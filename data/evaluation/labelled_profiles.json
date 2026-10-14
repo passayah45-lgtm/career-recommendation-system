@@ -1,0 +1,340 @@
+{
+  "version": "1.0.0",
+  "created_on": "2026-10-14",
+  "author": "Project author (single labeller)",
+  "status": "Synthetic evaluation profiles. Not real learners, not real outcomes, not hiring predictions.",
+  "labelling_rules": {
+    "L1": "Core work: a career is relevant when the profile's skills cover the central day-to-day work of the occupation, judged from what the occupation does (O*NET summary where available), not from counting overlap with the dataset skill list.",
+    "L2": "Credible next step: for career changers and early learners, a career is relevant when the current skills are a realistic entry point and the profile states that direction.",
+    "L3": "Generic skills do not create relevance: communication, excel or git alone never make a career relevant.",
+    "L4": "Education never makes a career irrelevant on its own, and interests support but do not create relevance.",
+    "L5": "Binary relevance. Each profile lists 0 to 3 relevant careers. A profile may list none when no career can be justified."
+  },
+  "independence_note": "Labels were written before the engine was run on any of these profiles. They were not copied from engine output and were not changed after seeing results.",
+  "profiles": [
+    {
+      "profile_id": "P01", "primary_category": "Data and AI", "profile_type": "strong match",
+      "description": "Final-year statistics student who builds predictive models in Python and presents them with charts.",
+      "skills": ["python", "statistics", "machine learning", "sql", "data visualization", "pandas"],
+      "interests": ["analysis", "mathematics", "research"], "education_level": 3,
+      "relevant_career_ids": ["C001", "C002", "C006"],
+      "relevance_explanation": "Modelling plus statistics is the core of data science (L1). SQL, statistics and charts are the core of data analysis (L1). A statistics degree is the usual entry route to statistician roles (L2).",
+      "rationale": "Typical strong candidate for data careers. Includes 'pandas', which is not in the vocabulary, to reflect real input."
+    },
+    {
+      "profile_id": "P02", "primary_category": "Data and AI", "profile_type": "strong match",
+      "description": "Operations assistant who builds Power BI dashboards from SQL queries for managers.",
+      "skills": ["excel", "sql", "power bi", "data visualization", "communication"],
+      "interests": ["business", "analysis"], "education_level": 3,
+      "relevant_career_ids": ["C004", "C002"],
+      "relevance_explanation": "Dashboards from company data are the core of business intelligence (L1) and of data analysis (L1).",
+      "rationale": "Business-facing reporting profile."
+    },
+    {
+      "profile_id": "P03", "primary_category": "Data and AI", "profile_type": "limited skills",
+      "description": "Diploma holder who finished one spreadsheet course and wants to work with data.",
+      "skills": ["excel"],
+      "interests": ["analysis"], "education_level": 2,
+      "relevant_career_ids": ["C002"],
+      "relevance_explanation": "States a data direction and spreadsheets are a common first step into data analysis (L2). Excel alone does not justify accounting or BI under L3.",
+      "rationale": "Tests behaviour with a single skill."
+    },
+    {
+      "profile_id": "P04", "primary_category": "Data and AI", "profile_type": "missing information",
+      "description": "Self-taught deep learning enthusiast who left interests and education blank.",
+      "skills": ["Python", "deep learning", "linear algebra", "ML"],
+      "interests": [], "education_level": null,
+      "relevant_career_ids": ["C003", "C007", "C001"],
+      "relevance_explanation": "Neural network work is central to machine learning engineering and AI research (L1). Python and ML also support data science (L1).",
+      "rationale": "Tests missing interests and education, plus mixed case and the ML alias."
+    },
+    {
+      "profile_id": "P05", "primary_category": "Software", "profile_type": "strong match",
+      "description": "Bootcamp graduate who builds responsive front ends.",
+      "skills": ["html", "css", "javascript", "react", "git"],
+      "interests": ["design", "building software"], "education_level": 2,
+      "relevant_career_ids": ["C010"],
+      "relevance_explanation": "Front-end web technologies are the core of web development (L1).",
+      "rationale": "Single clearly relevant career."
+    },
+    {
+      "profile_id": "P06", "primary_category": "Software", "profile_type": "strong match",
+      "description": "Computer science graduate who writes Java services and studied algorithms.",
+      "skills": ["java", "sql", "git", "OOP", "data structures and algorithms"],
+      "interests": ["building software", "problem solving"], "education_level": 3,
+      "relevant_career_ids": ["C009", "C015"],
+      "relevance_explanation": "Object-oriented Java development with algorithms is the core of software development and programming (L1).",
+      "rationale": "Uses two aliases (OOP and data structures and algorithms)."
+    },
+    {
+      "profile_id": "P07", "primary_category": "Software", "profile_type": "career transition",
+      "description": "Linux system administrator moving into automation and containers.",
+      "skills": ["linux", "bash scripting", "docker", "git", "networking"],
+      "interests": ["technology", "problem solving"], "education_level": 3,
+      "relevant_career_ids": ["C013", "C020", "C014"],
+      "relevance_explanation": "Containers, scripting and Linux are core DevOps work (L1). Current administration skills fit systems administration (L1). Linux and networking are a credible route into cloud engineering (L2).",
+      "rationale": "Overlaps Software and Cybersecurity categories."
+    },
+    {
+      "profile_id": "P08", "primary_category": "Software", "profile_type": "strong match",
+      "description": "Developer who ships Android and iOS apps and designs their screens.",
+      "skills": ["kotlin", "swift", "ui design", "git"],
+      "interests": ["building software", "design"], "education_level": 3,
+      "relevant_career_ids": ["C012"],
+      "relevance_explanation": "Native Android and iOS development is the core of mobile app development (L1).",
+      "rationale": "Single clearly relevant career."
+    },
+    {
+      "profile_id": "P09", "primary_category": "Cybersecurity", "profile_type": "strong match",
+      "description": "Security student who competes in capture-the-flag events and tests web apps.",
+      "skills": ["linux", "network security", "pentesting", "web application security", "python"],
+      "interests": ["security", "problem solving"], "education_level": 3,
+      "relevant_career_ids": ["C018", "C017"],
+      "relevance_explanation": "Offensive testing of networks and web apps is the core of penetration testing (L1). Network security knowledge supports security analyst work (L1).",
+      "rationale": "Uses the pentesting alias."
+    },
+    {
+      "profile_id": "P10", "primary_category": "Cybersecurity", "profile_type": "strong match",
+      "description": "Security operations centre trainee who triages alerts and handles incidents.",
+      "skills": ["SIEM", "incident response", "network security", "risk management"],
+      "interests": ["security", "analysis"], "education_level": 3,
+      "relevant_career_ids": ["C017", "C019"],
+      "relevance_explanation": "Monitoring, incident handling and risk work are core to security analysts (L1). Incident response is a credible route into digital forensics (L2).",
+      "rationale": "Uses the SIEM alias in upper case."
+    },
+    {
+      "profile_id": "P11", "primary_category": "Cybersecurity", "profile_type": "career transition",
+      "description": "IT support technician who runs Windows and Linux servers and the office network.",
+      "skills": ["networking", "windows server", "linux", "network security"],
+      "interests": ["technology", "organization"], "education_level": 2,
+      "relevant_career_ids": ["C020", "C021"],
+      "relevance_explanation": "Running servers and networks is the core of systems administration (L1). Networking and security are the base of network architecture, a credible next step (L2).",
+      "rationale": "Infrastructure profile with a diploma."
+    },
+    {
+      "profile_id": "P12", "primary_category": "Cybersecurity", "profile_type": "limited skills",
+      "description": "Mathematics graduate who studied cryptography and wants a security career. Education not given.",
+      "skills": ["cryptography"],
+      "interests": ["security"], "education_level": null,
+      "relevant_career_ids": ["C022"],
+      "relevance_explanation": "Applied cryptography is part of the core work of security engineers (L1, L2).",
+      "rationale": "Single skill plus missing education."
+    },
+    {
+      "profile_id": "P13", "primary_category": "Design", "profile_type": "strong match",
+      "description": "Freelance designer who makes posters and brand material.",
+      "skills": ["graphic design", "typography", "color theory", "illustration"],
+      "interests": ["visual arts", "design"], "education_level": 2,
+      "relevant_career_ids": ["C023"],
+      "relevance_explanation": "Layout, type and colour are the core of graphic design (L1). Illustration alone is not enough for animation under L1.",
+      "rationale": "Single clearly relevant career."
+    },
+    {
+      "profile_id": "P14", "primary_category": "Design", "profile_type": "career transition",
+      "description": "Front-end developer moving into user experience research and design.",
+      "skills": ["html", "user research", "prototyping", "ui design", "usability testing"],
+      "interests": ["design", "helping people"], "education_level": 3,
+      "relevant_career_ids": ["C024"],
+      "relevance_explanation": "Research, prototyping and usability testing are the core of UX design (L1). HTML alone does not make web development relevant here because the stated direction is UX (L2, L3).",
+      "rationale": "Transition profile that overlaps Software."
+    },
+    {
+      "profile_id": "P15", "primary_category": "Design", "profile_type": "strong match",
+      "description": "3D artist who models and animates short films.",
+      "skills": ["3d modeling", "animation", "blender", "video editing"],
+      "interests": ["visual arts", "technology"], "education_level": 2,
+      "relevant_career_ids": ["C027"],
+      "relevance_explanation": "Modelling and animating are the core of animation work (L1).",
+      "rationale": "Includes 'blender', which is not in the vocabulary."
+    },
+    {
+      "profile_id": "P16", "primary_category": "Design", "profile_type": "mixed skills",
+      "description": "Architecture graduate with CAD and space design experience who manages small fit-out projects.",
+      "skills": ["cad", "design thinking", "color theory", "project management"],
+      "interests": ["design", "organization"], "education_level": 3,
+      "relevant_career_ids": ["C025", "C026"],
+      "relevance_explanation": "CAD, colour and design process are core to interior design (L1). CAD and design thinking are a credible entry into industrial design (L2).",
+      "rationale": "Overlaps Design and Engineering through CAD."
+    },
+    {
+      "profile_id": "P17", "primary_category": "Business", "profile_type": "strong match",
+      "description": "Junior accountant who prepares tax returns and financial statements.",
+      "skills": ["accounting", "excel", "taxation", "financial analysis"],
+      "interests": ["business", "mathematics", "organization"], "education_level": 3,
+      "relevant_career_ids": ["C030", "C029"],
+      "relevance_explanation": "Bookkeeping and tax are the core of accounting (L1). Financial statement analysis is the core of financial analysis (L1).",
+      "rationale": "Finance profile."
+    },
+    {
+      "profile_id": "P18", "primary_category": "Business", "profile_type": "strong match",
+      "description": "Content marketer who writes blog posts and tracks campaigns.",
+      "skills": ["digital marketing", "SEO", "content writing", "web analytics"],
+      "interests": ["business", "writing", "communication"], "education_level": 3,
+      "relevant_career_ids": ["C034"],
+      "relevance_explanation": "Online campaigns, search optimisation and analytics are the core of digital marketing (L1).",
+      "rationale": "Uses the SEO alias."
+    },
+    {
+      "profile_id": "P19", "primary_category": "Business", "profile_type": "strong match",
+      "description": "Team lead who runs Scrum projects and reports progress to management.",
+      "skills": ["project management", "agile methods", "communication", "risk management", "excel"],
+      "interests": ["leadership", "organization"], "education_level": 3,
+      "relevant_career_ids": ["C032", "C028"],
+      "relevance_explanation": "Planning, agile delivery and risk control are the core of project management (L1). Project work and reporting are a credible route into management analysis (L2).",
+      "rationale": "Management profile."
+    },
+    {
+      "profile_id": "P20", "primary_category": "Business", "profile_type": "strong match",
+      "description": "HR assistant who handles recruitment and staff questions.",
+      "skills": ["human resource management", "communication", "organizational behavior"],
+      "interests": ["helping people", "business"], "education_level": 3,
+      "relevant_career_ids": ["C033"],
+      "relevance_explanation": "Recruitment and employee relations are the core of HR specialist work (L1).",
+      "rationale": "Single clearly relevant career."
+    },
+    {
+      "profile_id": "P21", "primary_category": "Data and AI", "profile_type": "mixed skills",
+      "description": "Economics graduate who uses Python, SQL and Excel for analysis and took one machine learning course.",
+      "skills": ["Python", "SQL", "Excel", "ML", "statistics"],
+      "interests": ["analysis", "mathematics"], "education_level": 3,
+      "relevant_career_ids": ["C001", "C002"],
+      "relevance_explanation": "Analysis with SQL and statistics is core to data analysis (L1), and Python with ML and statistics is core to data science (L1). No accounting or finance skills, so financial analysis is not labelled (L1, L3).",
+      "rationale": "Same skills as the Phase 3 worked example, used to test the Financial Analyst ranking concern."
+    },
+    {
+      "profile_id": "P22", "primary_category": "Education", "profile_type": "strong match",
+      "description": "Qualified secondary teacher with three years in the classroom.",
+      "skills": ["lesson planning", "classroom management", "assessment design", "communication"],
+      "interests": ["teaching", "helping people"], "education_level": 3,
+      "relevant_career_ids": ["C035", "C037"],
+      "relevance_explanation": "Planning, managing and assessing classes is the core of secondary teaching (L1) and transfers directly to ESL teaching (L2).",
+      "rationale": "Teaching profile."
+    },
+    {
+      "profile_id": "P23", "primary_category": "Education", "profile_type": "strong match",
+      "description": "English tutor with a TEFL certificate who teaches adults online.",
+      "skills": ["TEFL", "lesson planning", "communication", "educational technology"],
+      "interests": ["teaching", "communication"], "education_level": 3,
+      "relevant_career_ids": ["C037", "C035"],
+      "relevance_explanation": "Teaching English to non-native speakers is the core of ESL teaching (L1). Lesson planning is a credible route into secondary teaching (L2).",
+      "rationale": "Uses the TEFL alias."
+    },
+    {
+      "profile_id": "P24", "primary_category": "Education", "profile_type": "career transition",
+      "description": "Teacher with a master's degree who builds online courses for a university.",
+      "skills": ["instructional design", "educational technology", "technical writing", "video editing"],
+      "interests": ["teaching", "design", "technology"], "education_level": 4,
+      "relevant_career_ids": ["C036"],
+      "relevance_explanation": "Designing and producing online learning is the core of instructional design (L1).",
+      "rationale": "Education to learning design transition."
+    },
+    {
+      "profile_id": "P25", "primary_category": "Education", "profile_type": "mixed skills",
+      "description": "Computer science master's graduate who tutors programming and wants to teach at university.",
+      "skills": ["python", "algorithms and data structures", "research methods", "lesson planning"],
+      "interests": ["teaching", "technology", "research"], "education_level": 4,
+      "relevant_career_ids": ["C039"],
+      "relevance_explanation": "Teaching and researching computing is the core of CS lecturing, and the profile states that goal (L1, L2). Software development is not labelled because the stated direction is teaching (L2).",
+      "rationale": "Overlaps Education and Software."
+    },
+    {
+      "profile_id": "P26", "primary_category": "Healthcare", "profile_type": "strong match",
+      "description": "Final-year nursing student with hospital placements.",
+      "skills": ["patient care", "anatomy and physiology", "medical terminology", "infection control"],
+      "interests": ["healthcare", "helping people"], "education_level": 3,
+      "relevant_career_ids": ["C040"],
+      "relevance_explanation": "Direct patient care is the core of nursing (L1).",
+      "rationale": "Single clearly relevant career."
+    },
+    {
+      "profile_id": "P27", "primary_category": "Healthcare", "profile_type": "strong match",
+      "description": "Biology graduate who worked in a microbiology research lab.",
+      "skills": ["chemistry", "microbiology", "laboratory techniques"],
+      "interests": ["science", "analysis"], "education_level": 3,
+      "relevant_career_ids": ["C042"],
+      "relevance_explanation": "Running lab tests on samples is the core of medical laboratory work (L1).",
+      "rationale": "Laboratory science profile."
+    },
+    {
+      "profile_id": "P28", "primary_category": "Healthcare", "profile_type": "strong match",
+      "description": "Clinic receptionist trained in medical coding and electronic records.",
+      "skills": ["medical terminology", "medical coding", "health informatics", "excel"],
+      "interests": ["healthcare", "organization"], "education_level": 2,
+      "relevant_career_ids": ["C043"],
+      "relevance_explanation": "Coding and maintaining health records is the core of medical records work (L1).",
+      "rationale": "Health administration profile with a diploma."
+    },
+    {
+      "profile_id": "P29", "primary_category": "Healthcare", "profile_type": "strong match",
+      "description": "Nutrition graduate who advises clients on diet.",
+      "skills": ["nutrition", "chemistry", "counselling", "anatomy and physiology"],
+      "interests": ["healthcare", "helping people", "science"], "education_level": 3,
+      "relevant_career_ids": ["C044"],
+      "relevance_explanation": "Assessing diets and counselling clients is the core of dietetics (L1).",
+      "rationale": "Uses the UK spelling alias 'counselling'."
+    },
+    {
+      "profile_id": "P30", "primary_category": "Engineering", "profile_type": "strong match",
+      "description": "Civil engineering graduate who designed small structures during an internship.",
+      "skills": ["structural analysis", "cad", "engineering mathematics", "project management"],
+      "interests": ["engineering", "mathematics"], "education_level": 3,
+      "relevant_career_ids": ["C046"],
+      "relevance_explanation": "Structural design and construction projects are the core of civil engineering (L1).",
+      "rationale": "Single clearly relevant career."
+    },
+    {
+      "profile_id": "P31", "primary_category": "Engineering", "profile_type": "overlapping interests",
+      "description": "Electrical engineering student interested in medical devices.",
+      "skills": ["circuit analysis", "matlab", "engineering mathematics", "anatomy and physiology"],
+      "interests": ["engineering", "healthcare"], "education_level": 3,
+      "relevant_career_ids": ["C048", "C050"],
+      "relevance_explanation": "Circuit analysis is the core of electrical engineering (L1). Engineering plus physiology is the core of biomedical engineering (L1).",
+      "rationale": "Overlaps Engineering and Healthcare."
+    },
+    {
+      "profile_id": "P32", "primary_category": "Engineering", "profile_type": "strong match",
+      "description": "Environmental science graduate who writes site assessment reports with GIS maps.",
+      "skills": ["environmental science", "chemistry", "gis", "technical writing"],
+      "interests": ["environment", "science"], "education_level": 3,
+      "relevant_career_ids": ["C049"],
+      "relevance_explanation": "Assessing and reporting environmental impact is core environmental engineering work (L1).",
+      "rationale": "Single clearly relevant career."
+    },
+    {
+      "profile_id": "P33", "primary_category": "Engineering", "profile_type": "missing information",
+      "description": "Hobbyist who designs 3D-printed parts. Education not given.",
+      "skills": ["cad", "3d modeling"],
+      "interests": ["engineering"], "education_level": null,
+      "relevant_career_ids": ["C047", "C026"],
+      "relevance_explanation": "Designing mechanical parts in CAD is a credible entry into mechanical engineering (L2) and industrial design (L2). 3D modelling alone does not make animation relevant here (L1).",
+      "rationale": "Few skills and missing education."
+    },
+    {
+      "profile_id": "P34", "primary_category": "Business", "profile_type": "career transition",
+      "description": "Accountant learning SQL and statistics to move into data analysis.",
+      "skills": ["accounting", "excel", "sql", "statistics"],
+      "interests": ["analysis", "business"], "education_level": 3,
+      "relevant_career_ids": ["C002", "C030", "C029"],
+      "relevance_explanation": "SQL and statistics are the stated target and core of data analysis (L1, L2). Current accounting work stays relevant (L1). Accounting plus analysis supports financial analysis (L1).",
+      "rationale": "Overlaps Business and Data and AI."
+    },
+    {
+      "profile_id": "P35", "primary_category": "Software", "profile_type": "missing information",
+      "description": "Learner who lists only skills outside the catalogue.",
+      "skills": ["blockchain", "solidity"],
+      "interests": ["technology"], "education_level": null,
+      "relevant_career_ids": [],
+      "relevance_explanation": "No catalogue career covers these skills, so no career can be justified (L5). Metrics are undefined for this profile.",
+      "rationale": "Tests explicit handling of profiles without relevant careers."
+    },
+    {
+      "profile_id": "P36", "primary_category": "Education", "profile_type": "overlapping interests",
+      "description": "Teacher who builds simple course websites and wants to design e-learning.",
+      "skills": ["html", "css", "instructional design", "educational technology"],
+      "interests": ["teaching", "technology", "design"], "education_level": 3,
+      "relevant_career_ids": ["C036"],
+      "relevance_explanation": "Designing e-learning is the stated direction and core of instructional design (L1, L2). Basic HTML and CSS without JavaScript do not make web development relevant (L1).",
+      "rationale": "Overlaps Education, Design and Software."
+    }
+  ]
+}
