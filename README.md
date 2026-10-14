@@ -97,7 +97,7 @@ Compatibility score (0 to 100) = required skills 55% + preferred skills 15% + in
 2. Career skills, interests and education levels are curated by the author. 46 of 50 careers link to an O*NET occupation for source context.
 3. Skill coverage divides by the length of each career's required list, so one shared skill counts more for careers with short lists (for example Excel and Financial Analyst). Phase 5 found this and kept the weights. See docs/evaluation_report.md.
 4. One resource per skill, in English, several from US or UK sources (tax, health privacy, medical coding).
-5. Resource links were confirmed in web search results on 2026-10-14, not HTTP-checked.
+5. 104 of 114 resource links passed an HTTP check on 2026-10-14. The other 10 block automated checks or were temporarily down, and keep their search-confirmed status.
 6. Evaluation uses 36 synthetic profiles labelled by the author. It measures agreement with those labels, not real-world accuracy.
 
 Details: docs/dataset_documentation.md and docs/recommendation_algorithm.md.

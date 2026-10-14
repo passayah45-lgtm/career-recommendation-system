@@ -1,6 +1,6 @@
 # Dataset Documentation
 
-Version: 1.0.0
+Version: 1.1.0
 Last updated: 2026-10-14
 Phase: 2 (Dataset Engineering and Validation)
 
@@ -175,17 +175,26 @@ The free status was assessed from the provider's own description of the resource
 
 ## 11. URL verification method and limits
 
-Method used on 2026-10-14:
+Two methods were used, both on 2026-10-14.
 
-1. The project workspace has no direct internet access, so HTTP status codes could not be checked.
-2. Each URL was confirmed by running a web search and checking that the exact URL appeared in the results with a matching page title. These rows are marked search_index_confirmed.
-3. All 46 career source URLs and all 114 resource URLs passed this check. No URL is marked unverified.
+Search index check (all 160 URLs, during Phase 2):
+
+1. The project workspace had no direct internet access, so each URL was confirmed by checking that the exact URL appeared in web search results with a matching page title. These rows were marked search_index_confirmed.
+
+HTTP check (Phase 5, src/data/url_checker.py, run from the author's laptop):
+
+1. 150 of 160 URLs answered successfully, including all 46 career source URLs.
+2. 104 resources are now marked http_checked. Their notes keep the earlier status.
+3. 9 resources (open.edu, open.lib.umn.edu, pressbooks.pub) refused the checker with HTTP 403 and 1 (Inkscape) timed out while its server showed "502 Bad Gateway". These 10 keep search_index_confirmed.
+4. One resource returned HTTP 404 and was replaced: R045 graphic design now points to Canva Design School "Graphic design basics".
+
+Full results: docs/evaluation_report.md section 8, reports/url_check.json and reports/url_check_run2.json.
 
 Limits:
 
-1. search_index_confirmed means the page existed in the search index. It does not prove the page returns HTTP 200 today, or that it has no login wall.
-2. Some URLs point to a version that can change: "latest" Blender and Spark manuals, "current" PostgreSQL documentation, QGIS 3.44.
-3. Recommended next step: run an HTTP check from a machine with internet access and record the result as http_checked.
+1. http_checked means the server returned a 2xx or 3xx response on that date. It does not prove the content is unchanged or free of a login wall.
+2. search_index_confirmed means the page existed in the search index. It does not prove the page returns HTTP 200.
+3. Some URLs point to a version that can change: "latest" Blender and Spark manuals, "current" PostgreSQL documentation, QGIS 3.44.
 
 ## 12. Assumptions, biases and gaps
 
@@ -236,3 +245,4 @@ Errors stop the GitHub Actions workflow. Warnings (missing optional source URL, 
 | Version | Date | Change |
 |---|---|---|
 | 1.0.0 | 2026-10-14 | First release: 50 careers, 114 resources, 37 aliases, validator and tests |
+| 1.1.0 | 2026-10-14 | HTTP link check: 104 resources http_checked, R045 replaced after a 404 |

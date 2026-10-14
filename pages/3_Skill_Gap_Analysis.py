@@ -96,8 +96,7 @@ resource_table("Resources for missing required skills", gap["resources"]["requir
                "No missing required skills.")
 resource_table("Resources for missing preferred skills (optional)", gap["resources"]["preferred"], "preferred",
                "No missing preferred skills.")
-st.info(gap["resource_note"] + " A link status of 'search index confirmed' means the page was found in search "
-        "results, not that it was opened.")
+st.info(gap["resource_note"])
 
 if gap["learning_goals"]:
     st.markdown("**What you would learn to do in this career**")

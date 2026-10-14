@@ -6,8 +6,9 @@ from src.engine.scoring import coverage
 from src.services.recommendations import profile_from_input
 
 RESOURCE_NOTE = (
-    "Resource links were confirmed in web search results on the verified_on date. "
-    "They were not HTTP-checked, so a link may have moved since then."
+    "Each resource shows how its link was checked. 'http checked' means the page answered an HTTP request "
+    "on the verified_on date. 'search index confirmed' means the page was found in web search results but "
+    "was not opened by the checker. Links can move after these dates."
 )
 
 

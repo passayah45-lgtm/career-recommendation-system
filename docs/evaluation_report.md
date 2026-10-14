@@ -21,7 +21,7 @@ A test (tests/test_evaluation.py) fails if the saved file and a fresh run differ
 2. Test the Phase 3 concern that Financial Analyst ranks third for the worked-example profile with 1 of 3 required skills.
 3. Compare the baseline weights with two required-skill-heavy alternatives and a skills-only ablation, without tuning to the data.
 4. Find failure cases and their causes.
-5. Build a reusable HTTP link checker and report link status honestly.
+5. Build a reusable HTTP link checker, run it, and report link status honestly.
 
 ## 2. Evaluation dataset
 
@@ -268,25 +268,66 @@ Behaviour:
 7. Writes a JSON report with URL, record type and ID, status code, final URL, method, outcome, error and UTC timestamp.
 8. With --apply, it changes only reachable resource rows to http_checked with today's date, and appends "Earlier status: search_index_confirmed on 2026-10-14." to notes. Other rows stay unchanged.
 
-Status: the checker is implemented and covered by 19 tests with a mocked transport (tests/test_url_checker.py). **No real HTTP check has been run.** This workspace has no direct internet access, so every resource keeps its search_index_confirmed status from 2026-10-14. The CI workflow does not run the checker.
+Tests: 22 tests with a mocked transport (tests/test_url_checker.py). The CI workflow never runs the checker.
 
-How to run it on a Windows laptop:
+### 8.1 Real HTTP check results (2026-10-14)
+
+The checker was run by the project author on a Windows laptop (Python 3.12.7) on a home network in India. Three runs were made the same day:
+
+| Run | Time (UTC) | Reachable | Blocked | Inconclusive | Failed | Report file |
+|---|---|---|---|---|---|---|
+| 0 | afternoon | 149 | 9 | 1 | 1 | not kept (overwritten by run 1). Numbers copied from the console |
+| 1 | 17:02 | 118 | 9 | 33 | 0 | reports/url_check.json |
+| 2 | 17:18 | 150 | 9 | 1 | 0 | reports/url_check_run2.json |
+
+Run 2 is the reference result. The 33 inconclusive results in run 1 were all timeouts ("timed out" or "read operation timed out") caused by a weak connection at that time. The same sites answered in run 2.
+
+Run 2 in detail (160 URLs):
+
+| Group | Count | Outcome |
+|---|---|---|
+| Career source URLs (O*NET) | 46 | all reachable |
+| Resource URLs | 104 | reachable, now marked http_checked |
+| Resource URLs | 9 | blocked with HTTP 403 |
+| Resource URLs | 1 | inconclusive (timeout) |
+
+Blocked resources (HTTP 403 to the checker):
+
+| Site | Resources |
+|---|---|
+| open.edu (The Open University) | R008, R013, R022, R031, R033, R038 |
+| open.lib.umn.edu (University of Minnesota) | R020, R048 |
+| pressbooks.pub | R041 |
+
+These sites use bot protection. A 403 means the checker was refused, not that the page is missing. They keep the status search_index_confirmed. Checking them by hand in a browser is still recommended before the demonstration.
+
+Inconclusive: R050 Inkscape tutorials. The checker timed out, and opening the page in Chrome at the same time showed "502 Bad Gateway" from the Inkscape server. This is a server-side fault, so the link keeps search_index_confirmed and should be checked again before submission.
+
+Failed and replaced: in run 0, R045 (GCFGlobal "Beginning Graphic Design: Layout and Composition") returned HTTP 404 on both HEAD and GET. The page no longer appeared in search results either. It was replaced with Canva Design School "Graphic design basics" (commit 4f4ab0b). The author opened the new page in Chrome and confirmed the course loads. It was reachable in runs 1 and 2.
+
+Redirects worth noting (run 2): the GOV.UK content design guide (R021) now redirects to guidance.publishing.service.gov.uk, and the GCFGlobal Excel course (R040) redirects to learnfree.org. Both load the intended content, so the stored URLs were kept.
+
+### 8.2 Effect on the dataset
+
+| url_verification | Resources |
+|---|---|
+| http_checked (2026-10-14) | 104 |
+| search_index_confirmed (2026-10-14) | 10 (9 blocked, 1 inconclusive) |
+| unverified | 0 |
+
+Every http_checked row keeps its earlier status in notes ("Earlier status: search_index_confirmed on 2026-10-14."). No row was marked verified without a successful HTTP response.
+
+### 8.3 How to repeat the check
 
 ```powershell
 cd career-recommendation-system
 .venv\Scripts\activate
-python -m src.data.url_checker --output reports\url_check.json
-```
-
-It takes about 5 minutes. Review reports\url_check.json. To record reachable links in the dataset:
-
-```powershell
 python -m src.data.url_checker --output reports\url_check.json --apply
 python -m src.data.validation
 python -m pytest -q
 ```
 
-Then commit the updated resources.csv and the report. Treat blocked and inconclusive results as "check by hand in a browser".
+Run each command separately. --apply is safe to repeat: it only promotes reachable rows and never downgrades a row. Use a stable connection, because timeouts are reported as inconclusive. Commit the report and resources.csv afterwards.
 
 ## 9. Learner experience review
 
@@ -335,4 +376,4 @@ Not verified, manual browser checks still required (I have not opened the app in
 3. Add graded relevance (0, 1, 2) and report nDCG@5.
 4. Add harder profiles: more transitions and more profiles with limited or ambiguous skills.
 5. Hold out profiles: design formula changes on one set and report results only on a separate set.
-6. Run the URL checker before each release and track link failures over time.
+6. Run the URL checker before each release and track link failures over time. Recheck R050 (Inkscape) and the 9 blocked links by hand before submission.

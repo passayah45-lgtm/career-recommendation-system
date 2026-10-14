@@ -41,7 +41,7 @@ def test_resources_only_for_missing_skills_and_kept_separate(mini_catalog):
     assert preferred == {"git", "docker"}
     for entry in gap["resources"]["required"] + gap["resources"]["preferred"]:
         assert all(r["skill_name"] == entry["skill"] for r in entry["resources"])
-    assert "not HTTP-checked" in gap["resource_note"]
+    assert "was not opened by the checker" in gap["resource_note"]
 
 
 def test_multiple_resources_sorted_by_level_with_verification(mini_catalog):

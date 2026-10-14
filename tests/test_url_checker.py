@@ -133,3 +133,12 @@ def test_report_shape():
     report = uc.build_report([uc.CheckResult("resource", "R001", "u", uc.FAILED, 404)])
     assert report["summary"]["outcomes"][uc.FAILED] == 1
     assert set(report["results"][0]) >= {"url", "record_id", "status_code", "final_url", "checked_at", "outcome"}
+
+
+@pytest.mark.parametrize("existing,expected", [
+    ("", "Earlier status: x."),
+    ("Blender is free software", "Blender is free software. Earlier status: x."),
+    ("Free account needed.", "Free account needed. Earlier status: x."),
+])
+def test_join_notes_keeps_sentences_separate(existing, expected):
+    assert uc.join_notes(existing, "Earlier status: x.") == expected

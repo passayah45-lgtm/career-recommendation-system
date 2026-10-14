@@ -207,6 +207,16 @@ def build_report(results):
     }
 
 
+def join_notes(existing, addition):
+    # Appends a sentence to a note, adding a full stop to the existing text when it has none
+    existing = (existing or "").strip()
+    if not existing:
+        return addition
+    if existing[-1] not in ".!?":
+        existing += "."
+    return f"{existing} {addition}"
+
+
 def apply_to_resources(results, resources_path, date_str):
     # Marks only reachable resource URLs as http_checked and keeps the earlier status in notes
     reachable = {r.record_id for r in results if r.record_type == "resource" and r.outcome == REACHABLE}
@@ -216,7 +226,7 @@ def apply_to_resources(results, resources_path, date_str):
         if row["resource_id"] not in reachable or row["url_verification"] == "http_checked":
             continue
         earlier = f"Earlier status: {row['url_verification']} on {row['verified_on'] or 'unknown date'}."
-        row["notes"] = f"{row['notes']} {earlier}".strip() if row["notes"] else earlier
+        row["notes"] = join_notes(row["notes"], earlier)
         row["url_verification"] = "http_checked"
         row["verified_on"] = date_str
         changed += 1

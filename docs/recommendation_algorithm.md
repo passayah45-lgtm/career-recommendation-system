@@ -184,7 +184,7 @@ analyze_skill_gap(profile, career_id, catalog) returns:
 | meets_all_required | True when no required skill is missing |
 | unknown_skills | Profile skills that were not recognized |
 | resources | {"required": [...], "preferred": [...]} for missing skills only |
-| resource_note | States that links were search-index confirmed, not HTTP-checked |
+| resource_note | Explains the two link statuses (http checked, search index confirmed) and that links can move |
 
 Required and preferred gaps are never merged. A missing preferred skill is labelled optional in explanations and listed under "preferred". An unknown career_id raises UnknownCareerError.
 
