@@ -1,0 +1,13 @@
+# Shared Streamlit settings, used locally and on Streamlit Community Cloud
+[theme]
+base = "light"
+primaryColor = "#2563EB"
+backgroundColor = "#FFFFFF"
+secondaryBackgroundColor = "#F1F5F9"
+textColor = "#0F172A"
+
+[browser]
+gatherUsageStats = false
+
+[client]
+showErrorDetails = false

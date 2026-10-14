@@ -6,6 +6,9 @@
 Streamlit pages (pages/, app.py)
         |
         v
+UI helpers (src/ui/)            state (session + cached catalog), components, views, charts
+        |
+        v
 Services (src/services/)        catalog, profiles, recommendations, skill_gap, learning_resources
         |                 \
         v                  v
@@ -20,7 +23,7 @@ Rule: services call the engine and the data layer. The engine works only on in-m
 
 ## Request flow
 
-1. The learner fills the assessment form (pages/1_Career_Assessment.py, Phase 4).
+1. The learner fills the assessment form (pages/1_Career_Assessment.py). The raw answers are kept in Streamlit session state only.
 2. services/catalog.py load_catalog() validates and loads the CSV files once.
 3. services/profiles.py validates the raw input and normalizes skills with the Phase 2 aliases.
 4. engine/matching.py compares the profile with each career.
@@ -28,7 +31,9 @@ Rule: services call the engine and the data layer. The engine works only on in-m
 6. engine/ranking.py sorts results and applies the tie-break rule.
 7. engine/explanations.py writes reasons and notes from the computed values.
 8. services/skill_gap.py lists missing skills and attaches resources from services/learning_resources.py.
-9. The page renders results and Plotly charts (Phase 4).
+9. The page renders results and Plotly charts. Pages display service output and never compute scores themselves.
+
+Streamlit layer rules: src/ui/state.py loads the Catalog once with st.cache_resource (it is read-only), and session state holds only the learner's raw answers, the Top K choice and the selected career. src/ui/views.py and src/ui/charts.py are plain Python so they can be tested without a browser. A data folder can be swapped with the CAREER_DATA_DIR environment variable. If the data fails validation, every page shows an error message instead of crashing.
 
 Data quality: src/data/validation.py checks the CSV files in CI before any code reads them. src/data/loader.py then parses the pipe-separated lists, and src/data/preprocessing.py normalizes learner skill input with the alias file.
 

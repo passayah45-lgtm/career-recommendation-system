@@ -1,37 +1,38 @@
 # Career Recommendation System
 
-A content-based career recommender with skill-gap analysis. Built as an MSc assignment at KIIT University, designed for later integration into T-Career.
+A transparent career recommender with skill-gap analysis and free learning resources. A learner enters skills, interests and education level. The system ranks 50 careers, explains every score, shows which skills are missing, and links a learning resource for each one.
+
+Built as an MSc Computer Science and Data Analysis assignment at KIIT University. The engine is designed for later integration into T-Career.
 
 ## Features
 
-1. Career assessment form
-2. Ranked career matches with scores and explanations
-3. Skill-gap analysis with learning resources
-4. Career explorer
-5. Score analytics
+| Page | What it does |
+|---|---|
+| Home | Purpose, dataset size, how the system works |
+| Career Assessment | Skills (list plus free text with aliases such as ML or CI/CD), interests, education level, optional experience |
+| Recommendations | Top K careers with score, matched and missing skills, interests, reasons and a score breakdown |
+| Skill-Gap Analysis | Required and optional gaps, coverage, and learning resources with links and verification status |
+| Career Explorer | Browse all 50 careers, filter by category, search by title, view details and sources |
+| Analytics | Dataset charts, plus your own score contributions and skill coverage |
+
+Answers stay in the browser session. There are no accounts and nothing is written to disk.
 
 ## Tech stack
 
-Python, Pandas, NumPy, Scikit-learn, Streamlit, Plotly, Pytest.
+Python 3.11+, Streamlit, Plotly, pandas, pytest. NumPy and scikit-learn are installed for the evaluation phase. GitHub Actions runs data validation and tests.
 
-## Run locally
+## Install and run
 
 ```bash
+git clone https://github.com/passayah45-lgtm/career-recommendation-system.git
+cd career-recommendation-system
 python -m venv .venv
 source .venv/bin/activate        # Windows: .venv\Scripts\activate
 pip install -r requirements.txt
 streamlit run app.py
 ```
 
-## Dataset
-
-| File | Content |
-|---|---|
-| data/raw/careers.csv | 50 careers in 8 categories |
-| data/raw/resources.csv | 114 free learning resources, one per skill |
-| data/raw/skill_aliases.csv | 37 alternative skill names |
-
-Details, sources and limitations: docs/dataset_documentation.md
+The app opens at http://localhost:8501.
 
 ## Validate data and run tests
 
@@ -40,9 +41,9 @@ python -m src.data.validation
 python -m pytest -q
 ```
 
-GitHub Actions runs both on every push and pull request.
+The tests cover the data validator, the engine, the services and every Streamlit page (through Streamlit's AppTest). GitHub Actions runs both commands on every push and pull request.
 
-## Use the engine
+## Use the engine without Streamlit
 
 ```python
 from src.services.catalog import load_catalog
@@ -54,23 +55,60 @@ result = recommend({"skills": ["Python", "SQL"], "interests": ["analysis"], "edu
 gap = analyze_skill_gap({"skills": ["Python", "SQL"]}, "C002", catalog)
 ```
 
-Scoring, ranking and output schema: docs/recommendation_algorithm.md
+Both functions take and return plain dicts, ready for a REST API.
 
 ## Project structure
 
 | Folder | Purpose |
 |---|---|
-| src/data | Load, clean and validate data |
-| src/engine | Score, rank and explain careers |
-| src/services | Profile, recommendation and skill-gap logic |
-| src/evaluation | Metrics and experiments |
-| pages | Streamlit pages |
+| app.py, pages/ | Streamlit pages (presentation only) |
+| src/ui | Page helpers: session state, tables, Plotly charts |
+| src/services | Catalog loading, profile validation, recommendations, skill gap, resources |
+| src/engine | Matching, scoring, ranking and explanations (no Streamlit, no I/O) |
+| src/data | Loading, normalization and validation of the CSV files |
+| data/raw | careers.csv, resources.csv, skill_aliases.csv |
 | tests | Automated tests |
-| docs | Requirements, architecture, evaluation |
+| docs | Requirements, architecture, dataset and algorithm documentation |
+
+## Dataset
+
+| File | Content |
+|---|---|
+| data/raw/careers.csv | 50 careers in 8 categories |
+| data/raw/resources.csv | 114 free learning resources, one per skill |
+| data/raw/skill_aliases.csv | 37 alternative skill names |
+
+## How the score works
+
+Compatibility score (0 to 100) = required skills 55% + preferred skills 15% + interests 25% + education 5%. Each part is the share of the career's items the learner matches. The score ranks careers for one learner. It is not a probability of being hired or of success.
+
+## Limitations
+
+1. Skills are matched by exact name after alias resolution. Related skills (statistics and probability) earn no partial credit.
+2. Career skills, interests and education levels are curated by the author. 46 of 50 careers link to an O*NET occupation for source context.
+3. Preferred skills and interests together carry 40%, so a career with few matched required skills can still rank high. Phase 5 evaluates the weights.
+4. One resource per skill, in English, several from US or UK sources (tax, health privacy, medical coding).
+5. Resource links were confirmed in web search results on 2026-10-14, not HTTP-checked.
+6. No evaluation metrics exist yet. Precision@K is planned for Phase 5.
+
+Details: docs/dataset_documentation.md and docs/recommendation_algorithm.md.
+
+## Deploy to Streamlit Community Cloud
+
+The repository is ready: app.py is the entry point, requirements.txt pins tested versions, and .streamlit/config.toml sets the theme. No secrets are needed.
+
+1. Sign in at https://share.streamlit.io with the GitHub account that owns this repository.
+2. Click Create app, then choose to deploy from a GitHub repository.
+3. Repository: passayah45-lgtm/career-recommendation-system. Branch: main. Main file path: app.py.
+4. Open Advanced settings and choose Python 3.12 (3.11 or newer works). Leave secrets empty.
+5. Click Deploy. The first build installs the requirements and takes a few minutes.
+6. Open the app link, run one assessment, and check each page before sharing it.
+
+Free apps go to sleep after a period without visitors. The first visit afterwards takes a short time to wake the app.
 
 ## Documentation
 
-See docs/requirements.md, docs/architecture.md, docs/dataset_documentation.md and docs/recommendation_algorithm.md.
+docs/requirements.md, docs/architecture.md, docs/dataset_documentation.md, docs/recommendation_algorithm.md
 
 ## Author
 
