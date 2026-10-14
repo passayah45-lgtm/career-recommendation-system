@@ -4,6 +4,10 @@ A transparent career recommender with skill-gap analysis and free learning resou
 
 Built as an MSc Computer Science and Data Analysis assignment at KIIT University. The engine is designed for later integration into T-Career.
 
+**Live demo:** https://t-career-recommendation-2026.streamlit.app
+
+The app sleeps after 12 hours without visitors. If you see a sleep page, click "Yes, get this app back up!" and wait about a minute.
+
 ## Features
 
 | Page | What it does |

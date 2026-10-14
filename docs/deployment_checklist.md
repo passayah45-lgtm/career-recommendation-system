@@ -2,7 +2,7 @@
 
 Target: Streamlit Community Cloud (https://share.streamlit.io)
 Repository: passayah45-lgtm/career-recommendation-system, branch main, main file app.py, Python 3.12
-Live app URL: pending (fill in after deployment)
+Live app URL: https://t-career-recommendation-2026.streamlit.app (deployed 2026-10-14 from branch main)
 
 Status values: **verified locally**, **verified in CI**, **verified live**, **pending**. An item is only marked verified when the check was actually run.
 
@@ -61,9 +61,9 @@ Open the live URL in Chrome on your laptop, and once on your phone. Mark each it
 
 | # | Check | How | Status |
 |---|---|---|---|
-| L1 | App builds and starts | Deploy log ends without errors, home page appears | pending |
-| L2 | Home page | Title, four numbers (50, 8, 114, 114), five "How it works" links | pending |
-| L3 | Sidebar | Six entries starting with Home | pending |
+| L1 | App builds and starts | Deploy log ends without errors, home page appears | verified live (author's screenshot, 2026-10-14) |
+| L2 | Home page | Title, four numbers (50, 8, 114, 114), five "How it works" links | verified live (title and 50, 8, 114, 114 seen in screenshot) |
+| L3 | Sidebar | Six entries starting with Home | verified live (screenshot) |
 | L4 | Assessment input | Add skills from the list, type "ML, JS" in Other skills, pick 2 interests, education 3, save | pending |
 | L5 | Unknown skill warning | Add "blockchain" to Other skills, save, see it listed as not in the dataset | pending |
 | L6 | Empty input | Clear everything, save, see "add at least one skill" | pending |
