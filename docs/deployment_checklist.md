@@ -17,7 +17,7 @@ Status values: **verified locally**, **verified in CI**, **verified live**, **pe
 | Data loaded with repository-relative paths | verified locally | Paths built from the module location (src/data/validation.py), no absolute paths in src, pages or app.py |
 | No secrets, virtual environments or caches committed | verified locally | `git ls-files` and a secret-pattern search found none |
 | App needs no secrets | verified locally | No st.secrets or environment variable is required. CAREER_DATA_DIR is optional |
-| Tests and data validation pass | verified locally | 247 tests, 0 validation errors (Phase 6 redesign). CI status recorded after push |
+| Tests and data validation pass | verified in CI | 247 tests, 0 validation errors, evaluation check reproducible (run 38622396327 on commit 715aa66) |
 
 ## 2. Automated checks (run on every push)
 
