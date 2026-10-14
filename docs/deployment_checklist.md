@@ -10,7 +10,7 @@ Status values: **verified locally**, **verified in CI**, **verified live**, **pe
 
 | Check | Status | Evidence |
 |---|---|---|
-| Entry point is app.py at the repository root | verified locally | Fresh clone of commit 2270004, `streamlit run app.py` served HTTP 200 |
+| Entry point is app.py at the repository root | verified locally | Fresh clone of commit b0baea6 from GitHub, `streamlit run app.py` served HTTP 200 |
 | requirements.txt in the root, all versions pinned | verified locally | 6 pinned packages, installed with uv on Python 3.12.3 in 28 seconds |
 | Python 3.12 compatible | verified in CI | GitHub Actions runs on Python 3.12 |
 | No system packages needed (no packages.txt) | verified locally | All packages installed from wheels |
@@ -38,7 +38,7 @@ Status values: **verified locally**, **verified in CI**, **verified live**, **pe
 
 ## 3. Local browser smoke test (headless Chromium, before deployment)
 
-Run on 2026-10-14 against `streamlit run app.py` from the repository, with Chromium through Playwright. This is a real browser, but on the development machine, not on Community Cloud.
+Run on 2026-10-14 against `streamlit run app.py` from a fresh clone of commit b0baea6, with Chromium through Playwright. This is a real browser, but on the development machine, not on Community Cloud.
 
 | Check | Status | Notes |
 |---|---|---|
