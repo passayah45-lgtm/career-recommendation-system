@@ -160,6 +160,7 @@ Apps without visitors for 12 hours go to sleep. A visitor then sees a sleep page
 | `ModuleNotFoundError: No module named 'src'` | The main file path is not app.py at the repository root | Set the main file path to `app.py` (delete and redeploy if needed) |
 | "This app has gone over its resource limits" | Memory limit reached | Click **Manage app** then **Reboot app**. This app uses little memory, so report it if it repeats |
 | The answers disappear | The browser page was refreshed or a URL was typed by hand | Expected: each new browser session starts empty. Use the sidebar to move between pages |
+| `ImportError: cannot import name ...` right after a push | Community Cloud pulled new code without restarting Python, so old modules stayed in memory | app.py reloads changed modules automatically (src/ui/freshness.py). If it still appears, click **Manage app**, then **Reboot app** |
 | The build hangs for more than 15 minutes | Temporary platform problem | Check https://www.streamlitstatus.com, then reboot the app |
 
 The app hides detailed error messages from visitors (`client.showErrorDetails = false` in .streamlit/config.toml). The full traceback is always in the logs.

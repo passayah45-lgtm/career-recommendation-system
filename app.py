@@ -3,10 +3,16 @@
 
 import streamlit as st
 
-from src.ui.components import (
+from src.ui.freshness import drop_stale_modules, remember_loaded_modules
+
+# Must run before the other src imports: reloads modules changed by a hot update on Community Cloud
+if drop_stale_modules():
+    st.cache_resource.clear()
+
+from src.ui.components import (  # noqa: E402
     ANALYTICS_PAGE, ASSESSMENT_PAGE, EXPLORER_PAGE, HOME_PAGE, RECOMMENDATIONS_PAGE, SKILL_GAP_PAGE,
 )
-from src.ui.theme import PAGE_ICONS
+from src.ui.theme import PAGE_ICONS  # noqa: E402
 
 PAGES = [
     st.Page(HOME_PAGE, title="Home", icon=PAGE_ICONS["Home"], default=True),
@@ -17,4 +23,8 @@ PAGES = [
     st.Page(ANALYTICS_PAGE, title="Analytics", icon=PAGE_ICONS["Analytics"]),
 ]
 
-st.navigation(PAGES).run()
+try:
+    st.navigation(PAGES).run()
+finally:
+    # Also runs when a page stops or switches, so every imported module gets a baseline
+    remember_loaded_modules()
