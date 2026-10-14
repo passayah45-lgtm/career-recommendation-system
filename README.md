@@ -19,7 +19,7 @@ Answers stay in the browser session. There are no accounts and nothing is writte
 
 ## Tech stack
 
-Python 3.11+, Streamlit, Plotly, pandas, pytest. NumPy and scikit-learn are installed for the evaluation phase. GitHub Actions runs data validation and tests.
+Python 3.12+, Streamlit, Plotly, pandas, pytest. NumPy and scikit-learn are installed for the evaluation phase. GitHub Actions runs data validation and tests.
 
 ## Install and run
 
@@ -100,7 +100,7 @@ The repository is ready: app.py is the entry point, requirements.txt pins tested
 1. Sign in at https://share.streamlit.io with the GitHub account that owns this repository.
 2. Click Create app, then choose to deploy from a GitHub repository.
 3. Repository: passayah45-lgtm/career-recommendation-system. Branch: main. Main file path: app.py.
-4. Open Advanced settings and choose Python 3.12 (3.11 or newer works). Leave secrets empty.
+4. Open Advanced settings and choose Python 3.12 or newer (the pinned numpy needs at least 3.12). Leave secrets empty.
 5. Click Deploy. The first build installs the requirements and takes a few minutes.
 6. Open the app link, run one assessment, and check each page before sharing it.
 
