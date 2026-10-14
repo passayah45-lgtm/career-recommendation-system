@@ -187,3 +187,32 @@ def test_navigation_titles_and_home_page():
                       "Career Explorer", "Analytics"]
     at = open_page()
     assert at.title[0].value == "Career Recommendation System"
+
+
+def test_home_offers_assessment_action_and_score_note():
+    at = open_page()
+    assert "Start career assessment" in [b.label for b in at.button]
+    text = text_of(at)
+    assert "not a probability" in text
+    assert "required skills (55%)" in text and "interests (25%)" in text
+
+
+def test_skill_gap_cards_show_the_real_verification_status():
+    from src.services.catalog import load_catalog
+    from src.ui.theme import VERIFICATION_BADGES
+    at = open_page("pages/3_Skill_Gap_Analysis.py", profile=WORKED_EXAMPLE, **{SELECTED_CAREER_KEY: "C001"})
+    resource = load_catalog().resources.for_skill("data visualization")[0]
+    expected = VERIFICATION_BADGES[resource.url_verification][2]
+    card = [m.value for m in at.markdown if resource.title in m.value]
+    assert card, "resource card missing"
+    assert any(expected in m.value for m in at.markdown)
+    if resource.url_verification != "http_checked":
+        assert not any("Link checked" in m.value for m in at.markdown)
+
+
+def test_assessment_sidebar_shows_saved_state_after_submit():
+    at = open_page("pages/1_Career_Assessment.py")
+    at.multiselect[0].set_value(["python"])
+    at.button[0].click().run()
+    assert not at.exception
+    assert any("Saved for this session" in c.value for c in at.sidebar.caption)

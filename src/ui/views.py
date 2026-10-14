@@ -48,14 +48,15 @@ def filter_careers(careers, categories=None, query=""):
 
 
 def career_rows(careers):
+    # Compact overview for the explorer table, full skill lists stay in the detail card
     return [
         {
-            "ID": c.career_id,
             "Career": c.title,
             "Category": c.category,
-            "Required skills": ", ".join(c.required_skills),
-            "Preferred skills": ", ".join(c.preferred_skills),
-            "Education level": c.education_level,
+            "Required skills": len(c.required_skills),
+            "Preferred skills": len(c.preferred_skills),
+            "Entry education": c.education_level,
+            "ID": c.career_id,
         }
         for c in careers
     ]

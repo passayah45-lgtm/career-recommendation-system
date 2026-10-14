@@ -7,7 +7,7 @@ from src.services.recommendations import recommend
 from src.services.skill_gap import analyze_skill_gap
 from src.ui.charts import bar_chart, contribution_chart, coverage_chart
 from src.ui.views import (
-    build_profile_input, category_counts, contribution_rows, education_counts, education_label, filter_careers,
+    build_profile_input, career_rows, category_counts, contribution_rows, education_counts, education_label, filter_careers,
     parse_skill_text, required_skill_frequency, resource_rows,
 )
 
@@ -79,3 +79,11 @@ def test_charts_use_given_data(catalog):
     gap = analyze_skill_gap({"skills": ["python"]}, "C001", catalog, include_resources=False)
     cov = coverage_chart(gap)
     assert list(cov.data[0].y)[0] == pytest.approx(gap["required_coverage"] * 100, abs=0.1)
+
+
+def test_career_rows_are_compact_and_complete(catalog):
+    rows = career_rows(catalog.careers)
+    assert len(rows) == 50
+    assert list(rows[0]) == ["Career", "Category", "Required skills", "Preferred skills", "Entry education", "ID"]
+    first = catalog.careers[0]
+    assert rows[0]["Required skills"] == len(first.required_skills)

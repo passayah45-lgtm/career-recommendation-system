@@ -19,6 +19,8 @@ The app sleeps after 12 hours without visitors. If you see a sleep page, click "
 | Career Explorer | Browse all 50 careers, filter by category, search by title, view details and sources |
 | Analytics | Dataset charts, plus your own score contributions and skill coverage |
 
+The interface uses a shared design system (navy, teal and blue on a light blue-gray background, a navy sidebar with icons, card layouts and labelled status badges). See docs/design_system.md.
+
 Answers stay in the browser session. There are no accounts and nothing is written to disk.
 
 ## Tech stack
@@ -75,7 +77,8 @@ Both functions take and return plain dicts, ready for a REST API.
 | Folder | Purpose |
 |---|---|
 | app.py, home.py, pages/ | Streamlit entry point and pages (presentation only) |
-| src/ui | Page helpers: session state, tables, Plotly charts |
+| src/ui | Page helpers: session state, components, design tokens (theme.py), stylesheet (styles.css), Plotly charts |
+| static | Sidebar logo and browser tab icon |
 | src/services | Catalog loading, profile validation, recommendations, skill gap, resources |
 | src/engine | Matching, scoring, ranking and explanations (no Streamlit, no I/O) |
 | src/data | Loading, normalization and validation of the CSV files |
@@ -163,7 +166,7 @@ The app hides detailed error messages from visitors (`client.showErrorDetails = 
 
 ## Documentation
 
-docs/requirements.md, docs/architecture.md, docs/dataset_documentation.md, docs/recommendation_algorithm.md, docs/evaluation_report.md
+docs/requirements.md, docs/architecture.md, docs/dataset_documentation.md, docs/recommendation_algorithm.md, docs/evaluation_report.md, docs/design_system.md, docs/deployment_checklist.md
 
 ## Author
 

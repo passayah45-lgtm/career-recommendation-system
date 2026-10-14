@@ -1,0 +1,164 @@
+/* Shared styles for every page, injected once per page by src/ui/components.py */
+/* Most styling comes from the native theme in .streamlit/config.toml */
+/* Selectors target the st-key-* classes Streamlit adds to keyed containers, plus a few classes this app writes itself */
+/* Tokens mirror src/ui/theme.py, see docs/design_system.md */
+
+:root {
+  --crs-navy: #14213D;
+  --crs-teal: #0F9D94;
+  --crs-teal-dark: #0B7F78;
+  --crs-teal-tint: #E3F4F2;
+  --crs-blue: #3B82F6;
+  --crs-surface: #FFFFFF;
+  --crs-border: #DCE3EC;
+  --crs-muted: #475569;
+  --crs-subtle: #64748B;
+  --crs-space-xs: 0.25rem;
+  --crs-space-sm: 0.5rem;
+  --crs-space-md: 1rem;
+  --crs-space-lg: 1.5rem;
+  --crs-radius: 0.75rem;
+  --crs-shadow: 0 1px 2px rgba(20, 33, 61, 0.05), 0 2px 8px rgba(20, 33, 61, 0.04);
+}
+
+/* Page width and top spacing */
+.block-container {
+  max-width: 1180px;
+  padding-top: 4.25rem;
+}
+
+/* Page header: small eyebrow above the title, muted subtitle below */
+.crs-eyebrow {
+  color: var(--crs-teal-dark);
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  margin-bottom: -0.4rem;
+}
+.crs-subtitle {
+  color: var(--crs-muted);
+  font-size: 1rem;
+  max-width: 46rem;
+  margin-top: -0.4rem;
+}
+
+/* Card surfaces: every keyed panel, card and form is white with a soft shadow */
+[class*="st-key-panel_"],
+[class*="st-key-card_"],
+[class*="st-key-step_"],
+[class*="st-key-rec_"],
+[class*="st-key-res_"],
+.st-key-hero,
+.st-key-note,
+.st-key-toolbar,
+[data-testid="stForm"] {
+  background: var(--crs-surface);
+  box-shadow: var(--crs-shadow);
+}
+
+/* Metric cards inside a stats row */
+.st-key-stats [data-testid="stMetric"] {
+  background: var(--crs-surface);
+  box-shadow: var(--crs-shadow);
+}
+
+/* Hero: one restrained teal accent on the left edge */
+.st-key-hero {
+  border-left: 4px solid var(--crs-teal) !important;
+  padding: var(--crs-space-lg) var(--crs-space-lg) var(--crs-space-md);
+  background: linear-gradient(120deg, #FFFFFF 55%, #EEF7F6 100%);
+}
+
+/* Journey steps: numbered circle, teal border on hover */
+.crs-step-num {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.9rem;
+  height: 1.9rem;
+  border-radius: 50%;
+  background: var(--crs-teal-tint);
+  color: var(--crs-teal-dark);
+  font-weight: 700;
+  font-size: 0.95rem;
+}
+[class*="st-key-step_"] {
+  transition: border-color 0.15s ease;
+}
+[class*="st-key-step_"]:hover {
+  border-color: var(--crs-teal) !important;
+}
+
+/* Section heading inside forms and panels: number, title, help line */
+.crs-section {
+  display: flex;
+  gap: 0.75rem;
+  align-items: flex-start;
+  margin: 0.15rem 0 0.35rem;
+}
+.crs-section-title {
+  color: var(--crs-navy);
+  font-weight: 650;
+  font-size: 1.05rem;
+  line-height: 1.9rem;
+}
+.crs-section-help {
+  color: var(--crs-muted);
+  font-size: 0.9rem;
+  line-height: 1.35;
+}
+
+/* Small label above a group of skill badges */
+.crs-label {
+  color: var(--crs-subtle);
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  margin-bottom: 0.15rem;
+}
+
+/* Leading recommendation: teal border and a faint tint */
+.st-key-rec_top {
+  border: 2px solid var(--crs-teal) !important;
+  background: linear-gradient(180deg, #F3FAF9 0%, #FFFFFF 40%);
+}
+
+/* Transparency note */
+.st-key-note {
+  border-left: 4px solid var(--crs-blue) !important;
+}
+
+/* Resource cards in the skill-gap page */
+.crs-res-title {
+  font-weight: 600;
+  font-size: 0.98rem;
+}
+.crs-res-meta {
+  color: var(--crs-muted);
+  font-size: 0.85rem;
+}
+
+/* Phones and narrow tablets */
+@media (max-width: 640px) {
+  .block-container {
+    padding-top: 4.25rem;
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+  .st-key-hero {
+    padding: var(--crs-space-md);
+  }
+  /* Stat cards two per row instead of one tall column */
+  .st-key-stats [data-testid="stHorizontalBlock"] {
+    flex-wrap: wrap;
+  }
+  .st-key-stats [data-testid="stColumn"] {
+    min-width: calc(50% - 0.5rem) !important;
+    flex: 1 1 calc(50% - 0.5rem) !important;
+  }
+  h1 {
+    font-size: 1.5rem !important;
+  }
+}

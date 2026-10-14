@@ -1,10 +1,47 @@
 # Shared Streamlit settings, used locally and on Streamlit Community Cloud
+# Colors match the design tokens in src/ui/theme.py (tests/test_theme.py keeps them in sync)
+
 [theme]
 base = "light"
-primaryColor = "#2563EB"
-backgroundColor = "#FFFFFF"
-secondaryBackgroundColor = "#F1F5F9"
-textColor = "#0F172A"
+primaryColor = "#0B7F78"
+backgroundColor = "#F4F7FB"
+secondaryBackgroundColor = "#E9EEF5"
+textColor = "#14213D"
+linkColor = "#2563EB"
+linkUnderline = false
+borderColor = "#DCE3EC"
+dataframeBorderColor = "#E3E8EF"
+dataframeHeaderBackgroundColor = "#F1F5F9"
+showWidgetBorder = true
+baseRadius = "0.6rem"
+buttonRadius = "0.5rem"
+baseFontSize = 15
+headingFontSizes = ["1.85rem", "1.4rem", "1.3rem", "1.1rem", "0.95rem", "0.9rem"]
+headingFontWeights = [700, 650, 600, 600, 600, 600]
+metricValueFontSize = "1.9rem"
+metricValueFontWeight = 700
+greenColor = "#0B7F78"
+greenBackgroundColor = "#E3F4F2"
+greenTextColor = "#0A6B65"
+blueColor = "#2563EB"
+blueBackgroundColor = "#E6EEFD"
+blueTextColor = "#1D4ED8"
+orangeColor = "#C2410C"
+orangeBackgroundColor = "#FDF0E6"
+orangeTextColor = "#9A3412"
+grayColor = "#64748B"
+grayBackgroundColor = "#EEF2F6"
+grayTextColor = "#475569"
+chartCategoricalColors = ["#0F9D94", "#3B82F6", "#14213D", "#94A3B8", "#7DD3C8", "#93C5FD", "#475569", "#CBD5E1"]
+
+[theme.sidebar]
+backgroundColor = "#14213D"
+secondaryBackgroundColor = "#22325A"
+textColor = "#E2E8F0"
+primaryColor = "#5EEAD4"
+borderColor = "#2C3E66"
+linkColor = "#93C5FD"
+grayTextColor = "#B6C2D4"
 
 [browser]
 gatherUsageStats = false

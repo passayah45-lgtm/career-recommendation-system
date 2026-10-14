@@ -1,57 +1,82 @@
 # Home page, registered as the default page in app.py
-# All matching and scoring comes from src/services.
+# All counts come from the loaded catalog and the weights from the scoring engine
 
 import streamlit as st
 
 from src.data.validation import CATEGORIES
+from src.engine.scoring import DEFAULT_WEIGHTS
 from src.ui.components import (
     ANALYTICS_PAGE, ASSESSMENT_PAGE, EXPLORER_PAGE, RECOMMENDATIONS_PAGE, SKILL_GAP_PAGE, page_setup,
     score_disclaimer, sidebar_profile_summary,
 )
 from src.ui.state import get_catalog, get_profile
 
-page_setup("Career Recommendation System")
-catalog = get_catalog()
 profile = get_profile()
+hero = page_setup(
+    "Career Recommendation System",
+    subtitle="Match your skills and interests to careers, see exactly why each one was suggested, "
+             "and get free learning resources for the skills you still need.",
+    eyebrow="Transparent career guidance",
+    hero=True,
+)
+catalog = get_catalog()
 sidebar_profile_summary(profile)
 
-st.markdown(
-    "Find careers that fit your current skills and interests, see exactly why each one was suggested, "
-    "and get free learning resources for the skills you still need."
-)
+with hero:
+    a, b, _ = st.columns([1.2, 1.2, 2])
+    if profile:
+        if a.button("See my recommendations", type="primary", icon=":material/arrow_forward:", width="stretch"):
+            st.switch_page(RECOMMENDATIONS_PAGE)
+        if b.button("Edit my assessment", icon=":material/edit:", width="stretch"):
+            st.switch_page(ASSESSMENT_PAGE)
+    else:
+        if a.button("Start career assessment", type="primary", icon=":material/arrow_forward:", width="stretch"):
+            st.switch_page(ASSESSMENT_PAGE)
+        if b.button("Browse all careers", icon=":material/explore:", width="stretch"):
+            st.switch_page(EXPLORER_PAGE)
+    st.caption("About two minutes. No account needed. Your answers stay in this browser session.")
 
-c1, c2, c3, c4 = st.columns(4)
-c1.metric("Careers", len(catalog.careers))
-c2.metric("Categories", len(CATEGORIES))
-c3.metric("Skills covered", len(catalog.known_skills))
-c4.metric("Learning resources", len(catalog.resources))
+with st.container(key="stats"):
+    c1, c2, c3, c4 = st.columns(4)
+    c1.metric("Careers", len(catalog.careers), border=True)
+    c2.metric("Categories", len(CATEGORIES), border=True)
+    c3.metric("Unique skills", len(catalog.known_skills), border=True)
+    c4.metric("Learning resources", len(catalog.resources), border=True)
 
-st.subheader("How it works")
+st.subheader("How it works", anchor=False)
 steps = [
-    (ASSESSMENT_PAGE, "1. Career Assessment", "Enter your skills, interests and education level."),
-    (RECOMMENDATIONS_PAGE, "2. Recommendations", "See your best-matching careers with a score and the reasons behind it."),
-    (SKILL_GAP_PAGE, "3. Skill-Gap Analysis", "Compare your skills with one career and get learning resources."),
-    (EXPLORER_PAGE, "4. Career Explorer", "Browse and filter all careers in the dataset."),
-    (ANALYTICS_PAGE, "5. Analytics", "Charts about the dataset and about your own results."),
+    ("1", ASSESSMENT_PAGE, "Career Assessment", "Enter your skills, interests and education level."),
+    ("2", RECOMMENDATIONS_PAGE, "Recommendations", "See your best-matching careers, each with a score and the reasons behind it."),
+    ("3", SKILL_GAP_PAGE, "Skill-Gap Analysis", "Compare your skills with one career and get a learning resource for each gap."),
 ]
-for page, label, text in steps:
-    with st.container(border=True):
-        st.page_link(page, label=label)
+for col, (num, page, title, text) in zip(st.columns(3), steps):
+    with col, st.container(border=True, key=f"step_{num}", height="stretch"):
+        st.markdown(f'<span class="crs-step-num">{num}</span>', unsafe_allow_html=True)
+        st.page_link(page, label=f"**{title}**", icon=":material/arrow_forward:")
         st.caption(text)
 
-if profile:
-    st.success("Your assessment is saved for this browser session.")
-    st.page_link(RECOMMENDATIONS_PAGE, label="Continue to your recommendations")
-else:
-    st.page_link(ASSESSMENT_PAGE, label="Start the assessment")
+e1, e2 = st.columns(2)
+with e1, st.container(border=True, key="card_explorer"):
+    st.page_link(EXPLORER_PAGE, label="**Career Explorer**", icon=":material/explore:")
+    st.caption(f"Browse and filter all {len(catalog.careers)} careers, with skills, education and sources.")
+with e2, st.container(border=True, key="card_analytics"):
+    st.page_link(ANALYTICS_PAGE, label="**Analytics**", icon=":material/monitoring:")
+    st.caption("Charts about the dataset and about your own results.")
 
-with st.expander("About the score and its limits"):
+weights = DEFAULT_WEIGHTS.as_dict()
+with st.container(border=True, key="note"):
+    st.markdown("**:material/balance: How to read the score**")
     score_disclaimer()
     st.markdown(
-        "- The score combines required skills (55%), preferred skills (15%), interests (25%) and education (5%).\n"
-        "- Skills are matched by name against a curated dataset of 50 careers. Related skills earn no partial credit.\n"
-        "- Education levels are simplified estimates and carry a small weight. They are never a hard filter.\n"
-        "- Many sources are from the US or UK, so some careers and resources may differ in your country.\n"
-        "- Your answers stay in this browser session only. Nothing is saved to a database.\n\n"
-        "Full details: `docs/recommendation_algorithm.md` and `docs/dataset_documentation.md` in the repository."
+        f"The score combines required skills ({weights['required_skills']:.0%}), "
+        f"preferred skills ({weights['preferred_skills']:.0%}), interests ({weights['interests']:.0%}) "
+        f"and education ({weights['education']:.0%}). Every recommendation shows this breakdown."
     )
+    with st.expander("Limits of this system"):
+        st.markdown(
+            "- Skills are matched by name against a curated dataset. Related skills earn no partial credit.\n"
+            "- Education levels are simplified estimates with a small weight. They never exclude a career.\n"
+            "- Many sources are from the US or UK, so some careers and resources may differ in your country.\n"
+            "- Your answers stay in this browser session only. Nothing is saved to a database.\n\n"
+            "Full details: `docs/recommendation_algorithm.md` and `docs/dataset_documentation.md` in the repository."
+        )

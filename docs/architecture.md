@@ -33,7 +33,9 @@ Rule: services call the engine and the data layer. The engine works only on in-m
 8. services/skill_gap.py lists missing skills and attaches resources from services/learning_resources.py.
 9. The page renders results and Plotly charts. Pages display service output and never compute scores themselves.
 
-app.py only registers the pages with st.navigation, so each page has an explicit sidebar title. home.py is the default page.
+app.py only registers the pages with st.navigation, so each page has an explicit sidebar title and icon. home.py is the default page.
+
+Styling: .streamlit/config.toml holds the native theme, src/ui/theme.py the matching design tokens, and src/ui/styles.css a small shared stylesheet. components.page_setup() applies them on every page. Details: docs/design_system.md.
 
 Streamlit layer rules: src/ui/state.py loads the Catalog once with st.cache_resource (it is read-only), and session state holds only the learner's raw answers, the Top K choice and the selected career. src/ui/views.py and src/ui/charts.py are plain Python so they can be tested without a browser. A data folder can be swapped with the CAREER_DATA_DIR environment variable. If the data fails validation, every page shows an error message instead of crashing.
 

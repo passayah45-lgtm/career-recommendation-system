@@ -17,7 +17,7 @@ Status values: **verified locally**, **verified in CI**, **verified live**, **pe
 | Data loaded with repository-relative paths | verified locally | Paths built from the module location (src/data/validation.py), no absolute paths in src, pages or app.py |
 | No secrets, virtual environments or caches committed | verified locally | `git ls-files` and a secret-pattern search found none |
 | App needs no secrets | verified locally | No st.secrets or environment variable is required. CAREER_DATA_DIR is optional |
-| Tests and data validation pass | verified in CI | 230 tests, 0 validation errors |
+| Tests and data validation pass | verified locally | 247 tests, 0 validation errors (Phase 6 redesign). CI status recorded after push |
 
 ## 2. Automated checks (run on every push)
 
@@ -96,3 +96,17 @@ Open the live URL in Chrome on your laptop, and once on your phone. Mark each it
 | "The career data could not be loaded" | Run `python -m src.data.validation` locally, fix, push |
 | App over its resource limits | Manage app, then Reboot app |
 | App unreachable before the demo | Check https://www.streamlitstatus.com. Backup: run `streamlit run app.py` on the laptop |
+
+## 7. Phase 6 UI redesign (2026-10-15)
+
+Local headless Chromium run against `streamlit run app.py` with the redesigned interface, before pushing.
+
+| Check | Status | Notes |
+|---|---|---|
+| Full learner flow at 1440, 1280, 820 and 390 px wide | verified locally | Assessment, recommendations, skill gap, explorer search, analytics: 50 of 50 checks passed |
+| Worked-example scores unchanged (61.5, 59.6, 55.0) | verified locally | Same values as before the redesign |
+| No horizontal scroll on any page at any of the four widths | verified locally | |
+| Resource cards show the stored verification status | verified locally | Also covered by tests/test_app.py and tests/test_theme.py |
+| No JavaScript page errors | verified locally | |
+| Redesign visible on the live URL | pending | Open the live URL after the automatic redeploy and compare with docs/design_system.md |
+| Phone layout on a real phone | pending | Sidebar opens with the arrow, home statistics show two per row |
