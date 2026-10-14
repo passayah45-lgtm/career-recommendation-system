@@ -102,22 +102,24 @@ Changes from the Phase 1 draft: title became career_title, goals became learning
 
 ## 7. Algorithm design
 
-Total score per career:
+Implemented in Phase 3. The full specification is docs/recommendation_algorithm.md. Summary:
 
-S = ws * Ss + wi * Si + we * Se + wg * Sg
+S = 100 * (w_req * S_req + w_pref * S_pref + w_int * S_int + w_edu * S_edu) / (sum of applicable weights)
 
 | Component | Method | Range |
 |---|---|---|
-| Ss skill match | Matched required skills divided by total required skills | 0 to 1 |
-| Si interest match | Jaccard similarity of learner and career interests | 0 to 1 |
-| Se education | 1 if the learner meets the career's education level, partial credit per level below | 0 to 1 |
-| Sg goal match | Jaccard similarity of goals | 0 to 1 |
+| S_req required skills | Matched required skills divided by total required skills | 0 to 1 |
+| S_pref preferred skills | Matched preferred skills divided by total preferred skills | 0 to 1 |
+| S_int interests | Matched career interests divided by total career interests | 0 to 1 |
+| S_edu education | 1 when the learner meets the career level, minus 0.25 per level below | 0 to 1 |
 
-Starting weights: ws = 0.50, wi = 0.25, we = 0.15, wg = 0.10. Weights sum to 1. Phase 5 tests alternative weight sets and documents the results.
+Weights: w_req = 0.55, w_pref = 0.15, w_int = 0.25, w_edu = 0.05. Phase 5 tests alternative weight sets.
 
-Text normalisation: lowercase, trim spaces, map synonyms (for example "ml" to "machine learning") through a synonym dictionary.
+Changes from the Phase 1 draft: preferred skills became a separate component, interest matching uses coverage of the career's interests instead of Jaccard, education weight dropped from 0.15 to 0.05 because 42 of 50 careers share level 3, and the goal component was removed because learning goals are free text with no reliable way to compare them.
 
-Tie-break rule: higher skill match first, then alphabetical title. This keeps rankings deterministic.
+Text normalisation: the Phase 2 normalize_skill function with data/raw/skill_aliases.csv.
+
+Tie-break rule: total score, then required-skill coverage, then matched required count, then career_id. This keeps rankings deterministic.
 
 The score is a ranking signal. It is not a probability of hiring or career success.
 

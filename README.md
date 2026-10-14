@@ -42,6 +42,20 @@ python -m pytest -q
 
 GitHub Actions runs both on every push and pull request.
 
+## Use the engine
+
+```python
+from src.services.catalog import load_catalog
+from src.services.recommendations import recommend
+from src.services.skill_gap import analyze_skill_gap
+
+catalog = load_catalog()
+result = recommend({"skills": ["Python", "SQL"], "interests": ["analysis"], "education_level": 3}, catalog, top_k=5)
+gap = analyze_skill_gap({"skills": ["Python", "SQL"]}, "C002", catalog)
+```
+
+Scoring, ranking and output schema: docs/recommendation_algorithm.md
+
 ## Project structure
 
 | Folder | Purpose |
@@ -56,7 +70,7 @@ GitHub Actions runs both on every push and pull request.
 
 ## Documentation
 
-See docs/requirements.md, docs/architecture.md and docs/dataset_documentation.md.
+See docs/requirements.md, docs/architecture.md, docs/dataset_documentation.md and docs/recommendation_algorithm.md.
 
 ## Author
 

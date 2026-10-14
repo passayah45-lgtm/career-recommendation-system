@@ -52,6 +52,42 @@ def write_csv(path, columns, rows):
     return path
 
 
+def make_career(cid, required, preferred=(), interests=("technology",), education=3, **kw):
+    # Small engine-level Career for controlled ranking tests
+    from src.engine.models import Career
+    return Career(
+        career_id=cid, title=kw.get("title", f"Career {cid}"), category=kw.get("category", "Software"),
+        description="Test career used in engine tests only.",
+        required_skills=tuple(required), preferred_skills=tuple(preferred), education_level=education,
+        interests=tuple(interests), learning_goals=tuple(kw.get("learning_goals", ("learn things",))),
+        source_url=kw.get("source_url", ""),
+    )
+
+
+@pytest.fixture
+def mini_catalog():
+    # Four careers and matching resources, built without touching the real CSV files
+    from src.services.catalog import build_catalog
+    from src.services.learning_resources import LearningResource, ResourceCatalog
+    careers = [
+        make_career("C001", ["python", "sql", "statistics", "machine learning"], ["git", "docker"], ["analysis", "technology"]),
+        make_career("C002", ["html", "css", "javascript"], ["react"], ["design", "technology"]),
+        make_career("C003", ["accounting", "excel", "taxation"], ["communication"], ["business", "mathematics"]),
+        make_career("C004", ["python", "linux"], ["git"], ["technology", "security"], education=4),
+    ]
+    skills = sorted({s for c in careers for s in c.required_skills + c.preferred_skills})
+    resources = [
+        LearningResource(f"R{i:03d}", s, f"Learn {s}", "Test Provider", f"https://example.org/{s.replace(' ', '-')}",
+                         "tutorial", "beginner", True, "en", "search_index_confirmed", "2026-10-14")
+        for i, s in enumerate(skills, start=1)
+    ]
+    resources.append(LearningResource("R900", "sql", "Advanced SQL", "Test Provider", "https://example.org/sql-advanced",
+                                      "course", "advanced", False, "en", "unverified"))
+    aliases = {"ml": "machine learning", "js": "javascript", "k8s": "kubernetes"}
+    interests = ("analysis", "technology", "design", "business", "mathematics", "security")
+    return build_catalog(careers, ResourceCatalog(resources), aliases, interests)
+
+
 @pytest.fixture
 def valid_careers():
     return [career_row(1), career_row(2, career_title="Second Career")]
