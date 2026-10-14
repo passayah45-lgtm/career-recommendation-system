@@ -23,11 +23,24 @@ pip install -r requirements.txt
 streamlit run app.py
 ```
 
-## Run tests
+## Dataset
+
+| File | Content |
+|---|---|
+| data/raw/careers.csv | 50 careers in 8 categories |
+| data/raw/resources.csv | 114 free learning resources, one per skill |
+| data/raw/skill_aliases.csv | 37 alternative skill names |
+
+Details, sources and limitations: docs/dataset_documentation.md
+
+## Validate data and run tests
 
 ```bash
-pytest -q
+python -m src.data.validation
+python -m pytest -q
 ```
+
+GitHub Actions runs both on every push and pull request.
 
 ## Project structure
 
@@ -43,7 +56,7 @@ pytest -q
 
 ## Documentation
 
-See docs/requirements.md and docs/architecture.md.
+See docs/requirements.md, docs/architecture.md and docs/dataset_documentation.md.
 
 ## Author
 

@@ -53,41 +53,52 @@ Students and early-career learners pick careers with little structured guidance.
 
 ## 6. Data model
 
+Phase 2 replaced the draft schema below with the implemented one. The full field definitions live in docs/dataset_documentation.md. This section keeps a summary.
+
 ### Career record (careers.csv)
 
 | Field | Type | Example |
 |---|---|---|
-| career_id | string | C001 |
-| title | string | Data Analyst |
+| career_id | string | C002 |
+| career_title | string | Data Analyst |
 | category | string | Data and AI |
-| description | string | Analyses data to support business decisions |
-| required_skills | list (pipe separated) | python\|sql\|excel\|statistics |
-| interests | list (pipe separated) | analysis\|problem solving |
-| min_education | integer 0 to 4 | 2 |
-| min_experience_years | integer | 0 |
-| goals | list (pipe separated) | remote work\|high salary |
+| description | string | Collects, cleans and analyses data |
+| required_skills | list (pipe separated) | sql\|excel\|data visualization\|statistics |
+| preferred_skills | list (pipe separated, optional) | python\|power bi\|communication |
+| education_level | integer 0 to 4 | 3 |
+| interests | list (pipe separated, controlled vocabulary) | analysis\|business\|problem solving |
+| learning_goals | list (pipe separated) | write analytical sql queries\|build dashboards |
+| onet_code | string (optional) | 15-2051.00 |
+| source_url | string (optional) | O*NET OnLine summary page |
 
-Education scale: 0 secondary, 1 diploma, 2 bachelor, 3 master, 4 doctorate.
+Education scale (Phase 2): 0 no formal qualification specified, 1 secondary, 2 certificate or diploma, 3 bachelor's or equivalent, 4 master's or higher. Levels are simplified typical-entry categories, not hard requirements.
+
+Changes from the Phase 1 draft: title became career_title, goals became learning_goals, preferred_skills, onet_code and source_url were added, and min_experience_years was removed because no reliable per-career source was available.
 
 ### Learner profile (runtime input, not stored)
 
 | Field | Type |
 |---|---|
-| skills | list of strings |
-| interests | list of strings |
+| skills | list of strings (normalized with data/raw/skill_aliases.csv) |
+| interests | list of strings from the controlled vocabulary |
 | education_level | integer 0 to 4 |
-| experience_years | integer |
+| experience_years | integer (shown to the user, not scored in version 1) |
 | goals | list of strings |
 
 ### Learning resource record (resources.csv)
 
 | Field | Type |
 |---|---|
-| skill | string |
+| resource_id | string |
+| skill_name | string |
 | resource_title | string |
 | provider | string |
-| url | string |
+| resource_url | string |
+| is_free | boolean |
+| resource_type | book, course, documentation, guide, standard, tutorial |
 | level | beginner, intermediate or advanced |
+| language | ISO 639-1 code |
+| url_verification | search_index_confirmed, http_checked or unverified |
 
 ## 7. Algorithm design
 
@@ -99,7 +110,7 @@ S = ws * Ss + wi * Si + we * Se + wg * Sg
 |---|---|---|
 | Ss skill match | Matched required skills divided by total required skills | 0 to 1 |
 | Si interest match | Jaccard similarity of learner and career interests | 0 to 1 |
-| Se education and experience | 1 if both minimums met, partial credit per level below | 0 to 1 |
+| Se education | 1 if the learner meets the career's education level, partial credit per level below | 0 to 1 |
 | Sg goal match | Jaccard similarity of goals | 0 to 1 |
 
 Starting weights: ws = 0.50, wi = 0.25, we = 0.15, wg = 0.10. Weights sum to 1. Phase 5 tests alternative weight sets and documents the results.

@@ -15,7 +15,7 @@ Engine (src/engine/)            scoring, matching, ranking, explanations
 Data (src/data/)                loader, preprocessing, validation
         |
         v
-CSV files (data/raw/)           careers.csv, resources.csv
+CSV files (data/raw/)           careers.csv, resources.csv, skill_aliases.csv
 ```
 
 Rule: each layer calls only the layer below it. The engine never imports Streamlit.
@@ -30,6 +30,8 @@ Rule: each layer calls only the layer below it. The engine never imports Streaml
 6. engine/explanations.py writes a plain-language reason per career.
 7. services/skill_gap.py lists missing skills and attaches resources.
 8. The page renders results and Plotly charts.
+
+Data quality: src/data/validation.py checks the CSV files in CI before any code reads them. src/data/loader.py then parses the pipe-separated lists, and src/data/preprocessing.py normalizes learner skill input with the alias file.
 
 ## Key interfaces
 

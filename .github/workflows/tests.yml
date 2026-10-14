@@ -13,4 +13,7 @@ jobs:
         with:
           python-version: "3.11"
       - run: pip install -r requirements.txt
-      - run: pytest -q
+      - name: Validate datasets
+        run: python -m src.data.validation --quiet-warnings
+      - name: Run tests
+        run: python -m pytest -q
