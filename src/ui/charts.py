@@ -4,7 +4,7 @@
 
 import plotly.graph_objects as go
 
-from src.ui.theme import BORDER, COMPONENT_COLORS, COVERAGE_COLORS, NAVY, TEAL, TEXT_MUTED
+from src.ui.theme import BORDER, COMPONENT_COLORS, COVERAGE_COLORS, LEVEL_PALETTE, NAVY, TEAL, TEXT_MUTED
 
 PRIMARY = TEAL
 FONT = dict(family="Source Sans Pro, Segoe UI, Arial, sans-serif", size=13, color=TEXT_MUTED)
@@ -23,18 +23,20 @@ def _layout(fig, title, x_title, y_title, height=380):
     return fig
 
 
-def bar_chart(rows, x, y, title, x_title=None, y_title=None, horizontal=False):
+def bar_chart(rows, x, y, title, x_title=None, y_title=None, horizontal=False, colors=None):
     # x_title names the category axis and y_title the value axis, in both orientations
+    # colors is an optional list cycled over the bars, otherwise every bar uses the primary teal
     x_title = x if x_title is None else x_title
     y_title = y if y_title is None else y_title
     xs = [r[x] for r in rows]
     ys = [r[y] for r in rows]
+    marker = [colors[i % len(colors)] for i in range(len(rows))] if colors else PRIMARY
     if horizontal:
-        fig = go.Figure(go.Bar(x=ys, y=xs, orientation="h", marker_color=PRIMARY, text=ys, textposition="outside",
+        fig = go.Figure(go.Bar(x=ys, y=xs, orientation="h", marker_color=marker, text=ys, textposition="outside",
                                cliponaxis=False, hovertemplate=f"%{{y}}<br>{y}: %{{x}}<extra></extra>"))
         fig.update_yaxes(autorange="reversed", gridcolor="rgba(0,0,0,0)")
         return _layout(fig, title, y_title, x_title, height=max(320, 28 * len(rows) + 90))
-    fig = go.Figure(go.Bar(x=xs, y=ys, marker_color=PRIMARY, text=ys, textposition="outside", cliponaxis=False,
+    fig = go.Figure(go.Bar(x=xs, y=ys, marker_color=marker, text=ys, textposition="outside", cliponaxis=False,
                            hovertemplate=f"%{{x}}<br>{y}: %{{y}}<extra></extra>"))
     return _layout(fig, title, x_title, y_title)
 
@@ -68,3 +70,19 @@ def coverage_chart(gap, height=380):
                            hovertemplate="%{x}: %{y:.0f}% of skills<extra></extra>"))
     fig.update_yaxes(range=[0, 110], ticksuffix="%")
     return _layout(fig, f"Skill coverage for {gap['career_title']}", "", "Coverage", height=height)
+
+
+def donut_chart(rows, label_key, value_key, title, center_text=None, colors=LEVEL_PALETTE):
+    # Donut with a legend that shows each value, total in the middle
+    labels = [r[label_key] for r in rows]
+    values = [r[value_key] for r in rows]
+    total = sum(values)
+    fig = go.Figure(go.Pie(
+        labels=[f"{lab} ({val})" for lab, val in zip(labels, values)], values=values, hole=0.62, sort=False,
+        direction="clockwise", marker=dict(colors=colors[: len(rows)], line=dict(color="#FFFFFF", width=2)),
+        textinfo="none", hovertemplate="%{label}<br>%{percent}<extra></extra>",
+    ))
+    fig.update_layout(showlegend=True, legend=dict(orientation="v", x=1.02, y=0.5, font=dict(size=12)),
+                      annotations=[dict(text=center_text or f"<b>{total}</b>", x=0.5, y=0.5, showarrow=False,
+                                        font=dict(size=18, color=NAVY))])
+    return _layout(fig, title, "", "", height=340)

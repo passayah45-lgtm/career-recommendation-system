@@ -25,7 +25,8 @@ education_options = [None] + sorted(EDUCATION_LEVELS)
 saved_level = saved.get("education_level")
 
 with st.form("assessment_form"):
-    section(1, "Skills", f"Pick from the {len(known_skills)} skills used by the careers, or type your own.")
+    section(1, "Your skills", f"Select from the {len(known_skills)} skills used by the careers, or type your own.",
+            ":material/lightbulb:", "green")
     selected_skills = st.multiselect(
         "Skills you already have",
         options=known_skills,
@@ -43,7 +44,8 @@ with st.form("assessment_form"):
     )
 
     st.divider()
-    section(2, "Interests", "Choose the kinds of work you enjoy. Interests carry 25% of the score.")
+    section(2, "Your interests", "Choose the kinds of work you enjoy. Interests carry 25% of the score.",
+            ":material/favorite:", "red")
     interests = st.multiselect(
         "Kinds of work that interest you",
         options=sorted(catalog.interests),
@@ -52,7 +54,8 @@ with st.form("assessment_form"):
     )
 
     st.divider()
-    section(3, "Education level", "Education has a 5% weight. It is never used to exclude a career.")
+    section(3, "Education level", "Education has a 5% weight. It is never used to exclude a career.",
+            ":material/school:", "blue")
     edu_col, scale_col = st.columns([1, 1.2])
     with edu_col:
         education = st.selectbox(
@@ -68,7 +71,8 @@ with st.form("assessment_form"):
                    "not legal requirements.")
 
     st.divider()
-    section(4, "Work experience (optional)", "Shown for context only. It is not scored.")
+    section(4, "Work experience (optional, not scored)", "Shown for context only. It does not change the score.",
+            ":material/work:", "orange")
     exp_col, note_col = st.columns([1, 1.2])
     with exp_col:
         experience = st.number_input(
@@ -81,7 +85,7 @@ with st.form("assessment_form"):
         st.markdown(":gray-badge[:material/block: Not scored]")
         st.caption("The current dataset has no experience requirements, so this answer does not change the score.")
 
-    submitted = st.form_submit_button("Save my assessment", type="primary", icon=":material/check:",
+    submitted = st.form_submit_button("Save my assessment", type="primary", icon=":material/arrow_forward:",
                                       width="stretch")
 
 with st.expander("Why there is no learning goals field"):

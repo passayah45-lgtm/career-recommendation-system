@@ -62,6 +62,11 @@ def career_rows(careers):
     ]
 
 
+def career_list_rows(careers):
+    # Two-column list for the explorer, details live in the side panel
+    return [{"Career": r["Career"], "Category": r["Category"]} for r in career_rows(careers)]
+
+
 def resource_rows(entries, gap_type):
     # Flattens skill_gap resource entries into table rows, one row per resource
     rows = []

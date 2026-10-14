@@ -2,15 +2,19 @@
 
 import streamlit as st
 
+from src.data.validation import CATEGORIES
 from src.services.profiles import ProfileValidationError
 from src.services.recommendations import recommend
 from src.services.skill_gap import analyze_skill_gap
-from src.ui.charts import bar_chart, contribution_chart, coverage_chart
-from src.ui.components import need_profile_message, page_setup, score_disclaimer, sidebar_profile_summary
+from src.ui.charts import bar_chart, contribution_chart, coverage_chart, donut_chart
+from src.ui.components import (
+    need_profile_message, page_setup, score_disclaimer, sidebar_profile_summary, stat_card,
+)
 from src.ui.state import get_catalog, get_profile, get_top_k
+from src.ui.theme import BLUE, CATEGORY_PALETTE
 from src.ui.views import category_counts, contribution_rows, education_counts, required_skill_frequency
 
-page_setup("Analytics", subtitle="Descriptive charts about the career dataset and about your own results.")
+page_setup("Analytics", subtitle="Explore the dataset and your recommendation results.")
 catalog = get_catalog()
 profile = get_profile()
 sidebar_profile_summary(profile)
@@ -19,31 +23,34 @@ st.caption(":material/info: This page shows descriptive charts only. The synthet
            "(Precision@5, MAP) is documented in docs/evaluation_report.md in the repository.")
 
 CHART_CONFIG = {"displayModeBar": False}
+CATEGORY_COLORS = dict(zip(CATEGORIES, CATEGORY_PALETTE))
 
-dataset_tab, learner_tab = st.tabs([":material/dataset: Dataset statistics", ":material/person: Your results"])
+dataset_tab, learner_tab = st.tabs([":material/dataset: Dataset overview", ":material/person: Your results"])
 
 with dataset_tab:
     st.markdown("These charts describe the career dataset. They are the same for every learner.")
     with st.container(key="stats"):
         m1, m2, m3 = st.columns(3)
-        m1.metric("Careers", len(catalog.careers), border=True)
-        m2.metric("Unique skills", len(catalog.known_skills), border=True)
-        m3.metric("Learning resources", len(catalog.resources), border=True)
+        stat_card(m1, "Careers", len(catalog.careers), ":material/work:", "blue", "a_careers")
+        stat_card(m2, "Unique skills", len(catalog.known_skills), ":material/lightbulb:", "green", "a_skills")
+        stat_card(m3, "Learning resources", len(catalog.resources), ":material/menu_book:", "orange", "a_resources")
     left, right = st.columns(2)
     with left, st.container(border=True, key="panel_categories", height="stretch"):
-        st.plotly_chart(bar_chart(sorted(category_counts(catalog.careers), key=lambda r: -r["Careers"]), "Category", "Careers", "Careers by category",
-                                  x_title="", y_title="Number of careers", horizontal=True),
+        rows = sorted(category_counts(catalog.careers), key=lambda r: -r["Careers"])
+        colors = [CATEGORY_COLORS[r["Category"]] for r in rows]
+        st.plotly_chart(bar_chart(rows, "Category", "Careers", "Careers by category", x_title="",
+                                  y_title="Number of careers", horizontal=True, colors=colors),
                         width="stretch", config=CHART_CONFIG)
     with right, st.container(border=True, key="panel_education", height="stretch"):
-        st.plotly_chart(bar_chart(education_counts(catalog.careers), "Level", "Careers",
-                                  "Typical entry education level", x_title="", y_title="Number of careers",
-                                  horizontal=True),
+        st.plotly_chart(donut_chart(education_counts(catalog.careers), "Level", "Careers",
+                                    "Education level distribution",
+                                    center_text=f"<b>{len(catalog.careers)}</b><br>careers"),
                         width="stretch", config=CHART_CONFIG)
         st.caption("Most careers share level 3, which is why education carries only 5% of the score.")
     with st.container(border=True, key="panel_skills"):
         st.plotly_chart(bar_chart(required_skill_frequency(catalog.careers, limit=15), "Skill", "Careers",
-                                  "Most common required skills (top 15)", x_title="", y_title="Number of careers",
-                                  horizontal=True),
+                                  "Top required skills (top 15)", x_title="", y_title="Number of careers",
+                                  horizontal=True, colors=[BLUE]),
                         width="stretch", config=CHART_CONFIG)
 
 with learner_tab:

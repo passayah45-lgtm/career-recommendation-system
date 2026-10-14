@@ -83,3 +83,8 @@ def test_status_badges_always_carry_an_icon():
     assert missing_badges(["sql"]) == ":orange-badge[:material/close: sql]"
     assert optional_badges(["git"]) == ":gray-badge[:material/add: git]"
     assert have_badges([]) == ":gray[_None yet_]"
+
+
+def test_category_palette_covers_every_category():
+    from src.data.validation import CATEGORIES
+    assert len(set(theme.CATEGORY_PALETTE)) >= len(CATEGORIES)

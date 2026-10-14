@@ -7,7 +7,7 @@ from src.services.recommendations import recommend
 from src.services.skill_gap import analyze_skill_gap
 from src.ui.charts import bar_chart, contribution_chart, coverage_chart
 from src.ui.views import (
-    build_profile_input, career_rows, category_counts, contribution_rows, education_counts, education_label, filter_careers,
+    build_profile_input, career_list_rows, career_rows, category_counts, contribution_rows, education_counts, education_label, filter_careers,
     parse_skill_text, required_skill_frequency, resource_rows,
 )
 
@@ -87,3 +87,19 @@ def test_career_rows_are_compact_and_complete(catalog):
     assert list(rows[0]) == ["Career", "Category", "Required skills", "Preferred skills", "Entry education", "ID"]
     first = catalog.careers[0]
     assert rows[0]["Required skills"] == len(first.required_skills)
+
+
+def test_career_list_rows_follow_filtered_order(catalog):
+    careers = filter_careers(catalog.careers, ["Healthcare"])
+    rows = career_list_rows(careers)
+    assert [r["Career"] for r in rows] == [c.title for c in careers]
+    assert set(rows[0]) == {"Career", "Category"}
+
+
+def test_donut_and_colored_bars_use_dataset_values(catalog):
+    from src.ui.charts import donut_chart
+    donut = donut_chart(education_counts(catalog.careers), "Level", "Careers", "t")
+    assert sum(donut.data[0].values) == 50
+    bars = bar_chart(category_counts(catalog.careers), "Category", "Careers", "t", colors=["#111111", "#222222"])
+    assert list(bars.data[0].marker.color)[:3] == ["#111111", "#222222", "#111111"]
+    assert list(bars.data[0].y) == [r["Careers"] for r in category_counts(catalog.careers)]

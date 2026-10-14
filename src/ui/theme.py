@@ -31,6 +31,12 @@ COMPONENT_COLORS = {
     "education": NEUTRAL,
 }
 
+# One color per career category in analytics, labelled on the axis so color is never the only cue
+CATEGORY_PALETTE = ["#0F9D94", "#3B82F6", "#8B5CF6", "#F59E0B", "#14213D", "#7DD3C8", "#EC4899", "#64748B"]
+
+# Ordered levels in the education donut, light to dark
+LEVEL_PALETTE = ["#CBD5E1", "#93C5FD", "#7DD3C8", "#0F9D94", "#14213D"]
+
 # Coverage chart bars: required, preferred, all listed skills
 COVERAGE_COLORS = [TEAL, "#7DD3C8", NEUTRAL]
 

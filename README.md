@@ -77,7 +77,7 @@ Both functions take and return plain dicts, ready for a REST API.
 | Folder | Purpose |
 |---|---|
 | app.py, home.py, pages/ | Streamlit entry point and pages (presentation only) |
-| src/ui | Page helpers: session state, components, design tokens (theme.py), stylesheet (styles.css), Plotly charts |
+| src/ui | Page helpers: session state, components, design tokens (theme.py), stylesheet (styles.css), SVG graphics (illustrations.py), Plotly charts |
 | static | Sidebar logo and browser tab icon |
 | src/services | Catalog loading, profile validation, recommendations, skill gap, resources |
 | src/engine | Matching, scoring, ranking and explanations (no Streamlit, no I/O) |

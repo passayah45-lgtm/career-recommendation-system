@@ -7,6 +7,7 @@ from pathlib import Path
 import streamlit as st
 
 from src.services.recommendations import SCORE_DISCLAIMER
+from src.ui.illustrations import HERO_SVG, SIDEBAR_ART, initial_tile, ring_svg
 from src.ui.state import SELECTED_CAREER_KEY, get_catalog, reset_assessment
 from src.ui.theme import UNVERIFIED_BADGE, VERIFICATION_BADGES
 
@@ -31,10 +32,19 @@ def apply_theme():
 
 def page_setup(title, subtitle=None, eyebrow=None, hero=False):
     # Returns the header container, so a page can add actions inside it
+    # The hero variant adds an illustration on the right, hidden on phones by styles.css
     st.set_page_config(page_title=f"{title} | Career Recommendation System", page_icon=str(LOGO_ICON),
                        layout="wide")
     apply_theme()
-    header = st.container(border=True, key="hero") if hero else st.container()
+    if hero:
+        with st.container(border=True, key="hero"):
+            text_col, art_col = st.columns([1.7, 1], vertical_alignment="center")
+            with art_col, st.container(key="hero_art"):
+                # st.image renders SVG markup, st.html would strip it
+                st.image(HERO_SVG, width="stretch")
+        header = text_col
+    else:
+        header = st.container()
     with header:
         if eyebrow:
             st.markdown(f'<div class="crs-eyebrow">{escape(eyebrow)}</div>', unsafe_allow_html=True)
@@ -72,13 +82,34 @@ def label(text):
     st.markdown(f'<div class="crs-label">{escape(text)}</div>', unsafe_allow_html=True)
 
 
-def section(number, title, help_text=None):
-    help_html = f'<div class="crs-section-help">{escape(help_text)}</div>' if help_text else ""
-    st.markdown(
-        f'<div class="crs-section"><span class="crs-step-num">{number}</span>'
-        f'<div><div class="crs-section-title">{escape(title)}</div>{help_html}</div></div>',
-        unsafe_allow_html=True,
-    )
+def section(number, title, help_text=None, icon=":material/radio_button_checked:", color="primary"):
+    # Numbered section heading with a colored icon, used by the assessment form
+    st.markdown(f"#### :{color}[{icon}] {number}. {title}")
+    if help_text:
+        st.caption(help_text)
+
+
+def icon_heading(icon, color, size="###"):
+    # Large colored Material icon used as a tile on cards
+    st.markdown(f"{size} :{color}[{icon}]")
+
+
+def stat_card(column, label_text, value, icon, color, key):
+    # Statistic card: colored icon, value and label, value read from the dataset by the caller
+    with column, st.container(border=True, key=f"stat_{key}", height="stretch"):
+        icon_heading(icon, color)
+        st.metric(label_text, value)
+
+
+def ring(fraction, center_text, size=64, label_text=""):
+    st.image(ring_svg(fraction, center_text, size=size, label=label_text), width=size)
+
+
+def sidebar_card():
+    with st.sidebar, st.container(border=True, key="side_card"):
+        st.markdown("**Your future starts with your skills.**")
+        st.caption("Assess, compare and close the gaps.")
+        st.image(SIDEBAR_ART, width="stretch")
 
 
 def score_disclaimer():
@@ -105,16 +136,22 @@ def verification_badge(status, verified_on=""):
 
 
 def resource_card(resource, key):
+    # One learning resource: provider tile, linked title, type, level, cost and link status
     with st.container(border=True, key=f"res_{key}"):
-        st.markdown(f'<div class="crs-res-title"><a href="{escape(resource["url"], quote=True)}" target="_blank" '
-                    f'rel="noopener">{escape(resource["title"])}</a></div>'
-                    f'<div class="crs-res-meta">{escape(resource["provider"])} | '
-                    f'{escape(resource["resource_type"])} | {escape(resource["level"])}</div>',
-                    unsafe_allow_html=True)
-        access = (":blue-badge[:material/lock_open: Free]" if resource["is_free"]
-                  else ":gray-badge[:material/payments: Paid or partly paid]")
-        st.markdown(f"{access} {verification_badge(resource['url_verification'], resource.get('verified_on', ''))}",
-                    help=resource.get("url_verification_meaning"))
+        tile_col, body_col = st.columns([0.06, 1], vertical_alignment="center", gap="small")
+        with tile_col:
+            st.html(initial_tile(resource["provider"]), width="content")
+        with body_col:
+            st.markdown(f'<div class="crs-res-title"><a href="{escape(resource["url"], quote=True)}" target="_blank" '
+                        f'rel="noopener">{escape(resource["title"])}</a></div>'
+                        f'<div class="crs-res-meta">{escape(resource["provider"])}</div>',
+                        unsafe_allow_html=True)
+            access = (":blue-badge[:material/lock_open: Free]" if resource["is_free"]
+                      else ":gray-badge[:material/payments: Paid or partly paid]")
+            st.markdown(f":violet-badge[{resource['resource_type'].capitalize()}] "
+                        f":gray-badge[{resource['level'].capitalize()}] {access} "
+                        f"{verification_badge(resource['url_verification'], resource.get('verified_on', ''))}",
+                        help=resource.get("url_verification_meaning"))
 
 
 def reset_button(key="reset"):
@@ -131,6 +168,7 @@ def sidebar_profile_summary(profile):
         if not profile:
             st.caption(":material/radio_button_unchecked: Not started")
             st.page_link(ASSESSMENT_PAGE, label="Start the assessment", icon=":material/arrow_forward:")
+            sidebar_card()
             return
         level = profile.get("education_level")
         st.caption(f":material/check_circle: Saved for this session  \n"
@@ -142,3 +180,4 @@ def sidebar_profile_summary(profile):
         if selected in titles:
             st.caption(f":material/school: Skill-gap career: {titles[selected]}")
         reset_button(key="sidebar_reset")
+    sidebar_card()

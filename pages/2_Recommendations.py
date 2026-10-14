@@ -6,14 +6,14 @@ from src.services.profiles import ProfileValidationError
 from src.services.recommendations import recommend
 from src.ui.components import (
     EXPLORER_PAGE, SKILL_GAP_PAGE, badges, have_badges, interest_badges, label, missing_badges,
-    need_profile_message, optional_badges, page_setup, score_disclaimer, show_profile_warnings,
+    need_profile_message, optional_badges, page_setup, ring, score_disclaimer, show_profile_warnings,
     sidebar_profile_summary,
 )
 from src.ui.state import EXPLORER_CAREER_KEY, TOP_K_KEY, get_catalog, get_profile, get_top_k, select_career
 from src.ui.views import education_label
 
-page_setup("Career Recommendations", eyebrow="Step 2 of 3",
-           subtitle="Careers ranked by how well your answers match each one. Every score shows its reasons.")
+page_setup("Your Career Recommendations", eyebrow="Step 2 of 3",
+           subtitle="The careers that best match your profile, with explanations and skill analysis.")
 catalog = get_catalog()
 profile = get_profile()
 sidebar_profile_summary(profile)
@@ -60,33 +60,34 @@ for rec in recommendations:
     cid = rec["career_id"]
     top = rec["rank"] == 1
     with st.container(border=True, key="rec_top" if top else f"rec_card_{cid}"):
-        head, score_col = st.columns([3, 1.1], vertical_alignment="center")
+        head, score_col = st.columns([2.6, 1.2], vertical_alignment="center")
         with head:
-            tags = badges([rec["category"]], "gray")
+            tags = badges([rec["category"]], "blue")
             if top:
-                tags = ":green-badge[:material/star: Highest score for your answers] " + tags
+                tags = ":orange-badge[:material/star: Highest score for your answers] " + tags
             st.markdown(tags)
             st.markdown(f"### {rec['rank']}. {rec['career_title']}")
-        with score_col:
-            st.metric("Compatibility score", f"{rec['score']:.1f} / 100")
-            st.progress(min(1.0, rec["score"] / 100))
+        with score_col, st.container(horizontal=True, vertical_alignment="center", gap="small"):
+            ring(rec["score"] / 100, f"{rec['score']:.1f}", size=62,
+                 label_text=f"Compatibility score {rec['score']:.1f} out of 100")
+            st.metric("Compatibility score", f"{rec['score']:.1f} / 100", width="content")
 
-        req_col, pref_col, int_col = st.columns(3)
-        with req_col:
-            label("Required skills")
-            st.markdown(f"{have_badges(rec['matched_required_skills'])}  \n"
-                        f"{missing_badges(rec['missing_required_skills'], empty='Nothing missing')}")
-        with pref_col:
-            label("Preferred skills (optional)")
-            st.markdown(f"{have_badges(rec['matched_preferred_skills'])}  \n"
-                        f"{optional_badges(rec['missing_preferred_skills'], empty='Nothing missing')}")
-        with int_col:
-            label("Interests and education")
-            st.markdown(f"{interest_badges(rec['matched_interests'], empty='No matched interests')}  \n"
-                        f":gray[Typical entry: {education_label(rec['education']['career_level'])}]")
+        matched_col, missing_col = st.columns(2)
+        with matched_col:
+            label("Matched skills")
+            st.markdown(have_badges(rec["matched_required_skills"] + rec["matched_preferred_skills"],
+                                    empty="No matched skills yet"))
+        with missing_col:
+            label("Missing skills")
+            st.markdown(f"{missing_badges(rec['missing_required_skills'], empty='No required skill missing')} "
+                        f"{optional_badges(rec['missing_preferred_skills'], empty='')}".strip())
+            if rec["missing_preferred_skills"]:
+                st.caption("Gray tags are optional preferred skills.")
 
         label("Why this career")
         st.markdown("\n".join(f"- {r}" for r in rec["reasons"]))
+        st.markdown(f"{interest_badges(rec['matched_interests'], empty='No matched interests')} "
+                    f":gray-badge[:material/school: Typical entry {education_label(rec['education']['career_level'])}]")
         for note in rec["notes"]:
             st.caption(note)
 
@@ -104,10 +105,10 @@ for rec in recommendations:
             st.dataframe(rows, hide_index=True, width="stretch", column_config=BREAKDOWN_COLUMNS)
             st.caption("Points add up to the compatibility score.")
 
-        with st.container(horizontal=True):
-            if st.button("Analyze my skill gap", key=f"gap_{cid}", type="primary", icon=":material/school:"):
-                select_career(cid)
-                st.switch_page(SKILL_GAP_PAGE)
+        with st.container(horizontal=True, horizontal_alignment="right"):
             if st.button("View career details", key=f"explore_{cid}", icon=":material/open_in_new:"):
                 st.session_state[EXPLORER_CAREER_KEY] = cid
                 st.switch_page(EXPLORER_PAGE)
+            if st.button("Analyze my skill gap", key=f"gap_{cid}", type="primary", icon=":material/school:"):
+                select_career(cid)
+                st.switch_page(SKILL_GAP_PAGE)

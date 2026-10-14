@@ -216,3 +216,11 @@ def test_assessment_sidebar_shows_saved_state_after_submit():
     at.button[0].click().run()
     assert not at.exception
     assert any("Saved for this session" in c.value for c in at.sidebar.caption)
+
+
+def test_skill_gap_shows_overall_coverage_and_counts():
+    at = open_page("pages/3_Skill_Gap_Analysis.py", profile=WORKED_EXAMPLE, **{SELECTED_CAREER_KEY: "C001"})
+    metrics = {m.label: m.value for m in at.metric}
+    assert metrics["Overall skill coverage"] == "50%"
+    assert metrics["Preferred skill coverage"] == "0%"
+    assert "4 of 5 skills" in text_of(at)

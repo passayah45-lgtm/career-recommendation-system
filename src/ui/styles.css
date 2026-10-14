@@ -49,6 +49,7 @@
 [class*="st-key-step_"],
 [class*="st-key-rec_"],
 [class*="st-key-res_"],
+[class*="st-key-stat_"],
 .st-key-hero,
 .st-key-note,
 .st-key-toolbar,
@@ -57,10 +58,23 @@
   box-shadow: var(--crs-shadow);
 }
 
-/* Metric cards inside a stats row */
-.st-key-stats [data-testid="stMetric"] {
-  background: var(--crs-surface);
-  box-shadow: var(--crs-shadow);
+/* Statistic cards: icon, value and label centered */
+[class*="st-key-stat_"] {
+  text-align: center;
+}
+[class*="st-key-stat_"] [data-testid="stMetricLabel"],
+[class*="st-key-stat_"] [data-testid="stMetricValue"] {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+
+/* Decorative images (hero art, rings, sidebar art) do not need the fullscreen button */
+.st-key-hero_art [data-testid="stElementToolbar"],
+.st-key-side_card [data-testid="stElementToolbar"],
+[class*="st-key-rec_"] [data-testid="stElementToolbar"],
+[class*="st-key-card_"] [data-testid="stElementToolbar"] {
+  display: none;
 }
 
 /* Hero: one restrained teal accent on the left edge */
@@ -70,43 +84,54 @@
   background: linear-gradient(120deg, #FFFFFF 55%, #EEF7F6 100%);
 }
 
-/* Journey steps: numbered circle, teal border on hover */
-.crs-step-num {
+/* Icon tiles: a colored Material icon on a tint of the same color */
+[class*="st-key-stat_"] h3 .stMarkdownColoredText,
+[class*="st-key-step_"] h3 .stMarkdownColoredText,
+.st-key-card_edu h4 .stMarkdownColoredText,
+.st-key-card_cat h4 .stMarkdownColoredText,
+.st-key-note h4 .stMarkdownColoredText {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 1.9rem;
-  height: 1.9rem;
-  border-radius: 50%;
-  background: var(--crs-teal-tint);
-  color: var(--crs-teal-dark);
-  font-weight: 700;
-  font-size: 0.95rem;
+  width: 3rem;
+  height: 3rem;
+  border-radius: 0.8rem;
+  background: color-mix(in srgb, currentColor 12%, #FFFFFF);
 }
+[class*="st-key-stat_"] h3 [role="img"],
+[class*="st-key-step_"] h3 [role="img"] {
+  font-size: 1.7rem;
+}
+.st-key-card_edu h4 .stMarkdownColoredText,
+.st-key-card_cat h4 .stMarkdownColoredText,
+.st-key-note h4 .stMarkdownColoredText {
+  width: 2.4rem;
+  height: 2.4rem;
+}
+[class*="st-key-stat_"] h3,
+[class*="st-key-step_"] h3,
+.st-key-card_edu h4,
+.st-key-card_cat h4,
+.st-key-note h4 {
+  padding: 0;
+}
+[class*="st-key-stat_"] h3 {
+  justify-content: center;
+  display: flex;
+}
+
+/* Sidebar card */
+.st-key-side_card {
+  background: #1C2C50;
+  margin-top: 1rem;
+}
+
+/* Journey steps: teal border on hover */
 [class*="st-key-step_"] {
   transition: border-color 0.15s ease;
 }
 [class*="st-key-step_"]:hover {
   border-color: var(--crs-teal) !important;
-}
-
-/* Section heading inside forms and panels: number, title, help line */
-.crs-section {
-  display: flex;
-  gap: 0.75rem;
-  align-items: flex-start;
-  margin: 0.15rem 0 0.35rem;
-}
-.crs-section-title {
-  color: var(--crs-navy);
-  font-weight: 650;
-  font-size: 1.05rem;
-  line-height: 1.9rem;
-}
-.crs-section-help {
-  color: var(--crs-muted);
-  font-size: 0.9rem;
-  line-height: 1.35;
 }
 
 /* Small label above a group of skill badges */
@@ -140,6 +165,17 @@
   font-size: 0.85rem;
 }
 
+/* Sidebar navigation: active page gets a teal edge on top of the native highlight */
+[data-testid="stSidebarNavLink"][aria-current="page"] {
+  box-shadow: inset 3px 0 0 #5EEAD4;
+}
+
+/* Resource cards inside a skill group sit on a faint tint */
+[class*="st-key-res_"] {
+  background: #FBFCFE;
+  box-shadow: none;
+}
+
 /* Phones and narrow tablets */
 @media (max-width: 640px) {
   .block-container {
@@ -149,6 +185,9 @@
   }
   .st-key-hero {
     padding: var(--crs-space-md);
+  }
+  .st-key-hero_art {
+    display: none;
   }
   /* Stat cards two per row instead of one tall column */
   .st-key-stats [data-testid="stHorizontalBlock"] {

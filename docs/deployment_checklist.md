@@ -110,3 +110,5 @@ Local headless Chromium run against `streamlit run app.py` with the redesigned i
 | No JavaScript page errors | verified locally | |
 | Redesign visible on the live URL | pending | Open the live URL after the automatic redeploy and compare with docs/design_system.md |
 | Phone layout on a real phone | pending | Sidebar opens with the arrow, home statistics show two per row |
+
+Second pass on 2026-10-15, following the six-page reference image: hero illustration, icon tiles, score and coverage rings, clickable explorer list, category colors and education donut. The same 50 browser checks passed at the four widths, and a row click in the explorer list opened that career. Live status stays pending until checked on the deployed URL.
