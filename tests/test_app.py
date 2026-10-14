@@ -175,3 +175,15 @@ def test_recommendation_to_skill_gap_stays_on_recommended_list():
     at = open_page("pages/3_Skill_Gap_Analysis.py", profile=WORKED_EXAMPLE, **{SELECTED_CAREER_KEY: "C002"})
     assert at.radio[0].value == "My recommended careers"
     assert at.selectbox[0].value == "C002"
+
+
+def test_navigation_titles_and_home_page():
+    # The entry point registers explicit titles, so the sidebar never shows the file name "app"
+    import ast
+    tree = ast.parse(Path(APP).read_text(encoding="utf-8"))
+    titles = [kw.value.value for node in ast.walk(tree) if isinstance(node, ast.Call)
+              for kw in node.keywords if kw.arg == "title"]
+    assert titles == ["Home", "Career Assessment", "Recommendations", "Skill-Gap Analysis",
+                      "Career Explorer", "Analytics"]
+    at = open_page()
+    assert at.title[0].value == "Career Recommendation System"

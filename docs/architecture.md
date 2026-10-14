@@ -3,7 +3,7 @@
 ## Layers
 
 ```
-Streamlit pages (pages/, app.py)
+Streamlit pages (app.py navigation, home.py, pages/)
         |
         v
 UI helpers (src/ui/)            state (session + cached catalog), components, views, charts
@@ -32,6 +32,8 @@ Rule: services call the engine and the data layer. The engine works only on in-m
 7. engine/explanations.py writes reasons and notes from the computed values.
 8. services/skill_gap.py lists missing skills and attaches resources from services/learning_resources.py.
 9. The page renders results and Plotly charts. Pages display service output and never compute scores themselves.
+
+app.py only registers the pages with st.navigation, so each page has an explicit sidebar title. home.py is the default page.
 
 Streamlit layer rules: src/ui/state.py loads the Catalog once with st.cache_resource (it is read-only), and session state holds only the learner's raw answers, the Top K choice and the selected career. src/ui/views.py and src/ui/charts.py are plain Python so they can be tested without a browser. A data folder can be swapped with the CAREER_DATA_DIR environment variable. If the data fails validation, every page shows an error message instead of crashing.
 

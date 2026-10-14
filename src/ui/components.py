@@ -5,6 +5,7 @@ import streamlit as st
 from src.services.recommendations import SCORE_DISCLAIMER
 from src.ui.state import reset_assessment
 
+HOME_PAGE = "home.py"
 ASSESSMENT_PAGE = "pages/1_Career_Assessment.py"
 RECOMMENDATIONS_PAGE = "pages/2_Recommendations.py"
 SKILL_GAP_PAGE = "pages/3_Skill_Gap_Analysis.py"
