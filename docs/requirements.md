@@ -113,7 +113,7 @@ S = 100 * (w_req * S_req + w_pref * S_pref + w_int * S_int + w_edu * S_edu) / (s
 | S_int interests | Matched career interests divided by total career interests | 0 to 1 |
 | S_edu education | 1 when the learner meets the career level, minus 0.25 per level below | 0 to 1 |
 
-Weights: w_req = 0.55, w_pref = 0.15, w_int = 0.25, w_edu = 0.05. Phase 5 tests alternative weight sets.
+Weights: w_req = 0.55, w_pref = 0.15, w_int = 0.25, w_edu = 0.05. Phase 5 compared two required-heavy alternatives and kept these weights (docs/evaluation_report.md).
 
 Changes from the Phase 1 draft: preferred skills became a separate component, interest matching uses coverage of the career's interests instead of Jaccard, education weight dropped from 0.15 to 0.05 because 42 of 50 careers share level 3, and the goal component was removed because learning goals are free text with no reliable way to compare them.
 
@@ -125,10 +125,10 @@ The score is a ranking signal. It is not a probability of hiring or career succe
 
 ## 8. Evaluation plan
 
-1. Write 20 test learner profiles with expected relevant careers, labelled before running the engine.
-2. Compute Precision@5 and Recall@5 against these labels.
-3. Compare the weighted model against a baseline that ranks by skill match only.
-4. Report real results only. Record limitations, such as small dataset and self-labelled ground truth.
+1. Write 20 test learner profiles with expected relevant careers, labelled before running the engine. Done in Phase 5 with 36 profiles (data/evaluation/labelled_profiles.json).
+2. Compute Precision@5 and Recall@5 against these labels. Done, plus F1@5, MRR, R-precision and MAP.
+3. Compare the weighted model against a baseline that ranks by skill match only. Done as ablation D.
+4. Report real results only. Record limitations, such as small dataset and self-labelled ground truth. See docs/evaluation_report.md.
 
 ## 9. Acceptance criteria
 

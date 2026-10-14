@@ -19,7 +19,7 @@ Answers stay in the browser session. There are no accounts and nothing is writte
 
 ## Tech stack
 
-Python 3.12+, Streamlit, Plotly, pandas, pytest. NumPy and scikit-learn are installed for the evaluation phase. GitHub Actions runs data validation and tests.
+Python 3.12+, Streamlit, Plotly, pandas, pytest. NumPy and scikit-learn are listed for compatibility. The evaluation code uses only the standard library. GitHub Actions runs data validation and tests.
 
 ## Install and run
 
@@ -41,7 +41,16 @@ python -m src.data.validation
 python -m pytest -q
 ```
 
-The tests cover the data validator, the engine, the services and every Streamlit page (through Streamlit's AppTest). GitHub Actions runs both commands on every push and pull request.
+The tests cover the data validator, the engine, the services, the evaluation code, the URL checker (with mocked responses) and every Streamlit page (through Streamlit's AppTest). GitHub Actions runs both commands on every push and pull request, and checks that the saved evaluation report is reproducible.
+
+## Evaluate and check links
+
+```bash
+python -m src.evaluation.experiments --output reports/evaluation_results.json   # synthetic-profile evaluation
+python -m src.data.url_checker --output reports/url_check.json                 # needs internet, about 5 minutes
+```
+
+The URL checker never runs in CI. Results and method: docs/evaluation_report.md.
 
 ## Use the engine without Streamlit
 
@@ -86,10 +95,10 @@ Compatibility score (0 to 100) = required skills 55% + preferred skills 15% + in
 
 1. Skills are matched by exact name after alias resolution. Related skills (statistics and probability) earn no partial credit.
 2. Career skills, interests and education levels are curated by the author. 46 of 50 careers link to an O*NET occupation for source context.
-3. Preferred skills and interests together carry 40%, so a career with few matched required skills can still rank high. Phase 5 evaluates the weights.
+3. Skill coverage divides by the length of each career's required list, so one shared skill counts more for careers with short lists (for example Excel and Financial Analyst). Phase 5 found this and kept the weights. See docs/evaluation_report.md.
 4. One resource per skill, in English, several from US or UK sources (tax, health privacy, medical coding).
 5. Resource links were confirmed in web search results on 2026-10-14, not HTTP-checked.
-6. No evaluation metrics exist yet. Precision@K is planned for Phase 5.
+6. Evaluation uses 36 synthetic profiles labelled by the author. It measures agreement with those labels, not real-world accuracy.
 
 Details: docs/dataset_documentation.md and docs/recommendation_algorithm.md.
 
@@ -108,7 +117,7 @@ Free apps go to sleep after a period without visitors. The first visit afterward
 
 ## Documentation
 
-docs/requirements.md, docs/architecture.md, docs/dataset_documentation.md, docs/recommendation_algorithm.md
+docs/requirements.md, docs/architecture.md, docs/dataset_documentation.md, docs/recommendation_algorithm.md, docs/evaluation_report.md
 
 ## Author
 

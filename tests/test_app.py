@@ -154,3 +154,24 @@ def test_unavailable_data_shows_error_instead_of_crashing(tmp_path, monkeypatch)
     at = AppTest.from_file(APP, default_timeout=TIMEOUT).run()
     assert not at.exception
     assert any("could not be loaded" in e.value for e in at.error)
+
+
+def test_explorer_to_skill_gap_keeps_a_career_outside_the_recommendations():
+    # C040 Registered Nurse is not in the worked example's top 5
+    at = open_page("pages/4_Career_Explorer.py", profile=WORKED_EXAMPLE)
+    at.selectbox[0].set_value("C040").run()
+    at.button[0].click().run()
+    assert not at.exception
+    assert at.session_state[SELECTED_CAREER_KEY] == "C040"
+    at.switch_page("pages/3_Skill_Gap_Analysis.py")
+    at.run()
+    assert not at.exception
+    assert at.radio[0].value == "All careers"
+    assert at.selectbox[0].value == "C040"
+    assert any("Missing required skills" == m.label for m in at.metric)
+
+
+def test_recommendation_to_skill_gap_stays_on_recommended_list():
+    at = open_page("pages/3_Skill_Gap_Analysis.py", profile=WORKED_EXAMPLE, **{SELECTED_CAREER_KEY: "C002"})
+    assert at.radio[0].value == "My recommended careers"
+    assert at.selectbox[0].value == "C002"

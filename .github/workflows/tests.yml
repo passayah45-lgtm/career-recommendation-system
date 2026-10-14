@@ -17,3 +17,5 @@ jobs:
         run: python -m src.data.validation --quiet-warnings
       - name: Run tests
         run: python -m pytest -q
+      - name: Check evaluation report is reproducible
+        run: python -m src.evaluation.experiments --check reports/evaluation_results.json

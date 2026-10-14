@@ -55,3 +55,9 @@ Both functions take a plain dict and return plain dicts and lists, so a future R
 | Experiments | Google Colab (optional) |
 | Demo app | Streamlit Community Cloud |
 | CI tests | GitHub Actions (.github/workflows/tests.yml) |
+
+## Evaluation and link checking
+
+src/evaluation/ (dataset, metrics, experiments) runs the labelled profiles in data/evaluation/labelled_profiles.json through the same recommend() service the app uses, and writes reports/evaluation_results.json. It uses only the standard library and the existing services.
+
+src/data/url_checker.py checks resource and career source URLs over HTTP. It is the only module that uses the network, and it runs only when called by hand. CI and the test suite use a mocked transport.

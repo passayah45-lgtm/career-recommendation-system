@@ -1,0 +1,7327 @@
+{
+  "comparison": {
+    "B_required_heavy": {
+      "per_profile_vs_baseline": {
+        "average_precision": {
+          "better": 1,
+          "same": 31,
+          "worse": 3
+        },
+        "f1_at_5": {
+          "better": 0,
+          "same": 35,
+          "worse": 0
+        },
+        "r_precision": {
+          "better": 1,
+          "same": 33,
+          "worse": 1
+        },
+        "reciprocal_rank": {
+          "better": 0,
+          "same": 34,
+          "worse": 1
+        }
+      },
+      "ranking_changes": [
+        {
+          "baseline_top_k": [
+            "C001",
+            "C002",
+            "C006",
+            "C031",
+            "C007"
+          ],
+          "profile_id": "P01",
+          "relevant_rank_changes": {},
+          "top_k": [
+            "C001",
+            "C002",
+            "C006",
+            "C003",
+            "C031"
+          ]
+        },
+        {
+          "baseline_top_k": [
+            "C002",
+            "C004",
+            "C028",
+            "C031",
+            "C029"
+          ],
+          "profile_id": "P02",
+          "relevant_rank_changes": {},
+          "top_k": [
+            "C002",
+            "C004",
+            "C028",
+            "C016",
+            "C029"
+          ]
+        },
+        {
+          "baseline_top_k": [
+            "C029",
+            "C002",
+            "C004",
+            "C028",
+            "C031"
+          ],
+          "profile_id": "P03",
+          "relevant_rank_changes": {
+            "C002": [
+              2,
+              3
+            ]
+          },
+          "top_k": [
+            "C029",
+            "C030",
+            "C002",
+            "C004",
+            "C028"
+          ]
+        },
+        {
+          "baseline_top_k": [
+            "C003",
+            "C007",
+            "C001",
+            "C005",
+            "C015"
+          ],
+          "profile_id": "P04",
+          "relevant_rank_changes": {
+            "C003": [
+              1,
+              2
+            ],
+            "C007": [
+              2,
+              1
+            ]
+          },
+          "top_k": [
+            "C007",
+            "C003",
+            "C001",
+            "C005",
+            "C015"
+          ]
+        },
+        {
+          "baseline_top_k": [
+            "C015",
+            "C009",
+            "C013",
+            "C010",
+            "C008"
+          ],
+          "profile_id": "P06",
+          "relevant_rank_changes": {},
+          "top_k": [
+            "C015",
+            "C009",
+            "C008",
+            "C010",
+            "C013"
+          ]
+        },
+        {
+          "baseline_top_k": [
+            "C018",
+            "C017",
+            "C020",
+            "C022",
+            "C008"
+          ],
+          "profile_id": "P09",
+          "relevant_rank_changes": {
+            "C017": [
+              2,
+              3
+            ]
+          },
+          "top_k": [
+            "C018",
+            "C020",
+            "C017",
+            "C008",
+            "C019"
+          ]
+        },
+        {
+          "baseline_top_k": [
+            "C017",
+            "C019",
+            "C018",
+            "C022",
+            "C021"
+          ],
+          "profile_id": "P10",
+          "relevant_rank_changes": {},
+          "top_k": [
+            "C017",
+            "C019",
+            "C021",
+            "C018",
+            "C022"
+          ]
+        },
+        {
+          "baseline_top_k": [
+            "C024",
+            "C026",
+            "C010",
+            "C012",
+            "C023"
+          ],
+          "profile_id": "P14",
+          "relevant_rank_changes": {},
+          "top_k": [
+            "C024",
+            "C010",
+            "C012",
+            "C026",
+            "C023"
+          ]
+        },
+        {
+          "baseline_top_k": [
+            "C025",
+            "C046",
+            "C023",
+            "C026",
+            "C021"
+          ],
+          "profile_id": "P16",
+          "relevant_rank_changes": {},
+          "top_k": [
+            "C025",
+            "C046",
+            "C023",
+            "C026",
+            "C032"
+          ]
+        },
+        {
+          "baseline_top_k": [
+            "C030",
+            "C029",
+            "C004",
+            "C028",
+            "C032"
+          ],
+          "profile_id": "P17",
+          "relevant_rank_changes": {},
+          "top_k": [
+            "C030",
+            "C029",
+            "C004",
+            "C028",
+            "C002"
+          ]
+        },
+        {
+          "baseline_top_k": [
+            "C032",
+            "C028",
+            "C030",
+            "C033",
+            "C011"
+          ],
+          "profile_id": "P19",
+          "relevant_rank_changes": {},
+          "top_k": [
+            "C032",
+            "C028",
+            "C016",
+            "C030",
+            "C033"
+          ]
+        },
+        {
+          "baseline_top_k": [
+            "C033",
+            "C038",
+            "C016",
+            "C028",
+            "C032"
+          ],
+          "profile_id": "P20",
+          "relevant_rank_changes": {},
+          "top_k": [
+            "C033",
+            "C038",
+            "C011",
+            "C016",
+            "C028"
+          ]
+        },
+        {
+          "baseline_top_k": [
+            "C001",
+            "C002",
+            "C029",
+            "C031",
+            "C006"
+          ],
+          "profile_id": "P21",
+          "relevant_rank_changes": {},
+          "top_k": [
+            "C001",
+            "C002",
+            "C031",
+            "C029",
+            "C003"
+          ]
+        },
+        {
+          "baseline_top_k": [
+            "C035",
+            "C037",
+            "C038",
+            "C033",
+            "C036"
+          ],
+          "profile_id": "P22",
+          "relevant_rank_changes": {},
+          "top_k": [
+            "C035",
+            "C037",
+            "C038",
+            "C033",
+            "C011"
+          ]
+        },
+        {
+          "baseline_top_k": [
+            "C037",
+            "C035",
+            "C038",
+            "C039",
+            "C033"
+          ],
+          "profile_id": "P23",
+          "relevant_rank_changes": {},
+          "top_k": [
+            "C037",
+            "C035",
+            "C038",
+            "C033",
+            "C039"
+          ]
+        },
+        {
+          "baseline_top_k": [
+            "C036",
+            "C039",
+            "C027",
+            "C035",
+            "C010"
+          ],
+          "profile_id": "P24",
+          "relevant_rank_changes": {},
+          "top_k": [
+            "C036",
+            "C039",
+            "C049",
+            "C027",
+            "C035"
+          ]
+        },
+        {
+          "baseline_top_k": [
+            "C039",
+            "C007",
+            "C015",
+            "C006",
+            "C001"
+          ],
+          "profile_id": "P25",
+          "relevant_rank_changes": {},
+          "top_k": [
+            "C039",
+            "C015",
+            "C007",
+            "C006",
+            "C003"
+          ]
+        },
+        {
+          "baseline_top_k": [
+            "C040",
+            "C045",
+            "C041",
+            "C044",
+            "C042"
+          ],
+          "profile_id": "P26",
+          "relevant_rank_changes": {},
+          "top_k": [
+            "C040",
+            "C045",
+            "C041",
+            "C043",
+            "C042"
+          ]
+        },
+        {
+          "baseline_top_k": [
+            "C043",
+            "C041",
+            "C030",
+            "C004",
+            "C040"
+          ],
+          "profile_id": "P28",
+          "relevant_rank_changes": {},
+          "top_k": [
+            "C043",
+            "C030",
+            "C041",
+            "C029",
+            "C004"
+          ]
+        },
+        {
+          "baseline_top_k": [
+            "C046",
+            "C047",
+            "C048",
+            "C050",
+            "C049"
+          ],
+          "profile_id": "P30",
+          "relevant_rank_changes": {},
+          "top_k": [
+            "C046",
+            "C047",
+            "C050",
+            "C048",
+            "C025"
+          ]
+        },
+        {
+          "baseline_top_k": [
+            "C049",
+            "C042",
+            "C044",
+            "C041",
+            "C046"
+          ],
+          "profile_id": "P32",
+          "relevant_rank_changes": {},
+          "top_k": [
+            "C049",
+            "C042",
+            "C044",
+            "C041",
+            "C036"
+          ]
+        },
+        {
+          "baseline_top_k": [
+            "C026",
+            "C046",
+            "C047",
+            "C050",
+            "C025"
+          ],
+          "profile_id": "P33",
+          "relevant_rank_changes": {
+            "C047": [
+              3,
+              5
+            ]
+          },
+          "top_k": [
+            "C026",
+            "C025",
+            "C027",
+            "C046",
+            "C047"
+          ]
+        },
+        {
+          "baseline_top_k": [
+            "C029",
+            "C002",
+            "C031",
+            "C030",
+            "C004"
+          ],
+          "profile_id": "P34",
+          "relevant_rank_changes": {
+            "C030": [
+              4,
+              3
+            ]
+          },
+          "top_k": [
+            "C029",
+            "C002",
+            "C030",
+            "C031",
+            "C004"
+          ]
+        }
+      ]
+    },
+    "C_strong_required": {
+      "per_profile_vs_baseline": {
+        "average_precision": {
+          "better": 1,
+          "same": 30,
+          "worse": 4
+        },
+        "f1_at_5": {
+          "better": 0,
+          "same": 35,
+          "worse": 0
+        },
+        "r_precision": {
+          "better": 1,
+          "same": 32,
+          "worse": 2
+        },
+        "reciprocal_rank": {
+          "better": 0,
+          "same": 34,
+          "worse": 1
+        }
+      },
+      "ranking_changes": [
+        {
+          "baseline_top_k": [
+            "C001",
+            "C002",
+            "C006",
+            "C031",
+            "C007"
+          ],
+          "profile_id": "P01",
+          "relevant_rank_changes": {
+            "C006": [
+              3,
+              5
+            ]
+          },
+          "top_k": [
+            "C001",
+            "C002",
+            "C003",
+            "C005",
+            "C006"
+          ]
+        },
+        {
+          "baseline_top_k": [
+            "C002",
+            "C004",
+            "C028",
+            "C031",
+            "C029"
+          ],
+          "profile_id": "P02",
+          "relevant_rank_changes": {},
+          "top_k": [
+            "C002",
+            "C004",
+            "C028",
+            "C016",
+            "C029"
+          ]
+        },
+        {
+          "baseline_top_k": [
+            "C029",
+            "C002",
+            "C004",
+            "C028",
+            "C031"
+          ],
+          "profile_id": "P03",
+          "relevant_rank_changes": {
+            "C002": [
+              2,
+              3
+            ]
+          },
+          "top_k": [
+            "C029",
+            "C030",
+            "C002",
+            "C004",
+            "C028"
+          ]
+        },
+        {
+          "baseline_top_k": [
+            "C003",
+            "C007",
+            "C001",
+            "C005",
+            "C015"
+          ],
+          "profile_id": "P04",
+          "relevant_rank_changes": {
+            "C003": [
+              1,
+              2
+            ],
+            "C007": [
+              2,
+              1
+            ]
+          },
+          "top_k": [
+            "C007",
+            "C003",
+            "C001",
+            "C005",
+            "C015"
+          ]
+        },
+        {
+          "baseline_top_k": [
+            "C015",
+            "C009",
+            "C013",
+            "C010",
+            "C008"
+          ],
+          "profile_id": "P06",
+          "relevant_rank_changes": {},
+          "top_k": [
+            "C015",
+            "C009",
+            "C008",
+            "C010",
+            "C002"
+          ]
+        },
+        {
+          "baseline_top_k": [
+            "C018",
+            "C017",
+            "C020",
+            "C022",
+            "C008"
+          ],
+          "profile_id": "P09",
+          "relevant_rank_changes": {
+            "C017": [
+              2,
+              3
+            ]
+          },
+          "top_k": [
+            "C018",
+            "C020",
+            "C017",
+            "C008",
+            "C019"
+          ]
+        },
+        {
+          "baseline_top_k": [
+            "C017",
+            "C019",
+            "C018",
+            "C022",
+            "C021"
+          ],
+          "profile_id": "P10",
+          "relevant_rank_changes": {},
+          "top_k": [
+            "C017",
+            "C019",
+            "C021",
+            "C018",
+            "C022"
+          ]
+        },
+        {
+          "baseline_top_k": [
+            "C024",
+            "C026",
+            "C010",
+            "C012",
+            "C023"
+          ],
+          "profile_id": "P14",
+          "relevant_rank_changes": {},
+          "top_k": [
+            "C024",
+            "C010",
+            "C012",
+            "C026",
+            "C023"
+          ]
+        },
+        {
+          "baseline_top_k": [
+            "C025",
+            "C046",
+            "C023",
+            "C026",
+            "C021"
+          ],
+          "profile_id": "P16",
+          "relevant_rank_changes": {},
+          "top_k": [
+            "C025",
+            "C046",
+            "C023",
+            "C026",
+            "C032"
+          ]
+        },
+        {
+          "baseline_top_k": [
+            "C030",
+            "C029",
+            "C004",
+            "C028",
+            "C032"
+          ],
+          "profile_id": "P17",
+          "relevant_rank_changes": {},
+          "top_k": [
+            "C030",
+            "C029",
+            "C028",
+            "C004",
+            "C002"
+          ]
+        },
+        {
+          "baseline_top_k": [
+            "C032",
+            "C028",
+            "C030",
+            "C033",
+            "C011"
+          ],
+          "profile_id": "P19",
+          "relevant_rank_changes": {},
+          "top_k": [
+            "C032",
+            "C028",
+            "C016",
+            "C033",
+            "C030"
+          ]
+        },
+        {
+          "baseline_top_k": [
+            "C033",
+            "C038",
+            "C016",
+            "C028",
+            "C032"
+          ],
+          "profile_id": "P20",
+          "relevant_rank_changes": {},
+          "top_k": [
+            "C033",
+            "C038",
+            "C011",
+            "C016",
+            "C028"
+          ]
+        },
+        {
+          "baseline_top_k": [
+            "C001",
+            "C002",
+            "C029",
+            "C031",
+            "C006"
+          ],
+          "profile_id": "P21",
+          "relevant_rank_changes": {},
+          "top_k": [
+            "C001",
+            "C002",
+            "C031",
+            "C029",
+            "C003"
+          ]
+        },
+        {
+          "baseline_top_k": [
+            "C035",
+            "C037",
+            "C038",
+            "C033",
+            "C036"
+          ],
+          "profile_id": "P22",
+          "relevant_rank_changes": {},
+          "top_k": [
+            "C035",
+            "C037",
+            "C038",
+            "C033",
+            "C011"
+          ]
+        },
+        {
+          "baseline_top_k": [
+            "C037",
+            "C035",
+            "C038",
+            "C039",
+            "C033"
+          ],
+          "profile_id": "P23",
+          "relevant_rank_changes": {},
+          "top_k": [
+            "C037",
+            "C035",
+            "C038",
+            "C033",
+            "C039"
+          ]
+        },
+        {
+          "baseline_top_k": [
+            "C036",
+            "C039",
+            "C027",
+            "C035",
+            "C010"
+          ],
+          "profile_id": "P24",
+          "relevant_rank_changes": {},
+          "top_k": [
+            "C036",
+            "C049",
+            "C039",
+            "C035",
+            "C027"
+          ]
+        },
+        {
+          "baseline_top_k": [
+            "C039",
+            "C007",
+            "C015",
+            "C006",
+            "C001"
+          ],
+          "profile_id": "P25",
+          "relevant_rank_changes": {},
+          "top_k": [
+            "C039",
+            "C015",
+            "C007",
+            "C006",
+            "C003"
+          ]
+        },
+        {
+          "baseline_top_k": [
+            "C040",
+            "C045",
+            "C041",
+            "C044",
+            "C042"
+          ],
+          "profile_id": "P26",
+          "relevant_rank_changes": {},
+          "top_k": [
+            "C040",
+            "C045",
+            "C041",
+            "C043",
+            "C042"
+          ]
+        },
+        {
+          "baseline_top_k": [
+            "C043",
+            "C041",
+            "C030",
+            "C004",
+            "C040"
+          ],
+          "profile_id": "P28",
+          "relevant_rank_changes": {},
+          "top_k": [
+            "C043",
+            "C030",
+            "C041",
+            "C029",
+            "C004"
+          ]
+        },
+        {
+          "baseline_top_k": [
+            "C044",
+            "C045",
+            "C040",
+            "C041",
+            "C042"
+          ],
+          "profile_id": "P29",
+          "relevant_rank_changes": {},
+          "top_k": [
+            "C044",
+            "C045",
+            "C040",
+            "C041",
+            "C038"
+          ]
+        },
+        {
+          "baseline_top_k": [
+            "C046",
+            "C047",
+            "C048",
+            "C050",
+            "C049"
+          ],
+          "profile_id": "P30",
+          "relevant_rank_changes": {},
+          "top_k": [
+            "C046",
+            "C047",
+            "C050",
+            "C048",
+            "C025"
+          ]
+        },
+        {
+          "baseline_top_k": [
+            "C049",
+            "C042",
+            "C044",
+            "C041",
+            "C046"
+          ],
+          "profile_id": "P32",
+          "relevant_rank_changes": {},
+          "top_k": [
+            "C049",
+            "C042",
+            "C044",
+            "C041",
+            "C036"
+          ]
+        },
+        {
+          "baseline_top_k": [
+            "C026",
+            "C046",
+            "C047",
+            "C050",
+            "C025"
+          ],
+          "profile_id": "P33",
+          "relevant_rank_changes": {
+            "C047": [
+              3,
+              5
+            ]
+          },
+          "top_k": [
+            "C026",
+            "C025",
+            "C027",
+            "C046",
+            "C047"
+          ]
+        },
+        {
+          "baseline_top_k": [
+            "C029",
+            "C002",
+            "C031",
+            "C030",
+            "C004"
+          ],
+          "profile_id": "P34",
+          "relevant_rank_changes": {
+            "C030": [
+              4,
+              3
+            ]
+          },
+          "top_k": [
+            "C029",
+            "C002",
+            "C030",
+            "C031",
+            "C004"
+          ]
+        },
+        {
+          "baseline_top_k": [
+            "C036",
+            "C010",
+            "C024",
+            "C035",
+            "C039"
+          ],
+          "profile_id": "P36",
+          "relevant_rank_changes": {},
+          "top_k": [
+            "C036",
+            "C010",
+            "C035",
+            "C024",
+            "C039"
+          ]
+        }
+      ]
+    },
+    "D_skills_only": {
+      "per_profile_vs_baseline": {
+        "average_precision": {
+          "better": 1,
+          "same": 30,
+          "worse": 4
+        },
+        "f1_at_5": {
+          "better": 0,
+          "same": 35,
+          "worse": 0
+        },
+        "r_precision": {
+          "better": 1,
+          "same": 32,
+          "worse": 2
+        },
+        "reciprocal_rank": {
+          "better": 0,
+          "same": 33,
+          "worse": 2
+        }
+      },
+      "ranking_changes": [
+        {
+          "baseline_top_k": [
+            "C001",
+            "C002",
+            "C006",
+            "C031",
+            "C007"
+          ],
+          "profile_id": "P01",
+          "relevant_rank_changes": {},
+          "top_k": [
+            "C001",
+            "C002",
+            "C006",
+            "C031",
+            "C003"
+          ]
+        },
+        {
+          "baseline_top_k": [
+            "C002",
+            "C004",
+            "C028",
+            "C031",
+            "C029"
+          ],
+          "profile_id": "P02",
+          "relevant_rank_changes": {},
+          "top_k": [
+            "C002",
+            "C004",
+            "C028",
+            "C016",
+            "C030"
+          ]
+        },
+        {
+          "baseline_top_k": [
+            "C029",
+            "C002",
+            "C004",
+            "C028",
+            "C031"
+          ],
+          "profile_id": "P03",
+          "relevant_rank_changes": {
+            "C002": [
+              2,
+              3
+            ]
+          },
+          "top_k": [
+            "C029",
+            "C030",
+            "C002",
+            "C004",
+            "C028"
+          ]
+        },
+        {
+          "baseline_top_k": [
+            "C010",
+            "C012",
+            "C009",
+            "C015",
+            "C013"
+          ],
+          "profile_id": "P05",
+          "relevant_rank_changes": {},
+          "top_k": [
+            "C010",
+            "C009",
+            "C012",
+            "C015",
+            "C013"
+          ]
+        },
+        {
+          "baseline_top_k": [
+            "C015",
+            "C009",
+            "C013",
+            "C010",
+            "C008"
+          ],
+          "profile_id": "P06",
+          "relevant_rank_changes": {},
+          "top_k": [
+            "C015",
+            "C009",
+            "C010",
+            "C008",
+            "C001"
+          ]
+        },
+        {
+          "baseline_top_k": [
+            "C013",
+            "C020",
+            "C014",
+            "C008",
+            "C018"
+          ],
+          "profile_id": "P07",
+          "relevant_rank_changes": {},
+          "top_k": [
+            "C013",
+            "C020",
+            "C014",
+            "C019",
+            "C008"
+          ]
+        },
+        {
+          "baseline_top_k": [
+            "C012",
+            "C010",
+            "C009",
+            "C015",
+            "C024"
+          ],
+          "profile_id": "P08",
+          "relevant_rank_changes": {},
+          "top_k": [
+            "C012",
+            "C009",
+            "C010",
+            "C015",
+            "C024"
+          ]
+        },
+        {
+          "baseline_top_k": [
+            "C018",
+            "C017",
+            "C020",
+            "C022",
+            "C008"
+          ],
+          "profile_id": "P09",
+          "relevant_rank_changes": {
+            "C017": [
+              2,
+              3
+            ]
+          },
+          "top_k": [
+            "C018",
+            "C020",
+            "C017",
+            "C022",
+            "C005"
+          ]
+        },
+        {
+          "baseline_top_k": [
+            "C017",
+            "C019",
+            "C018",
+            "C022",
+            "C021"
+          ],
+          "profile_id": "P10",
+          "relevant_rank_changes": {},
+          "top_k": [
+            "C017",
+            "C019",
+            "C021",
+            "C018",
+            "C020"
+          ]
+        },
+        {
+          "baseline_top_k": [
+            "C020",
+            "C021",
+            "C014",
+            "C018",
+            "C008"
+          ],
+          "profile_id": "P11",
+          "relevant_rank_changes": {},
+          "top_k": [
+            "C020",
+            "C021",
+            "C014",
+            "C018",
+            "C019"
+          ]
+        },
+        {
+          "baseline_top_k": [
+            "C022",
+            "C017",
+            "C018",
+            "C019",
+            "C001"
+          ],
+          "profile_id": "P12",
+          "relevant_rank_changes": {},
+          "top_k": [
+            "C022",
+            "C001",
+            "C002",
+            "C003",
+            "C004"
+          ]
+        },
+        {
+          "baseline_top_k": [
+            "C023",
+            "C027",
+            "C025",
+            "C026",
+            "C010"
+          ],
+          "profile_id": "P13",
+          "relevant_rank_changes": {},
+          "top_k": [
+            "C023",
+            "C027",
+            "C025",
+            "C001",
+            "C002"
+          ]
+        },
+        {
+          "baseline_top_k": [
+            "C027",
+            "C026",
+            "C036",
+            "C043",
+            "C003"
+          ],
+          "profile_id": "P15",
+          "relevant_rank_changes": {},
+          "top_k": [
+            "C027",
+            "C026",
+            "C036",
+            "C001",
+            "C002"
+          ]
+        },
+        {
+          "baseline_top_k": [
+            "C025",
+            "C046",
+            "C023",
+            "C026",
+            "C021"
+          ],
+          "profile_id": "P16",
+          "relevant_rank_changes": {},
+          "top_k": [
+            "C025",
+            "C046",
+            "C023",
+            "C026",
+            "C016"
+          ]
+        },
+        {
+          "baseline_top_k": [
+            "C030",
+            "C029",
+            "C004",
+            "C028",
+            "C032"
+          ],
+          "profile_id": "P17",
+          "relevant_rank_changes": {},
+          "top_k": [
+            "C030",
+            "C029",
+            "C028",
+            "C002",
+            "C004"
+          ]
+        },
+        {
+          "baseline_top_k": [
+            "C034",
+            "C033",
+            "C002",
+            "C004",
+            "C016"
+          ],
+          "profile_id": "P18",
+          "relevant_rank_changes": {},
+          "top_k": [
+            "C034",
+            "C001",
+            "C002",
+            "C003",
+            "C004"
+          ]
+        },
+        {
+          "baseline_top_k": [
+            "C032",
+            "C028",
+            "C030",
+            "C033",
+            "C011"
+          ],
+          "profile_id": "P19",
+          "relevant_rank_changes": {},
+          "top_k": [
+            "C032",
+            "C028",
+            "C033",
+            "C016",
+            "C030"
+          ]
+        },
+        {
+          "baseline_top_k": [
+            "C033",
+            "C038",
+            "C016",
+            "C028",
+            "C032"
+          ],
+          "profile_id": "P20",
+          "relevant_rank_changes": {},
+          "top_k": [
+            "C033",
+            "C011",
+            "C038",
+            "C016",
+            "C028"
+          ]
+        },
+        {
+          "baseline_top_k": [
+            "C001",
+            "C002",
+            "C029",
+            "C031",
+            "C006"
+          ],
+          "profile_id": "P21",
+          "relevant_rank_changes": {
+            "C001": [
+              1,
+              2
+            ],
+            "C002": [
+              2,
+              1
+            ]
+          },
+          "top_k": [
+            "C002",
+            "C001",
+            "C031",
+            "C029",
+            "C003"
+          ]
+        },
+        {
+          "baseline_top_k": [
+            "C035",
+            "C037",
+            "C038",
+            "C033",
+            "C036"
+          ],
+          "profile_id": "P22",
+          "relevant_rank_changes": {},
+          "top_k": [
+            "C035",
+            "C037",
+            "C038",
+            "C011",
+            "C033"
+          ]
+        },
+        {
+          "baseline_top_k": [
+            "C037",
+            "C035",
+            "C038",
+            "C039",
+            "C033"
+          ],
+          "profile_id": "P23",
+          "relevant_rank_changes": {},
+          "top_k": [
+            "C037",
+            "C035",
+            "C039",
+            "C011",
+            "C033"
+          ]
+        },
+        {
+          "baseline_top_k": [
+            "C036",
+            "C039",
+            "C027",
+            "C035",
+            "C010"
+          ],
+          "profile_id": "P24",
+          "relevant_rank_changes": {},
+          "top_k": [
+            "C036",
+            "C035",
+            "C039",
+            "C049",
+            "C007"
+          ]
+        },
+        {
+          "baseline_top_k": [
+            "C039",
+            "C007",
+            "C015",
+            "C006",
+            "C001"
+          ],
+          "profile_id": "P25",
+          "relevant_rank_changes": {},
+          "top_k": [
+            "C039",
+            "C015",
+            "C007",
+            "C006",
+            "C050"
+          ]
+        },
+        {
+          "baseline_top_k": [
+            "C040",
+            "C045",
+            "C041",
+            "C044",
+            "C042"
+          ],
+          "profile_id": "P26",
+          "relevant_rank_changes": {},
+          "top_k": [
+            "C040",
+            "C045",
+            "C041",
+            "C042",
+            "C043"
+          ]
+        },
+        {
+          "baseline_top_k": [
+            "C042",
+            "C044",
+            "C049",
+            "C041",
+            "C002"
+          ],
+          "profile_id": "P27",
+          "relevant_rank_changes": {},
+          "top_k": [
+            "C042",
+            "C041",
+            "C044",
+            "C049",
+            "C001"
+          ]
+        },
+        {
+          "baseline_top_k": [
+            "C043",
+            "C041",
+            "C030",
+            "C004",
+            "C040"
+          ],
+          "profile_id": "P28",
+          "relevant_rank_changes": {},
+          "top_k": [
+            "C043",
+            "C041",
+            "C029",
+            "C030",
+            "C002"
+          ]
+        },
+        {
+          "baseline_top_k": [
+            "C044",
+            "C045",
+            "C040",
+            "C041",
+            "C042"
+          ],
+          "profile_id": "P29",
+          "relevant_rank_changes": {},
+          "top_k": [
+            "C044",
+            "C038",
+            "C045",
+            "C040",
+            "C041"
+          ]
+        },
+        {
+          "baseline_top_k": [
+            "C046",
+            "C047",
+            "C048",
+            "C050",
+            "C049"
+          ],
+          "profile_id": "P30",
+          "relevant_rank_changes": {},
+          "top_k": [
+            "C046",
+            "C047",
+            "C050",
+            "C025",
+            "C048"
+          ]
+        },
+        {
+          "baseline_top_k": [
+            "C049",
+            "C042",
+            "C044",
+            "C041",
+            "C046"
+          ],
+          "profile_id": "P32",
+          "relevant_rank_changes": {},
+          "top_k": [
+            "C049",
+            "C036",
+            "C041",
+            "C042",
+            "C044"
+          ]
+        },
+        {
+          "baseline_top_k": [
+            "C026",
+            "C046",
+            "C047",
+            "C050",
+            "C025"
+          ],
+          "profile_id": "P33",
+          "relevant_rank_changes": {
+            "C047": [
+              3,
+              5
+            ]
+          },
+          "top_k": [
+            "C026",
+            "C025",
+            "C027",
+            "C046",
+            "C047"
+          ]
+        },
+        {
+          "baseline_top_k": [
+            "C029",
+            "C002",
+            "C031",
+            "C030",
+            "C004"
+          ],
+          "profile_id": "P34",
+          "relevant_rank_changes": {
+            "C030": [
+              4,
+              3
+            ]
+          },
+          "top_k": [
+            "C029",
+            "C002",
+            "C030",
+            "C031",
+            "C004"
+          ]
+        },
+        {
+          "baseline_top_k": [
+            "C003",
+            "C005",
+            "C007",
+            "C008",
+            "C009"
+          ],
+          "profile_id": "P35",
+          "relevant_rank_changes": {},
+          "top_k": [
+            "C001",
+            "C002",
+            "C003",
+            "C004",
+            "C005"
+          ]
+        },
+        {
+          "baseline_top_k": [
+            "C036",
+            "C010",
+            "C024",
+            "C035",
+            "C039"
+          ],
+          "profile_id": "P36",
+          "relevant_rank_changes": {
+            "C036": [
+              1,
+              2
+            ]
+          },
+          "top_k": [
+            "C010",
+            "C036",
+            "C035",
+            "C024",
+            "C034"
+          ]
+        }
+      ]
+    }
+  },
+  "configurations": {
+    "A_baseline": {
+      "aggregate": {
+        "attainable_precision_at_5": {
+          "ci95": [
+            1.0,
+            1.0
+          ],
+          "defined_profiles": 35,
+          "mean": 1.0,
+          "undefined_profiles": 1
+        },
+        "average_precision": {
+          "ci95": [
+            0.9357,
+            0.9976
+          ],
+          "defined_profiles": 35,
+          "mean": 0.9714,
+          "undefined_profiles": 1
+        },
+        "f1_at_5": {
+          "ci95": [
+            0.4217,
+            0.5204
+          ],
+          "defined_profiles": 35,
+          "mean": 0.4694,
+          "undefined_profiles": 1
+        },
+        "hit_at_5": {
+          "ci95": [
+            1.0,
+            1.0
+          ],
+          "defined_profiles": 35,
+          "mean": 1.0,
+          "undefined_profiles": 1
+        },
+        "precision_at_5": {
+          "ci95": [
+            0.28,
+            0.3657
+          ],
+          "defined_profiles": 35,
+          "mean": 0.32,
+          "undefined_profiles": 1
+        },
+        "r_precision": {
+          "ci95": [
+            0.8571,
+            0.9905
+          ],
+          "defined_profiles": 35,
+          "mean": 0.9333,
+          "undefined_profiles": 1
+        },
+        "recall_at_5": {
+          "ci95": [
+            1.0,
+            1.0
+          ],
+          "defined_profiles": 35,
+          "mean": 1.0,
+          "undefined_profiles": 1
+        },
+        "reciprocal_rank": {
+          "ci95": [
+            0.9571,
+            1.0
+          ],
+          "defined_profiles": 35,
+          "mean": 0.9857,
+          "undefined_profiles": 1
+        }
+      },
+      "by_primary_category": {
+        "Business": {
+          "average_precision": 0.9833,
+          "f1_at_5": 0.5119,
+          "profiles": 5,
+          "recall_at_5": 1.0,
+          "reciprocal_rank": 1.0
+        },
+        "Cybersecurity": {
+          "average_precision": 1.0,
+          "f1_at_5": 0.5119,
+          "profiles": 4,
+          "recall_at_5": 1.0,
+          "reciprocal_rank": 1.0
+        },
+        "Data and AI": {
+          "average_precision": 0.9,
+          "f1_at_5": 0.5952,
+          "profiles": 5,
+          "recall_at_5": 1.0,
+          "reciprocal_rank": 0.9
+        },
+        "Design": {
+          "average_precision": 0.9375,
+          "f1_at_5": 0.3928,
+          "profiles": 4,
+          "recall_at_5": 1.0,
+          "reciprocal_rank": 1.0
+        },
+        "Education": {
+          "average_precision": 1.0,
+          "f1_at_5": 0.4285,
+          "profiles": 5,
+          "recall_at_5": 1.0,
+          "reciprocal_rank": 1.0
+        },
+        "Engineering": {
+          "average_precision": 0.9583,
+          "f1_at_5": 0.4524,
+          "profiles": 4,
+          "recall_at_5": 1.0,
+          "reciprocal_rank": 1.0
+        },
+        "Healthcare": {
+          "average_precision": 1.0,
+          "f1_at_5": 0.3333,
+          "profiles": 4,
+          "recall_at_5": 1.0,
+          "reciprocal_rank": 1.0
+        },
+        "Software": {
+          "average_precision": 1.0,
+          "f1_at_5": 0.497,
+          "profiles": 5,
+          "recall_at_5": 1.0,
+          "reciprocal_rank": 1.0
+        }
+      },
+      "careers_recommended": 50,
+      "catalogue_coverage": 1.0,
+      "category_distribution": {
+        "Business": {
+          "count": 28,
+          "share": 0.1556
+        },
+        "Cybersecurity": {
+          "count": 19,
+          "share": 0.1056
+        },
+        "Data and AI": {
+          "count": 35,
+          "share": 0.1944
+        },
+        "Design": {
+          "count": 17,
+          "share": 0.0944
+        },
+        "Education": {
+          "count": 17,
+          "share": 0.0944
+        },
+        "Engineering": {
+          "count": 14,
+          "share": 0.0778
+        },
+        "Healthcare": {
+          "count": 23,
+          "share": 0.1278
+        },
+        "Software": {
+          "count": 27,
+          "share": 0.15
+        }
+      },
+      "per_profile": [
+        {
+          "attainable_precision_at_5": 1.0,
+          "average_precision": 1.0,
+          "f1_at_5": 0.75,
+          "hit_at_5": 1.0,
+          "precision_at_5": 0.6,
+          "primary_category": "Data and AI",
+          "profile_id": "P01",
+          "profile_type": "strong match",
+          "r_precision": 1.0,
+          "recall_at_5": 1.0,
+          "reciprocal_rank": 1.0,
+          "relevant": [
+            "C001",
+            "C002",
+            "C006"
+          ],
+          "relevant_ranks": {
+            "C001": 1,
+            "C002": 2,
+            "C006": 3
+          },
+          "top_k": [
+            "C001",
+            "C002",
+            "C006",
+            "C031",
+            "C007"
+          ],
+          "top_k_scores": [
+            78.8,
+            59.6,
+            57.5,
+            50.4,
+            42.4
+          ]
+        },
+        {
+          "attainable_precision_at_5": 1.0,
+          "average_precision": 1.0,
+          "f1_at_5": 0.5714,
+          "hit_at_5": 1.0,
+          "precision_at_5": 0.4,
+          "primary_category": "Data and AI",
+          "profile_id": "P02",
+          "profile_type": "strong match",
+          "r_precision": 1.0,
+          "recall_at_5": 1.0,
+          "reciprocal_rank": 1.0,
+          "relevant": [
+            "C004",
+            "C002"
+          ],
+          "relevant_ranks": {
+            "C002": 1,
+            "C004": 2
+          },
+          "top_k": [
+            "C002",
+            "C004",
+            "C028",
+            "C031",
+            "C029"
+          ],
+          "top_k_scores": [
+            72.9,
+            70.4,
+            56.7,
+            45.4,
+            45.0
+          ]
+        },
+        {
+          "attainable_precision_at_5": 1.0,
+          "average_precision": 0.5,
+          "f1_at_5": 0.3333,
+          "hit_at_5": 1.0,
+          "precision_at_5": 0.2,
+          "primary_category": "Data and AI",
+          "profile_id": "P03",
+          "profile_type": "limited skills",
+          "r_precision": 0.0,
+          "recall_at_5": 1.0,
+          "reciprocal_rank": 0.5,
+          "relevant": [
+            "C002"
+          ],
+          "relevant_ranks": {
+            "C002": 2
+          },
+          "top_k": [
+            "C029",
+            "C002",
+            "C004",
+            "C028",
+            "C031"
+          ],
+          "top_k_scores": [
+            30.4,
+            25.8,
+            25.8,
+            25.8,
+            25.8
+          ]
+        },
+        {
+          "attainable_precision_at_5": 1.0,
+          "average_precision": 1.0,
+          "f1_at_5": 0.75,
+          "hit_at_5": 1.0,
+          "precision_at_5": 0.6,
+          "primary_category": "Data and AI",
+          "profile_id": "P04",
+          "profile_type": "missing information",
+          "r_precision": 1.0,
+          "recall_at_5": 1.0,
+          "reciprocal_rank": 1.0,
+          "relevant": [
+            "C003",
+            "C007",
+            "C001"
+          ],
+          "relevant_ranks": {
+            "C001": 3,
+            "C003": 1,
+            "C007": 2
+          },
+          "top_k": [
+            "C003",
+            "C007",
+            "C001",
+            "C005",
+            "C015"
+          ],
+          "top_k_scores": [
+            46.2,
+            44.0,
+            27.0,
+            13.8,
+            13.8
+          ]
+        },
+        {
+          "attainable_precision_at_5": 1.0,
+          "average_precision": 1.0,
+          "f1_at_5": 0.3333,
+          "hit_at_5": 1.0,
+          "precision_at_5": 0.2,
+          "primary_category": "Software",
+          "profile_id": "P05",
+          "profile_type": "strong match",
+          "r_precision": 1.0,
+          "recall_at_5": 1.0,
+          "reciprocal_rank": 1.0,
+          "relevant": [
+            "C010"
+          ],
+          "relevant_ranks": {
+            "C010": 1
+          },
+          "top_k": [
+            "C010",
+            "C012",
+            "C009",
+            "C015",
+            "C013"
+          ],
+          "top_k_scores": [
+            80.4,
+            34.2,
+            25.8,
+            25.8,
+            23.1
+          ]
+        },
+        {
+          "attainable_precision_at_5": 1.0,
+          "average_precision": 1.0,
+          "f1_at_5": 0.5714,
+          "hit_at_5": 1.0,
+          "precision_at_5": 0.4,
+          "primary_category": "Software",
+          "profile_id": "P06",
+          "profile_type": "strong match",
+          "r_precision": 1.0,
+          "recall_at_5": 1.0,
+          "reciprocal_rank": 1.0,
+          "relevant": [
+            "C009",
+            "C015"
+          ],
+          "relevant_ranks": {
+            "C009": 2,
+            "C015": 1
+          },
+          "top_k": [
+            "C015",
+            "C009",
+            "C013",
+            "C010",
+            "C008"
+          ],
+          "top_k_scores": [
+            70.4,
+            67.9,
+            32.7,
+            32.1,
+            31.7
+          ]
+        },
+        {
+          "attainable_precision_at_5": 1.0,
+          "average_precision": 1.0,
+          "f1_at_5": 0.75,
+          "hit_at_5": 1.0,
+          "precision_at_5": 0.6,
+          "primary_category": "Software",
+          "profile_id": "P07",
+          "profile_type": "career transition",
+          "r_precision": 1.0,
+          "recall_at_5": 1.0,
+          "reciprocal_rank": 1.0,
+          "relevant": [
+            "C013",
+            "C020",
+            "C014"
+          ],
+          "relevant_ranks": {
+            "C013": 1,
+            "C014": 3,
+            "C020": 2
+          },
+          "top_k": [
+            "C013",
+            "C020",
+            "C014",
+            "C008",
+            "C018"
+          ],
+          "top_k_scores": [
+            65.7,
+            56.7,
+            45.8,
+            45.0,
+            42.9
+          ]
+        },
+        {
+          "attainable_precision_at_5": 1.0,
+          "average_precision": 1.0,
+          "f1_at_5": 0.3333,
+          "hit_at_5": 1.0,
+          "precision_at_5": 0.2,
+          "primary_category": "Software",
+          "profile_id": "P08",
+          "profile_type": "strong match",
+          "r_precision": 1.0,
+          "recall_at_5": 1.0,
+          "reciprocal_rank": 1.0,
+          "relevant": [
+            "C012"
+          ],
+          "relevant_ranks": {
+            "C012": 1
+          },
+          "top_k": [
+            "C012",
+            "C010",
+            "C009",
+            "C015",
+            "C024"
+          ],
+          "top_k_scores": [
+            76.7,
+            35.4,
+            27.1,
+            27.1,
+            27.1
+          ]
+        },
+        {
+          "attainable_precision_at_5": 1.0,
+          "average_precision": 1.0,
+          "f1_at_5": 0.5714,
+          "hit_at_5": 1.0,
+          "precision_at_5": 0.4,
+          "primary_category": "Cybersecurity",
+          "profile_id": "P09",
+          "profile_type": "strong match",
+          "r_precision": 1.0,
+          "recall_at_5": 1.0,
+          "reciprocal_rank": 1.0,
+          "relevant": [
+            "C018",
+            "C017"
+          ],
+          "relevant_ranks": {
+            "C017": 2,
+            "C018": 1
+          },
+          "top_k": [
+            "C018",
+            "C017",
+            "C020",
+            "C022",
+            "C008"
+          ],
+          "top_k_scores": [
+            84.2,
+            45.4,
+            40.8,
+            34.6,
+            31.7
+          ]
+        },
+        {
+          "attainable_precision_at_5": 1.0,
+          "average_precision": 1.0,
+          "f1_at_5": 0.5714,
+          "hit_at_5": 1.0,
+          "precision_at_5": 0.4,
+          "primary_category": "Cybersecurity",
+          "profile_id": "P10",
+          "profile_type": "strong match",
+          "r_precision": 1.0,
+          "recall_at_5": 1.0,
+          "reciprocal_rank": 1.0,
+          "relevant": [
+            "C017",
+            "C019"
+          ],
+          "relevant_ranks": {
+            "C017": 1,
+            "C019": 2
+          },
+          "top_k": [
+            "C017",
+            "C019",
+            "C018",
+            "C022",
+            "C021"
+          ],
+          "top_k_scores": [
+            68.3,
+            40.0,
+            27.1,
+            27.1,
+            23.3
+          ]
+        },
+        {
+          "attainable_precision_at_5": 1.0,
+          "average_precision": 1.0,
+          "f1_at_5": 0.5714,
+          "hit_at_5": 1.0,
+          "precision_at_5": 0.4,
+          "primary_category": "Cybersecurity",
+          "profile_id": "P11",
+          "profile_type": "career transition",
+          "r_precision": 1.0,
+          "recall_at_5": 1.0,
+          "reciprocal_rank": 1.0,
+          "relevant": [
+            "C020",
+            "C021"
+          ],
+          "relevant_ranks": {
+            "C020": 1,
+            "C021": 2
+          },
+          "top_k": [
+            "C020",
+            "C021",
+            "C014",
+            "C018",
+            "C008"
+          ],
+          "top_k_scores": [
+            75.4,
+            57.1,
+            47.9,
+            39.6,
+            38.8
+          ]
+        },
+        {
+          "attainable_precision_at_5": 1.0,
+          "average_precision": 1.0,
+          "f1_at_5": 0.3333,
+          "hit_at_5": 1.0,
+          "precision_at_5": 0.2,
+          "primary_category": "Cybersecurity",
+          "profile_id": "P12",
+          "profile_type": "limited skills",
+          "r_precision": 1.0,
+          "recall_at_5": 1.0,
+          "reciprocal_rank": 1.0,
+          "relevant": [
+            "C022"
+          ],
+          "relevant_ranks": {
+            "C022": 1
+          },
+          "top_k": [
+            "C022",
+            "C017",
+            "C018",
+            "C019",
+            "C001"
+          ],
+          "top_k_scores": [
+            22.1,
+            8.3,
+            8.3,
+            8.3,
+            0.0
+          ]
+        },
+        {
+          "attainable_precision_at_5": 1.0,
+          "average_precision": 1.0,
+          "f1_at_5": 0.3333,
+          "hit_at_5": 1.0,
+          "precision_at_5": 0.2,
+          "primary_category": "Design",
+          "profile_id": "P13",
+          "profile_type": "strong match",
+          "r_precision": 1.0,
+          "recall_at_5": 1.0,
+          "reciprocal_rank": 1.0,
+          "relevant": [
+            "C023"
+          ],
+          "relevant_ranks": {
+            "C023": 1
+          },
+          "top_k": [
+            "C023",
+            "C027",
+            "C025",
+            "C026",
+            "C010"
+          ],
+          "top_k_scores": [
+            82.9,
+            46.2,
+            38.8,
+            20.4,
+            12.1
+          ]
+        },
+        {
+          "attainable_precision_at_5": 1.0,
+          "average_precision": 1.0,
+          "f1_at_5": 0.3333,
+          "hit_at_5": 1.0,
+          "precision_at_5": 0.2,
+          "primary_category": "Design",
+          "profile_id": "P14",
+          "profile_type": "career transition",
+          "r_precision": 1.0,
+          "recall_at_5": 1.0,
+          "reciprocal_rank": 1.0,
+          "relevant": [
+            "C024"
+          ],
+          "relevant_ranks": {
+            "C024": 1
+          },
+          "top_k": [
+            "C024",
+            "C026",
+            "C010",
+            "C012",
+            "C023"
+          ],
+          "top_k_scores": [
+            84.2,
+            28.3,
+            27.1,
+            27.1,
+            20.8
+          ]
+        },
+        {
+          "attainable_precision_at_5": 1.0,
+          "average_precision": 1.0,
+          "f1_at_5": 0.3333,
+          "hit_at_5": 1.0,
+          "precision_at_5": 0.2,
+          "primary_category": "Design",
+          "profile_id": "P15",
+          "profile_type": "strong match",
+          "r_precision": 1.0,
+          "recall_at_5": 1.0,
+          "reciprocal_rank": 1.0,
+          "relevant": [
+            "C027"
+          ],
+          "relevant_ranks": {
+            "C027": 1
+          },
+          "top_k": [
+            "C027",
+            "C026",
+            "C036",
+            "C043",
+            "C003"
+          ],
+          "top_k_scores": [
+            64.6,
+            30.4,
+            18.3,
+            13.3,
+            12.1
+          ]
+        },
+        {
+          "attainable_precision_at_5": 1.0,
+          "average_precision": 0.75,
+          "f1_at_5": 0.5714,
+          "hit_at_5": 1.0,
+          "precision_at_5": 0.4,
+          "primary_category": "Design",
+          "profile_id": "P16",
+          "profile_type": "mixed skills",
+          "r_precision": 0.5,
+          "recall_at_5": 1.0,
+          "reciprocal_rank": 1.0,
+          "relevant": [
+            "C025",
+            "C026"
+          ],
+          "relevant_ranks": {
+            "C025": 1,
+            "C026": 4
+          },
+          "top_k": [
+            "C025",
+            "C046",
+            "C023",
+            "C026",
+            "C021"
+          ],
+          "top_k_scores": [
+            84.2,
+            32.5,
+            31.7,
+            31.7,
+            29.2
+          ]
+        },
+        {
+          "attainable_precision_at_5": 1.0,
+          "average_precision": 1.0,
+          "f1_at_5": 0.5714,
+          "hit_at_5": 1.0,
+          "precision_at_5": 0.4,
+          "primary_category": "Business",
+          "profile_id": "P17",
+          "profile_type": "strong match",
+          "r_precision": 1.0,
+          "recall_at_5": 1.0,
+          "reciprocal_rank": 1.0,
+          "relevant": [
+            "C030",
+            "C029"
+          ],
+          "relevant_ranks": {
+            "C029": 2,
+            "C030": 1
+          },
+          "top_k": [
+            "C030",
+            "C029",
+            "C004",
+            "C028",
+            "C032"
+          ],
+          "top_k_scores": [
+            92.5,
+            76.7,
+            35.4,
+            34.6,
+            29.2
+          ]
+        },
+        {
+          "attainable_precision_at_5": 1.0,
+          "average_precision": 1.0,
+          "f1_at_5": 0.3333,
+          "hit_at_5": 1.0,
+          "precision_at_5": 0.2,
+          "primary_category": "Business",
+          "profile_id": "P18",
+          "profile_type": "strong match",
+          "r_precision": 1.0,
+          "recall_at_5": 1.0,
+          "reciprocal_rank": 1.0,
+          "relevant": [
+            "C034"
+          ],
+          "relevant_ranks": {
+            "C034": 1
+          },
+          "top_k": [
+            "C034",
+            "C033",
+            "C002",
+            "C004",
+            "C016"
+          ],
+          "top_k_scores": [
+            85.0,
+            21.7,
+            13.3,
+            13.3,
+            13.3
+          ]
+        },
+        {
+          "attainable_precision_at_5": 1.0,
+          "average_precision": 1.0,
+          "f1_at_5": 0.5714,
+          "hit_at_5": 1.0,
+          "precision_at_5": 0.4,
+          "primary_category": "Business",
+          "profile_id": "P19",
+          "profile_type": "strong match",
+          "r_precision": 1.0,
+          "recall_at_5": 1.0,
+          "reciprocal_rank": 1.0,
+          "relevant": [
+            "C032",
+            "C028"
+          ],
+          "relevant_ranks": {
+            "C028": 2,
+            "C032": 1
+          },
+          "top_k": [
+            "C032",
+            "C028",
+            "C030",
+            "C033",
+            "C011"
+          ],
+          "top_k_scores": [
+            84.2,
+            46.2,
+            39.2,
+            38.3,
+            36.7
+          ]
+        },
+        {
+          "attainable_precision_at_5": 1.0,
+          "average_precision": 1.0,
+          "f1_at_5": 0.3333,
+          "hit_at_5": 1.0,
+          "precision_at_5": 0.2,
+          "primary_category": "Business",
+          "profile_id": "P20",
+          "profile_type": "strong match",
+          "r_precision": 1.0,
+          "recall_at_5": 1.0,
+          "reciprocal_rank": 1.0,
+          "relevant": [
+            "C033"
+          ],
+          "relevant_ranks": {
+            "C033": 1
+          },
+          "top_k": [
+            "C033",
+            "C038",
+            "C016",
+            "C028",
+            "C032"
+          ],
+          "top_k_scores": [
+            76.7,
+            30.4,
+            27.1,
+            27.1,
+            27.1
+          ]
+        },
+        {
+          "attainable_precision_at_5": 1.0,
+          "average_precision": 1.0,
+          "f1_at_5": 0.5714,
+          "hit_at_5": 1.0,
+          "precision_at_5": 0.4,
+          "primary_category": "Data and AI",
+          "profile_id": "P21",
+          "profile_type": "mixed skills",
+          "r_precision": 1.0,
+          "recall_at_5": 1.0,
+          "reciprocal_rank": 1.0,
+          "relevant": [
+            "C001",
+            "C002"
+          ],
+          "relevant_ranks": {
+            "C001": 1,
+            "C002": 2
+          },
+          "top_k": [
+            "C001",
+            "C002",
+            "C029",
+            "C031",
+            "C006"
+          ],
+          "top_k_scores": [
+            61.5,
+            59.6,
+            55.0,
+            50.8,
+            41.7
+          ]
+        },
+        {
+          "attainable_precision_at_5": 1.0,
+          "average_precision": 1.0,
+          "f1_at_5": 0.5714,
+          "hit_at_5": 1.0,
+          "precision_at_5": 0.4,
+          "primary_category": "Education",
+          "profile_id": "P22",
+          "profile_type": "strong match",
+          "r_precision": 1.0,
+          "recall_at_5": 1.0,
+          "reciprocal_rank": 1.0,
+          "relevant": [
+            "C035",
+            "C037"
+          ],
+          "relevant_ranks": {
+            "C035": 1,
+            "C037": 2
+          },
+          "top_k": [
+            "C035",
+            "C037",
+            "C038",
+            "C033",
+            "C036"
+          ],
+          "top_k_scores": [
+            76.7,
+            70.4,
+            46.2,
+            31.7,
+            25.8
+          ]
+        },
+        {
+          "attainable_precision_at_5": 1.0,
+          "average_precision": 1.0,
+          "f1_at_5": 0.5714,
+          "hit_at_5": 1.0,
+          "precision_at_5": 0.4,
+          "primary_category": "Education",
+          "profile_id": "P23",
+          "profile_type": "strong match",
+          "r_precision": 1.0,
+          "recall_at_5": 1.0,
+          "reciprocal_rank": 1.0,
+          "relevant": [
+            "C037",
+            "C035"
+          ],
+          "relevant_ranks": {
+            "C035": 2,
+            "C037": 1
+          },
+          "top_k": [
+            "C037",
+            "C035",
+            "C038",
+            "C039",
+            "C033"
+          ],
+          "top_k_scores": [
+            70.4,
+            64.2,
+            38.8,
+            33.3,
+            31.7
+          ]
+        },
+        {
+          "attainable_precision_at_5": 1.0,
+          "average_precision": 1.0,
+          "f1_at_5": 0.3333,
+          "hit_at_5": 1.0,
+          "precision_at_5": 0.2,
+          "primary_category": "Education",
+          "profile_id": "P24",
+          "profile_type": "career transition",
+          "r_precision": 1.0,
+          "recall_at_5": 1.0,
+          "reciprocal_rank": 1.0,
+          "relevant": [
+            "C036"
+          ],
+          "relevant_ranks": {
+            "C036": 1
+          },
+          "top_k": [
+            "C036",
+            "C039",
+            "C027",
+            "C035",
+            "C010"
+          ],
+          "top_k_scores": [
+            78.8,
+            36.7,
+            29.2,
+            28.3,
+            21.7
+          ]
+        },
+        {
+          "attainable_precision_at_5": 1.0,
+          "average_precision": 1.0,
+          "f1_at_5": 0.3333,
+          "hit_at_5": 1.0,
+          "precision_at_5": 0.2,
+          "primary_category": "Education",
+          "profile_id": "P25",
+          "profile_type": "mixed skills",
+          "r_precision": 1.0,
+          "recall_at_5": 1.0,
+          "reciprocal_rank": 1.0,
+          "relevant": [
+            "C039"
+          ],
+          "relevant_ranks": {
+            "C039": 1
+          },
+          "top_k": [
+            "C039",
+            "C007",
+            "C015",
+            "C006",
+            "C001"
+          ],
+          "top_k_scores": [
+            85.0,
+            43.7,
+            40.8,
+            34.6,
+            28.5
+          ]
+        },
+        {
+          "attainable_precision_at_5": 1.0,
+          "average_precision": 1.0,
+          "f1_at_5": 0.3333,
+          "hit_at_5": 1.0,
+          "precision_at_5": 0.2,
+          "primary_category": "Healthcare",
+          "profile_id": "P26",
+          "profile_type": "strong match",
+          "r_precision": 1.0,
+          "recall_at_5": 1.0,
+          "reciprocal_rank": 1.0,
+          "relevant": [
+            "C040"
+          ],
+          "relevant_ranks": {
+            "C040": 1
+          },
+          "top_k": [
+            "C040",
+            "C045",
+            "C041",
+            "C044",
+            "C042"
+          ],
+          "top_k_scores": [
+            70.4,
+            57.1,
+            47.9,
+            35.4,
+            34.6
+          ]
+        },
+        {
+          "attainable_precision_at_5": 1.0,
+          "average_precision": 1.0,
+          "f1_at_5": 0.3333,
+          "hit_at_5": 1.0,
+          "precision_at_5": 0.2,
+          "primary_category": "Healthcare",
+          "profile_id": "P27",
+          "profile_type": "strong match",
+          "r_precision": 1.0,
+          "recall_at_5": 1.0,
+          "reciprocal_rank": 1.0,
+          "relevant": [
+            "C042"
+          ],
+          "relevant_ranks": {
+            "C042": 1
+          },
+          "top_k": [
+            "C042",
+            "C044",
+            "C049",
+            "C041",
+            "C002"
+          ],
+          "top_k_scores": [
+            62.9,
+            27.1,
+            27.1,
+            25.8,
+            13.3
+          ]
+        },
+        {
+          "attainable_precision_at_5": 1.0,
+          "average_precision": 1.0,
+          "f1_at_5": 0.3333,
+          "hit_at_5": 1.0,
+          "precision_at_5": 0.2,
+          "primary_category": "Healthcare",
+          "profile_id": "P28",
+          "profile_type": "strong match",
+          "r_precision": 1.0,
+          "recall_at_5": 1.0,
+          "reciprocal_rank": 1.0,
+          "relevant": [
+            "C043"
+          ],
+          "relevant_ranks": {
+            "C043": 1
+          },
+          "top_k": [
+            "C043",
+            "C041",
+            "C030",
+            "C004",
+            "C040"
+          ],
+          "top_k_scores": [
+            84.2,
+            32.1,
+            30.4,
+            25.8,
+            25.8
+          ]
+        },
+        {
+          "attainable_precision_at_5": 1.0,
+          "average_precision": 1.0,
+          "f1_at_5": 0.3333,
+          "hit_at_5": 1.0,
+          "precision_at_5": 0.2,
+          "primary_category": "Healthcare",
+          "profile_id": "P29",
+          "profile_type": "strong match",
+          "r_precision": 1.0,
+          "recall_at_5": 1.0,
+          "reciprocal_rank": 1.0,
+          "relevant": [
+            "C044"
+          ],
+          "relevant_ranks": {
+            "C044": 1
+          },
+          "top_k": [
+            "C044",
+            "C045",
+            "C040",
+            "C041",
+            "C042"
+          ],
+          "top_k_scores": [
+            85.0,
+            47.1,
+            43.8,
+            42.5,
+            35.4
+          ]
+        },
+        {
+          "attainable_precision_at_5": 1.0,
+          "average_precision": 1.0,
+          "f1_at_5": 0.3333,
+          "hit_at_5": 1.0,
+          "precision_at_5": 0.2,
+          "primary_category": "Engineering",
+          "profile_id": "P30",
+          "profile_type": "strong match",
+          "r_precision": 1.0,
+          "recall_at_5": 1.0,
+          "reciprocal_rank": 1.0,
+          "relevant": [
+            "C046"
+          ],
+          "relevant_ranks": {
+            "C046": 1
+          },
+          "top_k": [
+            "C046",
+            "C047",
+            "C048",
+            "C050",
+            "C049"
+          ],
+          "top_k_scores": [
+            76.7,
+            49.2,
+            47.5,
+            40.8,
+            34.6
+          ]
+        },
+        {
+          "attainable_precision_at_5": 1.0,
+          "average_precision": 1.0,
+          "f1_at_5": 0.5714,
+          "hit_at_5": 1.0,
+          "precision_at_5": 0.4,
+          "primary_category": "Engineering",
+          "profile_id": "P31",
+          "profile_type": "overlapping interests",
+          "r_precision": 1.0,
+          "recall_at_5": 1.0,
+          "reciprocal_rank": 1.0,
+          "relevant": [
+            "C048",
+            "C050"
+          ],
+          "relevant_ranks": {
+            "C048": 1,
+            "C050": 2
+          },
+          "top_k": [
+            "C048",
+            "C050",
+            "C045",
+            "C040",
+            "C044"
+          ],
+          "top_k_scores": [
+            68.3,
+            62.9,
+            30.4,
+            27.1,
+            27.1
+          ]
+        },
+        {
+          "attainable_precision_at_5": 1.0,
+          "average_precision": 1.0,
+          "f1_at_5": 0.3333,
+          "hit_at_5": 1.0,
+          "precision_at_5": 0.2,
+          "primary_category": "Engineering",
+          "profile_id": "P32",
+          "profile_type": "strong match",
+          "r_precision": 1.0,
+          "recall_at_5": 1.0,
+          "reciprocal_rank": 1.0,
+          "relevant": [
+            "C049"
+          ],
+          "relevant_ranks": {
+            "C049": 1
+          },
+          "top_k": [
+            "C049",
+            "C042",
+            "C044",
+            "C041",
+            "C046"
+          ],
+          "top_k_scores": [
+            70.4,
+            27.1,
+            27.1,
+            25.8,
+            20.8
+          ]
+        },
+        {
+          "attainable_precision_at_5": 1.0,
+          "average_precision": 0.8333,
+          "f1_at_5": 0.5714,
+          "hit_at_5": 1.0,
+          "precision_at_5": 0.4,
+          "primary_category": "Engineering",
+          "profile_id": "P33",
+          "profile_type": "missing information",
+          "r_precision": 0.5,
+          "recall_at_5": 1.0,
+          "reciprocal_rank": 1.0,
+          "relevant": [
+            "C047",
+            "C026"
+          ],
+          "relevant_ranks": {
+            "C026": 1,
+            "C047": 3
+          },
+          "top_k": [
+            "C026",
+            "C046",
+            "C047",
+            "C050",
+            "C025"
+          ],
+          "top_k_scores": [
+            45.0,
+            22.1,
+            22.1,
+            22.1,
+            18.3
+          ]
+        },
+        {
+          "attainable_precision_at_5": 1.0,
+          "average_precision": 0.9167,
+          "f1_at_5": 0.75,
+          "hit_at_5": 1.0,
+          "precision_at_5": 0.6,
+          "primary_category": "Business",
+          "profile_id": "P34",
+          "profile_type": "career transition",
+          "r_precision": 0.6667,
+          "recall_at_5": 1.0,
+          "reciprocal_rank": 1.0,
+          "relevant": [
+            "C002",
+            "C030",
+            "C029"
+          ],
+          "relevant_ranks": {
+            "C002": 2,
+            "C029": 1,
+            "C030": 4
+          },
+          "top_k": [
+            "C029",
+            "C002",
+            "C031",
+            "C030",
+            "C004"
+          ],
+          "top_k_scores": [
+            68.3,
+            62.9,
+            54.2,
+            50.0,
+            49.2
+          ]
+        },
+        {
+          "attainable_precision_at_5": null,
+          "average_precision": null,
+          "f1_at_5": null,
+          "hit_at_5": null,
+          "precision_at_5": null,
+          "primary_category": "Software",
+          "profile_id": "P35",
+          "profile_type": "missing information",
+          "r_precision": null,
+          "recall_at_5": null,
+          "reciprocal_rank": null,
+          "relevant": [],
+          "relevant_ranks": {},
+          "top_k": [
+            "C003",
+            "C005",
+            "C007",
+            "C008",
+            "C009"
+          ],
+          "top_k_scores": [
+            8.3,
+            8.3,
+            8.3,
+            8.3,
+            8.3
+          ]
+        },
+        {
+          "attainable_precision_at_5": 1.0,
+          "average_precision": 1.0,
+          "f1_at_5": 0.3333,
+          "hit_at_5": 1.0,
+          "precision_at_5": 0.2,
+          "primary_category": "Education",
+          "profile_id": "P36",
+          "profile_type": "overlapping interests",
+          "r_precision": 1.0,
+          "recall_at_5": 1.0,
+          "reciprocal_rank": 1.0,
+          "relevant": [
+            "C036"
+          ],
+          "relevant_ranks": {
+            "C036": 1
+          },
+          "top_k": [
+            "C036",
+            "C010",
+            "C024",
+            "C035",
+            "C039"
+          ],
+          "top_k_scores": [
+            56.3,
+            49.2,
+            29.2,
+            28.3,
+            27.9
+          ]
+        }
+      ],
+      "weights": {
+        "education": 0.05,
+        "interests": 0.25,
+        "preferred_skills": 0.15,
+        "required_skills": 0.55
+      }
+    },
+    "B_required_heavy": {
+      "aggregate": {
+        "attainable_precision_at_5": {
+          "ci95": [
+            1.0,
+            1.0
+          ],
+          "defined_profiles": 35,
+          "mean": 1.0,
+          "undefined_profiles": 1
+        },
+        "average_precision": {
+          "ci95": [
+            0.9148,
+            0.9952
+          ],
+          "defined_profiles": 35,
+          "mean": 0.9605,
+          "undefined_profiles": 1
+        },
+        "f1_at_5": {
+          "ci95": [
+            0.4217,
+            0.5204
+          ],
+          "defined_profiles": 35,
+          "mean": 0.4694,
+          "undefined_profiles": 1
+        },
+        "hit_at_5": {
+          "ci95": [
+            1.0,
+            1.0
+          ],
+          "defined_profiles": 35,
+          "mean": 1.0,
+          "undefined_profiles": 1
+        },
+        "precision_at_5": {
+          "ci95": [
+            0.28,
+            0.3657
+          ],
+          "defined_profiles": 35,
+          "mean": 0.32,
+          "undefined_profiles": 1
+        },
+        "r_precision": {
+          "ci95": [
+            0.8571,
+            0.9857
+          ],
+          "defined_profiles": 35,
+          "mean": 0.9286,
+          "undefined_profiles": 1
+        },
+        "recall_at_5": {
+          "ci95": [
+            1.0,
+            1.0
+          ],
+          "defined_profiles": 35,
+          "mean": 1.0,
+          "undefined_profiles": 1
+        },
+        "reciprocal_rank": {
+          "ci95": [
+            0.9429,
+            1.0
+          ],
+          "defined_profiles": 35,
+          "mean": 0.981,
+          "undefined_profiles": 1
+        }
+      },
+      "by_primary_category": {
+        "Business": {
+          "average_precision": 1.0,
+          "f1_at_5": 0.5119,
+          "profiles": 5,
+          "recall_at_5": 1.0,
+          "reciprocal_rank": 1.0
+        },
+        "Cybersecurity": {
+          "average_precision": 0.9583,
+          "f1_at_5": 0.5119,
+          "profiles": 4,
+          "recall_at_5": 1.0,
+          "reciprocal_rank": 1.0
+        },
+        "Data and AI": {
+          "average_precision": 0.8667,
+          "f1_at_5": 0.5952,
+          "profiles": 5,
+          "recall_at_5": 1.0,
+          "reciprocal_rank": 0.8667
+        },
+        "Design": {
+          "average_precision": 0.9375,
+          "f1_at_5": 0.3928,
+          "profiles": 4,
+          "recall_at_5": 1.0,
+          "reciprocal_rank": 1.0
+        },
+        "Education": {
+          "average_precision": 1.0,
+          "f1_at_5": 0.4285,
+          "profiles": 5,
+          "recall_at_5": 1.0,
+          "reciprocal_rank": 1.0
+        },
+        "Engineering": {
+          "average_precision": 0.925,
+          "f1_at_5": 0.4524,
+          "profiles": 4,
+          "recall_at_5": 1.0,
+          "reciprocal_rank": 1.0
+        },
+        "Healthcare": {
+          "average_precision": 1.0,
+          "f1_at_5": 0.3333,
+          "profiles": 4,
+          "recall_at_5": 1.0,
+          "reciprocal_rank": 1.0
+        },
+        "Software": {
+          "average_precision": 1.0,
+          "f1_at_5": 0.497,
+          "profiles": 5,
+          "recall_at_5": 1.0,
+          "reciprocal_rank": 1.0
+        }
+      },
+      "careers_recommended": 50,
+      "catalogue_coverage": 1.0,
+      "category_distribution": {
+        "Business": {
+          "count": 27,
+          "share": 0.15
+        },
+        "Cybersecurity": {
+          "count": 18,
+          "share": 0.1
+        },
+        "Data and AI": {
+          "count": 36,
+          "share": 0.2
+        },
+        "Design": {
+          "count": 19,
+          "share": 0.1056
+        },
+        "Education": {
+          "count": 17,
+          "share": 0.0944
+        },
+        "Engineering": {
+          "count": 12,
+          "share": 0.0667
+        },
+        "Healthcare": {
+          "count": 22,
+          "share": 0.1222
+        },
+        "Software": {
+          "count": 29,
+          "share": 0.1611
+        }
+      },
+      "per_profile": [
+        {
+          "attainable_precision_at_5": 1.0,
+          "average_precision": 1.0,
+          "f1_at_5": 0.75,
+          "hit_at_5": 1.0,
+          "precision_at_5": 0.6,
+          "primary_category": "Data and AI",
+          "profile_id": "P01",
+          "profile_type": "strong match",
+          "r_precision": 1.0,
+          "recall_at_5": 1.0,
+          "reciprocal_rank": 1.0,
+          "relevant": [
+            "C001",
+            "C002",
+            "C006"
+          ],
+          "relevant_ranks": {
+            "C001": 1,
+            "C002": 2,
+            "C006": 3
+          },
+          "top_k": [
+            "C001",
+            "C002",
+            "C006",
+            "C003",
+            "C031"
+          ],
+          "top_k_scores": [
+            86.2,
+            65.8,
+            46.2,
+            45.0,
+            42.5
+          ]
+        },
+        {
+          "attainable_precision_at_5": 1.0,
+          "average_precision": 1.0,
+          "f1_at_5": 0.5714,
+          "hit_at_5": 1.0,
+          "precision_at_5": 0.4,
+          "primary_category": "Data and AI",
+          "profile_id": "P02",
+          "profile_type": "strong match",
+          "r_precision": 1.0,
+          "recall_at_5": 1.0,
+          "reciprocal_rank": 1.0,
+          "relevant": [
+            "C004",
+            "C002"
+          ],
+          "relevant_ranks": {
+            "C002": 1,
+            "C004": 2
+          },
+          "top_k": [
+            "C002",
+            "C004",
+            "C028",
+            "C016",
+            "C029"
+          ],
+          "top_k_scores": [
+            74.2,
+            72.5,
+            55.0,
+            45.0,
+            41.7
+          ]
+        },
+        {
+          "attainable_precision_at_5": 1.0,
+          "average_precision": 0.3333,
+          "f1_at_5": 0.3333,
+          "hit_at_5": 1.0,
+          "precision_at_5": 0.2,
+          "primary_category": "Data and AI",
+          "profile_id": "P03",
+          "profile_type": "limited skills",
+          "r_precision": 0.0,
+          "recall_at_5": 1.0,
+          "reciprocal_rank": 0.3333,
+          "relevant": [
+            "C002"
+          ],
+          "relevant_ranks": {
+            "C002": 3
+          },
+          "top_k": [
+            "C029",
+            "C030",
+            "C002",
+            "C004",
+            "C028"
+          ],
+          "top_k_scores": [
+            32.1,
+            27.1,
+            26.2,
+            26.2,
+            26.2
+          ]
+        },
+        {
+          "attainable_precision_at_5": 1.0,
+          "average_precision": 1.0,
+          "f1_at_5": 0.75,
+          "hit_at_5": 1.0,
+          "precision_at_5": 0.6,
+          "primary_category": "Data and AI",
+          "profile_id": "P04",
+          "profile_type": "missing information",
+          "r_precision": 1.0,
+          "recall_at_5": 1.0,
+          "reciprocal_rank": 1.0,
+          "relevant": [
+            "C003",
+            "C007",
+            "C001"
+          ],
+          "relevant_ranks": {
+            "C001": 3,
+            "C003": 2,
+            "C007": 1
+          },
+          "top_k": [
+            "C007",
+            "C003",
+            "C001",
+            "C005",
+            "C015"
+          ],
+          "top_k_scores": [
+            56.0,
+            55.8,
+            31.3,
+            17.5,
+            17.5
+          ]
+        },
+        {
+          "attainable_precision_at_5": 1.0,
+          "average_precision": 1.0,
+          "f1_at_5": 0.3333,
+          "hit_at_5": 1.0,
+          "precision_at_5": 0.2,
+          "primary_category": "Software",
+          "profile_id": "P05",
+          "profile_type": "strong match",
+          "r_precision": 1.0,
+          "recall_at_5": 1.0,
+          "reciprocal_rank": 1.0,
+          "relevant": [
+            "C010"
+          ],
+          "relevant_ranks": {
+            "C010": 1
+          },
+          "top_k": [
+            "C010",
+            "C012",
+            "C009",
+            "C015",
+            "C013"
+          ],
+          "top_k_scores": [
+            87.1,
+            31.2,
+            26.2,
+            26.2,
+            22.8
+          ]
+        },
+        {
+          "attainable_precision_at_5": 1.0,
+          "average_precision": 1.0,
+          "f1_at_5": 0.5714,
+          "hit_at_5": 1.0,
+          "precision_at_5": 0.4,
+          "primary_category": "Software",
+          "profile_id": "P06",
+          "profile_type": "strong match",
+          "r_precision": 1.0,
+          "recall_at_5": 1.0,
+          "reciprocal_rank": 1.0,
+          "relevant": [
+            "C009",
+            "C015"
+          ],
+          "relevant_ranks": {
+            "C009": 2,
+            "C015": 1
+          },
+          "top_k": [
+            "C015",
+            "C009",
+            "C008",
+            "C010",
+            "C013"
+          ],
+          "top_k_scores": [
+            72.5,
+            70.8,
+            33.3,
+            30.8,
+            29.0
+          ]
+        },
+        {
+          "attainable_precision_at_5": 1.0,
+          "average_precision": 1.0,
+          "f1_at_5": 0.75,
+          "hit_at_5": 1.0,
+          "precision_at_5": 0.6,
+          "primary_category": "Software",
+          "profile_id": "P07",
+          "profile_type": "career transition",
+          "r_precision": 1.0,
+          "recall_at_5": 1.0,
+          "reciprocal_rank": 1.0,
+          "relevant": [
+            "C013",
+            "C020",
+            "C014"
+          ],
+          "relevant_ranks": {
+            "C013": 1,
+            "C014": 3,
+            "C020": 2
+          },
+          "top_k": [
+            "C013",
+            "C020",
+            "C014",
+            "C008",
+            "C018"
+          ],
+          "top_k_scores": [
+            71.0,
+            55.0,
+            48.3,
+            41.7,
+            37.5
+          ]
+        },
+        {
+          "attainable_precision_at_5": 1.0,
+          "average_precision": 1.0,
+          "f1_at_5": 0.3333,
+          "hit_at_5": 1.0,
+          "precision_at_5": 0.2,
+          "primary_category": "Software",
+          "profile_id": "P08",
+          "profile_type": "strong match",
+          "r_precision": 1.0,
+          "recall_at_5": 1.0,
+          "reciprocal_rank": 1.0,
+          "relevant": [
+            "C012"
+          ],
+          "relevant_ranks": {
+            "C012": 1
+          },
+          "top_k": [
+            "C012",
+            "C010",
+            "C009",
+            "C015",
+            "C024"
+          ],
+          "top_k_scores": [
+            85.0,
+            32.5,
+            27.5,
+            27.5,
+            27.5
+          ]
+        },
+        {
+          "attainable_precision_at_5": 1.0,
+          "average_precision": 0.8333,
+          "f1_at_5": 0.5714,
+          "hit_at_5": 1.0,
+          "precision_at_5": 0.4,
+          "primary_category": "Cybersecurity",
+          "profile_id": "P09",
+          "profile_type": "strong match",
+          "r_precision": 0.5,
+          "recall_at_5": 1.0,
+          "reciprocal_rank": 1.0,
+          "relevant": [
+            "C018",
+            "C017"
+          ],
+          "relevant_ranks": {
+            "C017": 3,
+            "C018": 1
+          },
+          "top_k": [
+            "C018",
+            "C020",
+            "C017",
+            "C008",
+            "C019"
+          ],
+          "top_k_scores": [
+            90.0,
+            45.0,
+            39.2,
+            33.3,
+            33.3
+          ]
+        },
+        {
+          "attainable_precision_at_5": 1.0,
+          "average_precision": 1.0,
+          "f1_at_5": 0.5714,
+          "hit_at_5": 1.0,
+          "precision_at_5": 0.4,
+          "primary_category": "Cybersecurity",
+          "profile_id": "P10",
+          "profile_type": "strong match",
+          "r_precision": 1.0,
+          "recall_at_5": 1.0,
+          "reciprocal_rank": 1.0,
+          "relevant": [
+            "C017",
+            "C019"
+          ],
+          "relevant_ranks": {
+            "C017": 1,
+            "C019": 2
+          },
+          "top_k": [
+            "C017",
+            "C019",
+            "C021",
+            "C018",
+            "C022"
+          ],
+          "top_k_scores": [
+            80.0,
+            38.3,
+            28.3,
+            27.5,
+            27.5
+          ]
+        },
+        {
+          "attainable_precision_at_5": 1.0,
+          "average_precision": 1.0,
+          "f1_at_5": 0.5714,
+          "hit_at_5": 1.0,
+          "precision_at_5": 0.4,
+          "primary_category": "Cybersecurity",
+          "profile_id": "P11",
+          "profile_type": "career transition",
+          "r_precision": 1.0,
+          "recall_at_5": 1.0,
+          "reciprocal_rank": 1.0,
+          "relevant": [
+            "C020",
+            "C021"
+          ],
+          "relevant_ranks": {
+            "C020": 1,
+            "C021": 2
+          },
+          "top_k": [
+            "C020",
+            "C021",
+            "C014",
+            "C018",
+            "C008"
+          ],
+          "top_k_scores": [
+            83.8,
+            60.4,
+            48.8,
+            43.8,
+            37.1
+          ]
+        },
+        {
+          "attainable_precision_at_5": 1.0,
+          "average_precision": 1.0,
+          "f1_at_5": 0.3333,
+          "hit_at_5": 1.0,
+          "precision_at_5": 0.2,
+          "primary_category": "Cybersecurity",
+          "profile_id": "P12",
+          "profile_type": "limited skills",
+          "r_precision": 1.0,
+          "recall_at_5": 1.0,
+          "reciprocal_rank": 1.0,
+          "relevant": [
+            "C022"
+          ],
+          "relevant_ranks": {
+            "C022": 1
+          },
+          "top_k": [
+            "C022",
+            "C017",
+            "C018",
+            "C019",
+            "C001"
+          ],
+          "top_k_scores": [
+            22.5,
+            5.0,
+            5.0,
+            5.0,
+            0.0
+          ]
+        },
+        {
+          "attainable_precision_at_5": 1.0,
+          "average_precision": 1.0,
+          "f1_at_5": 0.3333,
+          "hit_at_5": 1.0,
+          "precision_at_5": 0.2,
+          "primary_category": "Design",
+          "profile_id": "P13",
+          "profile_type": "strong match",
+          "r_precision": 1.0,
+          "recall_at_5": 1.0,
+          "reciprocal_rank": 1.0,
+          "relevant": [
+            "C023"
+          ],
+          "relevant_ranks": {
+            "C023": 1
+          },
+          "top_k": [
+            "C023",
+            "C027",
+            "C025",
+            "C026",
+            "C010"
+          ],
+          "top_k_scores": [
+            88.8,
+            42.1,
+            37.1,
+            13.8,
+            8.8
+          ]
+        },
+        {
+          "attainable_precision_at_5": 1.0,
+          "average_precision": 1.0,
+          "f1_at_5": 0.3333,
+          "hit_at_5": 1.0,
+          "precision_at_5": 0.2,
+          "primary_category": "Design",
+          "profile_id": "P14",
+          "profile_type": "career transition",
+          "r_precision": 1.0,
+          "recall_at_5": 1.0,
+          "reciprocal_rank": 1.0,
+          "relevant": [
+            "C024"
+          ],
+          "relevant_ranks": {
+            "C024": 1
+          },
+          "top_k": [
+            "C024",
+            "C010",
+            "C012",
+            "C026",
+            "C023"
+          ],
+          "top_k_scores": [
+            90.0,
+            27.5,
+            27.5,
+            20.0,
+            15.0
+          ]
+        },
+        {
+          "attainable_precision_at_5": 1.0,
+          "average_precision": 1.0,
+          "f1_at_5": 0.3333,
+          "hit_at_5": 1.0,
+          "precision_at_5": 0.2,
+          "primary_category": "Design",
+          "profile_id": "P15",
+          "profile_type": "strong match",
+          "r_precision": 1.0,
+          "recall_at_5": 1.0,
+          "reciprocal_rank": 1.0,
+          "relevant": [
+            "C027"
+          ],
+          "relevant_ranks": {
+            "C027": 1
+          },
+          "top_k": [
+            "C027",
+            "C026",
+            "C036",
+            "C043",
+            "C003"
+          ],
+          "top_k_scores": [
+            65.4,
+            32.1,
+            12.5,
+            10.0,
+            8.8
+          ]
+        },
+        {
+          "attainable_precision_at_5": 1.0,
+          "average_precision": 0.75,
+          "f1_at_5": 0.5714,
+          "hit_at_5": 1.0,
+          "precision_at_5": 0.4,
+          "primary_category": "Design",
+          "profile_id": "P16",
+          "profile_type": "mixed skills",
+          "r_precision": 0.5,
+          "recall_at_5": 1.0,
+          "reciprocal_rank": 1.0,
+          "relevant": [
+            "C025",
+            "C026"
+          ],
+          "relevant_ranks": {
+            "C025": 1,
+            "C026": 4
+          },
+          "top_k": [
+            "C025",
+            "C046",
+            "C023",
+            "C026",
+            "C032"
+          ],
+          "top_k_scores": [
+            90.0,
+            40.0,
+            33.3,
+            33.3,
+            27.5
+          ]
+        },
+        {
+          "attainable_precision_at_5": 1.0,
+          "average_precision": 1.0,
+          "f1_at_5": 0.5714,
+          "hit_at_5": 1.0,
+          "precision_at_5": 0.4,
+          "primary_category": "Business",
+          "profile_id": "P17",
+          "profile_type": "strong match",
+          "r_precision": 1.0,
+          "recall_at_5": 1.0,
+          "reciprocal_rank": 1.0,
+          "relevant": [
+            "C030",
+            "C029"
+          ],
+          "relevant_ranks": {
+            "C029": 2,
+            "C030": 1
+          },
+          "top_k": [
+            "C030",
+            "C029",
+            "C004",
+            "C028",
+            "C002"
+          ],
+          "top_k_scores": [
+            95.0,
+            85.0,
+            32.5,
+            32.5,
+            27.5
+          ]
+        },
+        {
+          "attainable_precision_at_5": 1.0,
+          "average_precision": 1.0,
+          "f1_at_5": 0.3333,
+          "hit_at_5": 1.0,
+          "precision_at_5": 0.2,
+          "primary_category": "Business",
+          "profile_id": "P18",
+          "profile_type": "strong match",
+          "r_precision": 1.0,
+          "recall_at_5": 1.0,
+          "reciprocal_rank": 1.0,
+          "relevant": [
+            "C034"
+          ],
+          "relevant_ranks": {
+            "C034": 1
+          },
+          "top_k": [
+            "C034",
+            "C033",
+            "C002",
+            "C004",
+            "C016"
+          ],
+          "top_k_scores": [
+            90.0,
+            15.0,
+            10.0,
+            10.0,
+            10.0
+          ]
+        },
+        {
+          "attainable_precision_at_5": 1.0,
+          "average_precision": 1.0,
+          "f1_at_5": 0.5714,
+          "hit_at_5": 1.0,
+          "precision_at_5": 0.4,
+          "primary_category": "Business",
+          "profile_id": "P19",
+          "profile_type": "strong match",
+          "r_precision": 1.0,
+          "recall_at_5": 1.0,
+          "reciprocal_rank": 1.0,
+          "relevant": [
+            "C032",
+            "C028"
+          ],
+          "relevant_ranks": {
+            "C028": 2,
+            "C032": 1
+          },
+          "top_k": [
+            "C032",
+            "C028",
+            "C016",
+            "C030",
+            "C033"
+          ],
+          "top_k_scores": [
+            90.0,
+            57.5,
+            40.0,
+            38.3,
+            38.3
+          ]
+        },
+        {
+          "attainable_precision_at_5": 1.0,
+          "average_precision": 1.0,
+          "f1_at_5": 0.3333,
+          "hit_at_5": 1.0,
+          "precision_at_5": 0.2,
+          "primary_category": "Business",
+          "profile_id": "P20",
+          "profile_type": "strong match",
+          "r_precision": 1.0,
+          "recall_at_5": 1.0,
+          "reciprocal_rank": 1.0,
+          "relevant": [
+            "C033"
+          ],
+          "relevant_ranks": {
+            "C033": 1
+          },
+          "top_k": [
+            "C033",
+            "C038",
+            "C011",
+            "C016",
+            "C028"
+          ],
+          "top_k_scores": [
+            85.0,
+            32.1,
+            28.3,
+            27.5,
+            27.5
+          ]
+        },
+        {
+          "attainable_precision_at_5": 1.0,
+          "average_precision": 1.0,
+          "f1_at_5": 0.5714,
+          "hit_at_5": 1.0,
+          "precision_at_5": 0.4,
+          "primary_category": "Data and AI",
+          "profile_id": "P21",
+          "profile_type": "mixed skills",
+          "r_precision": 1.0,
+          "recall_at_5": 1.0,
+          "reciprocal_rank": 1.0,
+          "relevant": [
+            "C001",
+            "C002"
+          ],
+          "relevant_ranks": {
+            "C001": 1,
+            "C002": 2
+          },
+          "top_k": [
+            "C001",
+            "C002",
+            "C031",
+            "C029",
+            "C003"
+          ],
+          "top_k_scores": [
+            68.5,
+            65.8,
+            51.7,
+            48.3,
+            45.0
+          ]
+        },
+        {
+          "attainable_precision_at_5": 1.0,
+          "average_precision": 1.0,
+          "f1_at_5": 0.5714,
+          "hit_at_5": 1.0,
+          "precision_at_5": 0.4,
+          "primary_category": "Education",
+          "profile_id": "P22",
+          "profile_type": "strong match",
+          "r_precision": 1.0,
+          "recall_at_5": 1.0,
+          "reciprocal_rank": 1.0,
+          "relevant": [
+            "C035",
+            "C037"
+          ],
+          "relevant_ranks": {
+            "C035": 1,
+            "C037": 2
+          },
+          "top_k": [
+            "C035",
+            "C037",
+            "C038",
+            "C033",
+            "C011"
+          ],
+          "top_k_scores": [
+            85.0,
+            72.5,
+            42.1,
+            33.3,
+            28.3
+          ]
+        },
+        {
+          "attainable_precision_at_5": 1.0,
+          "average_precision": 1.0,
+          "f1_at_5": 0.5714,
+          "hit_at_5": 1.0,
+          "precision_at_5": 0.4,
+          "primary_category": "Education",
+          "profile_id": "P23",
+          "profile_type": "strong match",
+          "r_precision": 1.0,
+          "recall_at_5": 1.0,
+          "reciprocal_rank": 1.0,
+          "relevant": [
+            "C037",
+            "C035"
+          ],
+          "relevant_ranks": {
+            "C035": 2,
+            "C037": 1
+          },
+          "top_k": [
+            "C037",
+            "C035",
+            "C038",
+            "C033",
+            "C039"
+          ],
+          "top_k_scores": [
+            72.5,
+            60.0,
+            37.1,
+            33.3,
+            31.2
+          ]
+        },
+        {
+          "attainable_precision_at_5": 1.0,
+          "average_precision": 1.0,
+          "f1_at_5": 0.3333,
+          "hit_at_5": 1.0,
+          "precision_at_5": 0.2,
+          "primary_category": "Education",
+          "profile_id": "P24",
+          "profile_type": "career transition",
+          "r_precision": 1.0,
+          "recall_at_5": 1.0,
+          "reciprocal_rank": 1.0,
+          "relevant": [
+            "C036"
+          ],
+          "relevant_ranks": {
+            "C036": 1
+          },
+          "top_k": [
+            "C036",
+            "C039",
+            "C049",
+            "C027",
+            "C035"
+          ],
+          "top_k_scores": [
+            77.5,
+            25.0,
+            22.5,
+            20.0,
+            20.0
+          ]
+        },
+        {
+          "attainable_precision_at_5": 1.0,
+          "average_precision": 1.0,
+          "f1_at_5": 0.3333,
+          "hit_at_5": 1.0,
+          "precision_at_5": 0.2,
+          "primary_category": "Education",
+          "profile_id": "P25",
+          "profile_type": "mixed skills",
+          "r_precision": 1.0,
+          "recall_at_5": 1.0,
+          "reciprocal_rank": 1.0,
+          "relevant": [
+            "C039"
+          ],
+          "relevant_ranks": {
+            "C039": 1
+          },
+          "top_k": [
+            "C039",
+            "C015",
+            "C007",
+            "C006",
+            "C003"
+          ],
+          "top_k_scores": [
+            90.0,
+            45.0,
+            43.0,
+            32.5,
+            27.5
+          ]
+        },
+        {
+          "attainable_precision_at_5": 1.0,
+          "average_precision": 1.0,
+          "f1_at_5": 0.3333,
+          "hit_at_5": 1.0,
+          "precision_at_5": 0.2,
+          "primary_category": "Healthcare",
+          "profile_id": "P26",
+          "profile_type": "strong match",
+          "r_precision": 1.0,
+          "recall_at_5": 1.0,
+          "reciprocal_rank": 1.0,
+          "relevant": [
+            "C040"
+          ],
+          "relevant_ranks": {
+            "C040": 1
+          },
+          "top_k": [
+            "C040",
+            "C045",
+            "C041",
+            "C043",
+            "C042"
+          ],
+          "top_k_scores": [
+            72.5,
+            60.4,
+            48.8,
+            33.3,
+            32.5
+          ]
+        },
+        {
+          "attainable_precision_at_5": 1.0,
+          "average_precision": 1.0,
+          "f1_at_5": 0.3333,
+          "hit_at_5": 1.0,
+          "precision_at_5": 0.2,
+          "primary_category": "Healthcare",
+          "profile_id": "P27",
+          "profile_type": "strong match",
+          "r_precision": 1.0,
+          "recall_at_5": 1.0,
+          "reciprocal_rank": 1.0,
+          "relevant": [
+            "C042"
+          ],
+          "relevant_ranks": {
+            "C042": 1
+          },
+          "top_k": [
+            "C042",
+            "C044",
+            "C049",
+            "C041",
+            "C002"
+          ],
+          "top_k_scores": [
+            67.5,
+            27.5,
+            27.5,
+            26.2,
+            10.0
+          ]
+        },
+        {
+          "attainable_precision_at_5": 1.0,
+          "average_precision": 1.0,
+          "f1_at_5": 0.3333,
+          "hit_at_5": 1.0,
+          "precision_at_5": 0.2,
+          "primary_category": "Healthcare",
+          "profile_id": "P28",
+          "profile_type": "strong match",
+          "r_precision": 1.0,
+          "recall_at_5": 1.0,
+          "reciprocal_rank": 1.0,
+          "relevant": [
+            "C043"
+          ],
+          "relevant_ranks": {
+            "C043": 1
+          },
+          "top_k": [
+            "C043",
+            "C030",
+            "C041",
+            "C029",
+            "C004"
+          ],
+          "top_k_scores": [
+            90.0,
+            32.1,
+            30.0,
+            27.1,
+            26.2
+          ]
+        },
+        {
+          "attainable_precision_at_5": 1.0,
+          "average_precision": 1.0,
+          "f1_at_5": 0.3333,
+          "hit_at_5": 1.0,
+          "precision_at_5": 0.2,
+          "primary_category": "Healthcare",
+          "profile_id": "P29",
+          "profile_type": "strong match",
+          "r_precision": 1.0,
+          "recall_at_5": 1.0,
+          "reciprocal_rank": 1.0,
+          "relevant": [
+            "C044"
+          ],
+          "relevant_ranks": {
+            "C044": 1
+          },
+          "top_k": [
+            "C044",
+            "C045",
+            "C040",
+            "C041",
+            "C042"
+          ],
+          "top_k_scores": [
+            90.0,
+            42.1,
+            37.5,
+            36.2,
+            32.5
+          ]
+        },
+        {
+          "attainable_precision_at_5": 1.0,
+          "average_precision": 1.0,
+          "f1_at_5": 0.3333,
+          "hit_at_5": 1.0,
+          "precision_at_5": 0.2,
+          "primary_category": "Engineering",
+          "profile_id": "P30",
+          "profile_type": "strong match",
+          "r_precision": 1.0,
+          "recall_at_5": 1.0,
+          "reciprocal_rank": 1.0,
+          "relevant": [
+            "C046"
+          ],
+          "relevant_ranks": {
+            "C046": 1
+          },
+          "top_k": [
+            "C046",
+            "C047",
+            "C050",
+            "C048",
+            "C025"
+          ],
+          "top_k_scores": [
+            85.0,
+            50.0,
+            45.0,
+            43.3,
+            33.3
+          ]
+        },
+        {
+          "attainable_precision_at_5": 1.0,
+          "average_precision": 1.0,
+          "f1_at_5": 0.5714,
+          "hit_at_5": 1.0,
+          "precision_at_5": 0.4,
+          "primary_category": "Engineering",
+          "profile_id": "P31",
+          "profile_type": "overlapping interests",
+          "r_precision": 1.0,
+          "recall_at_5": 1.0,
+          "reciprocal_rank": 1.0,
+          "relevant": [
+            "C048",
+            "C050"
+          ],
+          "relevant_ranks": {
+            "C048": 1,
+            "C050": 2
+          },
+          "top_k": [
+            "C048",
+            "C050",
+            "C045",
+            "C040",
+            "C044"
+          ],
+          "top_k_scores": [
+            80.0,
+            67.5,
+            32.1,
+            27.5,
+            27.5
+          ]
+        },
+        {
+          "attainable_precision_at_5": 1.0,
+          "average_precision": 1.0,
+          "f1_at_5": 0.3333,
+          "hit_at_5": 1.0,
+          "precision_at_5": 0.2,
+          "primary_category": "Engineering",
+          "profile_id": "P32",
+          "profile_type": "strong match",
+          "r_precision": 1.0,
+          "recall_at_5": 1.0,
+          "reciprocal_rank": 1.0,
+          "relevant": [
+            "C049"
+          ],
+          "relevant_ranks": {
+            "C049": 1
+          },
+          "top_k": [
+            "C049",
+            "C042",
+            "C044",
+            "C041",
+            "C036"
+          ],
+          "top_k_scores": [
+            72.5,
+            27.5,
+            27.5,
+            26.2,
+            21.2
+          ]
+        },
+        {
+          "attainable_precision_at_5": 1.0,
+          "average_precision": 0.7,
+          "f1_at_5": 0.5714,
+          "hit_at_5": 1.0,
+          "precision_at_5": 0.4,
+          "primary_category": "Engineering",
+          "profile_id": "P33",
+          "profile_type": "missing information",
+          "r_precision": 0.5,
+          "recall_at_5": 1.0,
+          "reciprocal_rank": 1.0,
+          "relevant": [
+            "C047",
+            "C026"
+          ],
+          "relevant_ranks": {
+            "C026": 1,
+            "C047": 5
+          },
+          "top_k": [
+            "C026",
+            "C025",
+            "C027",
+            "C046",
+            "C047"
+          ],
+          "top_k_scores": [
+            51.7,
+            23.3,
+            23.3,
+            22.5,
+            22.5
+          ]
+        },
+        {
+          "attainable_precision_at_5": 1.0,
+          "average_precision": 1.0,
+          "f1_at_5": 0.75,
+          "hit_at_5": 1.0,
+          "precision_at_5": 0.6,
+          "primary_category": "Business",
+          "profile_id": "P34",
+          "profile_type": "career transition",
+          "r_precision": 1.0,
+          "recall_at_5": 1.0,
+          "reciprocal_rank": 1.0,
+          "relevant": [
+            "C002",
+            "C030",
+            "C029"
+          ],
+          "relevant_ranks": {
+            "C002": 2,
+            "C029": 1,
+            "C030": 3
+          },
+          "top_k": [
+            "C029",
+            "C002",
+            "C030",
+            "C031",
+            "C004"
+          ],
+          "top_k_scores": [
+            68.3,
+            67.5,
+            56.7,
+            53.3,
+            50.0
+          ]
+        },
+        {
+          "attainable_precision_at_5": null,
+          "average_precision": null,
+          "f1_at_5": null,
+          "hit_at_5": null,
+          "precision_at_5": null,
+          "primary_category": "Software",
+          "profile_id": "P35",
+          "profile_type": "missing information",
+          "r_precision": null,
+          "recall_at_5": null,
+          "reciprocal_rank": null,
+          "relevant": [],
+          "relevant_ranks": {},
+          "top_k": [
+            "C003",
+            "C005",
+            "C007",
+            "C008",
+            "C009"
+          ],
+          "top_k_scores": [
+            5.0,
+            5.0,
+            5.0,
+            5.0,
+            5.0
+          ]
+        },
+        {
+          "attainable_precision_at_5": 1.0,
+          "average_precision": 1.0,
+          "f1_at_5": 0.3333,
+          "hit_at_5": 1.0,
+          "precision_at_5": 0.2,
+          "primary_category": "Education",
+          "profile_id": "P36",
+          "profile_type": "overlapping interests",
+          "r_precision": 1.0,
+          "recall_at_5": 1.0,
+          "reciprocal_rank": 1.0,
+          "relevant": [
+            "C036"
+          ],
+          "relevant_ranks": {
+            "C036": 1
+          },
+          "top_k": [
+            "C036",
+            "C010",
+            "C024",
+            "C035",
+            "C039"
+          ],
+          "top_k_scores": [
+            53.8,
+            50.0,
+            20.0,
+            20.0,
+            18.8
+          ]
+        }
+      ],
+      "weights": {
+        "education": 0.05,
+        "interests": 0.15,
+        "preferred_skills": 0.1,
+        "required_skills": 0.7
+      }
+    },
+    "C_strong_required": {
+      "aggregate": {
+        "attainable_precision_at_5": {
+          "ci95": [
+            1.0,
+            1.0
+          ],
+          "defined_profiles": 35,
+          "mean": 1.0,
+          "undefined_profiles": 1
+        },
+        "average_precision": {
+          "ci95": [
+            0.9095,
+            0.9914
+          ],
+          "defined_profiles": 35,
+          "mean": 0.9567,
+          "undefined_profiles": 1
+        },
+        "f1_at_5": {
+          "ci95": [
+            0.4217,
+            0.5204
+          ],
+          "defined_profiles": 35,
+          "mean": 0.4694,
+          "undefined_profiles": 1
+        },
+        "hit_at_5": {
+          "ci95": [
+            1.0,
+            1.0
+          ],
+          "defined_profiles": 35,
+          "mean": 1.0,
+          "undefined_profiles": 1
+        },
+        "precision_at_5": {
+          "ci95": [
+            0.28,
+            0.3657
+          ],
+          "defined_profiles": 35,
+          "mean": 0.32,
+          "undefined_profiles": 1
+        },
+        "r_precision": {
+          "ci95": [
+            0.8429,
+            0.9857
+          ],
+          "defined_profiles": 35,
+          "mean": 0.919,
+          "undefined_profiles": 1
+        },
+        "recall_at_5": {
+          "ci95": [
+            1.0,
+            1.0
+          ],
+          "defined_profiles": 35,
+          "mean": 1.0,
+          "undefined_profiles": 1
+        },
+        "reciprocal_rank": {
+          "ci95": [
+            0.9429,
+            1.0
+          ],
+          "defined_profiles": 35,
+          "mean": 0.981,
+          "undefined_profiles": 1
+        }
+      },
+      "by_primary_category": {
+        "Business": {
+          "average_precision": 1.0,
+          "f1_at_5": 0.5119,
+          "profiles": 5,
+          "recall_at_5": 1.0,
+          "reciprocal_rank": 1.0
+        },
+        "Cybersecurity": {
+          "average_precision": 0.9583,
+          "f1_at_5": 0.5119,
+          "profiles": 4,
+          "recall_at_5": 1.0,
+          "reciprocal_rank": 1.0
+        },
+        "Data and AI": {
+          "average_precision": 0.84,
+          "f1_at_5": 0.5952,
+          "profiles": 5,
+          "recall_at_5": 1.0,
+          "reciprocal_rank": 0.8667
+        },
+        "Design": {
+          "average_precision": 0.9375,
+          "f1_at_5": 0.3928,
+          "profiles": 4,
+          "recall_at_5": 1.0,
+          "reciprocal_rank": 1.0
+        },
+        "Education": {
+          "average_precision": 1.0,
+          "f1_at_5": 0.4285,
+          "profiles": 5,
+          "recall_at_5": 1.0,
+          "reciprocal_rank": 1.0
+        },
+        "Engineering": {
+          "average_precision": 0.925,
+          "f1_at_5": 0.4524,
+          "profiles": 4,
+          "recall_at_5": 1.0,
+          "reciprocal_rank": 1.0
+        },
+        "Healthcare": {
+          "average_precision": 1.0,
+          "f1_at_5": 0.3333,
+          "profiles": 4,
+          "recall_at_5": 1.0,
+          "reciprocal_rank": 1.0
+        },
+        "Software": {
+          "average_precision": 1.0,
+          "f1_at_5": 0.497,
+          "profiles": 5,
+          "recall_at_5": 1.0,
+          "reciprocal_rank": 1.0
+        }
+      },
+      "careers_recommended": 50,
+      "catalogue_coverage": 1.0,
+      "category_distribution": {
+        "Business": {
+          "count": 26,
+          "share": 0.1444
+        },
+        "Cybersecurity": {
+          "count": 18,
+          "share": 0.1
+        },
+        "Data and AI": {
+          "count": 38,
+          "share": 0.2111
+        },
+        "Design": {
+          "count": 19,
+          "share": 0.1056
+        },
+        "Education": {
+          "count": 18,
+          "share": 0.1
+        },
+        "Engineering": {
+          "count": 12,
+          "share": 0.0667
+        },
+        "Healthcare": {
+          "count": 21,
+          "share": 0.1167
+        },
+        "Software": {
+          "count": 28,
+          "share": 0.1556
+        }
+      },
+      "per_profile": [
+        {
+          "attainable_precision_at_5": 1.0,
+          "average_precision": 0.8667,
+          "f1_at_5": 0.75,
+          "hit_at_5": 1.0,
+          "precision_at_5": 0.6,
+          "primary_category": "Data and AI",
+          "profile_id": "P01",
+          "profile_type": "strong match",
+          "r_precision": 0.6667,
+          "recall_at_5": 1.0,
+          "reciprocal_rank": 1.0,
+          "relevant": [
+            "C001",
+            "C002",
+            "C006"
+          ],
+          "relevant_ranks": {
+            "C001": 1,
+            "C002": 2,
+            "C006": 5
+          },
+          "top_k": [
+            "C001",
+            "C002",
+            "C003",
+            "C005",
+            "C006"
+          ],
+          "top_k_scores": [
+            87.5,
+            67.9,
+            45.8,
+            42.5,
+            42.5
+          ]
+        },
+        {
+          "attainable_precision_at_5": 1.0,
+          "average_precision": 1.0,
+          "f1_at_5": 0.5714,
+          "hit_at_5": 1.0,
+          "precision_at_5": 0.4,
+          "primary_category": "Data and AI",
+          "profile_id": "P02",
+          "profile_type": "strong match",
+          "r_precision": 1.0,
+          "recall_at_5": 1.0,
+          "reciprocal_rank": 1.0,
+          "relevant": [
+            "C004",
+            "C002"
+          ],
+          "relevant_ranks": {
+            "C002": 1,
+            "C004": 2
+          },
+          "top_k": [
+            "C002",
+            "C004",
+            "C028",
+            "C016",
+            "C029"
+          ],
+          "top_k_scores": [
+            74.6,
+            72.9,
+            54.2,
+            45.8,
+            40.0
+          ]
+        },
+        {
+          "attainable_precision_at_5": 1.0,
+          "average_precision": 0.3333,
+          "f1_at_5": 0.3333,
+          "hit_at_5": 1.0,
+          "precision_at_5": 0.2,
+          "primary_category": "Data and AI",
+          "profile_id": "P03",
+          "profile_type": "limited skills",
+          "r_precision": 0.0,
+          "recall_at_5": 1.0,
+          "reciprocal_rank": 0.3333,
+          "relevant": [
+            "C002"
+          ],
+          "relevant_ranks": {
+            "C002": 3
+          },
+          "top_k": [
+            "C029",
+            "C030",
+            "C002",
+            "C004",
+            "C028"
+          ],
+          "top_k_scores": [
+            32.1,
+            28.8,
+            25.8,
+            25.8,
+            25.8
+          ]
+        },
+        {
+          "attainable_precision_at_5": 1.0,
+          "average_precision": 1.0,
+          "f1_at_5": 0.75,
+          "hit_at_5": 1.0,
+          "precision_at_5": 0.6,
+          "primary_category": "Data and AI",
+          "profile_id": "P04",
+          "profile_type": "missing information",
+          "r_precision": 1.0,
+          "recall_at_5": 1.0,
+          "reciprocal_rank": 1.0,
+          "relevant": [
+            "C003",
+            "C007",
+            "C001"
+          ],
+          "relevant_ranks": {
+            "C001": 3,
+            "C003": 2,
+            "C007": 1
+          },
+          "top_k": [
+            "C007",
+            "C003",
+            "C001",
+            "C005",
+            "C015"
+          ],
+          "top_k_scores": [
+            60.0,
+            59.6,
+            33.3,
+            18.8,
+            18.8
+          ]
+        },
+        {
+          "attainable_precision_at_5": 1.0,
+          "average_precision": 1.0,
+          "f1_at_5": 0.3333,
+          "hit_at_5": 1.0,
+          "precision_at_5": 0.2,
+          "primary_category": "Software",
+          "profile_id": "P05",
+          "profile_type": "strong match",
+          "r_precision": 1.0,
+          "recall_at_5": 1.0,
+          "reciprocal_rank": 1.0,
+          "relevant": [
+            "C010"
+          ],
+          "relevant_ranks": {
+            "C010": 1
+          },
+          "top_k": [
+            "C010",
+            "C012",
+            "C009",
+            "C015",
+            "C013"
+          ],
+          "top_k_scores": [
+            88.8,
+            29.2,
+            25.8,
+            25.8,
+            22.1
+          ]
+        },
+        {
+          "attainable_precision_at_5": 1.0,
+          "average_precision": 1.0,
+          "f1_at_5": 0.5714,
+          "hit_at_5": 1.0,
+          "precision_at_5": 0.4,
+          "primary_category": "Software",
+          "profile_id": "P06",
+          "profile_type": "strong match",
+          "r_precision": 1.0,
+          "recall_at_5": 1.0,
+          "reciprocal_rank": 1.0,
+          "relevant": [
+            "C009",
+            "C015"
+          ],
+          "relevant_ranks": {
+            "C009": 2,
+            "C015": 1
+          },
+          "top_k": [
+            "C015",
+            "C009",
+            "C008",
+            "C010",
+            "C002"
+          ],
+          "top_k_scores": [
+            72.9,
+            71.2,
+            33.3,
+            30.4,
+            27.1
+          ]
+        },
+        {
+          "attainable_precision_at_5": 1.0,
+          "average_precision": 1.0,
+          "f1_at_5": 0.75,
+          "hit_at_5": 1.0,
+          "precision_at_5": 0.6,
+          "primary_category": "Software",
+          "profile_id": "P07",
+          "profile_type": "career transition",
+          "r_precision": 1.0,
+          "recall_at_5": 1.0,
+          "reciprocal_rank": 1.0,
+          "relevant": [
+            "C013",
+            "C020",
+            "C014"
+          ],
+          "relevant_ranks": {
+            "C013": 1,
+            "C014": 3,
+            "C020": 2
+          },
+          "top_k": [
+            "C013",
+            "C020",
+            "C014",
+            "C008",
+            "C018"
+          ],
+          "top_k_scores": [
+            71.7,
+            54.2,
+            49.2,
+            40.0,
+            35.4
+          ]
+        },
+        {
+          "attainable_precision_at_5": 1.0,
+          "average_precision": 1.0,
+          "f1_at_5": 0.3333,
+          "hit_at_5": 1.0,
+          "precision_at_5": 0.2,
+          "primary_category": "Software",
+          "profile_id": "P08",
+          "profile_type": "strong match",
+          "r_precision": 1.0,
+          "recall_at_5": 1.0,
+          "reciprocal_rank": 1.0,
+          "relevant": [
+            "C012"
+          ],
+          "relevant_ranks": {
+            "C012": 1
+          },
+          "top_k": [
+            "C012",
+            "C010",
+            "C009",
+            "C015",
+            "C024"
+          ],
+          "top_k_scores": [
+            86.7,
+            30.4,
+            27.1,
+            27.1,
+            27.1
+          ]
+        },
+        {
+          "attainable_precision_at_5": 1.0,
+          "average_precision": 0.8333,
+          "f1_at_5": 0.5714,
+          "hit_at_5": 1.0,
+          "precision_at_5": 0.4,
+          "primary_category": "Cybersecurity",
+          "profile_id": "P09",
+          "profile_type": "strong match",
+          "r_precision": 0.5,
+          "recall_at_5": 1.0,
+          "reciprocal_rank": 1.0,
+          "relevant": [
+            "C018",
+            "C017"
+          ],
+          "relevant_ranks": {
+            "C017": 3,
+            "C018": 1
+          },
+          "top_k": [
+            "C018",
+            "C020",
+            "C017",
+            "C008",
+            "C019"
+          ],
+          "top_k_scores": [
+            91.7,
+            45.8,
+            37.1,
+            33.3,
+            33.3
+          ]
+        },
+        {
+          "attainable_precision_at_5": 1.0,
+          "average_precision": 1.0,
+          "f1_at_5": 0.5714,
+          "hit_at_5": 1.0,
+          "precision_at_5": 0.4,
+          "primary_category": "Cybersecurity",
+          "profile_id": "P10",
+          "profile_type": "strong match",
+          "r_precision": 1.0,
+          "recall_at_5": 1.0,
+          "reciprocal_rank": 1.0,
+          "relevant": [
+            "C017",
+            "C019"
+          ],
+          "relevant_ranks": {
+            "C017": 1,
+            "C019": 2
+          },
+          "top_k": [
+            "C017",
+            "C019",
+            "C021",
+            "C018",
+            "C022"
+          ],
+          "top_k_scores": [
+            83.3,
+            36.7,
+            30.0,
+            27.1,
+            27.1
+          ]
+        },
+        {
+          "attainable_precision_at_5": 1.0,
+          "average_precision": 1.0,
+          "f1_at_5": 0.5714,
+          "hit_at_5": 1.0,
+          "precision_at_5": 0.4,
+          "primary_category": "Cybersecurity",
+          "profile_id": "P11",
+          "profile_type": "career transition",
+          "r_precision": 1.0,
+          "recall_at_5": 1.0,
+          "reciprocal_rank": 1.0,
+          "relevant": [
+            "C020",
+            "C021"
+          ],
+          "relevant_ranks": {
+            "C020": 1,
+            "C021": 2
+          },
+          "top_k": [
+            "C020",
+            "C021",
+            "C014",
+            "C018",
+            "C008"
+          ],
+          "top_k_scores": [
+            85.4,
+            60.4,
+            47.9,
+            44.6,
+            35.4
+          ]
+        },
+        {
+          "attainable_precision_at_5": 1.0,
+          "average_precision": 1.0,
+          "f1_at_5": 0.3333,
+          "hit_at_5": 1.0,
+          "precision_at_5": 0.2,
+          "primary_category": "Cybersecurity",
+          "profile_id": "P12",
+          "profile_type": "limited skills",
+          "r_precision": 1.0,
+          "recall_at_5": 1.0,
+          "reciprocal_rank": 1.0,
+          "relevant": [
+            "C022"
+          ],
+          "relevant_ranks": {
+            "C022": 1
+          },
+          "top_k": [
+            "C022",
+            "C017",
+            "C018",
+            "C019",
+            "C001"
+          ],
+          "top_k_scores": [
+            22.1,
+            3.3,
+            3.3,
+            3.3,
+            0.0
+          ]
+        },
+        {
+          "attainable_precision_at_5": 1.0,
+          "average_precision": 1.0,
+          "f1_at_5": 0.3333,
+          "hit_at_5": 1.0,
+          "precision_at_5": 0.2,
+          "primary_category": "Design",
+          "profile_id": "P13",
+          "profile_type": "strong match",
+          "r_precision": 1.0,
+          "recall_at_5": 1.0,
+          "reciprocal_rank": 1.0,
+          "relevant": [
+            "C023"
+          ],
+          "relevant_ranks": {
+            "C023": 1
+          },
+          "top_k": [
+            "C023",
+            "C027",
+            "C025",
+            "C026",
+            "C010"
+          ],
+          "top_k_scores": [
+            90.4,
+            40.4,
+            35.4,
+            10.4,
+            7.1
+          ]
+        },
+        {
+          "attainable_precision_at_5": 1.0,
+          "average_precision": 1.0,
+          "f1_at_5": 0.3333,
+          "hit_at_5": 1.0,
+          "precision_at_5": 0.2,
+          "primary_category": "Design",
+          "profile_id": "P14",
+          "profile_type": "career transition",
+          "r_precision": 1.0,
+          "recall_at_5": 1.0,
+          "reciprocal_rank": 1.0,
+          "relevant": [
+            "C024"
+          ],
+          "relevant_ranks": {
+            "C024": 1
+          },
+          "top_k": [
+            "C024",
+            "C010",
+            "C012",
+            "C026",
+            "C023"
+          ],
+          "top_k_scores": [
+            91.7,
+            27.1,
+            27.1,
+            18.3,
+            13.3
+          ]
+        },
+        {
+          "attainable_precision_at_5": 1.0,
+          "average_precision": 1.0,
+          "f1_at_5": 0.3333,
+          "hit_at_5": 1.0,
+          "precision_at_5": 0.2,
+          "primary_category": "Design",
+          "profile_id": "P15",
+          "profile_type": "strong match",
+          "r_precision": 1.0,
+          "recall_at_5": 1.0,
+          "reciprocal_rank": 1.0,
+          "relevant": [
+            "C027"
+          ],
+          "relevant_ranks": {
+            "C027": 1
+          },
+          "top_k": [
+            "C027",
+            "C026",
+            "C036",
+            "C043",
+            "C003"
+          ],
+          "top_k_scores": [
+            65.4,
+            32.1,
+            10.8,
+            8.3,
+            7.1
+          ]
+        },
+        {
+          "attainable_precision_at_5": 1.0,
+          "average_precision": 0.75,
+          "f1_at_5": 0.5714,
+          "hit_at_5": 1.0,
+          "precision_at_5": 0.4,
+          "primary_category": "Design",
+          "profile_id": "P16",
+          "profile_type": "mixed skills",
+          "r_precision": 0.5,
+          "recall_at_5": 1.0,
+          "reciprocal_rank": 1.0,
+          "relevant": [
+            "C025",
+            "C026"
+          ],
+          "relevant_ranks": {
+            "C025": 1,
+            "C026": 4
+          },
+          "top_k": [
+            "C025",
+            "C046",
+            "C023",
+            "C026",
+            "C032"
+          ],
+          "top_k_scores": [
+            91.7,
+            42.5,
+            33.3,
+            33.3,
+            27.1
+          ]
+        },
+        {
+          "attainable_precision_at_5": 1.0,
+          "average_precision": 1.0,
+          "f1_at_5": 0.5714,
+          "hit_at_5": 1.0,
+          "precision_at_5": 0.4,
+          "primary_category": "Business",
+          "profile_id": "P17",
+          "profile_type": "strong match",
+          "r_precision": 1.0,
+          "recall_at_5": 1.0,
+          "reciprocal_rank": 1.0,
+          "relevant": [
+            "C030",
+            "C029"
+          ],
+          "relevant_ranks": {
+            "C029": 2,
+            "C030": 1
+          },
+          "top_k": [
+            "C030",
+            "C029",
+            "C028",
+            "C004",
+            "C002"
+          ],
+          "top_k_scores": [
+            95.0,
+            86.7,
+            32.1,
+            30.4,
+            27.1
+          ]
+        },
+        {
+          "attainable_precision_at_5": 1.0,
+          "average_precision": 1.0,
+          "f1_at_5": 0.3333,
+          "hit_at_5": 1.0,
+          "precision_at_5": 0.2,
+          "primary_category": "Business",
+          "profile_id": "P18",
+          "profile_type": "strong match",
+          "r_precision": 1.0,
+          "recall_at_5": 1.0,
+          "reciprocal_rank": 1.0,
+          "relevant": [
+            "C034"
+          ],
+          "relevant_ranks": {
+            "C034": 1
+          },
+          "top_k": [
+            "C034",
+            "C033",
+            "C002",
+            "C004",
+            "C016"
+          ],
+          "top_k_scores": [
+            90.0,
+            11.7,
+            8.3,
+            8.3,
+            8.3
+          ]
+        },
+        {
+          "attainable_precision_at_5": 1.0,
+          "average_precision": 1.0,
+          "f1_at_5": 0.5714,
+          "hit_at_5": 1.0,
+          "precision_at_5": 0.4,
+          "primary_category": "Business",
+          "profile_id": "P19",
+          "profile_type": "strong match",
+          "r_precision": 1.0,
+          "recall_at_5": 1.0,
+          "reciprocal_rank": 1.0,
+          "relevant": [
+            "C032",
+            "C028"
+          ],
+          "relevant_ranks": {
+            "C028": 2,
+            "C032": 1
+          },
+          "top_k": [
+            "C032",
+            "C028",
+            "C016",
+            "C033",
+            "C030"
+          ],
+          "top_k_scores": [
+            91.7,
+            61.2,
+            42.5,
+            40.0,
+            38.3
+          ]
+        },
+        {
+          "attainable_precision_at_5": 1.0,
+          "average_precision": 1.0,
+          "f1_at_5": 0.3333,
+          "hit_at_5": 1.0,
+          "precision_at_5": 0.2,
+          "primary_category": "Business",
+          "profile_id": "P20",
+          "profile_type": "strong match",
+          "r_precision": 1.0,
+          "recall_at_5": 1.0,
+          "reciprocal_rank": 1.0,
+          "relevant": [
+            "C033"
+          ],
+          "relevant_ranks": {
+            "C033": 1
+          },
+          "top_k": [
+            "C033",
+            "C038",
+            "C011",
+            "C016",
+            "C028"
+          ],
+          "top_k_scores": [
+            86.7,
+            32.1,
+            30.0,
+            27.1,
+            27.1
+          ]
+        },
+        {
+          "attainable_precision_at_5": 1.0,
+          "average_precision": 1.0,
+          "f1_at_5": 0.5714,
+          "hit_at_5": 1.0,
+          "precision_at_5": 0.4,
+          "primary_category": "Data and AI",
+          "profile_id": "P21",
+          "profile_type": "mixed skills",
+          "r_precision": 1.0,
+          "recall_at_5": 1.0,
+          "reciprocal_rank": 1.0,
+          "relevant": [
+            "C001",
+            "C002"
+          ],
+          "relevant_ranks": {
+            "C001": 1,
+            "C002": 2
+          },
+          "top_k": [
+            "C001",
+            "C002",
+            "C031",
+            "C029",
+            "C003"
+          ],
+          "top_k_scores": [
+            70.0,
+            67.9,
+            52.5,
+            46.7,
+            45.8
+          ]
+        },
+        {
+          "attainable_precision_at_5": 1.0,
+          "average_precision": 1.0,
+          "f1_at_5": 0.5714,
+          "hit_at_5": 1.0,
+          "precision_at_5": 0.4,
+          "primary_category": "Education",
+          "profile_id": "P22",
+          "profile_type": "strong match",
+          "r_precision": 1.0,
+          "recall_at_5": 1.0,
+          "reciprocal_rank": 1.0,
+          "relevant": [
+            "C035",
+            "C037"
+          ],
+          "relevant_ranks": {
+            "C035": 1,
+            "C037": 2
+          },
+          "top_k": [
+            "C035",
+            "C037",
+            "C038",
+            "C033",
+            "C011"
+          ],
+          "top_k_scores": [
+            86.7,
+            72.9,
+            40.4,
+            33.3,
+            30.0
+          ]
+        },
+        {
+          "attainable_precision_at_5": 1.0,
+          "average_precision": 1.0,
+          "f1_at_5": 0.5714,
+          "hit_at_5": 1.0,
+          "precision_at_5": 0.4,
+          "primary_category": "Education",
+          "profile_id": "P23",
+          "profile_type": "strong match",
+          "r_precision": 1.0,
+          "recall_at_5": 1.0,
+          "reciprocal_rank": 1.0,
+          "relevant": [
+            "C037",
+            "C035"
+          ],
+          "relevant_ranks": {
+            "C035": 2,
+            "C037": 1
+          },
+          "top_k": [
+            "C037",
+            "C035",
+            "C038",
+            "C033",
+            "C039"
+          ],
+          "top_k_scores": [
+            72.9,
+            59.2,
+            35.4,
+            33.3,
+            30.8
+          ]
+        },
+        {
+          "attainable_precision_at_5": 1.0,
+          "average_precision": 1.0,
+          "f1_at_5": 0.3333,
+          "hit_at_5": 1.0,
+          "precision_at_5": 0.2,
+          "primary_category": "Education",
+          "profile_id": "P24",
+          "profile_type": "career transition",
+          "r_precision": 1.0,
+          "recall_at_5": 1.0,
+          "reciprocal_rank": 1.0,
+          "relevant": [
+            "C036"
+          ],
+          "relevant_ranks": {
+            "C036": 1
+          },
+          "top_k": [
+            "C036",
+            "C049",
+            "C039",
+            "C035",
+            "C027"
+          ],
+          "top_k_scores": [
+            76.2,
+            23.8,
+            21.7,
+            18.3,
+            16.7
+          ]
+        },
+        {
+          "attainable_precision_at_5": 1.0,
+          "average_precision": 1.0,
+          "f1_at_5": 0.3333,
+          "hit_at_5": 1.0,
+          "precision_at_5": 0.2,
+          "primary_category": "Education",
+          "profile_id": "P25",
+          "profile_type": "mixed skills",
+          "r_precision": 1.0,
+          "recall_at_5": 1.0,
+          "reciprocal_rank": 1.0,
+          "relevant": [
+            "C039"
+          ],
+          "relevant_ranks": {
+            "C039": 1
+          },
+          "top_k": [
+            "C039",
+            "C015",
+            "C007",
+            "C006",
+            "C003"
+          ],
+          "top_k_scores": [
+            90.0,
+            45.8,
+            41.7,
+            32.1,
+            27.1
+          ]
+        },
+        {
+          "attainable_precision_at_5": 1.0,
+          "average_precision": 1.0,
+          "f1_at_5": 0.3333,
+          "hit_at_5": 1.0,
+          "precision_at_5": 0.2,
+          "primary_category": "Healthcare",
+          "profile_id": "P26",
+          "profile_type": "strong match",
+          "r_precision": 1.0,
+          "recall_at_5": 1.0,
+          "reciprocal_rank": 1.0,
+          "relevant": [
+            "C040"
+          ],
+          "relevant_ranks": {
+            "C040": 1
+          },
+          "top_k": [
+            "C040",
+            "C045",
+            "C041",
+            "C043",
+            "C042"
+          ],
+          "top_k_scores": [
+            72.9,
+            60.4,
+            47.9,
+            33.3,
+            32.1
+          ]
+        },
+        {
+          "attainable_precision_at_5": 1.0,
+          "average_precision": 1.0,
+          "f1_at_5": 0.3333,
+          "hit_at_5": 1.0,
+          "precision_at_5": 0.2,
+          "primary_category": "Healthcare",
+          "profile_id": "P27",
+          "profile_type": "strong match",
+          "r_precision": 1.0,
+          "recall_at_5": 1.0,
+          "reciprocal_rank": 1.0,
+          "relevant": [
+            "C042"
+          ],
+          "relevant_ranks": {
+            "C042": 1
+          },
+          "top_k": [
+            "C042",
+            "C044",
+            "C049",
+            "C041",
+            "C002"
+          ],
+          "top_k_scores": [
+            67.9,
+            27.1,
+            27.1,
+            25.8,
+            8.3
+          ]
+        },
+        {
+          "attainable_precision_at_5": 1.0,
+          "average_precision": 1.0,
+          "f1_at_5": 0.3333,
+          "hit_at_5": 1.0,
+          "precision_at_5": 0.2,
+          "primary_category": "Healthcare",
+          "profile_id": "P28",
+          "profile_type": "strong match",
+          "r_precision": 1.0,
+          "recall_at_5": 1.0,
+          "reciprocal_rank": 1.0,
+          "relevant": [
+            "C043"
+          ],
+          "relevant_ranks": {
+            "C043": 1
+          },
+          "top_k": [
+            "C043",
+            "C030",
+            "C041",
+            "C029",
+            "C004"
+          ],
+          "top_k_scores": [
+            91.7,
+            32.1,
+            29.6,
+            28.8,
+            25.8
+          ]
+        },
+        {
+          "attainable_precision_at_5": 1.0,
+          "average_precision": 1.0,
+          "f1_at_5": 0.3333,
+          "hit_at_5": 1.0,
+          "precision_at_5": 0.2,
+          "primary_category": "Healthcare",
+          "profile_id": "P29",
+          "profile_type": "strong match",
+          "r_precision": 1.0,
+          "recall_at_5": 1.0,
+          "reciprocal_rank": 1.0,
+          "relevant": [
+            "C044"
+          ],
+          "relevant_ranks": {
+            "C044": 1
+          },
+          "top_k": [
+            "C044",
+            "C045",
+            "C040",
+            "C041",
+            "C038"
+          ],
+          "top_k_scores": [
+            90.0,
+            38.8,
+            33.8,
+            32.5,
+            32.1
+          ]
+        },
+        {
+          "attainable_precision_at_5": 1.0,
+          "average_precision": 1.0,
+          "f1_at_5": 0.3333,
+          "hit_at_5": 1.0,
+          "precision_at_5": 0.2,
+          "primary_category": "Engineering",
+          "profile_id": "P30",
+          "profile_type": "strong match",
+          "r_precision": 1.0,
+          "recall_at_5": 1.0,
+          "reciprocal_rank": 1.0,
+          "relevant": [
+            "C046"
+          ],
+          "relevant_ranks": {
+            "C046": 1
+          },
+          "top_k": [
+            "C046",
+            "C047",
+            "C050",
+            "C048",
+            "C025"
+          ],
+          "top_k_scores": [
+            86.7,
+            49.2,
+            45.8,
+            41.7,
+            35.0
+          ]
+        },
+        {
+          "attainable_precision_at_5": 1.0,
+          "average_precision": 1.0,
+          "f1_at_5": 0.5714,
+          "hit_at_5": 1.0,
+          "precision_at_5": 0.4,
+          "primary_category": "Engineering",
+          "profile_id": "P31",
+          "profile_type": "overlapping interests",
+          "r_precision": 1.0,
+          "recall_at_5": 1.0,
+          "reciprocal_rank": 1.0,
+          "relevant": [
+            "C048",
+            "C050"
+          ],
+          "relevant_ranks": {
+            "C048": 1,
+            "C050": 2
+          },
+          "top_k": [
+            "C048",
+            "C050",
+            "C045",
+            "C040",
+            "C044"
+          ],
+          "top_k_scores": [
+            83.3,
+            67.9,
+            32.1,
+            27.1,
+            27.1
+          ]
+        },
+        {
+          "attainable_precision_at_5": 1.0,
+          "average_precision": 1.0,
+          "f1_at_5": 0.3333,
+          "hit_at_5": 1.0,
+          "precision_at_5": 0.2,
+          "primary_category": "Engineering",
+          "profile_id": "P32",
+          "profile_type": "strong match",
+          "r_precision": 1.0,
+          "recall_at_5": 1.0,
+          "reciprocal_rank": 1.0,
+          "relevant": [
+            "C049"
+          ],
+          "relevant_ranks": {
+            "C049": 1
+          },
+          "top_k": [
+            "C049",
+            "C042",
+            "C044",
+            "C041",
+            "C036"
+          ],
+          "top_k_scores": [
+            72.9,
+            27.1,
+            27.1,
+            25.8,
+            22.5
+          ]
+        },
+        {
+          "attainable_precision_at_5": 1.0,
+          "average_precision": 0.7,
+          "f1_at_5": 0.5714,
+          "hit_at_5": 1.0,
+          "precision_at_5": 0.4,
+          "primary_category": "Engineering",
+          "profile_id": "P33",
+          "profile_type": "missing information",
+          "r_precision": 0.5,
+          "recall_at_5": 1.0,
+          "reciprocal_rank": 1.0,
+          "relevant": [
+            "C047",
+            "C026"
+          ],
+          "relevant_ranks": {
+            "C026": 1,
+            "C047": 5
+          },
+          "top_k": [
+            "C026",
+            "C025",
+            "C027",
+            "C046",
+            "C047"
+          ],
+          "top_k_scores": [
+            53.3,
+            25.0,
+            25.0,
+            22.1,
+            22.1
+          ]
+        },
+        {
+          "attainable_precision_at_5": 1.0,
+          "average_precision": 1.0,
+          "f1_at_5": 0.75,
+          "hit_at_5": 1.0,
+          "precision_at_5": 0.6,
+          "primary_category": "Business",
+          "profile_id": "P34",
+          "profile_type": "career transition",
+          "r_precision": 1.0,
+          "recall_at_5": 1.0,
+          "reciprocal_rank": 1.0,
+          "relevant": [
+            "C002",
+            "C030",
+            "C029"
+          ],
+          "relevant_ranks": {
+            "C002": 2,
+            "C029": 1,
+            "C030": 3
+          },
+          "top_k": [
+            "C029",
+            "C002",
+            "C030",
+            "C031",
+            "C004"
+          ],
+          "top_k_scores": [
+            68.3,
+            67.9,
+            58.3,
+            52.5,
+            49.2
+          ]
+        },
+        {
+          "attainable_precision_at_5": null,
+          "average_precision": null,
+          "f1_at_5": null,
+          "hit_at_5": null,
+          "precision_at_5": null,
+          "primary_category": "Software",
+          "profile_id": "P35",
+          "profile_type": "missing information",
+          "r_precision": null,
+          "recall_at_5": null,
+          "reciprocal_rank": null,
+          "relevant": [],
+          "relevant_ranks": {},
+          "top_k": [
+            "C003",
+            "C005",
+            "C007",
+            "C008",
+            "C009"
+          ],
+          "top_k_scores": [
+            3.3,
+            3.3,
+            3.3,
+            3.3,
+            3.3
+          ]
+        },
+        {
+          "attainable_precision_at_5": 1.0,
+          "average_precision": 1.0,
+          "f1_at_5": 0.3333,
+          "hit_at_5": 1.0,
+          "precision_at_5": 0.2,
+          "primary_category": "Education",
+          "profile_id": "P36",
+          "profile_type": "overlapping interests",
+          "r_precision": 1.0,
+          "recall_at_5": 1.0,
+          "reciprocal_rank": 1.0,
+          "relevant": [
+            "C036"
+          ],
+          "relevant_ranks": {
+            "C036": 1
+          },
+          "top_k": [
+            "C036",
+            "C010",
+            "C035",
+            "C024",
+            "C039"
+          ],
+          "top_k_scores": [
+            51.2,
+            49.2,
+            18.3,
+            16.7,
+            15.4
+          ]
+        }
+      ],
+      "weights": {
+        "education": 0.05,
+        "interests": 0.1,
+        "preferred_skills": 0.1,
+        "required_skills": 0.75
+      }
+    },
+    "D_skills_only": {
+      "aggregate": {
+        "attainable_precision_at_5": {
+          "ci95": [
+            1.0,
+            1.0
+          ],
+          "defined_profiles": 35,
+          "mean": 1.0,
+          "undefined_profiles": 1
+        },
+        "average_precision": {
+          "ci95": [
+            0.89,
+            0.9905
+          ],
+          "defined_profiles": 35,
+          "mean": 0.9462,
+          "undefined_profiles": 1
+        },
+        "f1_at_5": {
+          "ci95": [
+            0.4217,
+            0.5204
+          ],
+          "defined_profiles": 35,
+          "mean": 0.4694,
+          "undefined_profiles": 1
+        },
+        "hit_at_5": {
+          "ci95": [
+            1.0,
+            1.0
+          ],
+          "defined_profiles": 35,
+          "mean": 1.0,
+          "undefined_profiles": 1
+        },
+        "precision_at_5": {
+          "ci95": [
+            0.28,
+            0.3657
+          ],
+          "defined_profiles": 35,
+          "mean": 0.32,
+          "undefined_profiles": 1
+        },
+        "r_precision": {
+          "ci95": [
+            0.8,
+            0.9714
+          ],
+          "defined_profiles": 35,
+          "mean": 0.9,
+          "undefined_profiles": 1
+        },
+        "recall_at_5": {
+          "ci95": [
+            1.0,
+            1.0
+          ],
+          "defined_profiles": 35,
+          "mean": 1.0,
+          "undefined_profiles": 1
+        },
+        "reciprocal_rank": {
+          "ci95": [
+            0.9143,
+            1.0
+          ],
+          "defined_profiles": 35,
+          "mean": 0.9667,
+          "undefined_profiles": 1
+        }
+      },
+      "by_primary_category": {
+        "Business": {
+          "average_precision": 1.0,
+          "f1_at_5": 0.5119,
+          "profiles": 5,
+          "recall_at_5": 1.0,
+          "reciprocal_rank": 1.0
+        },
+        "Cybersecurity": {
+          "average_precision": 0.9583,
+          "f1_at_5": 0.5119,
+          "profiles": 4,
+          "recall_at_5": 1.0,
+          "reciprocal_rank": 1.0
+        },
+        "Data and AI": {
+          "average_precision": 0.8667,
+          "f1_at_5": 0.5952,
+          "profiles": 5,
+          "recall_at_5": 1.0,
+          "reciprocal_rank": 0.8667
+        },
+        "Design": {
+          "average_precision": 0.9375,
+          "f1_at_5": 0.3928,
+          "profiles": 4,
+          "recall_at_5": 1.0,
+          "reciprocal_rank": 1.0
+        },
+        "Education": {
+          "average_precision": 0.9,
+          "f1_at_5": 0.4285,
+          "profiles": 5,
+          "recall_at_5": 1.0,
+          "reciprocal_rank": 0.9
+        },
+        "Engineering": {
+          "average_precision": 0.925,
+          "f1_at_5": 0.4524,
+          "profiles": 4,
+          "recall_at_5": 1.0,
+          "reciprocal_rank": 1.0
+        },
+        "Healthcare": {
+          "average_precision": 1.0,
+          "f1_at_5": 0.3333,
+          "profiles": 4,
+          "recall_at_5": 1.0,
+          "reciprocal_rank": 1.0
+        },
+        "Software": {
+          "average_precision": 1.0,
+          "f1_at_5": 0.497,
+          "profiles": 5,
+          "recall_at_5": 1.0,
+          "reciprocal_rank": 1.0
+        }
+      },
+      "careers_recommended": 50,
+      "catalogue_coverage": 1.0,
+      "category_distribution": {
+        "Business": {
+          "count": 26,
+          "share": 0.1444
+        },
+        "Cybersecurity": {
+          "count": 16,
+          "share": 0.0889
+        },
+        "Data and AI": {
+          "count": 45,
+          "share": 0.25
+        },
+        "Design": {
+          "count": 17,
+          "share": 0.0944
+        },
+        "Education": {
+          "count": 16,
+          "share": 0.0889
+        },
+        "Engineering": {
+          "count": 13,
+          "share": 0.0722
+        },
+        "Healthcare": {
+          "count": 20,
+          "share": 0.1111
+        },
+        "Software": {
+          "count": 27,
+          "share": 0.15
+        }
+      },
+      "per_profile": [
+        {
+          "attainable_precision_at_5": 1.0,
+          "average_precision": 1.0,
+          "f1_at_5": 0.75,
+          "hit_at_5": 1.0,
+          "precision_at_5": 0.6,
+          "primary_category": "Data and AI",
+          "profile_id": "P01",
+          "profile_type": "strong match",
+          "r_precision": 1.0,
+          "recall_at_5": 1.0,
+          "reciprocal_rank": 1.0,
+          "relevant": [
+            "C001",
+            "C002",
+            "C006"
+          ],
+          "relevant_ranks": {
+            "C001": 1,
+            "C002": 2,
+            "C006": 3
+          },
+          "top_k": [
+            "C001",
+            "C002",
+            "C006",
+            "C031",
+            "C003"
+          ],
+          "top_k_scores": [
+            78.6,
+            66.1,
+            41.1,
+            41.1,
+            39.3
+          ]
+        },
+        {
+          "attainable_precision_at_5": 1.0,
+          "average_precision": 1.0,
+          "f1_at_5": 0.5714,
+          "hit_at_5": 1.0,
+          "precision_at_5": 0.4,
+          "primary_category": "Data and AI",
+          "profile_id": "P02",
+          "profile_type": "strong match",
+          "r_precision": 1.0,
+          "recall_at_5": 1.0,
+          "reciprocal_rank": 1.0,
+          "relevant": [
+            "C004",
+            "C002"
+          ],
+          "relevant_ranks": {
+            "C002": 1,
+            "C004": 2
+          },
+          "top_k": [
+            "C002",
+            "C004",
+            "C028",
+            "C016",
+            "C030"
+          ],
+          "top_k_scores": [
+            73.2,
+            69.6,
+            50.0,
+            39.3,
+            36.9
+          ]
+        },
+        {
+          "attainable_precision_at_5": 1.0,
+          "average_precision": 0.3333,
+          "f1_at_5": 0.3333,
+          "hit_at_5": 1.0,
+          "precision_at_5": 0.2,
+          "primary_category": "Data and AI",
+          "profile_id": "P03",
+          "profile_type": "limited skills",
+          "r_precision": 0.0,
+          "recall_at_5": 1.0,
+          "reciprocal_rank": 0.3333,
+          "relevant": [
+            "C002"
+          ],
+          "relevant_ranks": {
+            "C002": 3
+          },
+          "top_k": [
+            "C029",
+            "C030",
+            "C002",
+            "C004",
+            "C028"
+          ],
+          "top_k_scores": [
+            26.2,
+            26.2,
+            19.6,
+            19.6,
+            19.6
+          ]
+        },
+        {
+          "attainable_precision_at_5": 1.0,
+          "average_precision": 1.0,
+          "f1_at_5": 0.75,
+          "hit_at_5": 1.0,
+          "precision_at_5": 0.6,
+          "primary_category": "Data and AI",
+          "profile_id": "P04",
+          "profile_type": "missing information",
+          "r_precision": 1.0,
+          "recall_at_5": 1.0,
+          "reciprocal_rank": 1.0,
+          "relevant": [
+            "C003",
+            "C007",
+            "C001"
+          ],
+          "relevant_ranks": {
+            "C001": 3,
+            "C003": 1,
+            "C007": 2
+          },
+          "top_k": [
+            "C003",
+            "C007",
+            "C001",
+            "C005",
+            "C015"
+          ],
+          "top_k_scores": [
+            66.1,
+            62.9,
+            38.6,
+            19.6,
+            19.6
+          ]
+        },
+        {
+          "attainable_precision_at_5": 1.0,
+          "average_precision": 1.0,
+          "f1_at_5": 0.3333,
+          "hit_at_5": 1.0,
+          "precision_at_5": 0.2,
+          "primary_category": "Software",
+          "profile_id": "P05",
+          "profile_type": "strong match",
+          "r_precision": 1.0,
+          "recall_at_5": 1.0,
+          "reciprocal_rank": 1.0,
+          "relevant": [
+            "C010"
+          ],
+          "relevant_ranks": {
+            "C010": 1
+          },
+          "top_k": [
+            "C010",
+            "C009",
+            "C012",
+            "C015",
+            "C013"
+          ],
+          "top_k_scores": [
+            85.7,
+            19.6,
+            19.6,
+            19.6,
+            15.7
+          ]
+        },
+        {
+          "attainable_precision_at_5": 1.0,
+          "average_precision": 1.0,
+          "f1_at_5": 0.5714,
+          "hit_at_5": 1.0,
+          "precision_at_5": 0.4,
+          "primary_category": "Software",
+          "profile_id": "P06",
+          "profile_type": "strong match",
+          "r_precision": 1.0,
+          "recall_at_5": 1.0,
+          "reciprocal_rank": 1.0,
+          "relevant": [
+            "C009",
+            "C015"
+          ],
+          "relevant_ranks": {
+            "C009": 2,
+            "C015": 1
+          },
+          "top_k": [
+            "C015",
+            "C009",
+            "C010",
+            "C008",
+            "C001"
+          ],
+          "top_k_scores": [
+            69.6,
+            66.1,
+            26.8,
+            26.2,
+            22.9
+          ]
+        },
+        {
+          "attainable_precision_at_5": 1.0,
+          "average_precision": 1.0,
+          "f1_at_5": 0.75,
+          "hit_at_5": 1.0,
+          "precision_at_5": 0.6,
+          "primary_category": "Software",
+          "profile_id": "P07",
+          "profile_type": "career transition",
+          "r_precision": 1.0,
+          "recall_at_5": 1.0,
+          "reciprocal_rank": 1.0,
+          "relevant": [
+            "C013",
+            "C020",
+            "C014"
+          ],
+          "relevant_ranks": {
+            "C013": 1,
+            "C014": 3,
+            "C020": 2
+          },
+          "top_k": [
+            "C013",
+            "C020",
+            "C014",
+            "C019",
+            "C008"
+          ],
+          "top_k_scores": [
+            62.9,
+            50.0,
+            46.4,
+            36.9,
+            33.3
+          ]
+        },
+        {
+          "attainable_precision_at_5": 1.0,
+          "average_precision": 1.0,
+          "f1_at_5": 0.3333,
+          "hit_at_5": 1.0,
+          "precision_at_5": 0.2,
+          "primary_category": "Software",
+          "profile_id": "P08",
+          "profile_type": "strong match",
+          "r_precision": 1.0,
+          "recall_at_5": 1.0,
+          "reciprocal_rank": 1.0,
+          "relevant": [
+            "C012"
+          ],
+          "relevant_ranks": {
+            "C012": 1
+          },
+          "top_k": [
+            "C012",
+            "C009",
+            "C010",
+            "C015",
+            "C024"
+          ],
+          "top_k_scores": [
+            78.6,
+            19.6,
+            19.6,
+            19.6,
+            19.6
+          ]
+        },
+        {
+          "attainable_precision_at_5": 1.0,
+          "average_precision": 0.8333,
+          "f1_at_5": 0.5714,
+          "hit_at_5": 1.0,
+          "precision_at_5": 0.4,
+          "primary_category": "Cybersecurity",
+          "profile_id": "P09",
+          "profile_type": "strong match",
+          "r_precision": 0.5,
+          "recall_at_5": 1.0,
+          "reciprocal_rank": 1.0,
+          "relevant": [
+            "C018",
+            "C017"
+          ],
+          "relevant_ranks": {
+            "C017": 3,
+            "C018": 1
+          },
+          "top_k": [
+            "C018",
+            "C020",
+            "C017",
+            "C022",
+            "C005"
+          ],
+          "top_k_scores": [
+            89.3,
+            39.3,
+            33.9,
+            30.4,
+            26.8
+          ]
+        },
+        {
+          "attainable_precision_at_5": 1.0,
+          "average_precision": 1.0,
+          "f1_at_5": 0.5714,
+          "hit_at_5": 1.0,
+          "precision_at_5": 0.4,
+          "primary_category": "Cybersecurity",
+          "profile_id": "P10",
+          "profile_type": "strong match",
+          "r_precision": 1.0,
+          "recall_at_5": 1.0,
+          "reciprocal_rank": 1.0,
+          "relevant": [
+            "C017",
+            "C019"
+          ],
+          "relevant_ranks": {
+            "C017": 1,
+            "C019": 2
+          },
+          "top_k": [
+            "C017",
+            "C019",
+            "C021",
+            "C018",
+            "C020"
+          ],
+          "top_k_scores": [
+            78.6,
+            26.2,
+            26.2,
+            19.6,
+            19.6
+          ]
+        },
+        {
+          "attainable_precision_at_5": 1.0,
+          "average_precision": 1.0,
+          "f1_at_5": 0.5714,
+          "hit_at_5": 1.0,
+          "precision_at_5": 0.4,
+          "primary_category": "Cybersecurity",
+          "profile_id": "P11",
+          "profile_type": "career transition",
+          "r_precision": 1.0,
+          "recall_at_5": 1.0,
+          "reciprocal_rank": 1.0,
+          "relevant": [
+            "C020",
+            "C021"
+          ],
+          "relevant_ranks": {
+            "C020": 1,
+            "C021": 2
+          },
+          "top_k": [
+            "C020",
+            "C021",
+            "C014",
+            "C018",
+            "C019"
+          ],
+          "top_k_scores": [
+            78.6,
+            52.4,
+            39.3,
+            39.3,
+            36.9
+          ]
+        },
+        {
+          "attainable_precision_at_5": 1.0,
+          "average_precision": 1.0,
+          "f1_at_5": 0.3333,
+          "hit_at_5": 1.0,
+          "precision_at_5": 0.2,
+          "primary_category": "Cybersecurity",
+          "profile_id": "P12",
+          "profile_type": "limited skills",
+          "r_precision": 1.0,
+          "recall_at_5": 1.0,
+          "reciprocal_rank": 1.0,
+          "relevant": [
+            "C022"
+          ],
+          "relevant_ranks": {
+            "C022": 1
+          },
+          "top_k": [
+            "C022",
+            "C001",
+            "C002",
+            "C003",
+            "C004"
+          ],
+          "top_k_scores": [
+            19.6,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ]
+        },
+        {
+          "attainable_precision_at_5": 1.0,
+          "average_precision": 1.0,
+          "f1_at_5": 0.3333,
+          "hit_at_5": 1.0,
+          "precision_at_5": 0.2,
+          "primary_category": "Design",
+          "profile_id": "P13",
+          "profile_type": "strong match",
+          "r_precision": 1.0,
+          "recall_at_5": 1.0,
+          "reciprocal_rank": 1.0,
+          "relevant": [
+            "C023"
+          ],
+          "relevant_ranks": {
+            "C023": 1
+          },
+          "top_k": [
+            "C023",
+            "C027",
+            "C025",
+            "C001",
+            "C002"
+          ],
+          "top_k_scores": [
+            89.3,
+            36.9,
+            26.2,
+            0.0,
+            0.0
+          ]
+        },
+        {
+          "attainable_precision_at_5": 1.0,
+          "average_precision": 1.0,
+          "f1_at_5": 0.3333,
+          "hit_at_5": 1.0,
+          "precision_at_5": 0.2,
+          "primary_category": "Design",
+          "profile_id": "P14",
+          "profile_type": "career transition",
+          "r_precision": 1.0,
+          "recall_at_5": 1.0,
+          "reciprocal_rank": 1.0,
+          "relevant": [
+            "C024"
+          ],
+          "relevant_ranks": {
+            "C024": 1
+          },
+          "top_k": [
+            "C024",
+            "C026",
+            "C010",
+            "C012",
+            "C023"
+          ],
+          "top_k_scores": [
+            89.3,
+            21.4,
+            19.6,
+            19.6,
+            10.7
+          ]
+        },
+        {
+          "attainable_precision_at_5": 1.0,
+          "average_precision": 1.0,
+          "f1_at_5": 0.3333,
+          "hit_at_5": 1.0,
+          "precision_at_5": 0.2,
+          "primary_category": "Design",
+          "profile_id": "P15",
+          "profile_type": "strong match",
+          "r_precision": 1.0,
+          "recall_at_5": 1.0,
+          "reciprocal_rank": 1.0,
+          "relevant": [
+            "C027"
+          ],
+          "relevant_ranks": {
+            "C027": 1
+          },
+          "top_k": [
+            "C027",
+            "C026",
+            "C036",
+            "C001",
+            "C002"
+          ],
+          "top_k_scores": [
+            63.1,
+            26.2,
+            10.7,
+            0.0,
+            0.0
+          ]
+        },
+        {
+          "attainable_precision_at_5": 1.0,
+          "average_precision": 0.75,
+          "f1_at_5": 0.5714,
+          "hit_at_5": 1.0,
+          "precision_at_5": 0.4,
+          "primary_category": "Design",
+          "profile_id": "P16",
+          "profile_type": "mixed skills",
+          "r_precision": 0.5,
+          "recall_at_5": 1.0,
+          "reciprocal_rank": 1.0,
+          "relevant": [
+            "C025",
+            "C026"
+          ],
+          "relevant_ranks": {
+            "C025": 1,
+            "C026": 4
+          },
+          "top_k": [
+            "C025",
+            "C046",
+            "C023",
+            "C026",
+            "C016"
+          ],
+          "top_k_scores": [
+            89.3,
+            39.3,
+            26.2,
+            26.2,
+            19.6
+          ]
+        },
+        {
+          "attainable_precision_at_5": 1.0,
+          "average_precision": 1.0,
+          "f1_at_5": 0.5714,
+          "hit_at_5": 1.0,
+          "precision_at_5": 0.4,
+          "primary_category": "Business",
+          "profile_id": "P17",
+          "profile_type": "strong match",
+          "r_precision": 1.0,
+          "recall_at_5": 1.0,
+          "reciprocal_rank": 1.0,
+          "relevant": [
+            "C030",
+            "C029"
+          ],
+          "relevant_ranks": {
+            "C029": 2,
+            "C030": 1
+          },
+          "top_k": [
+            "C030",
+            "C029",
+            "C028",
+            "C002",
+            "C004"
+          ],
+          "top_k_scores": [
+            89.3,
+            78.6,
+            30.4,
+            19.6,
+            19.6
+          ]
+        },
+        {
+          "attainable_precision_at_5": 1.0,
+          "average_precision": 1.0,
+          "f1_at_5": 0.3333,
+          "hit_at_5": 1.0,
+          "precision_at_5": 0.2,
+          "primary_category": "Business",
+          "profile_id": "P18",
+          "profile_type": "strong match",
+          "r_precision": 1.0,
+          "recall_at_5": 1.0,
+          "reciprocal_rank": 1.0,
+          "relevant": [
+            "C034"
+          ],
+          "relevant_ranks": {
+            "C034": 1
+          },
+          "top_k": [
+            "C034",
+            "C001",
+            "C002",
+            "C003",
+            "C004"
+          ],
+          "top_k_scores": [
+            78.6,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ]
+        },
+        {
+          "attainable_precision_at_5": 1.0,
+          "average_precision": 1.0,
+          "f1_at_5": 0.5714,
+          "hit_at_5": 1.0,
+          "precision_at_5": 0.4,
+          "primary_category": "Business",
+          "profile_id": "P19",
+          "profile_type": "strong match",
+          "r_precision": 1.0,
+          "recall_at_5": 1.0,
+          "reciprocal_rank": 1.0,
+          "relevant": [
+            "C032",
+            "C028"
+          ],
+          "relevant_ranks": {
+            "C028": 2,
+            "C032": 1
+          },
+          "top_k": [
+            "C032",
+            "C028",
+            "C033",
+            "C016",
+            "C030"
+          ],
+          "top_k_scores": [
+            89.3,
+            58.9,
+            47.6,
+            39.3,
+            36.9
+          ]
+        },
+        {
+          "attainable_precision_at_5": 1.0,
+          "average_precision": 1.0,
+          "f1_at_5": 0.3333,
+          "hit_at_5": 1.0,
+          "precision_at_5": 0.2,
+          "primary_category": "Business",
+          "profile_id": "P20",
+          "profile_type": "strong match",
+          "r_precision": 1.0,
+          "recall_at_5": 1.0,
+          "reciprocal_rank": 1.0,
+          "relevant": [
+            "C033"
+          ],
+          "relevant_ranks": {
+            "C033": 1
+          },
+          "top_k": [
+            "C033",
+            "C011",
+            "C038",
+            "C016",
+            "C028"
+          ],
+          "top_k_scores": [
+            78.6,
+            26.2,
+            26.2,
+            19.6,
+            19.6
+          ]
+        },
+        {
+          "attainable_precision_at_5": 1.0,
+          "average_precision": 1.0,
+          "f1_at_5": 0.5714,
+          "hit_at_5": 1.0,
+          "precision_at_5": 0.4,
+          "primary_category": "Data and AI",
+          "profile_id": "P21",
+          "profile_type": "mixed skills",
+          "r_precision": 1.0,
+          "recall_at_5": 1.0,
+          "reciprocal_rank": 1.0,
+          "relevant": [
+            "C001",
+            "C002"
+          ],
+          "relevant_ranks": {
+            "C001": 2,
+            "C002": 1
+          },
+          "top_k": [
+            "C002",
+            "C001",
+            "C031",
+            "C029",
+            "C003"
+          ],
+          "top_k_scores": [
+            66.1,
+            62.9,
+            53.6,
+            47.6,
+            39.3
+          ]
+        },
+        {
+          "attainable_precision_at_5": 1.0,
+          "average_precision": 1.0,
+          "f1_at_5": 0.5714,
+          "hit_at_5": 1.0,
+          "precision_at_5": 0.4,
+          "primary_category": "Education",
+          "profile_id": "P22",
+          "profile_type": "strong match",
+          "r_precision": 1.0,
+          "recall_at_5": 1.0,
+          "reciprocal_rank": 1.0,
+          "relevant": [
+            "C035",
+            "C037"
+          ],
+          "relevant_ranks": {
+            "C035": 1,
+            "C037": 2
+          },
+          "top_k": [
+            "C035",
+            "C037",
+            "C038",
+            "C011",
+            "C033"
+          ],
+          "top_k_scores": [
+            78.6,
+            69.6,
+            36.9,
+            26.2,
+            26.2
+          ]
+        },
+        {
+          "attainable_precision_at_5": 1.0,
+          "average_precision": 1.0,
+          "f1_at_5": 0.5714,
+          "hit_at_5": 1.0,
+          "precision_at_5": 0.4,
+          "primary_category": "Education",
+          "profile_id": "P23",
+          "profile_type": "strong match",
+          "r_precision": 1.0,
+          "recall_at_5": 1.0,
+          "reciprocal_rank": 1.0,
+          "relevant": [
+            "C037",
+            "C035"
+          ],
+          "relevant_ranks": {
+            "C035": 2,
+            "C037": 1
+          },
+          "top_k": [
+            "C037",
+            "C035",
+            "C039",
+            "C011",
+            "C033"
+          ],
+          "top_k_scores": [
+            69.6,
+            60.7,
+            30.4,
+            26.2,
+            26.2
+          ]
+        },
+        {
+          "attainable_precision_at_5": 1.0,
+          "average_precision": 1.0,
+          "f1_at_5": 0.3333,
+          "hit_at_5": 1.0,
+          "precision_at_5": 0.2,
+          "primary_category": "Education",
+          "profile_id": "P24",
+          "profile_type": "career transition",
+          "r_precision": 1.0,
+          "recall_at_5": 1.0,
+          "reciprocal_rank": 1.0,
+          "relevant": [
+            "C036"
+          ],
+          "relevant_ranks": {
+            "C036": 1
+          },
+          "top_k": [
+            "C036",
+            "C035",
+            "C039",
+            "C049",
+            "C007"
+          ],
+          "top_k_scores": [
+            69.6,
+            21.4,
+            21.4,
+            19.6,
+            10.7
+          ]
+        },
+        {
+          "attainable_precision_at_5": 1.0,
+          "average_precision": 1.0,
+          "f1_at_5": 0.3333,
+          "hit_at_5": 1.0,
+          "precision_at_5": 0.2,
+          "primary_category": "Education",
+          "profile_id": "P25",
+          "profile_type": "mixed skills",
+          "r_precision": 1.0,
+          "recall_at_5": 1.0,
+          "reciprocal_rank": 1.0,
+          "relevant": [
+            "C039"
+          ],
+          "relevant_ranks": {
+            "C039": 1
+          },
+          "top_k": [
+            "C039",
+            "C015",
+            "C007",
+            "C006",
+            "C050"
+          ],
+          "top_k_scores": [
+            78.6,
+            39.3,
+            31.4,
+            30.4,
+            21.4
+          ]
+        },
+        {
+          "attainable_precision_at_5": 1.0,
+          "average_precision": 1.0,
+          "f1_at_5": 0.3333,
+          "hit_at_5": 1.0,
+          "precision_at_5": 0.2,
+          "primary_category": "Healthcare",
+          "profile_id": "P26",
+          "profile_type": "strong match",
+          "r_precision": 1.0,
+          "recall_at_5": 1.0,
+          "reciprocal_rank": 1.0,
+          "relevant": [
+            "C040"
+          ],
+          "relevant_ranks": {
+            "C040": 1
+          },
+          "top_k": [
+            "C040",
+            "C045",
+            "C041",
+            "C042",
+            "C043"
+          ],
+          "top_k_scores": [
+            69.6,
+            52.4,
+            39.3,
+            30.4,
+            26.2
+          ]
+        },
+        {
+          "attainable_precision_at_5": 1.0,
+          "average_precision": 1.0,
+          "f1_at_5": 0.3333,
+          "hit_at_5": 1.0,
+          "precision_at_5": 0.2,
+          "primary_category": "Healthcare",
+          "profile_id": "P27",
+          "profile_type": "strong match",
+          "r_precision": 1.0,
+          "recall_at_5": 1.0,
+          "reciprocal_rank": 1.0,
+          "relevant": [
+            "C042"
+          ],
+          "relevant_ranks": {
+            "C042": 1
+          },
+          "top_k": [
+            "C042",
+            "C041",
+            "C044",
+            "C049",
+            "C001"
+          ],
+          "top_k_scores": [
+            58.9,
+            19.6,
+            19.6,
+            19.6,
+            0.0
+          ]
+        },
+        {
+          "attainable_precision_at_5": 1.0,
+          "average_precision": 1.0,
+          "f1_at_5": 0.3333,
+          "hit_at_5": 1.0,
+          "precision_at_5": 0.2,
+          "primary_category": "Healthcare",
+          "profile_id": "P28",
+          "profile_type": "strong match",
+          "r_precision": 1.0,
+          "recall_at_5": 1.0,
+          "reciprocal_rank": 1.0,
+          "relevant": [
+            "C043"
+          ],
+          "relevant_ranks": {
+            "C043": 1
+          },
+          "top_k": [
+            "C043",
+            "C041",
+            "C029",
+            "C030",
+            "C002"
+          ],
+          "top_k_scores": [
+            89.3,
+            30.4,
+            26.2,
+            26.2,
+            19.6
+          ]
+        },
+        {
+          "attainable_precision_at_5": 1.0,
+          "average_precision": 1.0,
+          "f1_at_5": 0.3333,
+          "hit_at_5": 1.0,
+          "precision_at_5": 0.2,
+          "primary_category": "Healthcare",
+          "profile_id": "P29",
+          "profile_type": "strong match",
+          "r_precision": 1.0,
+          "recall_at_5": 1.0,
+          "reciprocal_rank": 1.0,
+          "relevant": [
+            "C044"
+          ],
+          "relevant_ranks": {
+            "C044": 1
+          },
+          "top_k": [
+            "C044",
+            "C038",
+            "C045",
+            "C040",
+            "C041"
+          ],
+          "top_k_scores": [
+            78.6,
+            26.2,
+            26.2,
+            19.6,
+            19.6
+          ]
+        },
+        {
+          "attainable_precision_at_5": 1.0,
+          "average_precision": 1.0,
+          "f1_at_5": 0.3333,
+          "hit_at_5": 1.0,
+          "precision_at_5": 0.2,
+          "primary_category": "Engineering",
+          "profile_id": "P30",
+          "profile_type": "strong match",
+          "r_precision": 1.0,
+          "recall_at_5": 1.0,
+          "reciprocal_rank": 1.0,
+          "relevant": [
+            "C046"
+          ],
+          "relevant_ranks": {
+            "C046": 1
+          },
+          "top_k": [
+            "C046",
+            "C047",
+            "C050",
+            "C025",
+            "C048"
+          ],
+          "top_k_scores": [
+            78.6,
+            39.3,
+            39.3,
+            36.9,
+            36.9
+          ]
+        },
+        {
+          "attainable_precision_at_5": 1.0,
+          "average_precision": 1.0,
+          "f1_at_5": 0.5714,
+          "hit_at_5": 1.0,
+          "precision_at_5": 0.4,
+          "primary_category": "Engineering",
+          "profile_id": "P31",
+          "profile_type": "overlapping interests",
+          "r_precision": 1.0,
+          "recall_at_5": 1.0,
+          "reciprocal_rank": 1.0,
+          "relevant": [
+            "C048",
+            "C050"
+          ],
+          "relevant_ranks": {
+            "C048": 1,
+            "C050": 2
+          },
+          "top_k": [
+            "C048",
+            "C050",
+            "C045",
+            "C040",
+            "C044"
+          ],
+          "top_k_scores": [
+            78.6,
+            58.9,
+            26.2,
+            19.6,
+            19.6
+          ]
+        },
+        {
+          "attainable_precision_at_5": 1.0,
+          "average_precision": 1.0,
+          "f1_at_5": 0.3333,
+          "hit_at_5": 1.0,
+          "precision_at_5": 0.2,
+          "primary_category": "Engineering",
+          "profile_id": "P32",
+          "profile_type": "strong match",
+          "r_precision": 1.0,
+          "recall_at_5": 1.0,
+          "reciprocal_rank": 1.0,
+          "relevant": [
+            "C049"
+          ],
+          "relevant_ranks": {
+            "C049": 1
+          },
+          "top_k": [
+            "C049",
+            "C036",
+            "C041",
+            "C042",
+            "C044"
+          ],
+          "top_k_scores": [
+            69.6,
+            19.6,
+            19.6,
+            19.6,
+            19.6
+          ]
+        },
+        {
+          "attainable_precision_at_5": 1.0,
+          "average_precision": 0.7,
+          "f1_at_5": 0.5714,
+          "hit_at_5": 1.0,
+          "precision_at_5": 0.4,
+          "primary_category": "Engineering",
+          "profile_id": "P33",
+          "profile_type": "missing information",
+          "r_precision": 0.5,
+          "recall_at_5": 1.0,
+          "reciprocal_rank": 1.0,
+          "relevant": [
+            "C047",
+            "C026"
+          ],
+          "relevant_ranks": {
+            "C026": 1,
+            "C047": 5
+          },
+          "top_k": [
+            "C026",
+            "C025",
+            "C027",
+            "C046",
+            "C047"
+          ],
+          "top_k_scores": [
+            52.4,
+            26.2,
+            26.2,
+            19.6,
+            19.6
+          ]
+        },
+        {
+          "attainable_precision_at_5": 1.0,
+          "average_precision": 1.0,
+          "f1_at_5": 0.75,
+          "hit_at_5": 1.0,
+          "precision_at_5": 0.6,
+          "primary_category": "Business",
+          "profile_id": "P34",
+          "profile_type": "career transition",
+          "r_precision": 1.0,
+          "recall_at_5": 1.0,
+          "reciprocal_rank": 1.0,
+          "relevant": [
+            "C002",
+            "C030",
+            "C029"
+          ],
+          "relevant_ranks": {
+            "C002": 2,
+            "C029": 1,
+            "C030": 3
+          },
+          "top_k": [
+            "C029",
+            "C002",
+            "C030",
+            "C031",
+            "C004"
+          ],
+          "top_k_scores": [
+            66.7,
+            58.9,
+            52.4,
+            46.4,
+            39.3
+          ]
+        },
+        {
+          "attainable_precision_at_5": null,
+          "average_precision": null,
+          "f1_at_5": null,
+          "hit_at_5": null,
+          "precision_at_5": null,
+          "primary_category": "Software",
+          "profile_id": "P35",
+          "profile_type": "missing information",
+          "r_precision": null,
+          "recall_at_5": null,
+          "reciprocal_rank": null,
+          "relevant": [],
+          "relevant_ranks": {},
+          "top_k": [
+            "C001",
+            "C002",
+            "C003",
+            "C004",
+            "C005"
+          ],
+          "top_k_scores": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ]
+        },
+        {
+          "attainable_precision_at_5": 1.0,
+          "average_precision": 0.5,
+          "f1_at_5": 0.3333,
+          "hit_at_5": 1.0,
+          "precision_at_5": 0.2,
+          "primary_category": "Education",
+          "profile_id": "P36",
+          "profile_type": "overlapping interests",
+          "r_precision": 0.0,
+          "recall_at_5": 1.0,
+          "reciprocal_rank": 0.5,
+          "relevant": [
+            "C036"
+          ],
+          "relevant_ranks": {
+            "C036": 2
+          },
+          "top_k": [
+            "C010",
+            "C036",
+            "C035",
+            "C024",
+            "C034"
+          ],
+          "top_k_scores": [
+            39.3,
+            39.3,
+            21.4,
+            10.7,
+            10.7
+          ]
+        }
+      ],
+      "weights": {
+        "education": 0.0,
+        "interests": 0.0,
+        "preferred_skills": 0.15,
+        "required_skills": 0.55
+      }
+    }
+  },
+  "k": 5,
+  "labelled_careers": 42,
+  "note": "Synthetic-profile evaluation. Measures agreement with author-written reference labels, not real-world accuracy.",
+  "profiles": 36,
+  "profiles_by_category": {
+    "Business": 5,
+    "Cybersecurity": 4,
+    "Data and AI": 5,
+    "Design": 4,
+    "Education": 5,
+    "Engineering": 4,
+    "Healthcare": 4,
+    "Software": 5
+  },
+  "profiles_by_type": {
+    "career transition": 5,
+    "limited skills": 2,
+    "missing information": 3,
+    "mixed skills": 3,
+    "overlapping interests": 2,
+    "strong match": 21
+  },
+  "worked_example_check": {
+    "by_configuration": {
+      "A_baseline": {
+        "career_in_top_k": true,
+        "position": 3,
+        "top_k": [
+          "C001",
+          "C002",
+          "C029",
+          "C031",
+          "C006"
+        ]
+      },
+      "B_required_heavy": {
+        "career_in_top_k": true,
+        "position": 4,
+        "top_k": [
+          "C001",
+          "C002",
+          "C031",
+          "C029",
+          "C003"
+        ]
+      },
+      "C_strong_required": {
+        "career_in_top_k": true,
+        "position": 4,
+        "top_k": [
+          "C001",
+          "C002",
+          "C031",
+          "C029",
+          "C003"
+        ]
+      },
+      "D_skills_only": {
+        "career_in_top_k": true,
+        "position": 4,
+        "top_k": [
+          "C002",
+          "C001",
+          "C031",
+          "C029",
+          "C003"
+        ]
+      }
+    },
+    "career_id": "C029",
+    "profile_id": "P21"
+  }
+}

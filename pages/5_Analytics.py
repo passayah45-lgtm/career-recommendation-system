@@ -15,8 +15,8 @@ catalog = get_catalog()
 profile = get_profile()
 sidebar_profile_summary(profile)
 
-st.caption("This page shows descriptive charts only. Formal evaluation (for example Precision@K) is a later "
-           "project phase and is not reported here.")
+st.caption("This page shows descriptive charts only. The synthetic-profile evaluation (Precision@5, MAP) "
+           "is documented in docs/evaluation_report.md in the repository.")
 
 dataset_tab, learner_tab = st.tabs(["Dataset statistics", "Your results"])
 

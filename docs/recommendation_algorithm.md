@@ -261,7 +261,7 @@ Skill gap for C001: required coverage 0.8, preferred coverage 0.0, overall 0.5. 
 | Preferred | cloud computing | Introduction to Cloud Infrastructure: Describe Cloud Concepts | Microsoft Learn | beginner |
 | Preferred | git | Pro Git (2nd edition) | git-scm.com | beginner |
 
-Observation: C029 Financial Analyst ranks third with only 1 of 3 required skills, because the learner holds all its preferred skills and two of its interests. This is how the formula is designed, but it shows that preferred skills plus interests (40% together) can lift a career with low required coverage. Phase 5 should test whether a higher required weight gives more relevant results.
+Observation: C029 Financial Analyst ranks third with only 1 of 3 required skills, because the learner holds all its preferred skills and two of its interests. This is how the formula is designed, but it shows that preferred skills plus interests (40% together) can lift a career with low required coverage. Phase 5 tested higher required weights. They did not improve agreement with the labels and did not remove this effect, so the baseline was kept (docs/evaluation_report.md section 7).
 
 ## 15. Dataset limitations that affect results
 
@@ -269,7 +269,7 @@ Observation: C029 Financial Analyst ranks third with only 1 of 3 required skills
 2. Exact skill matching only: "data analysis" is not in the vocabulary, and close skills such as "statistics" and "probability" earn no partial credit.
 3. Coverage depends on list length: a career with 3 required skills moves more per skill than one with 5.
 4. One resource per skill, mostly in English, several US or UK specific.
-5. No labelled ground truth exists yet, so no accuracy figure is reported here.
+5. Phase 5 evaluated the engine on 36 labelled synthetic profiles (docs/evaluation_report.md). That evaluation found list-length bias in coverage scoring and kept the weights unchanged. It measures agreement with author-written labels, not real-world accuracy.
 
 ## 16. Fairness and explainability
 
