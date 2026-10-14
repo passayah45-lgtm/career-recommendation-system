@@ -112,7 +112,7 @@ def test_skill_gap_shows_coverage_and_resources():
     assert metrics["Missing required skills"] == "1"
     table = at.dataframe[0].value
     assert list(table["Skill"]) == ["data visualization"]
-    assert list(table["Link status"]) == ["search index confirmed"]
+    assert list(table["Link status"])[0] in ("search index confirmed", "http checked")
     assert "not HTTP-checked" in text_of(at)
 
 

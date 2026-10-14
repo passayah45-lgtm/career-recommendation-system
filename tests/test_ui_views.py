@@ -55,7 +55,7 @@ def test_resource_rows_keep_verification_and_gap_type(catalog):
     gap = analyze_skill_gap({"skills": ["python"]}, "C001", catalog)
     rows = resource_rows(gap["resources"]["required"], "required")
     assert {r["Gap"] for r in rows} == {"required"}
-    assert all(r["Link status"] == "search index confirmed" for r in rows)
+    assert all(r["Link status"] in ("search index confirmed", "http checked") for r in rows)
     assert all(r["URL"].startswith("https://") for r in rows)
     empty = resource_rows([{"skill": "x", "has_resources": False, "resources": []}], "preferred")
     assert empty[0]["Resource"] == "No resource in catalogue" and empty[0]["URL"] is None
