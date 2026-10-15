@@ -23,7 +23,7 @@ def _layout(fig, title, x_title, y_title, height=380):
     return fig
 
 
-def bar_chart(rows, x, y, title, x_title=None, y_title=None, horizontal=False, colors=None):
+def bar_chart(rows, x, y, title, x_title=None, y_title=None, horizontal=False, colors=None, height=None):
     # x_title names the category axis and y_title the value axis, in both orientations
     # colors is an optional list cycled over the bars, otherwise every bar uses the primary teal
     x_title = x if x_title is None else x_title
@@ -35,10 +35,10 @@ def bar_chart(rows, x, y, title, x_title=None, y_title=None, horizontal=False, c
         fig = go.Figure(go.Bar(x=ys, y=xs, orientation="h", marker_color=marker, text=ys, textposition="outside",
                                cliponaxis=False, hovertemplate=f"%{{y}}<br>{y}: %{{x}}<extra></extra>"))
         fig.update_yaxes(autorange="reversed", gridcolor="rgba(0,0,0,0)")
-        return _layout(fig, title, y_title, x_title, height=max(320, 28 * len(rows) + 90))
+        return _layout(fig, title, y_title, x_title, height=height or max(320, 28 * len(rows) + 90))
     fig = go.Figure(go.Bar(x=xs, y=ys, marker_color=marker, text=ys, textposition="outside", cliponaxis=False,
                            hovertemplate=f"%{{x}}<br>{y}: %{{y}}<extra></extra>"))
-    return _layout(fig, title, x_title, y_title)
+    return _layout(fig, title, x_title, y_title, height=height or 380)
 
 
 def contribution_chart(rows, title="Score contributions by component"):
@@ -72,7 +72,7 @@ def coverage_chart(gap, height=380):
     return _layout(fig, f"Skill coverage for {gap['career_title']}", "", "Coverage", height=height)
 
 
-def donut_chart(rows, label_key, value_key, title, center_text=None, colors=LEVEL_PALETTE):
+def donut_chart(rows, label_key, value_key, title, center_text=None, colors=LEVEL_PALETTE, height=430):
     # Donut with a legend that shows each value, total in the middle
     labels = [r[label_key] for r in rows]
     values = [r[value_key] for r in rows]
@@ -82,7 +82,11 @@ def donut_chart(rows, label_key, value_key, title, center_text=None, colors=LEVE
         direction="clockwise", marker=dict(colors=colors[: len(rows)], line=dict(color="#FFFFFF", width=2)),
         textinfo="none", hovertemplate="%{label}<br>%{percent}<extra></extra>",
     ))
-    fig.update_layout(showlegend=True, legend=dict(orientation="v", x=1.02, y=0.5, font=dict(size=12)),
+    # Legend below the donut so long labels never squeeze the ring, total kept inside the hole
+    fig.update_layout(showlegend=True,
+                      legend=dict(orientation="v", x=0, xanchor="left", y=-0.04, yanchor="top", font=dict(size=12)),
                       annotations=[dict(text=center_text or f"<b>{total}</b>", x=0.5, y=0.5, showarrow=False,
-                                        font=dict(size=18, color=NAVY))])
-    return _layout(fig, title, "", "", height=340)
+                                        font=dict(size=15, color=NAVY))])
+    _layout(fig, title, "", "", height=height)
+    fig.update_layout(margin=dict(l=10, r=10, t=56, b=120))
+    return fig

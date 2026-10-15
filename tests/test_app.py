@@ -224,3 +224,26 @@ def test_skill_gap_shows_overall_coverage_and_counts():
     assert metrics["Overall skill coverage"] == "50%"
     assert metrics["Preferred skill coverage"] == "0%"
     assert "4 of 5 skills" in text_of(at)
+
+
+def test_skill_gap_empty_state_has_no_one_option_selector():
+    # Without an assessment the page is still valid: all skills missing, career picker only
+    at = open_page("pages/3_Skill_Gap_Analysis.py", **{SELECTED_CAREER_KEY: "C001"})
+    assert len(at.radio) == 0
+    assert at.selectbox[0].value == "C001"
+    assert "every skill is shown as missing" in text_of(at)
+
+
+def test_skill_gap_labels_required_and_optional_resources_differently():
+    at = open_page("pages/3_Skill_Gap_Analysis.py", profile=WORKED_EXAMPLE, **{SELECTED_CAREER_KEY: "C001"})
+    texts = [m.value for m in at.markdown]
+    required = [t for t in texts if "Required]" in t]
+    optional = [t for t in texts if "Optional]" in t]
+    assert required == [":orange-badge[:material/priority_high: Required] **data visualization**"]
+    assert {t.split("**")[1] for t in optional} == {"deep learning", "cloud computing", "git"}
+
+
+def test_explorer_list_shows_title_and_category_only():
+    at = open_page("pages/4_Career_Explorer.py")
+    assert list(at.dataframe[0].value.columns) == ["Career", "Category"]
+    assert len(at.dataframe[0].value) == 50

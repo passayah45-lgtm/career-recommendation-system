@@ -103,3 +103,13 @@ def test_donut_and_colored_bars_use_dataset_values(catalog):
     bars = bar_chart(category_counts(catalog.careers), "Category", "Careers", "t", colors=["#111111", "#222222"])
     assert list(bars.data[0].marker.color)[:3] == ["#111111", "#222222", "#111111"]
     assert list(bars.data[0].y) == [r["Careers"] for r in category_counts(catalog.careers)]
+
+
+def test_career_from_cell_maps_clicked_row_to_id():
+    from src.ui.views import career_from_cell
+    ids = ["C001", "C002", "C003"]
+    assert career_from_cell(ids, [(2, "Career")]) == "C003"
+    assert career_from_cell(ids, [[0, "Category"]]) == "C001"
+    assert career_from_cell(ids, [{"row": 1, "column": "Career"}]) == "C002"
+    assert career_from_cell(ids, []) is None and career_from_cell(ids, None) is None
+    assert career_from_cell(ids, [(7, "Career")]) is None and career_from_cell(ids, [(-1, "Career")]) is None

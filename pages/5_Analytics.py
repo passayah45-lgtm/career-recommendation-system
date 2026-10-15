@@ -24,6 +24,8 @@ st.caption(":material/info: This page shows descriptive charts only. The synthet
 
 CHART_CONFIG = {"displayModeBar": False}
 CATEGORY_COLORS = dict(zip(CATEGORIES, CATEGORY_PALETTE))
+# Same height as the education donut, so the two chart cards line up
+DONUT_HEIGHT = 430
 
 dataset_tab, learner_tab = st.tabs([":material/dataset: Dataset overview", ":material/person: Your results"])
 
@@ -39,12 +41,13 @@ with dataset_tab:
         rows = sorted(category_counts(catalog.careers), key=lambda r: -r["Careers"])
         colors = [CATEGORY_COLORS[r["Category"]] for r in rows]
         st.plotly_chart(bar_chart(rows, "Category", "Careers", "Careers by category", x_title="",
-                                  y_title="Number of careers", horizontal=True, colors=colors),
+                                  y_title="Number of careers", horizontal=True, colors=colors,
+                                  height=DONUT_HEIGHT),
                         width="stretch", config=CHART_CONFIG)
     with right, st.container(border=True, key="panel_education", height="stretch"):
         st.plotly_chart(donut_chart(education_counts(catalog.careers), "Level", "Careers",
                                     "Education level distribution",
-                                    center_text=f"<b>{len(catalog.careers)}</b><br>careers"),
+                                    center_text=f"<b>{len(catalog.careers)}</b><br>careers", height=DONUT_HEIGHT),
                         width="stretch", config=CHART_CONFIG)
         st.caption("Most careers share level 3, which is why education carries only 5% of the score.")
     with st.container(border=True, key="panel_skills"):

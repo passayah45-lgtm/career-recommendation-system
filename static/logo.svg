@@ -1,6 +1,7 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="240" height="40" viewBox="0 0 240 40" role="img" aria-label="Career Recommender">
-  <rect x="2" y="4" width="32" height="32" rx="8" fill="#0F9D94"/>
-  <path d="M10 26 L16 19 L21 23 L28 13" fill="none" stroke="#FFFFFF" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
-  <circle cx="28" cy="13" r="2.6" fill="#FFFFFF"/>
-  <text x="44" y="26" font-family="Source Sans Pro, Segoe UI, Arial, sans-serif" font-size="17" font-weight="700" fill="#FFFFFF">Career Recommender</text>
+<svg xmlns="http://www.w3.org/2000/svg" width="216" height="48" viewBox="0 0 216 48" role="img" aria-label="Career Recommendation System">
+  <rect x="2" y="6" width="36" height="36" rx="9" fill="#0F9D94"/>
+  <path d="M10 31 L17 23 L23 27.5 L31 16" fill="none" stroke="#FFFFFF" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"/>
+  <circle cx="31" cy="16" r="2.8" fill="#FFFFFF"/>
+  <text x="48" y="22" textLength="164" lengthAdjust="spacingAndGlyphs" font-family="Segoe UI, Helvetica, Arial, sans-serif" font-size="15" font-weight="700" fill="#FFFFFF">Career Recommendation</text>
+  <text x="48" y="39" font-family="Segoe UI, Helvetica, Arial, sans-serif" font-size="11.5" font-weight="600" letter-spacing="2.2" fill="#5EEAD4">SYSTEM</text>
 </svg>

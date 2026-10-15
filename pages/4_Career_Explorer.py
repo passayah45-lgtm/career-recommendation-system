@@ -4,11 +4,11 @@ import streamlit as st
 
 from src.data.validation import CATEGORIES
 from src.ui.components import (
-    SKILL_GAP_PAGE, badges, icon_heading, interest_badges, label, optional_badges, page_setup,
+    SKILL_GAP_PAGE, badges, interest_badges, label, optional_badges, page_setup,
     sidebar_profile_summary,
 )
 from src.ui.state import EXPLORER_CAREER_KEY, get_catalog, get_profile, select_career
-from src.ui.views import career_label, career_list_rows, education_label, filter_careers
+from src.ui.views import career_from_cell, career_label, career_list_rows, education_label, filter_careers
 
 TABLE_KEY = "explorer_table"
 
@@ -36,20 +36,21 @@ by_id = {c.career_id: c for c in careers}
 
 
 def pick_from_table():
-    # A click on a list row selects that career for the details panel
-    rows = st.session_state[TABLE_KEY].selection.rows
-    if rows and rows[0] < len(ids):
-        st.session_state[EXPLORER_CAREER_KEY] = ids[rows[0]]
+    # A click on any cell opens that row's career; cell selection needs no checkbox column
+    picked = career_from_cell(ids, st.session_state[TABLE_KEY].selection.cells)
+    if picked:
+        st.session_state[EXPLORER_CAREER_KEY] = picked
 
 
-list_col, detail_col = st.columns([1, 1.7])
+list_col, detail_col = st.columns([1.15, 1.45])
 with list_col, st.container(border=True, key="panel_list"):
-    label("Careers")
+    label(f"Careers ({len(careers)})")
     st.dataframe(career_list_rows(careers), hide_index=True, width="stretch", key=TABLE_KEY,
-                 on_select=pick_from_table, selection_mode="single-row",
-                 height=min(560, 36 * len(careers) + 40),
-                 column_config={"Career": st.column_config.TextColumn(width="medium")})
-    st.caption("Click a row to open its details.")
+                 on_select=pick_from_table, selection_mode="single-cell",
+                 height=min(520, 35 * len(careers) + 38),
+                 column_config={"Career": st.column_config.TextColumn(width=230),
+                                "Category": st.column_config.TextColumn(width=115)})
+    st.caption("Click a career to open its details.")
 
 with detail_col:
     current = st.session_state.get(EXPLORER_CAREER_KEY)
@@ -70,14 +71,13 @@ with detail_col:
                 st.caption("Manually curated, no O*NET match.")
         st.markdown(career.description)
 
-        e_col, c_col = st.columns(2)
-        with e_col, st.container(border=True, key="card_edu", height="stretch"):
-            icon_heading(":material/school:", "green", "####")
-            st.caption("Typical entry education")
+        # Two compact fact boxes side by side, stacked by Streamlit on narrow screens
+        e_col, c_col = st.columns([1.4, 1])
+        with e_col, st.container(border=True, key="card_edu", height="stretch", gap="small"):
+            st.caption(":material/school: Typical entry education")
             st.markdown(f"**{education_label(career.education_level)}**")
-        with c_col, st.container(border=True, key="card_cat", height="stretch"):
-            icon_heading(":material/category:", "blue", "####")
-            st.caption("Category")
+        with c_col, st.container(border=True, key="card_cat", height="stretch", gap="small"):
+            st.caption(":material/category: Category")
             st.markdown(f"**{career.category}**")
         st.caption("Education levels are simplified dataset estimates, not legal or universal requirements.")
 

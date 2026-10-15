@@ -88,3 +88,11 @@ def test_status_badges_always_carry_an_icon():
 def test_category_palette_covers_every_category():
     from src.data.validation import CATEGORIES
     assert len(set(theme.CATEGORY_PALETTE)) >= len(CATEGORIES)
+
+
+def test_one_product_name_across_logo_readme_and_home():
+    name = "Career Recommendation System"
+    logo = (ROOT / "static" / "logo.svg").read_text(encoding="utf-8")
+    assert f'aria-label="{name}"' in logo and "Career Recommendation" in logo
+    assert (ROOT / "README.md").read_text(encoding="utf-8").startswith(f"# {name}")
+    assert f'"{name}"' in (ROOT / "home.py").read_text(encoding="utf-8")

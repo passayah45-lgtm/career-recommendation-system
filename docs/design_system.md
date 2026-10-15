@@ -72,9 +72,9 @@ SVG graphics are rendered with st.image, which accepts SVG markup. st.html is us
 | Home | Hero with illustration and two actions, four stat cards, four "How it works" cards, score note |
 | Career Assessment | One form card with four icon sections (skills, interests, education with visible scale, experience marked not scored) |
 | Recommendations | Toolbar with Top K and score note, one card per career: category and rank title, score ring and value, matched and missing skills, reasons, breakdown, two actions |
-| Skill-Gap Analysis | Career picker, four coverage cards (required, preferred, overall rings, missing count), tabs for required, preferred and all skills with resource cards |
-| Career Explorer | Search and category filter, clickable career list on the left, details panel on the right with fact tiles, skills and O*NET link |
-| Analytics | Stat cards, careers by category (one color per category), education donut, top required skills, then your own results on a separate tab |
+| Skill-Gap Analysis | Status panel when no assessment exists, career picker (the source choice appears only with an assessment), four compact coverage cards with progress bars, a skills summary (missing required, optional preferred, already held), then learning resources in Required and Optional tabs: one card per skill with an orange edge and Required badge, or a gray edge and Optional badge |
+| Career Explorer | Search and category filter, a two-column career list (title and category, click any cell, no checkbox column) beside a details panel with category and ID badges, description, education and category facts, skills and the O*NET link |
+| Analytics | Stat cards, careers by category (one color per category) and the education donut at the same height with the legend under the donut, top required skills, then your own results on a separate tab |
 
 ## Navigation
 
@@ -90,4 +90,8 @@ Streamlit columns stack on narrow screens. On screens under 640px the stylesheet
 
 ## Selector policy
 
-The stylesheet targets the st-key-* classes Streamlit adds to containers created with a key, plus classes this app writes itself (crs-*). A few Streamlit test ids and classes are used where no keyed element exists: stForm (form surface), stMetricLabel and stMetricValue (centered stat cards), stHorizontalBlock and stColumn (two-per-row stats on phones), stElementToolbar (hidden on decorative images), stSidebarNavLink with aria-current (active page edge) and stMarkdownColoredText (icon tiles). If a Streamlit upgrade renames them, the app still works and only loses that styling.
+The stylesheet targets the st-key-* classes Streamlit adds to containers created with a key, plus classes this app writes itself (crs-*). A few Streamlit test ids and classes are used where no keyed element exists: stForm (form surface), stMetricLabel and stMetricValue (centered stat cards), stHorizontalBlock and stColumn (two-per-row stats on phones), stElementToolbar (hidden on decorative images), stSidebarNavLink with aria-current (active page edge), stMarkdownColoredText (icon tiles) and the stLogo class in stSidebarHeader (wordmark height).
+
+## Product identity
+
+One name everywhere: Career Recommendation System. The sidebar wordmark (static/logo.svg) shows the teal mark, "Career Recommendation" in white and "SYSTEM" in light teal; the same name is the home page title, the browser tab suffix and the README title. tests/test_theme.py checks that they match. If a Streamlit upgrade renames them, the app still works and only loses that styling.

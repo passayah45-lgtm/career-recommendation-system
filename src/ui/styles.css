@@ -87,8 +87,6 @@
 /* Icon tiles: a colored Material icon on a tint of the same color */
 [class*="st-key-stat_"] h3 .stMarkdownColoredText,
 [class*="st-key-step_"] h3 .stMarkdownColoredText,
-.st-key-card_edu h4 .stMarkdownColoredText,
-.st-key-card_cat h4 .stMarkdownColoredText,
 .st-key-note h4 .stMarkdownColoredText {
   display: inline-flex;
   align-items: center;
@@ -102,16 +100,12 @@
 [class*="st-key-step_"] h3 [role="img"] {
   font-size: 1.7rem;
 }
-.st-key-card_edu h4 .stMarkdownColoredText,
-.st-key-card_cat h4 .stMarkdownColoredText,
 .st-key-note h4 .stMarkdownColoredText {
   width: 2.4rem;
   height: 2.4rem;
 }
 [class*="st-key-stat_"] h3,
 [class*="st-key-step_"] h3,
-.st-key-card_edu h4,
-.st-key-card_cat h4,
 .st-key-note h4 {
   padding: 0;
 }
@@ -170,10 +164,18 @@
   box-shadow: inset 3px 0 0 #5EEAD4;
 }
 
-/* Resource cards inside a skill group sit on a faint tint */
-[class*="st-key-res_"] {
-  background: #FBFCFE;
-  box-shadow: none;
+/* Skill cards in learning resources: required gaps get an orange edge, optional gaps a gray one */
+[class*="st-key-res_req_"] {
+  border-left: 4px solid #C2410C !important;
+}
+[class*="st-key-res_opt_"] {
+  border-left: 4px solid #94A3B8 !important;
+}
+
+/* Sidebar wordmark: taller than Streamlit's default logo size so the two text lines stay readable */
+[data-testid="stSidebarHeader"] .stLogo {
+  height: 2.6rem;
+  max-width: 13.5rem;
 }
 
 /* Phones and narrow tablets */
@@ -190,10 +192,12 @@
     display: none;
   }
   /* Stat cards two per row instead of one tall column */
-  .st-key-stats [data-testid="stHorizontalBlock"] {
+  .st-key-stats [data-testid="stHorizontalBlock"],
+  .st-key-coverage [data-testid="stHorizontalBlock"] {
     flex-wrap: wrap;
   }
-  .st-key-stats [data-testid="stColumn"] {
+  .st-key-stats [data-testid="stColumn"],
+  .st-key-coverage [data-testid="stColumn"] {
     min-width: calc(50% - 0.5rem) !important;
     flex: 1 1 calc(50% - 0.5rem) !important;
   }

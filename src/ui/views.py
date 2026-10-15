@@ -67,6 +67,14 @@ def career_list_rows(careers):
     return [{"Career": r["Career"], "Category": r["Category"]} for r in career_rows(careers)]
 
 
+def career_from_cell(ids, cells):
+    # Maps a clicked list cell, given as (row, column), to the career id on that row
+    if not cells:
+        return None
+    row = cells[0][0] if isinstance(cells[0], (list, tuple)) else cells[0].get("row")
+    return ids[row] if isinstance(row, int) and 0 <= row < len(ids) else None
+
+
 def resource_rows(entries, gap_type):
     # Flattens skill_gap resource entries into table rows, one row per resource
     rows = []

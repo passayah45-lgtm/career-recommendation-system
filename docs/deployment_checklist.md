@@ -112,3 +112,18 @@ Local headless Chromium run against `streamlit run app.py` with the redesigned i
 | Phone layout on a real phone | pending | Sidebar opens with the arrow, home statistics show two per row |
 
 Second pass on 2026-10-15, following the six-page reference image: hero illustration, icon tiles, score and coverage rings, clickable explorer list, category colors and education donut. The same 50 browser checks passed at the four widths, and a row click in the explorer list opened that career. Live status stays pending until checked on the deployed URL.
+
+## 8. UI polish pass (2026-10-15)
+
+Based on the author's review of the live Analytics, Career Explorer and Skill-Gap pages. Checked locally in headless Chromium at 1280 px and 390 px wide.
+
+| Check | Status | Notes |
+|---|---|---|
+| Explorer list shows full titles and categories, no checkbox column | verified locally | Click on any cell opens that career |
+| Explorer details keep category, ID, description, education, skills, O*NET link | verified locally | |
+| Skill-Gap without an assessment: status panel, career picker only, all skills missing | verified locally | Expected empty state, covered by tests/test_app.py |
+| Skill-Gap with an assessment: 80% required, 0% preferred, 50% overall, 1 missing | verified locally | Same values as before the polish |
+| Required and optional resource cards are labelled and edged differently | verified locally | |
+| Analytics chart cards line up, donut legend readable | verified locally | |
+| No horizontal overflow on the checked pages at either width | verified locally | Also 50 of 50 flow checks at four widths |
+| Same checks on the live URL and a real phone | pending | |

@@ -135,13 +135,11 @@ def verification_badge(status, verified_on=""):
     return f":{color}-badge[{icon} {text}{date}]"
 
 
-def resource_card(resource, key):
-    # One learning resource: provider tile, linked title, type, level, cost and link status
-    with st.container(border=True, key=f"res_{key}"):
-        tile_col, body_col = st.columns([0.06, 1], vertical_alignment="center", gap="small")
-        with tile_col:
-            st.html(initial_tile(resource["provider"]), width="content")
-        with body_col:
+def resource_row(resource):
+    # One learning resource inside a skill card: provider tile, linked title, type, level, cost and link status
+    with st.container(horizontal=True, vertical_alignment="center", gap="small"):
+        st.html(initial_tile(resource["provider"]), width="content")
+        with st.container(gap="small"):
             st.markdown(f'<div class="crs-res-title"><a href="{escape(resource["url"], quote=True)}" target="_blank" '
                         f'rel="noopener">{escape(resource["title"])}</a></div>'
                         f'<div class="crs-res-meta">{escape(resource["provider"])}</div>',

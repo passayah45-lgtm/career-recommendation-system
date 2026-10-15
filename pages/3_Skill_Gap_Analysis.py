@@ -7,7 +7,7 @@ from src.services.profiles import ProfileValidationError
 from src.services.recommendations import recommend
 from src.services.skill_gap import analyze_skill_gap
 from src.ui.components import (
-    ASSESSMENT_PAGE, badges, have_badges, label, missing_badges, optional_badges, page_setup, resource_card, ring,
+    ASSESSMENT_PAGE, badges, have_badges, label, missing_badges, optional_badges, page_setup, resource_row,
     sidebar_profile_summary,
 )
 from src.ui.state import SELECTED_CAREER_KEY, get_catalog, get_profile, get_top_k, select_career
@@ -20,9 +20,13 @@ profile = get_profile()
 careers_by_id = {c.career_id: c for c in catalog.careers}
 
 if not profile:
-    st.info("You have no saved assessment, so every skill is shown as missing. "
-            "Complete the assessment for a personal analysis.", icon=":material/info:")
-    st.page_link(ASSESSMENT_PAGE, label="Go to the Career Assessment", icon=":material/arrow_forward:")
+    # Expected empty state: without an assessment every listed skill counts as missing
+    with st.container(border=True, key="panel_status"):
+        text_col, link_col = st.columns([3, 1.1], vertical_alignment="center")
+        text_col.info("You have no saved assessment, so every skill is shown as missing. "
+                      "Complete the assessment for a personal analysis.", icon=":material/info:")
+        with link_col:
+            st.page_link(ASSESSMENT_PAGE, label="Go to the Career Assessment", icon=":material/arrow_forward:")
 
 recommended_ids = []
 if profile:
@@ -37,9 +41,13 @@ choices = ["My recommended careers", "All careers"] if recommended_ids else ["Al
 start_on_all = current is not None and current in careers_by_id and current not in recommended_ids
 
 with st.container(border=True, key="toolbar"):
-    src_col, career_col = st.columns([1, 1.6], vertical_alignment="bottom")
-    source = src_col.radio("Choose from", choices, horizontal=True,
-                           index=len(choices) - 1 if start_on_all else 0)
+    if len(choices) > 1:
+        src_col, career_col = st.columns([1, 1.6], vertical_alignment="bottom")
+        source = src_col.radio("Choose from", choices, horizontal=True,
+                               index=len(choices) - 1 if start_on_all else 0)
+    else:
+        # A one-option choice adds nothing, so only the career selector is shown
+        career_col, source = st.container(), choices[0]
     option_ids = recommended_ids if source == "My recommended careers" else [c.career_id for c in catalog.careers]
     if current not in option_ids:
         current = option_ids[0]
@@ -70,11 +78,10 @@ st.markdown(f"{badges([career.category], 'blue')} "
 
 
 def coverage_card(column, key, title, value, have, total):
-    # Ring, metric and an "x of y skills" line for one coverage figure
-    with column, st.container(border=True, key=f"card_{key}", height="stretch"):
-        with st.container(horizontal=True, vertical_alignment="center", gap="small"):
-            st.metric(title, pct(value), width="content")
-            ring(value, pct(value) if value is not None else "n/a", size=58, label_text=f"{title} {pct(value)}")
+    # Compact coverage figure: value, progress bar and an "x of y skills" line
+    with column, st.container(border=True, key=f"card_{key}", height="stretch", gap="small"):
+        st.metric(title, pct(value))
+        st.progress(value or 0.0)
         st.caption(f"{have} of {total} skills" if total else "This career lists no such skills.")
 
 
@@ -84,14 +91,25 @@ with st.container(key="coverage"):
     coverage_card(c2, "preferred", "Preferred skill coverage", gap["preferred_coverage"], len(have_pref), n_pref)
     coverage_card(c3, "overall", "Overall skill coverage", gap["overall_skill_coverage"],
                   len(have_req) + len(have_pref), n_req + n_pref)
-    with c4, st.container(border=True, key="card_missing", height="stretch"):
+    with c4, st.container(border=True, key="card_missing", height="stretch", gap="small"):
         st.metric("Missing required skills", len(miss_req))
-        st.caption("Optional preferred skills are not counted here.")
+        st.caption(f"Out of {n_req} required. Optional preferred skills are not counted here.")
 
 if gap["meets_all_required"]:
     st.success("You have every required skill for this career in the dataset.", icon=":material/check_circle:")
-if gap["unknown_skills"]:
-    st.caption(f"Not in the dataset, so not compared: {', '.join(gap['unknown_skills'])}.")
+
+with st.container(border=True, key="panel_skills"):
+    req_col, opt_col = st.columns(2)
+    with req_col:
+        label(f"Missing required skills ({len(miss_req)})")
+        st.markdown(missing_badges(miss_req, empty="None, every required skill is covered"))
+    with opt_col:
+        label(f"Optional preferred skills to add ({len(miss_pref)})")
+        st.markdown(optional_badges(miss_pref, empty="None"))
+    label(f"Skills you already have ({len(have_req) + len(have_pref)})")
+    st.markdown(have_badges(have_req + have_pref, empty="None yet"))
+    if gap["unknown_skills"]:
+        st.caption(f"Not in the dataset, so not compared: {', '.join(gap['unknown_skills'])}.")
 
 TABLE_COLUMNS = {
     "URL": st.column_config.LinkColumn("Link", display_text="Open resource"),
@@ -100,42 +118,36 @@ TABLE_COLUMNS = {
 
 
 def resource_group(entries, gap_type, empty_text):
+    # One card per missing skill: a required or optional label, then its resources as rows
     if not entries:
         st.caption(empty_text)
         return
+    required = gap_type == "required"
     for entry in entries:
-        with st.container(border=True, key=f"panel_{gap_type}_{entry['skill'].replace(' ', '_')}"):
-            tag = missing_badges([entry["skill"]]) if gap_type == "required" else optional_badges([entry["skill"]])
-            st.markdown(f"{tag} :gray[{len(entry['resources'])} learning resource(s)]")
+        key = f"res_{'req' if required else 'opt'}_{entry['skill'].replace(' ', '_')}"
+        with st.container(border=True, key=key, gap="small"):
+            kind = (":orange-badge[:material/priority_high: Required]" if required
+                    else ":gray-badge[:material/add: Optional]")
+            st.markdown(f"{kind} **{entry['skill']}**")
             if not entry["resources"]:
                 st.caption("No resource in the catalogue for this skill yet.")
             for r in entry["resources"]:
-                resource_card(r, f"{gap_type}_{r['resource_id']}")
+                resource_row(r)
     with st.expander("Table view"):
         st.dataframe(resource_rows(entries, gap_type), hide_index=True, width="stretch", column_config=TABLE_COLUMNS)
 
 
-with st.container(border=True, key="panel_gaps"):
-    required_tab, optional_tab, all_tab = st.tabs([
-        f"Required skills ({len(miss_req)} missing)",
-        f"Preferred skills ({len(miss_pref)} missing)",
-        f"All skills ({n_req + n_pref})",
-    ])
-    with required_tab:
-        st.markdown("**:red[:material/error:] Missing required skills**")
-        st.caption("These skills are needed for this career and are not in your current profile.")
-        resource_group(gap["resources"]["required"], "required", "No missing required skills.")
-    with optional_tab:
-        st.markdown("**:gray[:material/add_circle:] Missing preferred skills (optional)**")
-        st.caption("Preferred skills help but are not essential for this career.")
-        resource_group(gap["resources"]["preferred"], "preferred", "No missing preferred skills.")
-    with all_tab:
-        label("Skills you already have")
-        st.markdown(have_badges(have_req + have_pref))
-        label("Missing required skills")
-        st.markdown(missing_badges(miss_req))
-        label("Missing preferred skills (optional)")
-        st.markdown(optional_badges(miss_pref))
+st.subheader("Learning resources", anchor=False)
+required_tab, optional_tab = st.tabs([
+    f"Required skills ({len(gap['resources']['required'])})",
+    f"Optional skills ({len(gap['resources']['preferred'])})",
+])
+with required_tab:
+    st.caption("Needed for this career and not in your current profile.")
+    resource_group(gap["resources"]["required"], "required", "No missing required skills.")
+with optional_tab:
+    st.caption("Preferred skills help but are not essential for this career.")
+    resource_group(gap["resources"]["preferred"], "preferred", "No missing preferred skills.")
 
 st.info(gap["resource_note"], icon=":material/verified_user:")
 
