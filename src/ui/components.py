@@ -7,8 +7,9 @@ from pathlib import Path
 import streamlit as st
 
 from src.services.recommendations import SCORE_DISCLAIMER
+from src.services.session_data import SessionFileError, export_session, import_session
 from src.ui.illustrations import HERO_SVG, SIDEBAR_ART, initial_tile, ring_svg
-from src.ui.state import SELECTED_CAREER_KEY, get_catalog, reset_assessment
+from src.ui.state import SELECTED_CAREER_KEY, get_catalog, get_feedback, replace_session, reset_assessment
 from src.ui.theme import UNVERIFIED_BADGE, VERIFICATION_BADGES
 
 HOME_PAGE = "home.py"
@@ -179,3 +180,26 @@ def sidebar_profile_summary(profile):
             st.caption(f":material/school: Skill-gap career: {titles[selected]}")
         reset_button(key="sidebar_reset")
     sidebar_card()
+
+
+def session_data_panel(profile, key, allow_download=True):
+    # Download, upload and clear the learner's own session; nothing is stored by the app
+    with st.expander(":material/folder_shared: Your session data", expanded=False):
+        st.caption("Your answers and career feedback are kept only while this page is open. They are not "
+                   "saved in any database and disappear when you close the tab. Download them to continue later.")
+        if allow_download and profile:
+            st.download_button("Download my session", data=export_session(profile, get_feedback()),
+                               file_name="career_session.json", mime="application/json",
+                               icon=":material/download:", key=f"{key}_download")
+        uploaded = st.file_uploader("Continue a saved session", type=["json"], key=f"{key}_upload",
+                                    help="Upload a career_session.json file you downloaded earlier.")
+        if uploaded is not None and st.button("Restore this session", key=f"{key}_restore",
+                                              icon=":material/upload:"):
+            try:
+                saved_profile, saved_feedback = import_session(uploaded.getvalue(), get_catalog())
+            except SessionFileError as exc:
+                st.error(f"The file could not be used: {exc}.", icon=":material/error:")
+            else:
+                replace_session(saved_profile, saved_feedback)
+                st.success("Session restored.", icon=":material/check_circle:")
+                st.rerun()

@@ -109,3 +109,17 @@ Explanations are built only from values used in the calculation. They have not y
 | `src/evaluation/experiments.py` | Original study: weight configurations A to D, output `reports/evaluation_results.json` |
 | `src/evaluation/research_experiments.py` | Baselines and ablations, output `reports/research_results.json` |
 | `tests/test_evaluation.py`, `tests/test_research_experiments.py` | Hand-checked metric values and byte-for-byte reproducibility of both reports |
+
+## 11. Session feedback (per-student adaptation)
+
+Added 27 October 2026. The app adapts one student's ranking during their visit, without storing anything.
+
+- **Input:** on the Recommendations page the student marks careers as *Interested* or *Not for me*.
+- **Similarity** between two careers: 0.6 × Jaccard overlap of their required and preferred skills + 0.4 × (same category), between 0 and 1. Pairs below 0.15 are ignored.
+- **Adjustment** for each unrated career: the sum over rated careers of (+1 or -1) × 10 points × similarity, limited to ±15 points. The adjusted score is the formula score plus the adjustment, kept between 0 and 100.
+- **Ranking:** careers are re-ranked by adjusted score. Careers marked *Not for me* move to a separate list the student can undo.
+- **Explanation:** each card shows the formula score, the adjustment and one line per rated career that caused it. The formula score itself is never changed.
+- **Privacy:** answers and feedback live only in the Streamlit session and disappear when the tab closes. The student can download a `career_session.json` file and upload it later. The file is validated (format, version, size, known careers and values) before use.
+- **Code and tests:** `src/services/feedback.py`, `src/services/session_data.py`, `tests/test_feedback.py`, and interaction tests in `tests/test_app.py`.
+
+This is relevance feedback within one session. It does not retrain the machine-learning models and is not evaluated with real students yet.

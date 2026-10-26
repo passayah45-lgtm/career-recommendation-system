@@ -2,14 +2,18 @@
 
 import streamlit as st
 
+from src.services.feedback import INTERESTED, NOT_FOR_ME, adapt_recommendations
 from src.services.profiles import ProfileValidationError
 from src.services.recommendations import recommend
 from src.ui.components import (
     EXPLORER_PAGE, SKILL_GAP_PAGE, badges, have_badges, interest_badges, label, missing_badges,
-    need_profile_message, optional_badges, page_setup, ring, score_disclaimer, show_profile_warnings,
-    sidebar_profile_summary,
+    need_profile_message, optional_badges, page_setup, ring, score_disclaimer, session_data_panel,
+    show_profile_warnings, sidebar_profile_summary,
 )
-from src.ui.state import EXPLORER_CAREER_KEY, TOP_K_KEY, get_catalog, get_profile, get_top_k, select_career
+from src.ui.state import (
+    EXPLORER_CAREER_KEY, FEEDBACK_KEY, TOP_K_KEY, get_catalog, get_feedback, get_profile, get_top_k, select_career,
+    set_feedback,
+)
 from src.ui.views import education_label
 
 page_setup("Your Career Recommendations", eyebrow="Step 2 of 3",
@@ -31,7 +35,7 @@ with st.container(border=True, key="toolbar"):
 st.session_state[TOP_K_KEY] = top_k
 
 try:
-    result = recommend(profile, catalog, top_k=top_k)
+    result = recommend(profile, catalog, top_k=None)
 except (ProfileValidationError, ValueError) as exc:
     st.error(f"Your saved assessment could not be used: {exc}. Please complete the assessment again.",
              icon=":material/error:")
@@ -39,10 +43,25 @@ except (ProfileValidationError, ValueError) as exc:
 
 show_profile_warnings(result["warnings"])
 
-recommendations = result["recommendations"]
+feedback = get_feedback()
+ranked, hidden = adapt_recommendations(result["recommendations"], catalog, feedback)
+recommendations = ranked[:top_k]
 if not recommendations:
     st.info("No careers were returned. Try adding more skills or interests.", icon=":material/info:")
     st.stop()
+
+liked = sum(1 for v in feedback.values() if v == INTERESTED)
+with st.container(border=True, key="feedback_bar"):
+    if feedback:
+        info_col, clear_col = st.columns([3, 1], vertical_alignment="center")
+        info_col.markdown(f":material/tune: **Adapted to your feedback:** {liked} interested, {len(hidden)} not for me. "
+                          "Similar careers move up or down, and each card shows by how much.")
+        if clear_col.button("Clear my feedback", key="clear_feedback", icon=":material/backspace:"):
+            st.session_state.pop(FEEDBACK_KEY, None)
+            st.rerun()
+    else:
+        st.markdown(":material/tune: **Tell the app what you think.** Mark careers as *Interested* or *Not for me* "
+                    "and the list adapts to you during this visit. Nothing is stored after you leave.")
 
 COMPONENT_LABELS = {
     "required_skills": "Required skills",
@@ -68,9 +87,11 @@ for rec in recommendations:
             st.markdown(tags)
             st.markdown(f"### {rec['rank']}. {rec['career_title']}")
         with score_col, st.container(horizontal=True, vertical_alignment="center", gap="small"):
-            ring(rec["score"] / 100, f"{rec['score']:.1f}", size=62,
-                 label_text=f"Compatibility score {rec['score']:.1f} out of 100")
-            st.metric("Compatibility score", f"{rec['score']:.1f} / 100", width="content")
+            shown_score = rec["adjusted_score"]
+            ring(shown_score / 100, f"{shown_score:.1f}", size=62,
+                 label_text=f"Compatibility score {shown_score:.1f} out of 100")
+            delta = f"{rec['feedback_adjustment']:+.1f} from your feedback" if rec["feedback_adjustment"] else None
+            st.metric("Compatibility score", f"{shown_score:.1f} / 100", delta=delta, width="content")
 
         matched_col, missing_col = st.columns(2)
         with matched_col:
@@ -91,6 +112,12 @@ for rec in recommendations:
         for note in rec["notes"]:
             st.caption(note)
 
+        if rec["feedback_reasons"]:
+            label("How your feedback changed this score")
+            st.markdown("\n".join(f"- {r}" for r in rec["feedback_reasons"]))
+            st.caption(f"Formula score {rec['formula_score']:.1f} plus feedback {rec['feedback_adjustment']:+.1f} "
+                       f"gives {rec['adjusted_score']:.1f}.")
+
         with st.expander("Score breakdown"):
             rows = [
                 {
@@ -103,12 +130,30 @@ for rec in recommendations:
                 for name, comp in rec["score_components"].items()
             ]
             st.dataframe(rows, hide_index=True, width="stretch", column_config=BREAKDOWN_COLUMNS)
-            st.caption("Points add up to the compatibility score.")
+            st.caption("Points add up to the formula score. Feedback adjustments are shown above the breakdown.")
 
         with st.container(horizontal=True, horizontal_alignment="right"):
+            if rec["user_feedback"] == INTERESTED:
+                st.markdown(":green-badge[:material/thumb_up: You are interested]")
+                st.button("Undo", key=f"undo_{cid}", icon=":material/undo:", on_click=set_feedback, args=(cid, None))
+            else:
+                st.button("Interested", key=f"like_{cid}", icon=":material/thumb_up:",
+                          on_click=set_feedback, args=(cid, INTERESTED))
+                st.button("Not for me", key=f"dislike_{cid}", icon=":material/thumb_down:",
+                          on_click=set_feedback, args=(cid, NOT_FOR_ME))
             if st.button("View career details", key=f"explore_{cid}", icon=":material/open_in_new:"):
                 st.session_state[EXPLORER_CAREER_KEY] = cid
                 st.switch_page(EXPLORER_PAGE)
             if st.button("Analyze my skill gap", key=f"gap_{cid}", type="primary", icon=":material/school:"):
                 select_career(cid)
                 st.switch_page(SKILL_GAP_PAGE)
+
+if hidden:
+    with st.expander(f":material/visibility_off: Careers you marked not for me ({len(hidden)})"):
+        for rec in hidden:
+            name_col, undo_col = st.columns([3, 1], vertical_alignment="center")
+            name_col.markdown(f"**{rec['career_title']}** :gray-badge[{rec['category']}]")
+            undo_col.button("Show again", key=f"unhide_{rec['career_id']}", icon=":material/undo:",
+                            on_click=set_feedback, args=(rec["career_id"], None))
+
+session_data_panel(profile, key="rec_session")

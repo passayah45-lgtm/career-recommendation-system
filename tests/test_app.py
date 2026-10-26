@@ -256,3 +256,28 @@ def test_explorer_list_shows_title_and_category_only():
     at = open_page("pages/4_Career_Explorer.py")
     assert list(at.dataframe[0].value.columns) == ["Career", "Category"]
     assert len(at.dataframe[0].value) == 50
+
+
+def test_feedback_adapts_the_recommendation_list():
+    from src.ui.state import FEEDBACK_KEY
+    at = open_page("pages/2_Recommendations.py", profile=WORKED_EXAMPLE, top_k=10)
+    assert "Tell the app what you think" in text_of(at)
+    at.button(key="like_C002").click().run()
+    assert not at.exception
+    assert at.session_state[FEEDBACK_KEY] == {"C002": 1}
+    text = text_of(at)
+    assert "Adapted to your feedback" in text
+    assert "similar to Data Analyst, which you are interested in" in text
+    at.button(key="dislike_C029").click().run()
+    assert at.session_state[FEEDBACK_KEY] == {"C002": 1, "C029": -1}
+    assert any("not for me (1)" in e.label for e in at.expander)
+    at.button(key="clear_feedback").click().run()
+    assert FEEDBACK_KEY not in at.session_state
+
+
+def test_session_download_is_offered_and_reset_clears_feedback():
+    from src.ui.state import FEEDBACK_KEY
+    at = open_page("pages/2_Recommendations.py", profile=WORKED_EXAMPLE, **{FEEDBACK_KEY: {"C002": 1}})
+    assert len(at.get("download_button")) == 1
+    at.button(key="sidebar_reset").click().run()
+    assert FEEDBACK_KEY not in at.session_state and PROFILE_KEY not in at.session_state

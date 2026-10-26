@@ -6,7 +6,8 @@ from src.data.validation import EDUCATION_LEVELS
 from src.services.profiles import MAX_EXPERIENCE_YEARS, ProfileValidationError
 from src.services.recommendations import profile_from_input
 from src.ui.components import (
-    RECOMMENDATIONS_PAGE, have_badges, page_setup, reset_button, section, sidebar_profile_summary,
+    RECOMMENDATIONS_PAGE, have_badges, page_setup, reset_button, section, session_data_panel,
+    sidebar_profile_summary,
 )
 from src.ui.state import get_catalog, get_profile, set_profile
 from src.ui.views import build_profile_input, education_label
@@ -16,6 +17,7 @@ page_setup("Career Assessment", eyebrow="Step 1 of 3",
                     "The more you add, the more useful your results will be.")
 catalog = get_catalog()
 saved = get_profile() or {}
+session_data_panel(saved, key="assess_session", allow_download=bool(saved))
 
 known_skills = sorted(catalog.known_skills)
 saved_skills = saved.get("skills", [])

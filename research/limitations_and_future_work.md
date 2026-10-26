@@ -26,6 +26,11 @@
 - English only; one resource per skill.
 - No licence file.
 
+## 2b. Session feedback
+
+- The per-student adaptation (Interested / Not for me) uses fixed similarity rules. Its usefulness has not been tested with real students; the planned user study should compare lists before and after feedback.
+- Feedback is not stored or pooled, so the app does not learn across students. This protects privacy but means the global models cannot improve from use.
+
 ## 3. Threats to validity
 
 | Type | Threat | Mitigation planned |
