@@ -1,0 +1,92 @@
+{
+  "models": {
+    "decision_tree": {
+      "depth": 4,
+      "feature_importance": {
+        "education_gap": 0.0078,
+        "education_provided": 0.0,
+        "education_value": 0.0,
+        "interest_coverage": 0.0,
+        "interest_matched": 0.0,
+        "learner_skill_count": 0.0143,
+        "learner_skills_used_share": 0.9208,
+        "preferred_coverage": 0.0104,
+        "preferred_matched": 0.0,
+        "required_coverage": 0.0006,
+        "required_matched": 0.0068,
+        "required_missing": 0.0394,
+        "required_total": 0.0
+      },
+      "leaves": 9,
+      "params": {
+        "max_depth": 4,
+        "min_samples_leaf": 5
+      },
+      "rules": "|--- learner_skills_used_share <= 0.450\n|   |--- required_missing <= 2.500\n|   |   |--- learner_skill_count <= 4.500\n|   |   |   |--- education_gap <= 0.500\n|   |   |   |   |--- class: 1\n|   |   |   |--- education_gap >  0.500\n|   |   |   |   |--- class: 0\n|   |   |--- learner_skill_count >  4.500\n|   |   |   |--- class: 0\n|   |--- required_missing >  2.500\n|   |   |--- class: 0\n|--- learner_skills_used_share >  0.450\n|   |--- required_matched <= 0.500\n|   |   |--- class: 0\n|   |--- required_matched >  0.500\n|   |   |--- learner_skills_used_share <= 0.550\n|   |   |   |--- preferred_coverage <= 0.167\n|   |   |   |   |--- class: 1\n|   |   |   |--- preferred_coverage >  0.167\n|   |   |   |   |--- class: 0\n|   |   |--- learner_skills_used_share >  0.550\n|   |   |   |--- required_coverage <= 0.367\n|   |   |   |   |--- class: 1\n|   |   |   |--- required_coverage >  0.367\n|   |   |   |   |--- class: 1\n"
+    },
+    "logistic_regression": {
+      "params": {
+        "clf__C": 0.01
+      },
+      "standardised_coefficients": {
+        "education_gap": -0.1061,
+        "education_provided": -0.1815,
+        "education_value": -0.1394,
+        "interest_coverage": 0.2816,
+        "interest_matched": 0.2772,
+        "learner_skill_count": -0.1066,
+        "learner_skills_used_share": 0.5645,
+        "preferred_coverage": 0.0453,
+        "preferred_matched": 0.0846,
+        "required_coverage": 0.4582,
+        "required_matched": 0.4198,
+        "required_missing": -0.3526,
+        "required_total": -0.0334
+      }
+    },
+    "random_forest": {
+      "feature_importance": {
+        "education_gap": 0.0044,
+        "education_provided": 0.0036,
+        "education_value": 0.0089,
+        "interest_coverage": 0.0752,
+        "interest_matched": 0.0432,
+        "learner_skill_count": 0.0113,
+        "learner_skills_used_share": 0.2516,
+        "preferred_coverage": 0.0165,
+        "preferred_matched": 0.0147,
+        "required_coverage": 0.2393,
+        "required_matched": 0.1909,
+        "required_missing": 0.1334,
+        "required_total": 0.007
+      },
+      "params": {
+        "max_depth": null,
+        "min_samples_leaf": 1
+      }
+    },
+    "xgboost": {
+      "feature_importance": {
+        "education_gap": 0.0127,
+        "education_provided": 0.0215,
+        "education_value": 0.0171,
+        "interest_coverage": 0.023,
+        "interest_matched": 0.0187,
+        "learner_skill_count": 0.0279,
+        "learner_skills_used_share": 0.5171,
+        "preferred_coverage": 0.0215,
+        "preferred_matched": 0.0256,
+        "required_coverage": 0.1014,
+        "required_matched": 0.1274,
+        "required_missing": 0.0598,
+        "required_total": 0.0263
+      },
+      "params": {
+        "learning_rate": 0.05,
+        "max_depth": 3,
+        "n_estimators": 100
+      }
+    }
+  },
+  "note": "Fitted on all 1,800 pairs for interpretation only; not an accuracy estimate."
+}

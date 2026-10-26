@@ -1,0 +1,3 @@
+# Extra packages for the research experiments only; the Streamlit app does not need them
+-r requirements.txt
+xgboost==3.4.1

@@ -1,7 +1,7 @@
 # Dataset Documentation
 
-Version: 1.1.0
-Last updated: 2026-10-14
+Version: 1.2.0
+Last updated: 2026-10-26
 Phase: 2 (Dataset Engineering and Validation)
 
 ## 1. Purpose and scope
@@ -140,9 +140,9 @@ Most common required skills: communication (8 careers), python, sql, excel, linu
 
 ### Career records
 
-1. Occupation mapping: 46 of 50 careers map to an O*NET-SOC occupation. The source_url points to the O*NET OnLine summary page for that code. O*NET is maintained for the U.S. Department of Labor.
-2. Careers without a matching O*NET occupation: Data Analyst, Machine Learning Engineer, Mobile App Developer and DevOps Engineer. Their onet_code and source_url are empty. The validator reports them as warnings.
-3. Nearest-occupation mappings: some titles map to a broader O*NET occupation. Data Engineer maps to Data Warehousing Specialists (15-1243.01), Cloud Engineer to Computer Systems Engineers/Architects (15-1299.08), Instructional Designer to Instructional Coordinators (25-9031.00), Digital Marketing Specialist to Search Marketing Strategists (13-1161.01), UX Designer to Web and Digital Interface Designers (15-1255.00).
+1. Occupation mapping: 47 of 50 careers map to an O*NET-SOC occupation. The source_url points to the O*NET OnLine summary page for that code. O*NET is maintained for the U.S. Department of Labor.
+2. Careers without a matching O*NET occupation: Data Analyst, Machine Learning Engineer and Mobile App Developer. Their onet_code and source_url are empty. The validator reports them as warnings.
+3. Nearest-occupation mappings: some titles map to a broader O*NET occupation. Data Engineer maps to Data Warehousing Specialists (15-1243.01), Cloud Engineer to Computer Systems Engineers/Architects (15-1299.08), Instructional Designer to Instructional Coordinators (25-9031.00), Digital Marketing Specialist to Search Marketing Strategists (13-1161.01), UX Designer to Web and Digital Interface Designers (15-1255.00), DevOps Engineer to Software Developers (15-1252.00, where O*NET OnLine lists "DevOps Engineer" as a reported job title, checked 2026-10-26), AI Research Scientist to Computer and Information Research Scientists (15-1221.00).
 
 What is sourced and what is curated:
 
@@ -246,3 +246,4 @@ Errors stop the GitHub Actions workflow. Warnings (missing optional source URL, 
 |---|---|---|
 | 1.0.0 | 2026-10-14 | First release: 50 careers, 114 resources, 37 aliases, validator and tests |
 | 1.1.0 | 2026-10-14 | HTTP link check: 104 resources http_checked, R045 replaced after a 404 |
+| 1.2.0 | 2026-10-26 | C013 DevOps Engineer mapped to O*NET 15-1252.00 as a nearest-broader occupation; AI Research Scientist recorded as nearest-broader. Its source URL is the same page already checked for C009 on 2026-10-14 |

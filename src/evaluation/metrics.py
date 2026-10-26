@@ -1,6 +1,7 @@
 # Ranking metrics against binary relevance labels
 # Every function returns None when the metric is undefined, it never substitutes a value
 
+import math
 import random
 from collections import Counter
 
@@ -117,3 +118,48 @@ def category_distribution(top_k_lists, category_of):
     counts = Counter(category_of[cid] for lst in top_k_lists for cid in lst)
     total = sum(counts.values())
     return {cat: {"count": n, "share": n / total if total else 0.0} for cat, n in sorted(counts.items())}
+
+
+def ndcg_at_k(ranked_ids, relevant, k=5, grades=None):
+    # Normalised discounted cumulative gain with log2 discount; gain 1 per relevant career unless grades are given
+    gain = grades if grades is not None else {cid: 1 for cid in relevant}
+    ideal = sorted((g for g in gain.values() if g > 0), reverse=True)[:k]
+    if not ideal:
+        return None
+    dcg = sum(gain.get(cid, 0) / math.log2(i + 2) for i, cid in enumerate(ranked_ids[:k]))
+    idcg = sum(g / math.log2(i + 2) for i, g in enumerate(ideal))
+    return dcg / idcg
+
+
+def paired_randomization_test(a, b, n_resamples=10000, seed=42):
+    # Two-sided sign-flip test on paired per-profile differences; pairs with a None value are dropped
+    diffs = [x - y for x, y in zip(a, b) if x is not None and y is not None]
+    if not diffs:
+        return None
+    observed = abs(sum(diffs) / len(diffs))
+    if all(d == 0 for d in diffs):
+        return {"n": len(diffs), "mean_difference": 0.0, "p_value": 1.0, "nonzero_pairs": 0}
+    rng = random.Random(seed)
+    extreme = 0
+    for _ in range(n_resamples):
+        s = sum(d if rng.random() < 0.5 else -d for d in diffs)
+        if abs(s / len(diffs)) >= observed - 1e-12:
+            extreme += 1
+    return {
+        "n": len(diffs),
+        "mean_difference": sum(diffs) / len(diffs),
+        "p_value": (extreme + 1) / (n_resamples + 1),
+        "nonzero_pairs": sum(1 for d in diffs if d != 0),
+    }
+
+
+def holm_adjust(p_values):
+    # Holm step-down adjusted p-values, returned in the input order
+    order = sorted(range(len(p_values)), key=lambda i: p_values[i])
+    adjusted = [0.0] * len(p_values)
+    running = 0.0
+    m_total = len(p_values)
+    for rank, i in enumerate(order):
+        running = max(running, min(1.0, (m_total - rank) * p_values[i]))
+        adjusted[i] = running
+    return adjusted
