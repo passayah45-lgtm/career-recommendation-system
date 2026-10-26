@@ -113,3 +113,25 @@ def test_career_from_cell_maps_clicked_row_to_id():
     assert career_from_cell(ids, [{"row": 1, "column": "Career"}]) == "C002"
     assert career_from_cell(ids, []) is None and career_from_cell(ids, None) is None
     assert career_from_cell(ids, [(7, "Career")]) is None and career_from_cell(ids, [(-1, "Career")]) is None
+
+
+def test_model_comparison_rows_match_saved_report():
+    from src.ui.views import load_ml_report, model_comparison_rows
+    report = load_ml_report()
+    rows = model_comparison_rows(report)
+    assert [r["Method"] for r in rows][0].startswith("Weighted formula")
+    assert len(rows) == 5
+    formula = rows[0]
+    assert formula["MAP"] == round(report["methods"]["weighted_formula"]["ranking"]["average_precision"]["mean"], 3)
+    assert formula["p vs formula (Holm)"] == "reference"
+    assert all(isinstance(r["p vs formula (Holm)"], str) for r in rows)
+    assert not formula["Trained model"] and all(r["Trained model"] for r in rows[1:])
+
+
+def test_missing_or_broken_model_report_is_handled(tmp_path):
+    from src.ui.views import load_ml_report, model_comparison_rows
+    assert load_ml_report(tmp_path / "missing.json") is None
+    bad = tmp_path / "bad.json"
+    bad.write_text("{not json", encoding="utf-8")
+    assert load_ml_report(bad) is None
+    assert model_comparison_rows(None) == [] and model_comparison_rows({}) == []

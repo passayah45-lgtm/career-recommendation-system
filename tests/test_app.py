@@ -136,10 +136,19 @@ def test_explorer_filters_by_category_and_search():
 
 
 def test_analytics_with_and_without_profile():
+    # 3 dataset charts, 1 model comparison chart, plus 2 personal charts when a profile exists
     at = open_page("pages/5_Analytics.py")
-    assert len(at.get("plotly_chart")) == 3
+    assert len(at.get("plotly_chart")) == 4
     at = open_page("pages/5_Analytics.py", profile=WORKED_EXAMPLE)
-    assert len(at.get("plotly_chart")) == 5
+    assert len(at.get("plotly_chart")) == 6
+
+
+def test_analytics_model_comparison_tab_shows_saved_results():
+    at = open_page("pages/5_Analytics.py")
+    text = text_of(at)
+    assert "No trained model ranked careers better than the formula" in text
+    assert "36 synthetic profiles" in text
+    assert len(at.dataframe) == 1
 
 
 def test_reset_clears_the_assessment():

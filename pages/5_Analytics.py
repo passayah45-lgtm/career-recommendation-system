@@ -11,23 +11,27 @@ from src.ui.components import (
     need_profile_message, page_setup, score_disclaimer, sidebar_profile_summary, stat_card,
 )
 from src.ui.state import get_catalog, get_profile, get_top_k
-from src.ui.theme import BLUE, CATEGORY_PALETTE
-from src.ui.views import category_counts, contribution_rows, education_counts, required_skill_frequency
+from src.ui.theme import BLUE, CATEGORY_PALETTE, TEAL
+from src.ui.views import (
+    category_counts, contribution_rows, education_counts, load_ml_report, model_comparison_rows,
+    required_skill_frequency,
+)
 
 page_setup("Analytics", subtitle="Explore the dataset and your recommendation results.")
 catalog = get_catalog()
 profile = get_profile()
 sidebar_profile_summary(profile)
 
-st.caption(":material/info: This page shows descriptive charts only. The synthetic-profile evaluation "
-           "(Precision@5, MAP) is documented in docs/evaluation_report.md in the repository.")
+st.caption(":material/info: Dataset and personal charts are descriptive. The Model comparison tab shows saved "
+           "evaluation results on synthetic profiles; full details are in the research folder of the repository.")
 
 CHART_CONFIG = {"displayModeBar": False}
 CATEGORY_COLORS = dict(zip(CATEGORIES, CATEGORY_PALETTE))
 # Same height as the education donut, so the two chart cards line up
 DONUT_HEIGHT = 430
 
-dataset_tab, learner_tab = st.tabs([":material/dataset: Dataset overview", ":material/person: Your results"])
+dataset_tab, learner_tab, model_tab = st.tabs([":material/dataset: Dataset overview", ":material/person: Your results",
+                                              ":material/model_training: Model comparison"])
 
 with dataset_tab:
     st.markdown("These charts describe the career dataset. They are the same for every learner.")
@@ -76,3 +80,30 @@ with learner_tab:
                                    format_func=lambda c: f"{by_id[c]['rank']}. {by_id[c]['career_title']}")
                 gap = analyze_skill_gap(profile, cid, catalog, include_resources=False)
                 st.plotly_chart(coverage_chart(gap), width="stretch", config=CHART_CONFIG)
+
+with model_tab:
+    rows = model_comparison_rows(load_ml_report())
+    if not rows:
+        st.info("The saved model comparison results are not available.", icon=":material/info:")
+    else:
+        st.markdown(
+            "Four machine-learning models were trained on learner-career pairs and compared with the weighted "
+            "formula this app uses. Every profile was tested by models that never saw it during training. "
+            "**No trained model ranked careers better than the formula, and no difference is statistically "
+            "significant**, so the app keeps the formula, whose scores can be explained."
+        )
+        with st.container(border=True, key="panel_models"):
+            colors = [TEAL if not r["Trained model"] else BLUE for r in rows]
+            short = [{"Method": r["Method"].replace(" (used by this app)", ""), "MAP": r["MAP"]} for r in rows]
+            fig = bar_chart(short, "Method", "MAP", "Mean average precision (higher is better)",
+                            x_title="", y_title="MAP", horizontal=True, colors=colors)
+            # Room on the right so the value labels are not cut off on narrow screens
+            fig.update_xaxes(range=[0, 1.18], tickvals=[0, 0.25, 0.5, 0.75, 1.0])
+            st.plotly_chart(fig, width="stretch", config=CHART_CONFIG)
+            st.caption("Green: the weighted formula used by this app. Blue: trained models.")
+        table = [{k: v for k, v in r.items() if k != "Trained model"} for r in rows]
+        st.dataframe(table, hide_index=True, width="stretch")
+        st.caption(
+            ":material/warning: These results come from 36 synthetic profiles written and labelled by the project "
+            "author. They measure agreement with those labels, not how well careers suit real learners."
+        )

@@ -1,8 +1,10 @@
 # Pure data-shaping helpers used by the pages
 # No scoring happens here: scores and matches come from the Phase 3 services
 
+import json
 import re
 from collections import Counter
+from pathlib import Path
 
 from src.data.validation import CATEGORIES, EDUCATION_LEVELS
 
@@ -125,4 +127,49 @@ def contribution_rows(recommendations):
                 "Component": name.replace("_", " "),
                 "Points": comp["contribution"],
             })
+    return rows
+
+
+# Saved results of the ML comparison, read only; the app never trains or runs these models
+ML_REPORT_PATH = Path(__file__).resolve().parents[2] / "reports" / "ml_results.json"
+ML_METHOD_LABELS = (
+    ("weighted_formula", "Weighted formula (used by this app)"),
+    ("random_forest", "Random Forest"),
+    ("logistic_regression", "Logistic Regression"),
+    ("xgboost", "XGBoost"),
+    ("decision_tree", "Decision Tree"),
+)
+
+
+def load_ml_report(path=ML_REPORT_PATH):
+    # Returns the saved report as a dict, or None when the file is missing or unreadable
+    try:
+        return json.loads(Path(path).read_text(encoding="utf-8"))
+    except (OSError, ValueError):
+        return None
+
+
+def model_comparison_rows(report):
+    # One row per method in a fixed order, values copied from the saved report
+    if not report or "methods" not in report:
+        return []
+    tests = report.get("significance_vs_formula", {}).get("average_precision", {})
+    rows = []
+    for key, label in ML_METHOD_LABELS:
+        method = report["methods"].get(key)
+        if method is None:
+            continue
+        rank = method["ranking"]
+        cls = method["classification_mean_over_repeats"]
+        p = tests.get(key, {}).get("p_holm")
+        rows.append({
+            "Method": label,
+            "Trained model": key != "weighted_formula",
+            "MAP": round(rank["average_precision"]["mean"], 3),
+            "NDCG@5": round(rank["ndcg_at_5"]["mean"], 3),
+            "MRR": round(rank["reciprocal_rank"]["mean"], 3),
+            "ROC-AUC": round(cls["roc_auc"], 3),
+            "F1": round(cls["f1"], 3),
+            "p vs formula (Holm)": "reference" if key == "weighted_formula" else ("n/a" if p is None else f"{p:.3f}"),
+        })
     return rows

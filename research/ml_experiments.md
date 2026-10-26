@@ -102,7 +102,8 @@ Most often chosen hyperparameters:
 
 ## 7. Decision
 
-- No trained model improves on the weighted formula, so none is integrated into the app. Production ranking stays with the formula, which keeps every score explainable.
+- No trained model improves on the weighted formula, so none ranks careers in the app. Production ranking stays with the formula, which keeps every score explainable.
+- The app shows the saved comparison read-only in a "Model comparison" tab on the Analytics page. It reads `reports/ml_results.json`, so the deployed app needs no machine-learning libraries.
 - The trained models are available through `src/ml/ranker.py` (`TrainedRanker`). Its output has the same schema as `recommend()`, adds `model_probability`, and keeps the engine's explanations and skill gaps.
 - One finding worth testing on new data: learner_skills_used_share, a signal the formula does not use.
 - Before any model can win credibly, the project needs independent labels on real profiles (`experimental_protocol.md`, Part B).
