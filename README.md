@@ -17,7 +17,7 @@ The app sleeps after 12 hours without visitors. If you see a sleep page, click "
 | Recommendations | Top K careers with score, matched and missing skills, interests, reasons and a score breakdown |
 | Skill-Gap Analysis | Required and optional gaps, coverage, and learning resources with links and verification status |
 | Career Explorer | Browse all 50 careers, filter by category, search by title, view details and sources |
-| Analytics | Dataset charts, plus your own score contributions and skill coverage |
+| Analytics | Dataset charts, your own score contributions and skill coverage, and "How the Models Rank Your Careers": your top 5 from the formula next to Logistic Regression, Decision Tree and Random Forest (comparison only), plus the saved offline evaluation |
 
 The interface uses a shared design system (navy, teal and blue on a light blue-gray background, a navy sidebar with icons, card layouts and labelled status badges). See docs/design_system.md.
 

@@ -123,3 +123,7 @@ Added 27 October 2026. The app adapts one student's ranking during their visit, 
 - **Code and tests:** `src/services/feedback.py`, `src/services/session_data.py`, `tests/test_feedback.py`, and interaction tests in `tests/test_app.py`.
 
 This is relevance feedback within one session. It does not retrain the machine-learning models and is not evaluated with real students yet.
+
+## 12. Live model comparison (demonstration only)
+
+Added 28 October 2026. The Model comparison tab on the Analytics page ranks the learner's saved answers with the weighted formula and with Logistic Regression, Decision Tree and Random Forest, and shows each method's top 5 with scores and explanations. The formula is labelled as the primary method; the models are labelled as comparison only. All methods use the same 50 careers and 13 features. The models are trained once per server process on the 1,800 labelled synthetic pairs and reused. XGBoost stays offline. Full setup, explanation methods, measured times and limits are in `ml_experiments.md`, sections 8 and 9.

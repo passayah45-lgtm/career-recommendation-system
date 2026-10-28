@@ -10,6 +10,7 @@ from src.ui.charts import bar_chart, contribution_chart, coverage_chart, donut_c
 from src.ui.components import (
     need_profile_message, page_setup, score_disclaimer, sidebar_profile_summary, stat_card,
 )
+from src.ui.model_rankings import model_rankings_section
 from src.ui.state import get_catalog, get_profile, get_top_k
 from src.ui.theme import BLUE, CATEGORY_PALETTE, TEAL
 from src.ui.views import (
@@ -22,8 +23,8 @@ catalog = get_catalog()
 profile = get_profile()
 sidebar_profile_summary(profile)
 
-st.caption(":material/info: Dataset and personal charts are descriptive. The Model comparison tab shows saved "
-           "evaluation results on synthetic profiles; full details are in the research folder of the repository.")
+st.caption(":material/info: Dataset and personal charts are descriptive. The Model comparison tab ranks your own "
+           "answers with each method and shows the saved offline evaluation; details are in the research folder.")
 
 CHART_CONFIG = {"displayModeBar": False}
 CATEGORY_COLORS = dict(zip(CATEGORIES, CATEGORY_PALETTE))
@@ -82,6 +83,11 @@ with learner_tab:
                 st.plotly_chart(coverage_chart(gap), width="stretch", config=CHART_CONFIG)
 
 with model_tab:
+    model_rankings_section(profile, catalog)
+    st.divider()
+    st.subheader("Offline evaluation results", anchor=False)
+    st.caption("Fixed results from the research experiments. They are the same for every learner and do not change "
+               "with your answers.")
     rows = model_comparison_rows(load_ml_report())
     if not rows:
         st.info("The saved model comparison results are not available.", icon=":material/info:")

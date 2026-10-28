@@ -35,6 +35,24 @@ def get_catalog():
         st.stop()
 
 
+@st.cache_resource(show_spinner="Training the comparison models (once per server)...")
+def _cached_live_models(data_dir):
+    # Trained once per server process and shared read-only by every visitor, never retrained per view
+    from src.evaluation.dataset import load_profiles
+    from src.ml.comparison import train_live_models
+    catalog = _cached_catalog(data_dir)
+    profiles = load_profiles([c.career_id for c in catalog.careers])
+    return train_live_models(profiles, catalog)
+
+
+def get_live_models():
+    # Returns (models, None) or (None, error message); the rest of the page keeps working on failure
+    try:
+        return _cached_live_models(os.environ.get(DATA_DIR_ENV, "")), None
+    except Exception as exc:  # noqa: BLE001
+        return None, f"{type(exc).__name__}: {exc}"
+
+
 def get_profile():
     return st.session_state.get(PROFILE_KEY)
 

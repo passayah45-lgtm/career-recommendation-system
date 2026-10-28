@@ -31,6 +31,14 @@
 - The per-student adaptation (Interested / Not for me) uses fixed similarity rules. Its usefulness has not been tested with real students; the planned user study should compare lists before and after feedback.
 - Feedback is not stored or pooled, so the app does not learn across students. This protects privacy but means the global models cannot improve from use.
 
+## 2c. Live model comparison
+
+- The three models are trained on 56 author-written relevant labels from 36 synthetic profiles. Their rankings show how the methods differ for one learner, not which method is right. No accuracy is claimed for live profiles.
+- Model scores come from balanced class weights and are not calibrated probabilities.
+- The Decision Tree gives the same score to many careers; ties are ordered by career id, so the end of its list can be arbitrary. The page says when this happens.
+- Random Forest explanations are path contributions averaged over trees. They add up exactly to the score but depend on tree structure and can differ from permutation-based importance.
+- Training time and comparison time were measured once in the development container; other servers will differ.
+
 ## 3. Threats to validity
 
 | Type | Threat | Mitigation planned |

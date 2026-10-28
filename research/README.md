@@ -14,7 +14,7 @@ Prepared on 26 October 2026 for the lecturer's review. The lecturer will decide 
 | `methodology.md` | Architecture, dataset, matching, scoring formula, weights, ranking, explanations, skill gap |
 | `experimental_protocol.md` | Reproducible protocol: completed synthetic experiments and proposed human studies |
 | `results_and_analysis.md` | Results copied from the saved experiment outputs, with analysis |
-| `ml_experiments.md` | Logistic Regression, Decision Tree, Random Forest and XGBoost vs the formula: features, labels, protocol, results, decision |
+| `ml_experiments.md` | Logistic Regression, Decision Tree, Random Forest and XGBoost vs the formula: features, labels, protocol, results, decision, and the live "How the Models Rank Your Careers" demonstration |
 | `literature_review.md` | Verified references by theme and their relation to the research question |
 | `limitations_and_future_work.md` | Limitations, validity threats, ethics, future work |
 | `risks_report.md` | Risks with severity, evidence, effect, mitigation and status |

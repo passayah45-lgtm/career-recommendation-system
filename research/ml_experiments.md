@@ -103,16 +103,64 @@ Most often chosen hyperparameters:
 ## 7. Decision
 
 - No trained model improves on the weighted formula, so none ranks careers in the app. Production ranking stays with the formula, which keeps every score explainable.
-- The app shows the saved comparison read-only in a "Model comparison" tab on the Analytics page. It reads `reports/ml_results.json`, so the deployed app needs no machine-learning libraries.
+- The app shows the saved comparison read-only under "Offline evaluation results" in the Model comparison tab on the Analytics page. It reads `reports/ml_results.json`.
+- Since 28 October 2026 the same tab also ranks the learner's own answers with Logistic Regression, Decision Tree and Random Forest next to the formula (section 9). This is a demonstration, not an evaluation.
 - The trained models are available through `src/ml/ranker.py` (`TrainedRanker`). Its output has the same schema as `recommend()`, adds `model_probability`, and keeps the engine's explanations and skill gaps.
 - One finding worth testing on new data: learner_skills_used_share, a signal the formula does not use.
 - Before any model can win credibly, the project needs independent labels on real profiles (`experimental_protocol.md`, Part B).
 
-## 8. How to reproduce
+## 8. Offline evaluation vs live profile demonstration
+
+| | Offline evaluation (sections 4 to 6) | Live demonstration (section 9) |
+|---|---|---|
+| Question | Which method agrees best with the labels on profiles it never saw? | How do the methods differ for this learner's answers? |
+| Data | 36 labelled synthetic profiles, grouped nested CV, 5 repeats | One learner's answers, no label |
+| Models | Refit inside every fold, settings tuned in inner folds | Refit once on all 1,800 labelled pairs with the most-chosen settings |
+| Output | MAP, NDCG@5, MRR, ROC-AUC, F1, Holm-corrected p-values | Each method's top 5, scores, explanations, overlap with the formula |
+| Can it show accuracy? | Agreement with author-written labels only | No. There is no ground truth for a live learner |
+
+## 9. Live profile demonstration: "How the Models Rank Your Careers"
+
+**Where:** Analytics page, Model comparison tab, above the offline results. Code: `src/ml/comparison.py`, `src/ui/model_rankings.py`, cached training in `src/ui/state.py`. Tests: `tests/test_model_comparison.py` (19 tests) and three page tests in `tests/test_app.py`.
+
+**Label check before building it.** The 1,800 pairs hold 56 relevant labels (3.1%). 35 of 36 profiles have one to three relevant careers (18 with one, 13 with two, 4 with three) and one has none; 42 of the 50 careers are relevant for at least one profile. The offline study already shows the labels are learnable on held-out profiles (MAP 0.936 to 0.965). They are suitable for a demonstration. They are not suitable for claims about real learners, because one author wrote the profiles, the careers and the labels.
+
+**Setup.**
+
+- Same input for every method: the 50 catalogue careers and the 13 features of section 2, built by `profile_matrix()` from the same matching the formula uses. Session feedback is not included.
+- Settings: Logistic Regression C = 0.01, Decision Tree depth 4 and leaf 5, Random Forest 300 trees, no depth limit, leaf 1. These are the most often chosen settings in the nested CV; a test checks them against `reports/ml_interpretation.json`. Seed 42, balanced class weights.
+- Training: once per server process with `st.cache_resource`, shared read-only by all visitors, never per view. A test checks that two trainings give identical predictions.
+- XGBoost is not in the live app. A test runs the live comparison with XGBoost blocked.
+- No pickled model files are committed. scikit-learn pickles are tied to the library version (local Python 3.13, CI Python 3.12) and can run code when loaded, and training is fast enough to repeat at start-up.
+
+**Explanations (from the fitted models only).**
+
+- Formula: the matched required skills and the points per component.
+- Logistic Regression: coefficient × standardised feature value, the exact split of the log-odds relative to the average training pair. A test checks that the parts plus the intercept equal the model's log-odds.
+- Decision Tree: the decision path in plain words, plus how many training pairs on that path were labelled relevant.
+- Random Forest: path contributions averaged over the 300 trees (start value plus the change at each split). A test checks that they add up to the model's score.
+- Ties: the Decision Tree gives the same score to many careers. When careers outside the top 5 share the fifth score, the page says how many and that ties are ordered by career id.
+
+**Safety.** Unknown skills and interests are set aside as in the formula. Missing interests or education become zero-valued features, the same as in training. A model that fails is reported on its card while the other methods still show. If training fails (for example the label file is missing), the section shows a notice and the rest of the page works. A check rejects missing feature values.
+
+**Measured performance** (this development container, Python 3.13.16, scikit-learn 1.9.1, one run each, not a benchmark):
+
+| Step | Time |
+|---|---|
+| Training all three models (script) | 1.11 s |
+| Training on first page view (two server starts) | 1.29 s and 1.56 s |
+| One comparison per view (formula, features, three models, explanations) | 120 ms to 253 ms over four views |
+| Prediction alone for 50 careers | LR 1.4 ms, DT 1.0 ms, RF 24 ms |
+
+The page prints its own measured times, so a different server shows its own numbers.
+
+**What it shows for the worked example** (Python, SQL, Excel, machine learning, statistics; analysis and mathematics; level 3): Logistic Regression and the Decision Tree share 4 of 5 careers with the formula and Random Forest shares all 5. For an empty profile the formula scores every career 0 and the page warns that all methods rank on tie-breaks only. Logistic Regression then prefers careers where "education level given: no" adds to the score, a pattern learned from the synthetic "missing information" profiles. This shows why the models are for comparison only.
+
+## 10. How to reproduce
 
 ```bash
 pip install -r requirements-research.txt
 python -m src.evaluation.ml_experiments --check reports/ml_results.json
 python -m src.evaluation.ml_interpretation --output reports/ml_interpretation.json
-python -m pytest -q tests/test_ml.py
+python -m pytest -q tests/test_ml.py tests/test_model_comparison.py
 ```

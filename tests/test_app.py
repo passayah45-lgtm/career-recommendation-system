@@ -281,3 +281,32 @@ def test_session_download_is_offered_and_reset_clears_feedback():
     assert len(at.get("download_button")) == 1
     at.button(key="sidebar_reset").click().run()
     assert FEEDBACK_KEY not in at.session_state and PROFILE_KEY not in at.session_state
+
+
+def test_model_rankings_section_needs_a_profile():
+    at = open_page("pages/5_Analytics.py")
+    text = text_of(at)
+    assert "How the Models Rank Your Careers" in text
+    assert "Complete the career assessment to see how each method ranks" in text
+
+
+def test_model_rankings_section_shows_four_methods_for_the_profile():
+    at = open_page("pages/5_Analytics.py", profile=WORKED_EXAMPLE)
+    text = text_of(at)
+    for label in ("Weighted formula", "Logistic Regression", "Decision Tree", "Random Forest"):
+        assert f"#### {label}" in text
+    assert "Primary method, used by this app" in text
+    assert text.count("Trained model, comparison only") == 3
+    assert "1. **Data Scientist** :gray[61.5 / 100]" in text
+    assert "not your chance of success" in text
+    assert "Offline evaluation results" in text
+    assert "measured on this server" in text.lower()
+
+
+def test_model_rankings_section_survives_a_training_failure(monkeypatch):
+    import src.ui.state as state
+    monkeypatch.setattr(state, "_cached_live_models", lambda _: (_ for _ in ()).throw(OSError("no labels")))
+    at = open_page("pages/5_Analytics.py", profile=WORKED_EXAMPLE)
+    text = text_of(at)
+    assert "The model comparison is not available right now" in text
+    assert "No trained model ranked careers better than the formula" in text
