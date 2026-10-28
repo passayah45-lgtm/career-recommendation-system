@@ -173,3 +173,28 @@ def model_comparison_rows(report):
             "p vs formula (Holm)": "reference" if key == "weighted_formula" else ("n/a" if p is None else f"{p:.3f}"),
         })
     return rows
+
+
+def saved_list_rows(career_ids, catalog, formula_recommendations=None):
+    # One row per saved career, in formula order when scores exist, otherwise by title
+    # Scores and ranks come from recommend() without feedback, so they match the score breakdown
+    by_id = {c.career_id: c for c in catalog.careers}
+    scored = {r["career_id"]: r for r in (formula_recommendations or [])}
+    rows = []
+    for cid in career_ids:
+        career = by_id.get(cid)
+        if career is None:
+            continue
+        rec = scored.get(cid)
+        rows.append({
+            "career_id": cid,
+            "title": career.title,
+            "category": career.category,
+            "formula_score": rec["score"] if rec else None,
+            "formula_rank": rec["rank"] if rec else None,
+            "matched_required": len(rec["matched_required_skills"]) if rec else None,
+            "required_total": len(career.required_skills),
+        })
+    if scored:
+        return sorted(rows, key=lambda r: (r["formula_rank"] is None, r["formula_rank"] or 0, r["title"]))
+    return sorted(rows, key=lambda r: r["title"])

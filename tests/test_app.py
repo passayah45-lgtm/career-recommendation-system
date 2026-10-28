@@ -169,7 +169,7 @@ def test_explorer_to_skill_gap_keeps_a_career_outside_the_recommendations():
     # C040 Registered Nurse is not in the worked example's top 5
     at = open_page("pages/4_Career_Explorer.py", profile=WORKED_EXAMPLE)
     at.selectbox[0].set_value("C040").run()
-    at.button[0].click().run()
+    next(b for b in at.button if b.label == "Analyze my skill gap for this career").click().run()
     assert not at.exception
     assert at.session_state[SELECTED_CAREER_KEY] == "C040"
     at.switch_page("pages/3_Skill_Gap_Analysis.py")
@@ -270,7 +270,6 @@ def test_feedback_adapts_the_recommendation_list():
     assert "similar to Data Analyst, which you are interested in" in text
     at.button(key="dislike_C029").click().run()
     assert at.session_state[FEEDBACK_KEY] == {"C002": 1, "C029": -1}
-    assert any("not for me (1)" in e.label for e in at.expander)
     at.button(key="clear_feedback").click().run()
     assert FEEDBACK_KEY not in at.session_state
 
@@ -310,3 +309,176 @@ def test_model_rankings_section_survives_a_training_failure(monkeypatch):
     text = text_of(at)
     assert "The model comparison is not available right now" in text
     assert "No trained model ranked careers better than the formula" in text
+
+
+def button_keys(at):
+    return {b.key for b in at.button}
+
+
+def open_list(at, view):
+    at.button_group(key="career_list_view").set_value(view).run()
+    assert not at.exception
+    return at
+
+
+def test_interested_career_moves_to_its_own_list():
+    from src.ui.state import FEEDBACK_KEY
+    at = open_page("pages/2_Recommendations.py", profile=WORKED_EXAMPLE)
+    assert "like_C002" in button_keys(at)
+    at.button(key="like_C002").click().run()
+    assert not at.exception
+    assert at.session_state[FEEDBACK_KEY] == {"C002": 1}
+    # Gone from the main list, which is renumbered and still shows five new careers
+    assert "like_C002" not in button_keys(at)
+    assert len([k for k in button_keys(at) if k and k.startswith("like_")]) == 5
+    assert "Data Analyst moved to Interested." in [t.value for t in at.toast]
+    open_list(at, "interested")
+    keys = button_keys(at)
+    assert {"to_not_C002", "remove_C002", "saved_explore_C002", "saved_gap_C002"} <= keys
+    assert "#### Data Analyst" in text_of(at)
+    assert "Rank 2 by the formula" in text_of(at)
+
+
+def test_not_for_me_career_moves_to_its_own_list():
+    from src.ui.state import FEEDBACK_KEY
+    at = open_page("pages/2_Recommendations.py", profile=WORKED_EXAMPLE)
+    at.button(key="dislike_C029").click().run()
+    assert at.session_state[FEEDBACK_KEY] == {"C029": -1}
+    assert "dislike_C029" not in button_keys(at)
+    open_list(at, "not_for_me")
+    assert {"to_int_C029", "remove_C029"} <= button_keys(at)
+    open_list(at, "interested")
+    assert "No careers yet" in text_of(at)
+
+
+def test_changing_a_decision_moves_the_career_without_duplicates():
+    from src.ui.state import FEEDBACK_KEY
+    at = open_page("pages/2_Recommendations.py", profile=WORKED_EXAMPLE, **{FEEDBACK_KEY: {"C002": 1}})
+    open_list(at, "interested")
+    at.button(key="to_not_C002").click().run()
+    assert at.session_state[FEEDBACK_KEY] == {"C002": -1}
+    # The open list stays open after the move, and the career is now only in the other list
+    assert at.session_state["career_list_view"] == "interested"
+    assert "to_not_C002" not in button_keys(at)
+    open_list(at, "not_for_me")
+    assert "to_int_C002" in button_keys(at)
+    at.button(key="to_int_C002").click().run()
+    assert at.session_state[FEEDBACK_KEY] == {"C002": 1}
+    assert "to_int_C002" not in button_keys(at)
+
+
+def test_removing_feedback_returns_the_career_to_recommendations():
+    from src.ui.state import FEEDBACK_KEY
+    at = open_page("pages/2_Recommendations.py", profile=WORKED_EXAMPLE, **{FEEDBACK_KEY: {"C002": 1}})
+    open_list(at, "interested")
+    at.button(key="remove_C002").click().run()
+    assert at.session_state[FEEDBACK_KEY] == {}
+    assert "Data Analyst removed from your lists." in [t.value for t in at.toast]
+    open_list(at, "recommendations")
+    assert "like_C002" in button_keys(at)
+
+
+def test_list_counts_on_the_page_dashboard_and_sidebar():
+    from src.ui.state import FEEDBACK_KEY
+    feedback = {"C002": 1, "C003": 1, "C029": -1}
+    at = open_page("pages/2_Recommendations.py", profile=WORKED_EXAMPLE, **{FEEDBACK_KEY: feedback})
+    control = at.button_group(key="career_list_view")
+    assert [o.strip() for o in control.options] == ["Recommendations (5)", "Interested (2)", "Not for me (1)"]
+    labels = [b.label for b in at.button]
+    assert "Interested (2)" in labels and "Not for me (1)" in labels
+    at = open_page(None, profile=WORKED_EXAMPLE, **{FEEDBACK_KEY: feedback})
+    assert at.button(key="home_lists_interested").label == "Interested (2)"
+    assert at.button(key="home_lists_not_for_me").label == "Not for me (1)"
+
+
+def test_dashboard_button_opens_the_list():
+    from src.ui.state import FEEDBACK_KEY
+    at = open_page(None, profile=WORKED_EXAMPLE, **{FEEDBACK_KEY: {"C029": -1}})
+    at.button(key="home_lists_not_for_me").click().run()
+    assert not at.exception
+    assert at.session_state["career_list_view"] == "not_for_me"
+    assert "to_int_C029" in button_keys(at)
+
+
+def test_lists_are_written_to_the_address_bar():
+    at = open_page("pages/2_Recommendations.py", profile=WORKED_EXAMPLE)
+    at.button(key="like_C002").click().run()
+    at.button(key="dislike_C029").click().run()
+    assert at.query_params["interested"] in ("C002", ["C002"])
+    assert at.query_params["not_for_me"] in ("C029", ["C029"])
+    at.button(key="clear_feedback").click().run()
+    assert "interested" not in at.query_params and "not_for_me" not in at.query_params
+
+
+def test_lists_survive_a_page_refresh():
+    # A refresh starts a new session with the same address, but without the answers
+    from src.ui.state import FEEDBACK_KEY
+    at = AppTest.from_file(APP, default_timeout=TIMEOUT)
+    at.query_params["interested"] = "C002,C003"
+    at.query_params["not_for_me"] = "C029"
+    at.run()
+    at.switch_page("pages/2_Recommendations.py")
+    at.run()
+    assert not at.exception
+    assert at.session_state[FEEDBACK_KEY] == {"C002": 1, "C003": 1, "C029": -1}
+    assert [o.strip() for o in at.button_group(key="career_list_view").options] == ["Interested (2)",
+                                                                                     "Not for me (1)"]
+    assert {"to_not_C002", "to_not_C003"} <= button_keys(at)
+    assert "Complete the assessment to see your score." in text_of(at)
+
+
+def test_bad_address_values_are_ignored():
+    from src.ui.state import FEEDBACK_KEY
+    at = AppTest.from_file(APP, default_timeout=TIMEOUT)
+    at.query_params["interested"] = "C002,C999,<script>"
+    at.query_params["not_for_me"] = "C002,C029"
+    at.run()
+    assert not at.exception
+    assert at.session_state[FEEDBACK_KEY] == {"C029": -1}
+
+
+def test_cleared_lists_are_not_restored_in_the_same_session():
+    from src.ui.state import FEEDBACK_KEY
+    at = AppTest.from_file(APP, default_timeout=TIMEOUT)
+    at.query_params["interested"] = "C002"
+    at.session_state[PROFILE_KEY] = WORKED_EXAMPLE
+    at.run()
+    at.switch_page("pages/2_Recommendations.py")
+    at.run()
+    at.button(key="clear_feedback").click().run()
+    at.run()
+    assert FEEDBACK_KEY not in at.session_state
+
+
+def test_explorer_can_change_the_decision():
+    from src.ui.state import EXPLORER_CAREER_KEY, FEEDBACK_KEY
+    at = open_page("pages/4_Career_Explorer.py", **{EXPLORER_CAREER_KEY: "C040"})
+    at.button(key="explorer_like").click().run()
+    assert at.session_state[FEEDBACK_KEY] == {"C040": 1}
+    assert "In your Interested list" in text_of(at)
+    at.button(key="explorer_dislike").click().run()
+    assert at.session_state[FEEDBACK_KEY] == {"C040": -1}
+    at.button(key="explorer_remove").click().run()
+    assert at.session_state[FEEDBACK_KEY] == {}
+
+
+def test_saved_list_links_open_details_and_skill_gap():
+    from src.ui.state import EXPLORER_CAREER_KEY, FEEDBACK_KEY
+    at = open_page("pages/2_Recommendations.py", profile=WORKED_EXAMPLE, **{FEEDBACK_KEY: {"C040": 1}})
+    open_list(at, "interested")
+    at.button(key="saved_gap_C040").click().run()
+    assert not at.exception
+    assert at.session_state[SELECTED_CAREER_KEY] == "C040"
+    assert any("Missing required skills" == m.label for m in at.metric)
+    at = open_page("pages/2_Recommendations.py", profile=WORKED_EXAMPLE, **{FEEDBACK_KEY: {"C040": 1}})
+    open_list(at, "interested")
+    at.button(key="saved_explore_C040").click().run()
+    assert at.session_state[EXPLORER_CAREER_KEY] == "C040"
+    assert "### Registered Nurse" in text_of(at)
+
+
+def test_analytics_and_model_comparison_work_with_saved_lists():
+    from src.ui.state import FEEDBACK_KEY
+    at = open_page("pages/5_Analytics.py", profile=WORKED_EXAMPLE, **{FEEDBACK_KEY: {"C002": 1, "C029": -1}})
+    assert "How the Models Rank Your Careers" in text_of(at)
+    assert "#### Random Forest" in text_of(at)

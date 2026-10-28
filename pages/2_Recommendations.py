@@ -10,9 +10,10 @@ from src.ui.components import (
     need_profile_message, optional_badges, page_setup, ring, score_disclaimer, session_data_panel,
     show_profile_warnings, sidebar_profile_summary,
 )
+from src.ui.career_lists import list_counts, list_view_control, saved_list, show_flash
 from src.ui.state import (
-    EXPLORER_CAREER_KEY, FEEDBACK_KEY, TOP_K_KEY, get_catalog, get_feedback, get_profile, get_top_k, select_career,
-    set_feedback,
+    EXPLORER_CAREER_KEY, FEEDBACK_KEY, TOP_K_KEY, decide, get_catalog, get_feedback, get_profile, get_top_k,
+    select_career,
 )
 from src.ui.views import education_label
 
@@ -21,9 +22,15 @@ page_setup("Your Career Recommendations", eyebrow="Step 2 of 3",
 catalog = get_catalog()
 profile = get_profile()
 sidebar_profile_summary(profile)
+show_flash()
 
 if not profile:
     need_profile_message()
+    # Saved lists survive a page refresh even though the answers do not, so they stay reachable here
+    saved = get_feedback()
+    if saved:
+        view = list_view_control(list_counts(saved), views=("interested", "not_for_me"))
+        saved_list(view, saved, catalog)
     st.stop()
 
 with st.container(border=True, key="toolbar"):
@@ -45,23 +52,35 @@ show_profile_warnings(result["warnings"])
 
 feedback = get_feedback()
 ranked, hidden = adapt_recommendations(result["recommendations"], catalog, feedback)
-recommendations = ranked[:top_k]
-if not recommendations:
-    st.info("No careers were returned. Try adding more skills or interests.", icon=":material/info:")
-    st.stop()
+# Rated careers move to their own lists; the main list keeps only careers not rated yet, renumbered from 1
+unrated = [dict(r, rank=i) for i, r in enumerate((r for r in ranked if r["user_feedback"] is None), start=1)]
+recommendations = unrated[:top_k]
 
 liked = sum(1 for v in feedback.values() if v == INTERESTED)
 with st.container(border=True, key="feedback_bar"):
     if feedback:
         info_col, clear_col = st.columns([3, 1], vertical_alignment="center")
         info_col.markdown(f":material/tune: **Adapted to your feedback:** {liked} interested, {len(hidden)} not for me. "
-                          "Similar careers move up or down, and each card shows by how much.")
+                          "Rated careers move to their own lists. Similar careers move up or down, and each card "
+                          "shows by how much.")
         if clear_col.button("Clear my feedback", key="clear_feedback", icon=":material/backspace:"):
             st.session_state.pop(FEEDBACK_KEY, None)
             st.rerun()
     else:
-        st.markdown(":material/tune: **Tell the app what you think.** Mark careers as *Interested* or *Not for me* "
-                    "and the list adapts to you during this visit. Nothing is stored after you leave.")
+        st.markdown(":material/tune: **Tell the app what you think.** Mark careers as *Interested* or *Not for me*. "
+                    "They move to their own lists below, and the rest of the list adapts to you.")
+
+view = list_view_control(list_counts(feedback, new_count=len(recommendations)))
+if view != "recommendations":
+    saved_list(view, feedback, catalog, result["recommendations"], has_profile=True)
+    session_data_panel(profile, key="rec_session")
+    st.stop()
+
+if not recommendations:
+    st.info("You have rated every career. Open your Interested or Not for me list to review them.",
+            icon=":material/info:")
+    session_data_panel(profile, key="rec_session")
+    st.stop()
 
 COMPONENT_LABELS = {
     "required_skills": "Required skills",
@@ -133,27 +152,15 @@ for rec in recommendations:
             st.caption("Points add up to the formula score. Feedback adjustments are shown above the breakdown.")
 
         with st.container(horizontal=True, horizontal_alignment="right"):
-            if rec["user_feedback"] == INTERESTED:
-                st.markdown(":green-badge[:material/thumb_up: You are interested]")
-                st.button("Undo", key=f"undo_{cid}", icon=":material/undo:", on_click=set_feedback, args=(cid, None))
-            else:
-                st.button("Interested", key=f"like_{cid}", icon=":material/thumb_up:",
-                          on_click=set_feedback, args=(cid, INTERESTED))
-                st.button("Not for me", key=f"dislike_{cid}", icon=":material/thumb_down:",
-                          on_click=set_feedback, args=(cid, NOT_FOR_ME))
+            st.button("Interested", key=f"like_{cid}", icon=":material/thumb_up:",
+                      on_click=decide, args=(cid, INTERESTED, rec["career_title"]))
+            st.button("Not for me", key=f"dislike_{cid}", icon=":material/thumb_down:",
+                      on_click=decide, args=(cid, NOT_FOR_ME, rec["career_title"]))
             if st.button("View career details", key=f"explore_{cid}", icon=":material/open_in_new:"):
                 st.session_state[EXPLORER_CAREER_KEY] = cid
                 st.switch_page(EXPLORER_PAGE)
             if st.button("Analyze my skill gap", key=f"gap_{cid}", type="primary", icon=":material/school:"):
                 select_career(cid)
                 st.switch_page(SKILL_GAP_PAGE)
-
-if hidden:
-    with st.expander(f":material/visibility_off: Careers you marked not for me ({len(hidden)})"):
-        for rec in hidden:
-            name_col, undo_col = st.columns([3, 1], vertical_alignment="center")
-            name_col.markdown(f"**{rec['career_title']}** :gray-badge[{rec['category']}]")
-            undo_col.button("Show again", key=f"unhide_{rec['career_id']}", icon=":material/undo:",
-                            on_click=set_feedback, args=(rec["career_id"], None))
 
 session_data_panel(profile, key="rec_session")

@@ -6,8 +6,8 @@ import streamlit as st
 from src.data.validation import CATEGORIES
 from src.engine.scoring import DEFAULT_WEIGHTS
 from src.ui.components import (
-    ASSESSMENT_PAGE, EXPLORER_PAGE, RECOMMENDATIONS_PAGE, SKILL_GAP_PAGE, icon_heading, page_setup,
-    score_disclaimer, sidebar_profile_summary, stat_card,
+    ASSESSMENT_PAGE, EXPLORER_PAGE, RECOMMENDATIONS_PAGE, SKILL_GAP_PAGE, career_list_links, icon_heading,
+    page_setup, score_disclaimer, sidebar_profile_summary, stat_card,
 )
 from src.ui.state import get_catalog, get_profile
 
@@ -42,6 +42,15 @@ with st.container(key="stats"):
     stat_card(c2, "Categories", len(CATEGORIES), ":material/category:", "violet", "categories")
     stat_card(c3, "Unique skills", len(catalog.known_skills), ":material/lightbulb:", "green", "skills")
     stat_card(c4, "Learning resources", len(catalog.resources), ":material/menu_book:", "orange", "resources")
+
+with st.container(border=True, key="panel_lists"):
+    text_col, link_col = st.columns([1.6, 1], vertical_alignment="center")
+    with text_col:
+        st.markdown("#### :primary[:material/bookmarks:] Your career lists")
+        st.caption("Careers you marked Interested or Not for me on the Recommendations page. Open a list to review "
+                   "them, check their skill gaps or change your mind.")
+    with link_col:
+        career_list_links("home_lists")
 
 st.subheader("How it works", anchor=False)
 steps = [
@@ -78,7 +87,9 @@ with st.container(border=True, key="note"):
                 "- Skills are matched by name against a curated dataset. Related skills earn no partial credit.\n"
                 "- Education levels are simplified estimates with a small weight. They never exclude a career.\n"
                 "- Many sources are from the US or UK, so some careers and resources may differ in your country.\n"
-                "- Your answers stay in this browser session only. Nothing is saved to a database.\n\n"
+                "- Your answers stay in this browser session only. Nothing is saved to a database.\n"
+                "- Your Interested and Not for me lists are kept in the page address as career ids, so a refresh "
+                "keeps them. Anyone you share the address with can see those ids.\n\n"
                 "Full details: `docs/recommendation_algorithm.md` and `docs/dataset_documentation.md` "
                 "in the repository."
             )

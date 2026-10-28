@@ -9,7 +9,10 @@ import streamlit as st
 from src.services.recommendations import SCORE_DISCLAIMER
 from src.services.session_data import SessionFileError, export_session, import_session
 from src.ui.illustrations import HERO_SVG, SIDEBAR_ART, initial_tile, ring_svg
-from src.ui.state import SELECTED_CAREER_KEY, get_catalog, get_feedback, replace_session, reset_assessment
+from src.services.feedback import split_lists
+from src.ui.state import (
+    SELECTED_CAREER_KEY, get_catalog, get_feedback, replace_session, reset_assessment, show_list,
+)
 from src.ui.theme import UNVERIFIED_BADGE, VERIFICATION_BADGES
 
 HOME_PAGE = "home.py"
@@ -160,6 +163,19 @@ def reset_button(key="reset"):
         st.switch_page(ASSESSMENT_PAGE)
 
 
+def career_list_links(key, buttons=True):
+    # Counts of the saved lists with buttons that open each list on the Recommendations page
+    interested, not_for_me = split_lists(get_feedback())
+    with st.container(horizontal=True, gap="small"):
+        for view, icon, text, count in (("interested", ":material/thumb_up:", "Interested", len(interested)),
+                                        ("not_for_me", ":material/thumb_down:", "Not for me", len(not_for_me))):
+            if buttons:
+                if st.button(f"{text} ({count})", key=f"{key}_{view}", icon=icon, on_click=show_list, args=(view,)):
+                    st.switch_page(RECOMMENDATIONS_PAGE)
+            else:
+                st.caption(f"{icon} {text} ({count})")
+
+
 def sidebar_profile_summary(profile):
     # Assessment status and the career selected for skill-gap analysis, visible on every page
     with st.sidebar:
@@ -167,6 +183,9 @@ def sidebar_profile_summary(profile):
         if not profile:
             st.caption(":material/radio_button_unchecked: Not started")
             st.page_link(ASSESSMENT_PAGE, label="Start the assessment", icon=":material/arrow_forward:")
+            if get_feedback():
+                st.markdown("**Your career lists**")
+                career_list_links("side_lists")
             sidebar_card()
             return
         level = profile.get("education_level")
@@ -178,6 +197,8 @@ def sidebar_profile_summary(profile):
         titles = {c.career_id: c.title for c in get_catalog().careers}
         if selected in titles:
             st.caption(f":material/school: Skill-gap career: {titles[selected]}")
+        st.markdown("**Your career lists**")
+        career_list_links("side_lists")
         reset_button(key="sidebar_reset")
     sidebar_card()
 

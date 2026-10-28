@@ -121,3 +121,22 @@ def test_bad_session_files_are_rejected(catalog, raw, message):
 def test_oversized_session_file_is_rejected(catalog):
     with pytest.raises(SessionFileError, match="too large"):
         import_session(b" " * (MAX_BYTES + 1), catalog)
+
+
+def test_lists_are_split_and_never_overlap():
+    from src.services.feedback import split_lists
+    assert split_lists({"C003": 1, "C001": 1, "C029": -1}) == (["C001", "C003"], ["C029"])
+    assert split_lists({}) == ([], [])
+
+
+def test_query_round_trip_and_validation(catalog):
+    from src.services.feedback import feedback_from_query, feedback_to_query
+    ids_ = [c.career_id for c in catalog.careers]
+    fb = {"C002": INTERESTED, "C001": INTERESTED, "C029": NOT_FOR_ME}
+    params = feedback_to_query(fb)
+    assert params == {"interested": "C001,C002", "not_for_me": "C029"}
+    assert feedback_from_query(params, ids_) == fb
+    assert feedback_to_query({}) == {}
+    assert feedback_from_query({"interested": "C001,C999", "not_for_me": "C001,C029"}, ids_) == {"C029": NOT_FOR_ME}
+    assert feedback_from_query({"interested": "C001," * 400}, ids_) == {}
+    assert feedback_from_query({"interested": None}, ids_) == {}

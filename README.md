@@ -14,7 +14,7 @@ The app sleeps after 12 hours without visitors. If you see a sleep page, click "
 |---|---|
 | Home | Purpose, dataset size, how the system works |
 | Career Assessment | Skills (list plus free text with aliases such as ML or CI/CD), interests, education level, optional experience |
-| Recommendations | Top K careers with score, matched and missing skills, interests, reasons and a score breakdown |
+| Recommendations | Top K careers with score, matched and missing skills, interests, reasons and a score breakdown. Interested and Not for me buttons move a career into its own list, shown with a count beside the main list |
 | Skill-Gap Analysis | Required and optional gaps, coverage, and learning resources with links and verification status |
 | Career Explorer | Browse all 50 careers, filter by category, search by title, view details and sources |
 | Analytics | Dataset charts, your own score contributions and skill coverage, and "How the Models Rank Your Careers": your top 5 from the formula next to Logistic Regression, Decision Tree and Random Forest (comparison only), plus the saved offline evaluation |
@@ -22,6 +22,10 @@ The app sleeps after 12 hours without visitors. If you see a sleep page, click "
 The interface uses a shared design system (navy, teal and blue on a light blue-gray background, a navy sidebar with icons, card layouts and labelled status badges). See docs/design_system.md.
 
 Answers stay in the browser session. There are no accounts and nothing is written to disk.
+
+**Interested and Not for me lists.** Clicking Interested or Not for me moves a career out of the main list into its own list (Recommendations page, with counts; also linked from the home page and the sidebar). Each saved career shows its category, score and formula rank when an assessment exists, and buttons to open its details or skill gap, move it to the other list or remove it. A career is never in both lists. The Career Explorer has the same buttons.
+
+How the lists are stored: in the Streamlit session and, as career ids only, in the page address (for example `?interested=C002&not_for_me=C029`). A page refresh keeps the lists because the address is reused. Limits: there are no accounts, so lists do not follow you to another browser or device, and opening the app from a fresh link starts empty (use "Download my session" to keep them). Anyone you send the address to sees which career ids you chose; nothing else is in it. The address is also kept in your browser history. Your answers are not put in the address, so after a refresh you need to redo or upload the assessment to see scores.
 
 ## Tech stack
 
@@ -159,7 +163,7 @@ Apps without visitors for 12 hours go to sleep. A visitor then sees a sleep page
 | `FileNotFoundError` or the page says "The career data could not be loaded" | A data file is missing from GitHub or was renamed | Check that data/raw/careers.csv, resources.csv and skill_aliases.csv exist on GitHub, run `python -m src.data.validation` locally, push the fix |
 | `ModuleNotFoundError: No module named 'src'` | The main file path is not app.py at the repository root | Set the main file path to `app.py` (delete and redeploy if needed) |
 | "This app has gone over its resource limits" | Memory limit reached | Click **Manage app** then **Reboot app**. This app uses little memory, so report it if it repeats |
-| The answers disappear | The browser page was refreshed or a URL was typed by hand | Expected: each new browser session starts empty. Use the sidebar to move between pages |
+| The answers disappear | The browser page was refreshed or a URL was typed by hand | Expected: each new browser session starts empty. Use the sidebar to move between pages. Interested and Not for me lists are kept through a refresh, answers are not; upload your session file to restore both |
 | `ImportError: cannot import name ...` right after a push | Community Cloud pulled new code without restarting Python, so old modules stayed in memory | app.py reloads changed modules automatically (src/ui/freshness.py). If it still appears, click **Manage app**, then **Reboot app** |
 | The build hangs for more than 15 minutes | Temporary platform problem | Check https://www.streamlitstatus.com, then reboot the app |
 

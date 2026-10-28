@@ -75,3 +75,45 @@ def adapt_recommendations(recommendations, catalog, feedback):
         rec.pop("_order")
         rec["rank"] = None
     return shown, hidden
+
+
+# Saved lists in the browser address bar, so a page refresh keeps them
+# Only career ids are written; no answers, scores or names
+QUERY_INTERESTED = "interested"
+QUERY_NOT_FOR_ME = "not_for_me"
+MAX_QUERY_LENGTH = 1000
+
+
+def split_lists(feedback):
+    # Returns (interested ids, not for me ids), each sorted, a career never in both
+    interested = sorted(cid for cid, v in (feedback or {}).items() if v == INTERESTED)
+    not_for_me = sorted(cid for cid, v in (feedback or {}).items() if v == NOT_FOR_ME)
+    return interested, not_for_me
+
+
+def feedback_to_query(feedback):
+    # Query parameters for the current lists; empty lists are left out
+    interested, not_for_me = split_lists(feedback)
+    params = {}
+    if interested:
+        params[QUERY_INTERESTED] = ",".join(interested)
+    if not_for_me:
+        params[QUERY_NOT_FOR_ME] = ",".join(not_for_me)
+    return params
+
+
+def _ids(raw):
+    if not isinstance(raw, str) or len(raw) > MAX_QUERY_LENGTH:
+        return set()
+    return {part.strip() for part in raw.split(",") if part.strip()}
+
+
+def feedback_from_query(params, career_ids):
+    # Rebuilds feedback from query parameters; unknown ids and ids found in both lists are dropped
+    known = set(career_ids)
+    interested = _ids(params.get(QUERY_INTERESTED)) & known
+    not_for_me = _ids(params.get(QUERY_NOT_FOR_ME)) & known
+    both = interested & not_for_me
+    feedback = {cid: INTERESTED for cid in interested - both}
+    feedback.update({cid: NOT_FOR_ME for cid in not_for_me - both})
+    return dict(sorted(feedback.items()))

@@ -117,9 +117,9 @@ Added 27 October 2026. The app adapts one student's ranking during their visit, 
 - **Input:** on the Recommendations page the student marks careers as *Interested* or *Not for me*.
 - **Similarity** between two careers: 0.6 × Jaccard overlap of their required and preferred skills + 0.4 × (same category), between 0 and 1. Pairs below 0.15 are ignored.
 - **Adjustment** for each unrated career: the sum over rated careers of (+1 or -1) × 10 points × similarity, limited to ±15 points. The adjusted score is the formula score plus the adjustment, kept between 0 and 100.
-- **Ranking:** careers are re-ranked by adjusted score. Careers marked *Not for me* move to a separate list the student can undo.
+- **Ranking:** careers are re-ranked by adjusted score. Since 28 October 2026, careers marked *Interested* or *Not for me* leave the main list and appear in two separate lists with counts, where the student can open details and skill gaps, switch lists or remove the mark. The main list is renumbered from 1 and shows only careers not rated yet.
 - **Explanation:** each card shows the formula score, the adjustment and one line per rated career that caused it. The formula score itself is never changed.
-- **Privacy:** answers and feedback live only in the Streamlit session and disappear when the tab closes. The student can download a `career_session.json` file and upload it later. The file is validated (format, version, size, known careers and values) before use.
+- **Privacy:** answers and feedback live only in the Streamlit session. The two lists are also written to the page address as career ids (`?interested=...&not_for_me=...`), so a refresh restores them; unknown ids and ids in both lists are dropped. No server-side storage is used and no answers go into the address. The student can download a `career_session.json` file and upload it later. The file is validated (format, version, size, known careers and values) before use.
 - **Code and tests:** `src/services/feedback.py`, `src/services/session_data.py`, `tests/test_feedback.py`, and interaction tests in `tests/test_app.py`.
 
 This is relevance feedback within one session. It does not retrain the machine-learning models and is not evaluated with real students yet.

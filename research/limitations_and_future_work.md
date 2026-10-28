@@ -29,6 +29,7 @@
 ## 2b. Session feedback
 
 - The per-student adaptation (Interested / Not for me) uses fixed similarity rules. Its usefulness has not been tested with real students; the planned user study should compare lists before and after feedback.
+- The Interested and Not for me lists survive a page refresh through the page address only. They do not follow a student to another browser or device, and anyone given the address sees the chosen career ids. Accounts would be needed for lasting, private lists.
 - Feedback is not stored or pooled, so the app does not learn across students. This protects privacy but means the global models cannot improve from use.
 
 ## 2c. Live model comparison

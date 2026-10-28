@@ -7,7 +7,9 @@ from src.ui.components import (
     SKILL_GAP_PAGE, badges, interest_badges, label, optional_badges, page_setup,
     sidebar_profile_summary,
 )
-from src.ui.state import EXPLORER_CAREER_KEY, get_catalog, get_profile, select_career
+from src.services.feedback import INTERESTED, NOT_FOR_ME
+from src.ui.state import EXPLORER_CAREER_KEY, decide, get_catalog, get_feedback, get_profile, select_career
+from src.ui.career_lists import show_flash
 from src.ui.views import career_from_cell, career_label, career_list_rows, education_label, filter_careers
 
 TABLE_KEY = "explorer_table"
@@ -15,6 +17,7 @@ TABLE_KEY = "explorer_table"
 page_setup("Explore Careers", subtitle="Browse all careers, filter by category, or search for a specific role.")
 catalog = get_catalog()
 sidebar_profile_summary(get_profile())
+show_flash()
 
 with st.container(border=True, key="toolbar"):
     f1, f2 = st.columns([1.4, 1])
@@ -89,6 +92,21 @@ with detail_col:
         st.markdown(interest_badges(career.interests))
         with st.expander("Learning goals"):
             st.markdown("\n".join(f"- {g}" for g in career.learning_goals))
+        decision = get_feedback().get(career.career_id)
+        with st.container(horizontal=True, vertical_alignment="center"):
+            if decision == INTERESTED:
+                st.markdown(":green-badge[:material/thumb_up: In your Interested list]")
+            elif decision == NOT_FOR_ME:
+                st.markdown(":gray-badge[:material/thumb_down: In your Not for me list]")
+            if decision != INTERESTED:
+                st.button("Interested", key="explorer_like", icon=":material/thumb_up:",
+                          on_click=decide, args=(career.career_id, INTERESTED, career.title))
+            if decision != NOT_FOR_ME:
+                st.button("Not for me", key="explorer_dislike", icon=":material/thumb_down:",
+                          on_click=decide, args=(career.career_id, NOT_FOR_ME, career.title))
+            if decision is not None:
+                st.button("Remove from list", key="explorer_remove", icon=":material/backspace:",
+                          on_click=decide, args=(career.career_id, None, career.title))
         if st.button("Analyze my skill gap for this career", type="primary", icon=":material/school:"):
             select_career(career.career_id)
             st.switch_page(SKILL_GAP_PAGE)
