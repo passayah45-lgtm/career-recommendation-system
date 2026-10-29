@@ -94,7 +94,7 @@ def test_adaptation_is_deterministic(catalog, recs):
 def test_session_file_round_trip(catalog):
     raw = export_session(PROFILE, {"C002": 1, "C029": -1})
     data = json.loads(raw)
-    assert data["format"] == "career-recommendation-session" and data["version"] == 1
+    assert data["format"] == "career-recommendation-session" and data["version"] == 2
     profile, feedback = import_session(raw, catalog)
     assert profile == PROFILE and feedback == {"C002": 1, "C029": -1}
 

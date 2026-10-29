@@ -47,7 +47,10 @@ Data quality: src/data/validation.py checks the CSV files in CI before any code 
 catalog = load_catalog()                                         # src/services/catalog.py
 recommend(profile: dict, catalog, top_k=5, weights=DEFAULT_WEIGHTS) -> dict   # src/services/recommendations.py
 analyze_skill_gap(profile: dict, career_id: str, catalog) -> dict            # src/services/skill_gap.py
+build_roadmap(profile: dict | None, career_id: str, catalog, progress=None) -> dict  # src/services/roadmap.py
 ```
+
+The roadmap functions (`docs/skill_roadmap.md`) follow the same rule: plain dicts in and out, no Streamlit imports.
 
 Both functions take a plain dict and return plain dicts and lists, so a future REST API can pass request bodies in and return the results as JSON. The Catalog is loaded once and passed in, there is no global state. These two functions become the T-Career API endpoints in Phase 7. Algorithm details: docs/recommendation_algorithm.md.
 

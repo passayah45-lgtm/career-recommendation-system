@@ -17,6 +17,7 @@ The app sleeps after 12 hours without visitors. If you see a sleep page, click "
 | Recommendations | Top K careers with score, matched and missing skills, interests, reasons and a score breakdown. Interested and Not for me buttons move a career into its own list, shown with a count beside the main list |
 | Skill-Gap Analysis | Required and optional gaps, coverage, and learning resources with links and verification status |
 | Career Explorer | Browse all 50 careers, filter by category, search by title, view details and sources |
+| Skill Roadmap | "My Skill Development Roadmap": an ordered learning plan for an Interested or recommended career, with a free resource per step, Not started / In progress / Completed status per step, progress totals, and an explicit confirmation before a learned skill is added to the profile (`docs/skill_roadmap.md`) |
 | Analytics | Dataset charts, your own score contributions and skill coverage, and "How the Models Rank Your Careers": your top 5 from the formula next to Logistic Regression, Decision Tree and Random Forest (comparison only), plus the saved offline evaluation |
 
 The interface uses a shared design system (navy, teal and blue on a light blue-gray background, a navy sidebar with icons, card layouts and labelled status badges). See docs/design_system.md.
@@ -24,6 +25,8 @@ The interface uses a shared design system (navy, teal and blue on a light blue-g
 Answers stay in the browser session. There are no accounts and nothing is written to disk.
 
 **Interested and Not for me lists.** Clicking Interested or Not for me moves a career out of the main list into its own list (Recommendations page, with counts; also linked from the home page and the sidebar). Each saved career shows its category, score and formula rank when an assessment exists, and buttons to open its details or skill gap, move it to the other list or remove it. A career is never in both lists. The Career Explorer has the same buttons.
+
+Roadmap progress is stored the same way, under `progress=` in the page address, and is included in the session file (version 2). Details and limits: `docs/skill_roadmap.md`.
 
 How the lists are stored: in the Streamlit session and, as career ids only, in the page address (for example `?interested=C002&not_for_me=C029`). A page refresh keeps the lists because the address is reused. Limits: there are no accounts, so lists do not follow you to another browser or device, and opening the app from a fresh link starts empty (use "Download my session" to keep them). Anyone you send the address to sees which career ids you chose; nothing else is in it. The address is also kept in your browser history. Your answers are not put in the address, so after a refresh you need to redo or upload the assessment to see scores.
 

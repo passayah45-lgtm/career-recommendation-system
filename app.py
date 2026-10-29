@@ -10,7 +10,7 @@ if drop_stale_modules():
     st.cache_resource.clear()
 
 from src.ui.components import (  # noqa: E402
-    ANALYTICS_PAGE, ASSESSMENT_PAGE, EXPLORER_PAGE, HOME_PAGE, RECOMMENDATIONS_PAGE, SKILL_GAP_PAGE,
+    ANALYTICS_PAGE, ASSESSMENT_PAGE, EXPLORER_PAGE, HOME_PAGE, RECOMMENDATIONS_PAGE, ROADMAP_PAGE, SKILL_GAP_PAGE,
 )
 from src.ui.theme import PAGE_ICONS  # noqa: E402
 
@@ -19,6 +19,7 @@ PAGES = [
     st.Page(ASSESSMENT_PAGE, title="Career Assessment", icon=PAGE_ICONS["Career Assessment"]),
     st.Page(RECOMMENDATIONS_PAGE, title="Recommendations", icon=PAGE_ICONS["Recommendations"]),
     st.Page(SKILL_GAP_PAGE, title="Skill-Gap Analysis", icon=PAGE_ICONS["Skill-Gap Analysis"]),
+    st.Page(ROADMAP_PAGE, title="Skill Roadmap", icon=PAGE_ICONS["Skill Roadmap"]),
     st.Page(EXPLORER_PAGE, title="Career Explorer", icon=PAGE_ICONS["Career Explorer"]),
     st.Page(ANALYTICS_PAGE, title="Analytics", icon=PAGE_ICONS["Analytics"]),
 ]

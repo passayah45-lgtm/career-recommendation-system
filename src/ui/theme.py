@@ -49,6 +49,7 @@ PAGE_ICONS = {
     "Career Assessment": ":material/assignment:",
     "Recommendations": ":material/recommend:",
     "Skill-Gap Analysis": ":material/school:",
+    "Skill Roadmap": ":material/route:",
     "Career Explorer": ":material/explore:",
     "Analytics": ":material/monitoring:",
 }

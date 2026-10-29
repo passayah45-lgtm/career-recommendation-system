@@ -4,8 +4,10 @@
 import streamlit as st
 
 from src.services.feedback import INTERESTED, NOT_FOR_ME, split_lists
-from src.ui.components import EXPLORER_PAGE, SKILL_GAP_PAGE, badges
-from src.ui.state import EXPLORER_CAREER_KEY, FLASH_KEY, LIST_VIEW_KEY, LIST_VIEWS, decide, select_career
+from src.ui.components import EXPLORER_PAGE, ROADMAP_PAGE, SKILL_GAP_PAGE, badges
+from src.ui.state import (
+    EXPLORER_CAREER_KEY, FLASH_KEY, LIST_VIEW_KEY, LIST_VIEWS, ROADMAP_CAREER_KEY, decide, select_career,
+)
 from src.ui.views import saved_list_rows
 
 LIST_TITLES = {
@@ -79,8 +81,12 @@ def saved_card(row, kind, has_profile):
                       on_click=decide, args=(cid, None, row["title"]))
             if st.button("View career details", key=f"saved_explore_{cid}", icon=":material/open_in_new:"):
                 open_details(cid)
-            if st.button("Analyze my skill gap", key=f"saved_gap_{cid}", type="primary", icon=":material/school:"):
+            if st.button("Analyze my skill gap", key=f"saved_gap_{cid}", icon=":material/school:"):
                 open_skill_gap(cid)
+            if kind == "interested" and st.button("Plan my learning", key=f"saved_plan_{cid}", type="primary",
+                                                  icon=":material/route:"):
+                st.session_state[ROADMAP_CAREER_KEY] = cid
+                st.switch_page(ROADMAP_PAGE)
 
 
 def saved_list(kind, feedback, catalog, formula_recommendations=None, has_profile=False):

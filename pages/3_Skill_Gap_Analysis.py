@@ -7,10 +7,10 @@ from src.services.profiles import ProfileValidationError
 from src.services.recommendations import recommend
 from src.services.skill_gap import analyze_skill_gap
 from src.ui.components import (
-    ASSESSMENT_PAGE, badges, have_badges, label, missing_badges, optional_badges, page_setup, resource_row,
-    sidebar_profile_summary,
+    ASSESSMENT_PAGE, ROADMAP_PAGE, badges, have_badges, label, missing_badges, optional_badges, page_setup,
+    resource_row, sidebar_profile_summary,
 )
-from src.ui.state import SELECTED_CAREER_KEY, get_catalog, get_profile, get_top_k, select_career
+from src.ui.state import ROADMAP_CAREER_KEY, SELECTED_CAREER_KEY, get_catalog, get_profile, get_top_k, select_career
 from src.ui.views import career_label, education_label, resource_rows
 
 page_setup("Skill-Gap Analysis", eyebrow="Step 3 of 3",
@@ -72,9 +72,15 @@ have_req, miss_req = gap["have_required_skills"], gap["missing_required_skills"]
 have_pref, miss_pref = gap["have_preferred_skills"], gap["missing_preferred_skills"]
 n_req, n_pref = len(have_req) + len(miss_req), len(have_pref) + len(miss_pref)
 
-st.markdown(f"#### {gap['career_title']}")
-st.markdown(f"{badges([career.category], 'blue')} "
-            f":gray-badge[:material/school: Typical entry {education_label(career.education_level)}]")
+title_col, plan_col = st.columns([2.2, 1], vertical_alignment="center")
+with title_col:
+    st.markdown(f"#### {gap['career_title']}")
+    st.markdown(f"{badges([career.category], 'blue')} "
+                f":gray-badge[:material/school: Typical entry {education_label(career.education_level)}]")
+with plan_col:
+    if st.button("Plan my learning for this career", key="gap_to_roadmap", icon=":material/route:"):
+        st.session_state[ROADMAP_CAREER_KEY] = career_id
+        st.switch_page(ROADMAP_PAGE)
 
 
 def coverage_card(column, key, title, value, have, total):

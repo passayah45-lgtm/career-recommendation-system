@@ -192,7 +192,7 @@ def test_navigation_titles_and_home_page():
     tree = ast.parse(Path(APP).read_text(encoding="utf-8"))
     titles = [kw.value.value for node in ast.walk(tree) if isinstance(node, ast.Call)
               for kw in node.keywords if kw.arg == "title"]
-    assert titles == ["Home", "Career Assessment", "Recommendations", "Skill-Gap Analysis",
+    assert titles == ["Home", "Career Assessment", "Recommendations", "Skill-Gap Analysis", "Skill Roadmap",
                       "Career Explorer", "Analytics"]
     at = open_page()
     assert at.title[0].value == "Career Recommendation System"
@@ -482,3 +482,127 @@ def test_analytics_and_model_comparison_work_with_saved_lists():
     at = open_page("pages/5_Analytics.py", profile=WORKED_EXAMPLE, **{FEEDBACK_KEY: {"C002": 1, "C029": -1}})
     assert "How the Models Rank Your Careers" in text_of(at)
     assert "#### Random Forest" in text_of(at)
+
+
+ROADMAP = "pages/6_Skill_Roadmap.py"
+
+
+def test_roadmap_without_any_career_explains_how_to_choose():
+    at = open_page(ROADMAP)
+    text = text_of(at)
+    assert "My Skill Development Roadmap" in text
+    assert "Choose a career first" in text
+
+
+def test_roadmap_offers_interested_careers_first_and_recommendations():
+    from src.ui.state import FEEDBACK_KEY
+    at = open_page(ROADMAP, profile=WORKED_EXAMPLE, **{FEEDBACK_KEY: {"C040": 1, "C001": -1}})
+    options = at.selectbox[0].options
+    assert options[0] == "Registered Nurse (Interested)"
+    assert any("(Recommended)" in o for o in options)
+    assert not any(o.startswith("Data Scientist") for o in options)
+    labels = {m.label: m.value for m in at.metric}
+    assert labels["Steps"] == str(len([k for k in button_keys(at) if k and k.startswith("learned_")]))
+    assert "Ordered learning plan" in text_of(at)
+
+
+def test_roadmap_status_updates_and_progress():
+    from src.ui.state import ROADMAP_CAREER_KEY, ROADMAP_KEY
+    at = open_page(ROADMAP, profile=WORKED_EXAMPLE, **{ROADMAP_CAREER_KEY: "C001"})
+    control = at.button_group(key="status_C001_git")
+    control.set_value("in_progress").run()
+    assert not at.exception
+    assert at.session_state[ROADMAP_KEY] == {"C001": {"git": "in_progress"}}
+    at.button_group(key="status_C001_git").set_value("completed").run()
+    assert at.session_state[ROADMAP_KEY] == {"C001": {"git": "completed"}}
+    labels = {m.label: m.value for m in at.metric}
+    assert labels["Completed"] == "1" and labels["Steps"] == "4"
+    assert len(at.get("progress")) == 1
+    assert "Completing a step means you marked it done" in text_of(at)
+    # Completing a step does not add the skill to the profile
+    assert "git" not in [s.lower() for s in at.session_state["profile_input"]["skills"]]
+
+
+def test_roadmap_progress_is_separate_per_career_and_survives_not_for_me():
+    from src.ui.state import FEEDBACK_KEY, ROADMAP_CAREER_KEY, ROADMAP_KEY
+    progress = {"C001": {"git": "completed"}, "C009": {"git": "in_progress"}}
+    at = open_page(ROADMAP, profile=WORKED_EXAMPLE, **{ROADMAP_KEY: progress, FEEDBACK_KEY: {"C001": 1},
+                                                       ROADMAP_CAREER_KEY: "C001"})
+    assert at.button_group(key="status_C001_git").value == "completed"
+    at.switch_page("pages/2_Recommendations.py")
+    at.run()
+    at.button_group(key="career_list_view").set_value("interested").run()
+    at.button(key="to_not_C001").click().run()
+    at.switch_page(ROADMAP)
+    at.run()
+    assert at.session_state[ROADMAP_KEY] == progress
+    options = at.selectbox[0].options
+    assert "Data Scientist (Not for me, progress kept)" in options
+    at.selectbox[0].set_value("C001").run()
+    assert "You marked this career Not for me" in text_of(at)
+    at.selectbox[0].set_value("C009").run()
+    assert at.button_group(key="status_C009_git").value == "in_progress"
+
+
+def test_learned_skill_needs_confirmation_and_recalculates():
+    from src.ui.state import ROADMAP_CAREER_KEY
+    at = open_page(ROADMAP, profile=WORKED_EXAMPLE, **{ROADMAP_CAREER_KEY: "C001"})
+    at.button(key="learned_C001_data_visualization").click().run()
+    assert "data visualization" not in at.session_state[PROFILE_KEY]["skills"]
+    at.button(key="cancel_C001_data_visualization").click().run()
+    assert "data visualization" not in at.session_state[PROFILE_KEY]["skills"]
+    at.button(key="learned_C001_data_visualization").click().run()
+    at.button(key="yes_C001_data_visualization").click().run()
+    assert not at.exception
+    assert "data visualization" in at.session_state[PROFILE_KEY]["skills"]
+    labels = {m.label: m.value for m in at.metric}
+    assert labels["Required skills you have"] == "5 of 5" and labels["Compatibility score"] != "61.5 / 100"
+    assert "learned_C001_data_visualization" not in button_keys(at)
+
+
+def test_deleting_a_roadmap_needs_confirmation():
+    from src.ui.state import ROADMAP_CAREER_KEY, ROADMAP_KEY
+    at = open_page(ROADMAP, profile=WORKED_EXAMPLE, **{ROADMAP_KEY: {"C001": {"git": "completed"}},
+                                                       ROADMAP_CAREER_KEY: "C001"})
+    at.button(key="delete_roadmap").click().run()
+    assert at.session_state[ROADMAP_KEY] == {"C001": {"git": "completed"}}
+    at.button(key="confirm_delete_roadmap").click().run()
+    assert at.session_state[ROADMAP_KEY] == {}
+
+
+def test_roadmap_progress_survives_a_refresh_and_bad_values_are_ignored():
+    from src.ui.state import ROADMAP_KEY
+    at = open_page(ROADMAP, profile=WORKED_EXAMPLE, roadmap_career_id="C001")
+    at.button_group(key="status_C001_git").set_value("completed").run()
+    assert at.query_params["progress"] in ("C001:git=c", ["C001:git=c"])
+    fresh = AppTest.from_file(APP, default_timeout=TIMEOUT)
+    fresh.query_params["progress"] = "C001:git=c,unknown skill=c;C999:git=p"
+    fresh.run()
+    assert not fresh.exception
+    assert fresh.session_state[ROADMAP_KEY] == {"C001": {"git": "completed"}}
+
+
+def test_each_session_has_its_own_roadmap():
+    # There are no accounts: progress lives in each browser session and is never shared
+    from src.ui.state import ROADMAP_KEY
+    a = open_page(ROADMAP, profile=WORKED_EXAMPLE, roadmap_career_id="C001")
+    a.button_group(key="status_C001_git").set_value("completed").run()
+    b = open_page(ROADMAP, profile=WORKED_EXAMPLE, roadmap_career_id="C001")
+    assert ROADMAP_KEY not in b.session_state
+    assert b.button_group(key="status_C001_git").value == "not_started"
+
+
+def test_interested_list_and_skill_gap_link_to_the_roadmap():
+    from src.ui.state import FEEDBACK_KEY, ROADMAP_CAREER_KEY
+    at = open_page("pages/2_Recommendations.py", profile=WORKED_EXAMPLE, **{FEEDBACK_KEY: {"C040": 1}})
+    at.button_group(key="career_list_view").set_value("interested").run()
+    at.button(key="saved_plan_C040").click().run()
+    assert not at.exception
+    assert at.session_state[ROADMAP_CAREER_KEY] == "C040"
+    assert at.selectbox[0].value == "C040"
+    at = open_page(SKILL_GAP_PAGE_PATH, profile=WORKED_EXAMPLE)
+    at.button(key="gap_to_roadmap").click().run()
+    assert not at.exception and "Ordered learning plan" in text_of(at)
+
+
+SKILL_GAP_PAGE_PATH = "pages/3_Skill_Gap_Analysis.py"

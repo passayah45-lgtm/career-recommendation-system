@@ -7,11 +7,11 @@ from pathlib import Path
 import streamlit as st
 
 from src.services.recommendations import SCORE_DISCLAIMER
-from src.services.session_data import SessionFileError, export_session, import_session
+from src.services.session_data import SessionFileError, export_session, import_session_data
 from src.ui.illustrations import HERO_SVG, SIDEBAR_ART, initial_tile, ring_svg
 from src.services.feedback import split_lists
 from src.ui.state import (
-    SELECTED_CAREER_KEY, get_catalog, get_feedback, replace_session, reset_assessment, show_list,
+    SELECTED_CAREER_KEY, get_catalog, get_feedback, get_progress, replace_session, reset_assessment, show_list,
 )
 from src.ui.theme import UNVERIFIED_BADGE, VERIFICATION_BADGES
 
@@ -21,6 +21,7 @@ RECOMMENDATIONS_PAGE = "pages/2_Recommendations.py"
 SKILL_GAP_PAGE = "pages/3_Skill_Gap_Analysis.py"
 EXPLORER_PAGE = "pages/4_Career_Explorer.py"
 ANALYTICS_PAGE = "pages/5_Analytics.py"
+ROADMAP_PAGE = "pages/6_Skill_Roadmap.py"
 
 ROOT = Path(__file__).resolve().parents[2]
 STYLESHEET = Path(__file__).with_name("styles.css")
@@ -206,10 +207,11 @@ def sidebar_profile_summary(profile):
 def session_data_panel(profile, key, allow_download=True):
     # Download, upload and clear the learner's own session; nothing is stored by the app
     with st.expander(":material/folder_shared: Your session data", expanded=False):
-        st.caption("Your answers and career feedback are kept only while this page is open. They are not "
-                   "saved in any database and disappear when you close the tab. Download them to continue later.")
+        st.caption("Your answers, career feedback and roadmap progress are kept only while this page is open. "
+                   "They are not saved in any database and disappear when you close the tab. Download them to "
+                   "continue later.")
         if allow_download and profile:
-            st.download_button("Download my session", data=export_session(profile, get_feedback()),
+            st.download_button("Download my session", data=export_session(profile, get_feedback(), get_progress()),
                                file_name="career_session.json", mime="application/json",
                                icon=":material/download:", key=f"{key}_download")
         uploaded = st.file_uploader("Continue a saved session", type=["json"], key=f"{key}_upload",
@@ -217,10 +219,11 @@ def session_data_panel(profile, key, allow_download=True):
         if uploaded is not None and st.button("Restore this session", key=f"{key}_restore",
                                               icon=":material/upload:"):
             try:
-                saved_profile, saved_feedback = import_session(uploaded.getvalue(), get_catalog())
+                saved_profile, saved_feedback, saved_roadmaps, _ = import_session_data(uploaded.getvalue(),
+                                                                                      get_catalog())
             except SessionFileError as exc:
                 st.error(f"The file could not be used: {exc}.", icon=":material/error:")
             else:
-                replace_session(saved_profile, saved_feedback)
+                replace_session(saved_profile, saved_feedback, saved_roadmaps)
                 st.success("Session restored.", icon=":material/check_circle:")
                 st.rerun()
