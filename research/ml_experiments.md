@@ -80,7 +80,9 @@ All models use random_state 42. Software used for the saved results: Python 3.13
 | XGBoost | 0.959 [0.922, 0.988] | 0.974 | 0.986 | 0.913 | 0.318 | 0.994 | 0.992 | 0.903 | 0.846 | 0.779 | 0.810 | 1.000 |
 | Decision Tree | 0.936 [0.886, 0.979] | 0.949 | 0.983 | 0.909 | 0.301 | 0.954 | 0.967 | 0.818 | 0.781 | 0.789 | 0.785 | 0.588 |
 
-Mean AP difference (model minus formula): Random Forest -0.006, Logistic Regression -0.010, XGBoost -0.013, Decision Tree -0.036. No difference is significant (all Holm p values 0.249 or higher).
+Mean AP difference (model minus formula): Random Forest -0.006, Logistic Regression -0.010, XGBoost -0.013, Decision Tree -0.036. No difference is significant (all Holm p values 0.249 or higher). The formula has the highest MAP and NDCG@5, which does not make it better in general.
+
+Audit note (29 October 2026, `model_audit.md`): models break ties by career id. With random tie-breaking the Decision Tree's MAP falls from 0.921 to 0.877 in a one-repeat check (`reports/ml_sensitivity.json`), so its 0.936 above is optimistic.
 
 Most often chosen hyperparameters:
 

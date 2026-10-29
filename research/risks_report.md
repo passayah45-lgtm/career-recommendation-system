@@ -39,7 +39,14 @@ Updated 26 October 2026 after the baselines, ablations and DevOps mapping fix. S
 | # | Category | Risk | Severity | Evidence | Mitigation | Status |
 |---|---|---|---|---|---|---|
 | 25 | Methodological | Career-id tie-breaking flatters models with many tied scores | Medium | Decision Tree MAP 0.921 with id ties vs 0.877 with random ties (seed 0) | Report both; treat the main Decision Tree figure as optimistic | Documented |
-| 26 | Reporting | Label provenance overstated as "committed before the engine ran" | Medium | Engine code d29ecaa committed 47 minutes before labels d93b46b | Wording corrected in six repository documents; paper still to update | Partly fixed |
+| 26 | Reporting | Label provenance overstated as "committed before the engine ran" | Medium | Engine code d29ecaa committed 47 minutes before labels d93b46b | Wording corrected in six repository documents and in the research paper (29 Oct 2026); the paper is a Word file kept outside the repository | Fixed |
 | 27 | Reproducibility | CI could not check ML results because XGBoost is not installed there | Low to medium | Only the evaluation report was checked in CI | `tests/test_ml_audit.py` reproduces LR, DT and formula results; CI checks `ml_sensitivity.json` | Mitigated |
 | 28 | Methodological | Same-category profiles might leak information across folds | Low | Profiles are stratified, not grouped, by category | Leave-one-category-out check: MAP within 0.002 of the 5-repeat grouped CV for LR and RF | Checked |
 | 29 | Methodological | Hidden leakage from labels into features | Low | Permutation check gives MAP 0.112 to 0.120 vs random 0.100; features identical under permuted labels (test) | Keep the permutation check in CI | Checked |
+
+## Paper consistency pass (29 October 2026)
+
+| # | Category | Risk | Severity | Evidence | Mitigation | Status |
+|---|---|---|---|---|---|---|
+| 30 | Reporting | The research paper is not version-controlled with the code | Medium | No .docx in the repository; the paper exists only as a Word file shared by the author | Every number in the corrected paper was checked against `reports/ml_results.json`, `reports/ml_sensitivity.json` and `reports/research_results.json`; consider adding the paper or a PDF to the repository | Open |
+| 31 | Reporting | Readers take the highest MAP as proof the formula is better | Medium | Formula MAP 0.971 vs 0.936 to 0.965, all Holm p 0.249 or higher | Paper now states no difference is significant and that the results do not show the formula is better in general or that any method is accurate for real learners | Mitigated |

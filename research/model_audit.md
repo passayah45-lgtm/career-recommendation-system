@@ -48,5 +48,5 @@ Not changed: the main experiment code and `reports/ml_results.json`. The full pi
 
 ## 5. Open items
 
-- The research paper (outside the repository) says the labels were "committed to the repository before the engine was run on any profile". It should use the corrected wording in section 2.
+- The research paper is not in the repository. A corrected copy (29 October 2026) uses the wording in section 2, adds the sensitivity checks as Table 7 and two limitations; see `risks_report.md`, rows 26, 30 and 31.
 - The main report uses career-id tie-breaking. Results with random tie-breaking come from one repeat only (seed 0).
