@@ -32,7 +32,7 @@ File: data/evaluation/labelled_profiles.json (36 profiles).
 1. Each profile describes a plausible learner (student, career changer, self-taught learner) in one or two sentences.
 2. Skills are written the way a learner might type them, including aliases (ML, OOP, SIEM, SEO, TEFL, counselling), mixed case and 3 skills outside the catalogue (pandas, blender, blockchain and solidity).
 3. Relevant careers were chosen with written rules L1 to L5 (section 2.3), using what each occupation does, not the overlap count the engine uses.
-4. The labels were written and committed (commit d93b46b) before the engine was run on any profile, and were not changed after seeing results.
+4. The labels were committed in d93b46b, 47 minutes after the engine code (d29ecaa), and have not changed since. The author states they were written before the engine was run on any profile; git history cannot confirm that part.
 
 ### 2.2 Distribution
 

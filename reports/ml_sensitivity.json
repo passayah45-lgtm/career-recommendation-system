@@ -1,0 +1,838 @@
+{
+  "grouped_cv_seed0_career_id_ties": {
+    "results": {
+      "decision_tree": {
+        "average_precision": {
+          "ci95": [
+            0.8409,
+            0.9863
+          ],
+          "mean": 0.9206,
+          "profiles": 35
+        },
+        "ndcg_at_5": {
+          "ci95": [
+            0.8557,
+            0.9889
+          ],
+          "mean": 0.9298,
+          "profiles": 35
+        },
+        "precision_at_5": {
+          "ci95": [
+            0.2457,
+            0.3371
+          ],
+          "mean": 0.2914,
+          "profiles": 35
+        },
+        "r_precision": {
+          "ci95": [
+            0.8381,
+            0.9857
+          ],
+          "mean": 0.919,
+          "profiles": 35
+        },
+        "recall_at_5": {
+          "ci95": [
+            0.8381,
+            0.9857
+          ],
+          "mean": 0.919,
+          "profiles": 35
+        },
+        "reciprocal_rank": {
+          "ci95": [
+            0.9167,
+            1.0
+          ],
+          "mean": 0.9722,
+          "profiles": 35
+        }
+      },
+      "logistic_regression": {
+        "average_precision": {
+          "ci95": [
+            0.9196,
+            0.9898
+          ],
+          "mean": 0.9574,
+          "profiles": 35
+        },
+        "ndcg_at_5": {
+          "ci95": [
+            0.9441,
+            0.9945
+          ],
+          "mean": 0.9717,
+          "profiles": 35
+        },
+        "precision_at_5": {
+          "ci95": [
+            0.2743,
+            0.36
+          ],
+          "mean": 0.3143,
+          "profiles": 35
+        },
+        "r_precision": {
+          "ci95": [
+            0.8333,
+            0.9762
+          ],
+          "mean": 0.9095,
+          "profiles": 35
+        },
+        "recall_at_5": {
+          "ci95": [
+            0.9714,
+            1.0
+          ],
+          "mean": 0.9905,
+          "profiles": 35
+        },
+        "reciprocal_rank": {
+          "ci95": [
+            0.9571,
+            1.0
+          ],
+          "mean": 0.9857,
+          "profiles": 35
+        }
+      },
+      "random_forest": {
+        "average_precision": {
+          "ci95": [
+            0.9426,
+            0.9952
+          ],
+          "mean": 0.9725,
+          "profiles": 35
+        },
+        "ndcg_at_5": {
+          "ci95": [
+            0.9585,
+            0.9981
+          ],
+          "mean": 0.9825,
+          "profiles": 35
+        },
+        "precision_at_5": {
+          "ci95": [
+            0.2686,
+            0.36
+          ],
+          "mean": 0.3143,
+          "profiles": 35
+        },
+        "r_precision": {
+          "ci95": [
+            0.8857,
+            0.9857
+          ],
+          "mean": 0.9381,
+          "profiles": 35
+        },
+        "recall_at_5": {
+          "ci95": [
+            0.9571,
+            1.0
+          ],
+          "mean": 0.9857,
+          "profiles": 35
+        },
+        "reciprocal_rank": {
+          "ci95": [
+            1.0,
+            1.0
+          ],
+          "mean": 1.0,
+          "profiles": 35
+        }
+      },
+      "weighted_formula": {
+        "average_precision": {
+          "ci95": [
+            0.9357,
+            0.9976
+          ],
+          "mean": 0.9714,
+          "profiles": 35
+        },
+        "ndcg_at_5": {
+          "ci95": [
+            0.9581,
+            0.9991
+          ],
+          "mean": 0.9827,
+          "profiles": 35
+        },
+        "precision_at_5": {
+          "ci95": [
+            0.28,
+            0.3657
+          ],
+          "mean": 0.32,
+          "profiles": 35
+        },
+        "r_precision": {
+          "ci95": [
+            0.8571,
+            0.9905
+          ],
+          "mean": 0.9333,
+          "profiles": 35
+        },
+        "recall_at_5": {
+          "ci95": [
+            1.0,
+            1.0
+          ],
+          "mean": 1.0,
+          "profiles": 35
+        },
+        "reciprocal_rank": {
+          "ci95": [
+            0.9571,
+            1.0
+          ],
+          "mean": 0.9857,
+          "profiles": 35
+        }
+      }
+    },
+    "split": "StratifiedGroupKFold(5) by profile, strata = primary category, seed 0, one repeat"
+  },
+  "grouped_cv_seed0_random_ties": {
+    "results": {
+      "decision_tree": {
+        "average_precision": {
+          "ci95": [
+            0.7958,
+            0.948
+          ],
+          "mean": 0.8772,
+          "profiles": 35
+        },
+        "ndcg_at_5": {
+          "ci95": [
+            0.8188,
+            0.9607
+          ],
+          "mean": 0.8959,
+          "profiles": 35
+        },
+        "precision_at_5": {
+          "ci95": [
+            0.2474,
+            0.3383
+          ],
+          "mean": 0.2909,
+          "profiles": 35
+        },
+        "r_precision": {
+          "ci95": [
+            0.742,
+            0.9246
+          ],
+          "mean": 0.8391,
+          "profiles": 35
+        },
+        "recall_at_5": {
+          "ci95": [
+            0.835,
+            0.9767
+          ],
+          "mean": 0.9132,
+          "profiles": 35
+        },
+        "reciprocal_rank": {
+          "ci95": [
+            0.859,
+            0.9886
+          ],
+          "mean": 0.9334,
+          "profiles": 35
+        }
+      },
+      "logistic_regression": {
+        "average_precision": {
+          "ci95": [
+            0.9085,
+            0.9898
+          ],
+          "mean": 0.9542,
+          "profiles": 35
+        },
+        "ndcg_at_5": {
+          "ci95": [
+            0.9341,
+            0.995
+          ],
+          "mean": 0.9687,
+          "profiles": 35
+        },
+        "precision_at_5": {
+          "ci95": [
+            0.2743,
+            0.36
+          ],
+          "mean": 0.3143,
+          "profiles": 35
+        },
+        "r_precision": {
+          "ci95": [
+            0.8379,
+            0.9762
+          ],
+          "mean": 0.9141,
+          "profiles": 35
+        },
+        "recall_at_5": {
+          "ci95": [
+            0.9714,
+            1.0
+          ],
+          "mean": 0.9905,
+          "profiles": 35
+        },
+        "reciprocal_rank": {
+          "ci95": [
+            0.9426,
+            1.0
+          ],
+          "mean": 0.9809,
+          "profiles": 35
+        }
+      },
+      "random_forest": {
+        "average_precision": {
+          "ci95": [
+            0.9211,
+            0.9911
+          ],
+          "mean": 0.9599,
+          "profiles": 35
+        },
+        "ndcg_at_5": {
+          "ci95": [
+            0.9426,
+            0.9961
+          ],
+          "mean": 0.9729,
+          "profiles": 35
+        },
+        "precision_at_5": {
+          "ci95": [
+            0.2696,
+            0.3603
+          ],
+          "mean": 0.3146,
+          "profiles": 35
+        },
+        "r_precision": {
+          "ci95": [
+            0.8587,
+            0.9762
+          ],
+          "mean": 0.9207,
+          "profiles": 35
+        },
+        "recall_at_5": {
+          "ci95": [
+            0.9597,
+            1.0
+          ],
+          "mean": 0.9866,
+          "profiles": 35
+        },
+        "reciprocal_rank": {
+          "ci95": [
+            0.9587,
+            1.0
+          ],
+          "mean": 0.9862,
+          "profiles": 35
+        }
+      },
+      "weighted_formula": {
+        "average_precision": {
+          "ci95": [
+            0.9221,
+            0.9976
+          ],
+          "mean": 0.9682,
+          "profiles": 35
+        },
+        "ndcg_at_5": {
+          "ci95": [
+            0.9462,
+            0.9991
+          ],
+          "mean": 0.9793,
+          "profiles": 35
+        },
+        "precision_at_5": {
+          "ci95": [
+            0.28,
+            0.3657
+          ],
+          "mean": 0.32,
+          "profiles": 35
+        },
+        "r_precision": {
+          "ci95": [
+            0.8673,
+            0.9911
+          ],
+          "mean": 0.9388,
+          "profiles": 35
+        },
+        "recall_at_5": {
+          "ci95": [
+            1.0,
+            1.0
+          ],
+          "mean": 1.0,
+          "profiles": 35
+        },
+        "reciprocal_rank": {
+          "ci95": [
+            0.9397,
+            1.0
+          ],
+          "mean": 0.9799,
+          "profiles": 35
+        }
+      }
+    },
+    "split": "same predictions; ties broken at random, mean over shuffles; formula ties also random"
+  },
+  "label_permutation": {
+    "results": {
+      "decision_tree": {
+        "average_precision": {
+          "ci95": [
+            0.0673,
+            0.1798
+          ],
+          "mean": 0.1184,
+          "profiles": 35
+        },
+        "ndcg_at_5": {
+          "ci95": [
+            0.0278,
+            0.1719
+          ],
+          "mean": 0.0947,
+          "profiles": 35
+        },
+        "precision_at_5": {
+          "ci95": [
+            0.0171,
+            0.0914
+          ],
+          "mean": 0.0514,
+          "profiles": 35
+        },
+        "r_precision": {
+          "ci95": [
+            0.0,
+            0.1048
+          ],
+          "mean": 0.0476,
+          "profiles": 35
+        },
+        "recall_at_5": {
+          "ci95": [
+            0.0381,
+            0.2333
+          ],
+          "mean": 0.1286,
+          "profiles": 35
+        },
+        "reciprocal_rank": {
+          "ci95": [
+            0.0695,
+            0.2227
+          ],
+          "mean": 0.1384,
+          "profiles": 35
+        }
+      },
+      "logistic_regression": {
+        "average_precision": {
+          "ci95": [
+            0.0734,
+            0.1812
+          ],
+          "mean": 0.1195,
+          "profiles": 35
+        },
+        "ndcg_at_5": {
+          "ci95": [
+            0.0245,
+            0.1578
+          ],
+          "mean": 0.0792,
+          "profiles": 35
+        },
+        "precision_at_5": {
+          "ci95": [
+            0.0114,
+            0.0857
+          ],
+          "mean": 0.04,
+          "profiles": 35
+        },
+        "r_precision": {
+          "ci95": [
+            0.0095,
+            0.1048
+          ],
+          "mean": 0.0524,
+          "profiles": 35
+        },
+        "recall_at_5": {
+          "ci95": [
+            0.019,
+            0.181
+          ],
+          "mean": 0.0905,
+          "profiles": 35
+        },
+        "reciprocal_rank": {
+          "ci95": [
+            0.0855,
+            0.2572
+          ],
+          "mean": 0.1626,
+          "profiles": 35
+        }
+      },
+      "random_forest": {
+        "average_precision": {
+          "ci95": [
+            0.074,
+            0.1592
+          ],
+          "mean": 0.1123,
+          "profiles": 35
+        },
+        "ndcg_at_5": {
+          "ci95": [
+            0.0292,
+            0.1505
+          ],
+          "mean": 0.0842,
+          "profiles": 35
+        },
+        "precision_at_5": {
+          "ci95": [
+            0.0171,
+            0.08
+          ],
+          "mean": 0.0457,
+          "profiles": 35
+        },
+        "r_precision": {
+          "ci95": [
+            0.0095,
+            0.0857
+          ],
+          "mean": 0.0429,
+          "profiles": 35
+        },
+        "recall_at_5": {
+          "ci95": [
+            0.0381,
+            0.2286
+          ],
+          "mean": 0.1238,
+          "profiles": 35
+        },
+        "reciprocal_rank": {
+          "ci95": [
+            0.0833,
+            0.2305
+          ],
+          "mean": 0.1478,
+          "profiles": 35
+        }
+      },
+      "weighted_formula": {
+        "average_precision": {
+          "ci95": [
+            0.0501,
+            0.0946
+          ],
+          "mean": 0.0696,
+          "profiles": 35
+        },
+        "ndcg_at_5": {
+          "ci95": [
+            0.0,
+            0.0553
+          ],
+          "mean": 0.0246,
+          "profiles": 35
+        },
+        "precision_at_5": {
+          "ci95": [
+            0.0,
+            0.04
+          ],
+          "mean": 0.0171,
+          "profiles": 35
+        },
+        "r_precision": {
+          "ci95": [
+            0.0,
+            0.0429
+          ],
+          "mean": 0.0143,
+          "profiles": 35
+        },
+        "recall_at_5": {
+          "ci95": [
+            0.0,
+            0.1
+          ],
+          "mean": 0.0429,
+          "profiles": 35
+        },
+        "reciprocal_rank": {
+          "ci95": [
+            0.0453,
+            0.1027
+          ],
+          "mean": 0.0693,
+          "profiles": 35
+        }
+      }
+    },
+    "split": "labels moved to other profiles (derangement), then grouped CV seed 0"
+  },
+  "leave_one_category_out": {
+    "results": {
+      "decision_tree": {
+        "average_precision": {
+          "ci95": [
+            0.8826,
+            0.9787
+          ],
+          "mean": 0.9341,
+          "profiles": 35
+        },
+        "ndcg_at_5": {
+          "ci95": [
+            0.9127,
+            0.9872
+          ],
+          "mean": 0.9521,
+          "profiles": 35
+        },
+        "precision_at_5": {
+          "ci95": [
+            0.2629,
+            0.3486
+          ],
+          "mean": 0.3029,
+          "profiles": 35
+        },
+        "r_precision": {
+          "ci95": [
+            0.8286,
+            0.9714
+          ],
+          "mean": 0.9048,
+          "profiles": 35
+        },
+        "recall_at_5": {
+          "ci95": [
+            0.9143,
+            1.0
+          ],
+          "mean": 0.9619,
+          "profiles": 35
+        },
+        "reciprocal_rank": {
+          "ci95": [
+            0.9571,
+            1.0
+          ],
+          "mean": 0.9857,
+          "profiles": 35
+        }
+      },
+      "logistic_regression": {
+        "average_precision": {
+          "ci95": [
+            0.9219,
+            0.9905
+          ],
+          "mean": 0.9605,
+          "profiles": 35
+        },
+        "ndcg_at_5": {
+          "ci95": [
+            0.9525,
+            0.9956
+          ],
+          "mean": 0.9775,
+          "profiles": 35
+        },
+        "precision_at_5": {
+          "ci95": [
+            0.28,
+            0.3657
+          ],
+          "mean": 0.32,
+          "profiles": 35
+        },
+        "r_precision": {
+          "ci95": [
+            0.8333,
+            0.9762
+          ],
+          "mean": 0.9095,
+          "profiles": 35
+        },
+        "recall_at_5": {
+          "ci95": [
+            1.0,
+            1.0
+          ],
+          "mean": 1.0,
+          "profiles": 35
+        },
+        "reciprocal_rank": {
+          "ci95": [
+            0.9571,
+            1.0
+          ],
+          "mean": 0.9857,
+          "profiles": 35
+        }
+      },
+      "random_forest": {
+        "average_precision": {
+          "ci95": [
+            0.9276,
+            0.9952
+          ],
+          "mean": 0.9652,
+          "profiles": 35
+        },
+        "ndcg_at_5": {
+          "ci95": [
+            0.9535,
+            0.9981
+          ],
+          "mean": 0.9798,
+          "profiles": 35
+        },
+        "precision_at_5": {
+          "ci95": [
+            0.28,
+            0.3657
+          ],
+          "mean": 0.32,
+          "profiles": 35
+        },
+        "r_precision": {
+          "ci95": [
+            0.8476,
+            0.9857
+          ],
+          "mean": 0.9238,
+          "profiles": 35
+        },
+        "recall_at_5": {
+          "ci95": [
+            1.0,
+            1.0
+          ],
+          "mean": 1.0,
+          "profiles": 35
+        },
+        "reciprocal_rank": {
+          "ci95": [
+            0.9571,
+            1.0
+          ],
+          "mean": 0.9857,
+          "profiles": 35
+        }
+      },
+      "weighted_formula": {
+        "average_precision": {
+          "ci95": [
+            0.9357,
+            0.9976
+          ],
+          "mean": 0.9714,
+          "profiles": 35
+        },
+        "ndcg_at_5": {
+          "ci95": [
+            0.9581,
+            0.9991
+          ],
+          "mean": 0.9827,
+          "profiles": 35
+        },
+        "precision_at_5": {
+          "ci95": [
+            0.28,
+            0.3657
+          ],
+          "mean": 0.32,
+          "profiles": 35
+        },
+        "r_precision": {
+          "ci95": [
+            0.8571,
+            0.9905
+          ],
+          "mean": 0.9333,
+          "profiles": 35
+        },
+        "recall_at_5": {
+          "ci95": [
+            1.0,
+            1.0
+          ],
+          "mean": 1.0,
+          "profiles": 35
+        },
+        "reciprocal_rank": {
+          "ci95": [
+            0.9571,
+            1.0
+          ],
+          "mean": 0.9857,
+          "profiles": 35
+        }
+      }
+    },
+    "split": "LeaveOneGroupOut over primary category (8 folds)"
+  },
+  "note": "Sensitivity checks on the 36 author-labelled synthetic profiles. They test the protocol, not real-world career-guidance quality.",
+  "settings": {
+    "inner": "GroupKFold(3) by profile",
+    "model_seed": 42,
+    "models": [
+      "logistic_regression",
+      "decision_tree",
+      "random_forest"
+    ],
+    "permutation_seed": 7,
+    "tie_shuffles": 50
+  },
+  "software": {
+    "numpy": "2.5.4",
+    "scikit_learn": "1.9.1"
+  }
+}

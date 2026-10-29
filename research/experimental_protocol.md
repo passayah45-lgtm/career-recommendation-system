@@ -10,7 +10,7 @@ Version 1.0, 26 October 2026. This protocol separates three things: experiments 
 |---|---|---|
 | Career catalogue | `data/raw/careers.csv` (dataset v1.2.0) | 50 careers; DevOps O*NET mapping added 26 Oct 2026, which does not affect scores |
 | Skill aliases | `data/raw/skill_aliases.csv` | 37 aliases |
-| Profiles and labels | `data/evaluation/labelled_profiles.json` | 36 author-written profiles, binary labels, committed before the engine was run (commit d93b46b); 35 have at least one relevant career |
+| Profiles and labels | `data/evaluation/labelled_profiles.json` | 36 author-written profiles, binary labels, committed in d93b46b, after the engine code, and never changed; the author states they were written before running the engine; 35 have at least one relevant career |
 
 ### A.2 Methods compared
 
@@ -62,7 +62,40 @@ python -m src.evaluation.experiments --check reports/evaluation_results.json
 python -m src.evaluation.research_experiments --check reports/research_results.json
 ```
 
-Expected on 26 October 2026: 275 tests passed; validation 0 errors and 3 warnings (the 3 careers without an O*NET code); both checks report "match". To regenerate a report after a deliberate change, use `--output` instead of `--check`. `tests/test_research_experiments.py` fails if the saved research report and a fresh run differ.
+Expected on 26 October 2026: 275 tests passed (381 on 29 October 2026); validation 0 errors and 3 warnings (the 3 careers without an O*NET code); both checks report "match". To regenerate a report after a deliberate change, use `--output` instead of `--check`. `tests/test_research_experiments.py` fails if the saved research report and a fresh run differ.
+
+### A.6 Machine-learning comparison (completed, audited 29 October 2026)
+
+| Item | Setting |
+|---|---|
+| Unit | One learner-career pair: 36 profiles x 50 careers = 1,800 pairs, 56 positive (3.1%) |
+| Label | 1 if the career is in the profile's author-written `relevant_career_ids`, else 0 |
+| Features (13) | required_coverage, required_matched, required_missing, required_total, preferred_coverage, preferred_matched, interest_coverage, interest_matched, education_value, education_gap, education_provided, learner_skill_count, learner_skills_used_share (`src/ml/features.py`); no career id, category or profile field |
+| Logistic Regression | StandardScaler + LogisticRegression(class_weight="balanced", max_iter=2000); grid C in {0.01, 0.1, 1, 10} |
+| Decision Tree | DecisionTreeClassifier(class_weight="balanced"); grid max_depth {2, 3, 4, 6}, min_samples_leaf {1, 5, 20} |
+| Random Forest | RandomForestClassifier(n_estimators=300, class_weight="balanced_subsample", n_jobs=1); grid max_depth {3, 6, None}, min_samples_leaf {1, 5} |
+| XGBoost (offline only) | XGBClassifier(n_estimators 200, subsample 0.9, colsample_bytree 0.9, tree_method "hist", scale_pos_weight = negatives/positives, n_jobs 1); grid max_depth {2, 3, 4}, learning_rate {0.05, 0.1}, n_estimators {100, 300} |
+| Outer split | StratifiedGroupKFold(5) grouped by profile, strata = primary category, shuffle seeds 0 to 4 (5 repeats) |
+| Inner split | GroupKFold(3) by profile, GridSearchCV scoring = average precision |
+| Model seed | 42 for every model |
+| Ranking | Careers sorted by predicted probability, ties by career id; formula uses its own tie-breaks |
+| Ranking metrics | AP (MAP), NDCG@5, MRR, R-precision, Precision@5, Recall@5; per profile mean over repeats, then macro mean over 35 scorable profiles; 95% bootstrap intervals |
+| Classification metrics | ROC-AUC and PR-AUC from pooled out-of-fold scores; precision, recall, F1 at the F1-maximising threshold chosen on each outer training fold |
+| Significance | Paired sign-flip randomisation vs formula on per-profile AP and NDCG@5, 10,000 resamples, Holm over the four models |
+| Sensitivity (`ml_sensitivity.py`) | Seed 0 grouped CV with career-id and random tie-breaking (50 shuffles); leave-one-category-out (8 folds); label permutation (derangement, seed 7). LR, DT, RF only |
+| Software | Python 3.13.16, scikit-learn 1.9.1, NumPy 2.5.4, XGBoost 3.4.1 (CI uses Python 3.12 without XGBoost) |
+
+Commands:
+
+```bash
+pip install -r requirements-research.txt
+python -m src.evaluation.ml_experiments --check reports/ml_results.json      # about 5 minutes
+python -m src.evaluation.ml_sensitivity --check reports/ml_sensitivity.json  # about 3 minutes
+python -m src.evaluation.ml_interpretation --output reports/ml_interpretation.json
+python -m pytest -q tests/test_ml.py tests/test_ml_audit.py tests/test_model_comparison.py
+```
+
+On 29 October 2026 both checks reported "match" from a clean run. CI runs the sensitivity check and `tests/test_ml_audit.py`, which reproduces the Logistic Regression, Decision Tree and formula numbers of `ml_results.json` without XGBoost.
 
 ## Part B. Independent-label study (proposed, requires ethics approval)
 

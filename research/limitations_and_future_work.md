@@ -12,7 +12,7 @@
 | Binary labels | Relevant or not | Graded quality hidden; NDCG uses gain 1 |
 | Tests not pre-registered | Chosen before results but not registered | Report as exploratory |
 
-**On circularity.** The labels were not produced by the scoring rules. They were committed before the engine ran (commit d93b46b), and rule L1 asks the labeller to judge an occupation's core work rather than count overlap. The evaluation is therefore not mechanically circular. It is still indirectly circular, because one person's view shaped both the skill lists and the labels.
+**On circularity.** The labels were not produced by the scoring rules. They were committed in d93b46b, 47 minutes after the engine code (d29ecaa), and have not changed since. The author states they were written before the engine was run on any profile; git cannot confirm that part (`model_audit.md`, section 2). Rule L1 asks the labeller to judge an occupation's core work rather than count overlap. The evaluation is therefore not mechanically circular. It is still indirectly circular, because one person's view shaped both the skill lists and the labels.
 
 ## 2. Limitations of the system and dataset
 
@@ -39,6 +39,13 @@
 - The Decision Tree gives the same score to many careers; ties are ordered by career id, so the end of its list can be arbitrary. The page says when this happens.
 - Random Forest explanations are path contributions averaged over trees. They add up exactly to the score but depend on tree structure and can differ from permutation-based importance.
 - Training time and comparison time were measured once in the development container; other servers will differ.
+
+## 2d. Machine-learning audit (29 October 2026)
+
+- The main ML report breaks ties by career id. Random tie-breaking lowers the Decision Tree's MAP by 0.043 and Random Forest's by 0.013 in a one-repeat check, so tree models look slightly better in the main table than their expected ranking quality.
+- The audit checks (random ties, leave-one-category-out, label permutation) use one repeat and scikit-learn models only; XGBoost was not included.
+- Whether the engine was run before the labels were written rests on the author's statement; git shows only that the engine code was committed 47 minutes earlier.
+- Further data needed for valid supervised learning on real learners: independent labels from at least three reviewers on a few hundred real profiles (Part B of the protocol), graded relevance, and a held-out test set written before any method change.
 
 ## 3. Threats to validity
 

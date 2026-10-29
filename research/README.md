@@ -14,6 +14,7 @@ Prepared on 26 October 2026 for the lecturer's review. The lecturer will decide 
 | `methodology.md` | Architecture, dataset, matching, scoring formula, weights, ranking, explanations, skill gap |
 | `experimental_protocol.md` | Reproducible protocol: completed synthetic experiments and proposed human studies |
 | `results_and_analysis.md` | Results copied from the saved experiment outputs, with analysis |
+| `model_audit.md` | Audit of the ML experiments (29 Oct 2026): what is trained, label provenance, leakage checks, corrections |
 | `ml_experiments.md` | Logistic Regression, Decision Tree, Random Forest and XGBoost vs the formula: features, labels, protocol, results, decision, and the live "How the Models Rank Your Careers" demonstration |
 | `literature_review.md` | Verified references by theme and their relation to the research question |
 | `limitations_and_future_work.md` | Limitations, validity threats, ethics, future work |
@@ -25,19 +26,20 @@ Prepared on 26 October 2026 for the lecturer's review. The lecturer will decide 
 ## Reproduce the evidence
 
 ```bash
-python -m pytest -q                                                   # 291 passed
+python -m pytest -q                                                   # all pass (count in experimental_protocol.md A.5)
 python -m src.data.validation --quiet-warnings                        # 0 errors, 3 warnings
 python -m src.evaluation.experiments --check reports/evaluation_results.json
 python -m src.evaluation.research_experiments --check reports/research_results.json
 pip install -r requirements-research.txt                              # adds xgboost for the ML study
 python -m src.evaluation.ml_experiments --check reports/ml_results.json
+python -m src.evaluation.ml_sensitivity --check reports/ml_sensitivity.json   # audit checks, no xgboost needed
 ```
 
 ## Verified, preliminary, proposed
 
 | Category | Items |
 |---|---|
-| Verified | Dataset statistics; O*NET facts from official pages; DevOps mapping to 15-1252.00; code behaviour; both result files reproduce |
+| Verified | Dataset statistics; O*NET facts from official pages; DevOps mapping to 15-1252.00; code behaviour; all four result files reproduce |
 | Preliminary | All metric values, which come from 36 author-written synthetic profiles (35 scorable) |
 | Proposed | Independent labels, real student profiles, user study, semantic baseline, held-out set |
 | Future work | ESCO validation, Indian labour data, graded skills, more languages, T-Career API |

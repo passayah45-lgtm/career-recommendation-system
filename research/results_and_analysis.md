@@ -1,6 +1,6 @@
 # Results and analysis
 
-Every number here is copied from the saved experiment outputs `reports/evaluation_results.json` (original study, 14 October 2026) and `reports/research_results.json` (baselines and ablations, 26 October 2026). Both reproduce exactly from code (see `experimental_protocol.md`, A.5).
+Every number here is copied from the saved experiment outputs `reports/evaluation_results.json` (original study, 14 October 2026), `reports/research_results.json` (baselines and ablations, 26 October 2026), `reports/ml_results.json` (machine-learning comparison, 26 October 2026) and `reports/ml_sensitivity.json` (audit checks, 29 October 2026). All reproduce exactly from code (see `experimental_protocol.md`, A.5 and A.6).
 
 **Scope of every result below.** These are preliminary, synthetic-profile results. They measure how closely the rankings agree with labels that the project author wrote for 36 author-written profiles (35 scorable). They are not evidence of effectiveness for real learners, and they are not hiring predictions.
 
@@ -8,8 +8,8 @@ Every number here is copied from the saved experiment outputs `reports/evaluatio
 
 | Category | Content |
 |---|---|
-| Verified (reproduced from code) | All tables in Sections 2 to 4 |
-| Preliminary findings | Interpretations in Section 5, limited to synthetic profiles |
+| Verified (reproduced from code) | All tables in Sections 2 to 4, 7 and 8 |
+| Preliminary findings | Interpretations in Sections 5 and 9, limited to synthetic profiles |
 | Proposed experiments, no results yet | Independent labels, real profiles, user study, semantic baseline B4 |
 
 ## 2. Original evaluation (configurations A to D)
@@ -84,3 +84,50 @@ Profiles whose average precision changes when interests are removed (AB-I): P01 
 - Any effect on career outcomes.
 
 The independent-label study and the user study (`experimental_protocol.md`, Parts B and C) are needed for those claims.
+
+## 7. Machine-learning models vs the formula (grouped nested CV, 5 repeats)
+
+Source: `reports/ml_results.json`. Ranking metrics are macro means over 35 scorable profiles; classification metrics are means over the 5 repeats (standard deviation in brackets).
+
+| Method | MAP [95% CI] | NDCG@5 | MRR | R-prec | P@5 | R@5 | ROC-AUC | PR-AUC | F1 |
+|---|---|---|---|---|---|---|---|---|---|
+| Weighted formula | 0.971 [0.936, 0.998] | 0.983 | 0.986 | 0.933 | 0.320 | 1.000 | 0.991 (0.000) | 0.897 (0.000) | 0.823 (0.019) |
+| Random Forest | 0.965 [0.933, 0.991] | 0.979 | 0.986 | 0.917 | 0.319 | 0.997 | 0.992 (0.003) | 0.901 (0.011) | 0.829 (0.019) |
+| Logistic Regression | 0.962 [0.925, 0.991] | 0.977 | 0.985 | 0.912 | 0.319 | 0.998 | 0.991 (0.011) | 0.928 (0.009) | 0.839 (0.007) |
+| XGBoost | 0.959 [0.922, 0.988] | 0.974 | 0.986 | 0.913 | 0.318 | 0.994 | 0.992 (0.009) | 0.903 (0.019) | 0.810 (0.007) |
+| Decision Tree | 0.936 [0.886, 0.979] | 0.949 | 0.983 | 0.909 | 0.301 | 0.954 | 0.967 (0.018) | 0.818 (0.046) | 0.785 (0.027) |
+
+P@5 cannot exceed about 0.32 here because profiles have only 1.6 relevant careers on average.
+
+Paired randomisation test, model minus formula (Holm over four models):
+
+| Model | AP difference | Holm p (AP) | NDCG@5 difference | Holm p (NDCG@5) |
+|---|---|---|---|---|
+| Random Forest | -0.006 | 1.000 | -0.004 | 1.000 |
+| Logistic Regression | -0.010 | 0.249 | -0.006 | 0.249 |
+| XGBoost | -0.013 | 1.000 | -0.008 | 1.000 |
+| Decision Tree | -0.036 | 0.588 | -0.034 | 0.382 |
+
+No model ranks better than the formula and no difference is significant.
+
+## 8. Audit checks (one repeat, seed 0)
+
+Source: `reports/ml_sensitivity.json`. Logistic Regression, Decision Tree and Random Forest only.
+
+| Check | Formula | Logistic Regression | Decision Tree | Random Forest |
+|---|---|---|---|---|
+| Grouped CV, ties by career id (MAP) | 0.971 | 0.957 | 0.921 | 0.973 |
+| Same predictions, random ties (MAP) | 0.968 | 0.954 | 0.877 | 0.960 |
+| Leave-one-category-out (MAP) | 0.971 | 0.961 | 0.934 | 0.965 |
+| Labels permuted across profiles (MAP) | 0.070 | 0.120 | 0.118 | 0.112 |
+
+Random ordering reaches MAP 0.100 (Section 3).
+
+## 9. Analysis of the machine-learning results (preliminary)
+
+1. **The models are genuinely trained and do learn the labels.** On held-out profiles they reach MAP 0.936 to 0.965, and with labels moved to the wrong profiles they fall to 0.112 to 0.120, close to random (0.100). The pipeline therefore does not leak labels into features or folds.
+2. **No model beats the formula.** In the 5-repeat study the formula has the highest MAP, NDCG@5 and R-precision. In one seed-0 repeat Random Forest is 0.001 above the formula (0.9725 vs 0.9714) with career-id ties but 0.008 below it with random ties, so single runs should not be over-read.
+3. **Tie-breaking matters for the Decision Tree.** It gives many careers the same probability. Ordering those ties by career id raised its MAP from 0.877 (random ties) to 0.921 in the seed-0 run. Its reported 0.936 is therefore optimistic; its true expected ranking quality is lower.
+4. **Related profiles do not inflate the models.** Holding out a whole career category at a time leaves MAP almost unchanged (LR 0.961, RF 0.965, DT 0.934). The features describe the match, not the career, so models transfer across categories.
+5. **Logistic Regression is best on pooled classification (PR-AUC 0.928, F1 0.839)** but not on per-learner ranking, which is what a learner sees.
+6. **What this does not show.** All labels come from the author, and the features reuse the formula's matching, so agreement here cannot be read as real-world accuracy. The formula is kept in production.

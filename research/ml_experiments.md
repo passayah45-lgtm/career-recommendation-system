@@ -14,7 +14,7 @@ Partly. The existing labelled profiles give a valid but small supervised task:
 | Candidate careers per profile | 50 |
 | Learner-career pairs | 1,800 |
 | Positive pairs (labelled relevant) | 56 (3.1%) |
-| Label source | Author's binary labels, written with rules L1 to L5 and committed before the engine was run (commit d93b46b) |
+| Label source | Author's binary labels, written with rules L1 to L5 and committed in d93b46b after the engine code and never changed; written before running the engine according to the author (`model_audit.md`) |
 
 What is missing for a trustworthy model:
 

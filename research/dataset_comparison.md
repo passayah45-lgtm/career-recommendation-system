@@ -107,7 +107,7 @@ The project fills the second group by hand. It does not fix the first group, and
 | Every score splits into four named components | One author curated skills, interests and education without field-level sources |
 | Deterministic, tested (275 tests), reproducible evaluation | 50 careers out of 923 O*NET data-level occupations |
 | Required and optional gaps, each with a free resource | Binary skill lists ignore importance and level |
-| Labels committed before the engine ran | Same author for careers, engine and labels; 91% of profile skills are exact catalogue names |
+| Labels fixed in commit d93b46b and never changed; the author states they were written before running the engine | Same author for careers, engine and labels; 91% of profile skills are exact catalogue names |
 | Links carry verification status | Education not checked against Job Zones; no licence file |
 
 ## 8. Missing information
