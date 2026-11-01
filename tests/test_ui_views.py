@@ -3,7 +3,6 @@
 import pytest
 
 from src.services.catalog import load_catalog
-from tests.conftest import live_counts
 from src.services.recommendations import recommend
 from src.services.skill_gap import analyze_skill_gap
 from src.ui.charts import bar_chart, contribution_chart, coverage_chart
@@ -11,6 +10,7 @@ from src.ui.views import (
     build_profile_input, career_list_rows, career_rows, category_counts, contribution_rows, education_counts, education_label, filter_careers,
     parse_skill_text, required_skill_frequency, resource_rows,
 )
+from tests.conftest import live_counts
 
 
 @pytest.fixture(scope="module")

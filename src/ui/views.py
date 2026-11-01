@@ -141,37 +141,83 @@ ML_METHOD_LABELS = (
 )
 
 
-def load_ml_report(path=ML_REPORT_PATH):
-    # Returns the saved report as a dict, or None when the file is missing or unreadable
+def read_ml_report(path=None):
+    # Returns (report dict, None) or (None, plain reason); never raises, so the page can show a fallback
+    path = Path(path) if path is not None else ML_REPORT_PATH
     try:
-        return json.loads(Path(path).read_text(encoding="utf-8"))
-    except (OSError, ValueError):
-        return None
+        text = path.read_text(encoding="utf-8")
+    except FileNotFoundError:
+        return None, f"the results file {path.name} was not found"
+    except (OSError, UnicodeDecodeError):
+        return None, f"the results file {path.name} could not be read"
+    try:
+        report = json.loads(text)
+    except ValueError:
+        return None, f"the results file {path.name} is not valid JSON"
+    if not isinstance(report, dict):
+        return None, f"the results file {path.name} has an unexpected structure"
+    if not isinstance(report.get("methods"), dict) or not report["methods"]:
+        return None, f"the results file {path.name} contains no model results"
+    return report, None
+
+
+def load_ml_report(path=None):
+    # Returns the saved report as a dict, or None when it is missing, unreadable or has no model results
+    return read_ml_report(path)[0]
+
+
+def _count(value):
+    # A usable count is a positive whole number, not a bool
+    return value if isinstance(value, int) and not isinstance(value, bool) and value > 0 else None
+
+
+def report_counts(report):
+    # (profiles, careers) from the report's data section; None for anything missing or invalid
+    data = report.get("data") if isinstance(report, dict) else None
+    if not isinstance(data, dict):
+        return None, None
+    return _count(data.get("profiles")), _count(data.get("careers"))
+
+
+def ml_results_caption(report):
+    # Caption under the saved results; counts are named only when the report states them
+    profiles, careers = report_counts(report)
+    who = f"{profiles} synthetic profiles" if profiles else "synthetic profiles"
+    catalogue = f"the original {careers}-career catalogue" if careers else "the original catalogue"
+    return (f":material/warning: These results come from {who} written and labelled by the project author for "
+            f"{catalogue} (dataset v1.2.0). They measure agreement with those labels, not how well careers suit real "
+            "learners, and they do not cover careers added later.")
 
 
 def model_comparison_rows(report):
-    # One row per method in a fixed order, values copied from the saved report
-    if not report or "methods" not in report:
+    # One row per method in a fixed order, values copied from the saved report; malformed entries are skipped
+    if not isinstance(report, dict) or not isinstance(report.get("methods"), dict):
         return []
-    tests = report.get("significance_vs_formula", {}).get("average_precision", {})
+    significance = report.get("significance_vs_formula")
+    tests = significance.get("average_precision", {}) if isinstance(significance, dict) else {}
+    tests = tests if isinstance(tests, dict) else {}
     rows = []
     for key, label in ML_METHOD_LABELS:
         method = report["methods"].get(key)
         if method is None:
             continue
-        rank = method["ranking"]
-        cls = method["classification_mean_over_repeats"]
-        p = tests.get(key, {}).get("p_holm")
-        rows.append({
-            "Method": label,
-            "Trained model": key != "weighted_formula",
-            "MAP": round(rank["average_precision"]["mean"], 3),
-            "NDCG@5": round(rank["ndcg_at_5"]["mean"], 3),
-            "MRR": round(rank["reciprocal_rank"]["mean"], 3),
-            "ROC-AUC": round(cls["roc_auc"], 3),
-            "F1": round(cls["f1"], 3),
-            "p vs formula (Holm)": "reference" if key == "weighted_formula" else ("n/a" if p is None else f"{p:.3f}"),
-        })
+        try:
+            rank = method["ranking"]
+            cls = method["classification_mean_over_repeats"]
+            p = tests.get(key, {}).get("p_holm") if isinstance(tests.get(key, {}), dict) else None
+            rows.append({
+                "Method": label,
+                "Trained model": key != "weighted_formula",
+                "MAP": round(rank["average_precision"]["mean"], 3),
+                "NDCG@5": round(rank["ndcg_at_5"]["mean"], 3),
+                "MRR": round(rank["reciprocal_rank"]["mean"], 3),
+                "ROC-AUC": round(cls["roc_auc"], 3),
+                "F1": round(cls["f1"], 3),
+                "p vs formula (Holm)": ("reference" if key == "weighted_formula"
+                                        else ("n/a" if p is None else f"{p:.3f}")),
+            })
+        except (KeyError, TypeError, ValueError):
+            continue
     return rows
 
 

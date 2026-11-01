@@ -13,7 +13,7 @@ from src.ui.model_rankings import model_rankings_section
 from src.ui.state import get_catalog, get_profile, get_top_k
 from src.ui.theme import BLUE, TEAL, category_color
 from src.ui.views import (
-    category_counts, contribution_rows, education_counts, load_ml_report, model_comparison_rows,
+    category_counts, contribution_rows, education_counts, ml_results_caption, model_comparison_rows, read_ml_report,
     required_skill_frequency,
 )
 
@@ -86,10 +86,12 @@ with model_tab:
     st.subheader("Offline evaluation results", anchor=False)
     st.caption("Fixed results from the research experiments. They are the same for every learner and do not change "
                "with your answers.")
-    report = load_ml_report()
+    report, problem = read_ml_report()
     rows = model_comparison_rows(report)
     if not rows:
-        st.info("The saved model comparison results are not available.", icon=":material/info:")
+        reason = problem or "the results file has no readable model results"
+        st.info(f"The saved model comparison results are not available: {reason}. The live comparison above and "
+                "the rest of the app are not affected.", icon=":material/info:")
     else:
         st.markdown(
             "Four machine-learning models were trained on learner-career pairs and compared with the weighted "
@@ -108,9 +110,4 @@ with model_tab:
             st.caption("Green: the weighted formula used by this app. Blue: trained models.")
         table = [{k: v for k, v in r.items() if k != "Trained model"} for r in rows]
         st.dataframe(table, hide_index=True, width="stretch")
-        st.caption(
-            f":material/warning: These results come from {report['data']['profiles']} synthetic profiles written and "
-            f"labelled by the project author for the original {report['data']['careers']}-career catalogue (dataset "
-            "v1.2.0). They measure agreement with those labels, not how well careers suit real learners, and they do "
-            "not cover careers added later."
-        )
+        st.caption(ml_results_caption(report))

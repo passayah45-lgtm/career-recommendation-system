@@ -1,0 +1,8 @@
+# Keep the exact bytes and line endings of the dataset files. -text stops Git from converting line endings on
+# any platform, whatever core.autocrlf says. careers.csv and resources.csv use CRLF; the other files use LF.
+# Live catalogue CSV files: prevents whole-file line-ending churn when edited on Windows
+data/raw/*.csv -text
+# Frozen evaluation snapshots: the SHA-256 values in each dataset_manifest.json must stay valid
+data/evaluation/catalog_v1.2.0/** -text
+# Any future frozen snapshot
+data/evaluation/catalog_*/** -text

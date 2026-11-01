@@ -613,3 +613,32 @@ def test_interested_list_and_skill_gap_link_to_the_roadmap():
 
 
 SKILL_GAP_PAGE_PATH = "pages/3_Skill_Gap_Analysis.py"
+
+
+@pytest.mark.parametrize("content", [None, "{not json", '{"data": {"profiles": 36}}'])
+def test_analytics_survives_a_missing_or_broken_results_file(tmp_path, monkeypatch, content):
+    import src.ui.views as views
+    path = tmp_path / "ml_results.json"
+    if content is not None:
+        path.write_text(content, encoding="utf-8")
+    monkeypatch.setattr(views, "ML_REPORT_PATH", path)
+    at = open_page("pages/5_Analytics.py", profile=WORKED_EXAMPLE)
+    text = text_of(at)
+    assert "The saved model comparison results are not available" in text
+    assert "How the Models Rank Your Careers" in text
+    assert len(at.dataframe) == 0
+
+
+def test_analytics_caption_without_counts(tmp_path, monkeypatch):
+    import json as _json
+
+    import src.ui.views as views
+    saved = _json.loads(views.ML_REPORT_PATH.read_text(encoding="utf-8"))
+    saved.pop("data")
+    path = tmp_path / "ml_results.json"
+    path.write_text(_json.dumps(saved), encoding="utf-8")
+    monkeypatch.setattr(views, "ML_REPORT_PATH", path)
+    at = open_page("pages/5_Analytics.py")
+    text = text_of(at)
+    assert "These results come from synthetic profiles" in text and "the original catalogue" in text
+    assert len(at.dataframe) == 1
