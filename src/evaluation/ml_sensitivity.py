@@ -20,6 +20,7 @@ from sklearn.model_selection import GridSearchCV, GroupKFold, LeaveOneGroupOut
 from src.evaluation import metrics as m
 from src.evaluation.dataset import load_profiles
 from src.evaluation.ml_experiments import INNER_FOLDS, RANK_METRICS, _r, baseline_scores, outer_splits, ranking_metrics
+from src.evaluation.report_compare import report_differences
 from src.evaluation.snapshot import load_evaluation_catalog
 from src.ml.features import build_pair_dataset
 from src.ml.models import make_model
@@ -146,8 +147,19 @@ def main(argv=None):
     parser = argparse.ArgumentParser(description="Sensitivity checks for the ML comparison.")
     parser.add_argument("--output")
     parser.add_argument("--check")
+    parser.add_argument("--tolerance", type=float, default=None,
+                        help="with --check: allow numbers to differ by this much (used in CI across machines)")
     args = parser.parse_args(argv)
     text = to_json(run())
+    if args.check and args.tolerance is not None:
+        saved = json.loads(Path(args.check).read_text(encoding="utf-8"))
+        diffs = report_differences(saved, json.loads(text), args.tolerance)
+        if diffs:
+            print(f"Sensitivity results differ from {args.check} beyond {args.tolerance}:")
+            print("\n".join(diffs[:20]))
+            return 1
+        print(f"Sensitivity results match {args.check} within {args.tolerance}.")
+        return 0
     if args.check:
         saved = Path(args.check).read_text(encoding="utf-8") if Path(args.check).exists() else ""
         if saved != text:

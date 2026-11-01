@@ -20,4 +20,4 @@ jobs:
       - name: Check evaluation report is reproducible
         run: python -m src.evaluation.experiments --check reports/evaluation_results.json
       - name: Check ML sensitivity report is reproducible
-        run: python -m src.evaluation.ml_sensitivity --check reports/ml_sensitivity.json
+        run: python -m src.evaluation.ml_sensitivity --check reports/ml_sensitivity.json --tolerance 0.0005

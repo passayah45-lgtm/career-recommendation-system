@@ -10,10 +10,13 @@ import pytest
 from src.evaluation.dataset import load_profiles
 from src.evaluation.ml_experiments import outer_splits, run
 from src.evaluation.ml_sensitivity import evaluate, permuted_profiles, random_tie_ranking
+from src.evaluation.report_compare import report_differences
 from src.ml.features import FEATURE_NAMES, build_pair_dataset
 from src.evaluation.snapshot import load_evaluation_catalog
 
 ROOT = Path(__file__).resolve().parents[1]
+# Two units in the fourth decimal, the precision the reports are rounded to
+TOLERANCE = 0.0002
 
 
 @pytest.fixture(scope="module")
@@ -30,11 +33,18 @@ def test_saved_results_reproduce_for_scikit_learn_models(catalog, profiles):
     # The full report needs xgboost; the scikit-learn models and the formula are checked here in CI
     saved = json.loads((ROOT / "reports" / "ml_results.json").read_text(encoding="utf-8"))
     fresh = run(catalog, profiles, models=["logistic_regression", "decision_tree"])
+    # Exact on the machine that wrote the report; CI runners can differ in the last rounded digit
     for name in ("logistic_regression", "decision_tree", "weighted_formula"):
-        assert fresh["methods"][name]["ranking"] == saved["methods"][name]["ranking"]
-        assert (fresh["methods"][name]["classification_mean_over_repeats"]
-                == saved["methods"][name]["classification_mean_over_repeats"])
+        for part in ("ranking", "classification_mean_over_repeats"):
+            assert report_differences(saved["methods"][name][part], fresh["methods"][name][part], TOLERANCE) == []
     assert fresh["data"] == saved["data"]
+
+
+def test_report_comparison_tolerance():
+    assert report_differences({"a": [0.9277, 1]}, {"a": [0.9276, 1]}, TOLERANCE) == []
+    assert report_differences({"a": 0.9277}, {"a": 0.9257}, TOLERANCE) == ["$.a: 0.9277 != 0.9257"]
+    assert report_differences({"a": 1}, {"b": 1}, TOLERANCE) != []
+    assert report_differences({"a": "x"}, {"a": "y"}, TOLERANCE) != []
 
 
 def test_features_carry_no_identity_and_ignore_labels(catalog, profiles):
