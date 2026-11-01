@@ -21,6 +21,7 @@ from src.ml.comparison import (
     tree_contributions,
 )
 from src.ml.features import FEATURE_NAMES, profile_matrix
+from src.evaluation.snapshot import load_evaluation_catalog
 from src.services.catalog import load_catalog
 from src.services.profiles import ProfileValidationError
 from src.services.recommendations import recommend
@@ -36,13 +37,19 @@ def catalog():
 
 
 @pytest.fixture(scope="module")
-def profiles(catalog):
-    return load_profiles([c.career_id for c in catalog.careers])
+def training_catalog():
+    # Labels exist only for the frozen 50-career catalogue, so training always uses it
+    return load_evaluation_catalog()
 
 
 @pytest.fixture(scope="module")
-def models(profiles, catalog):
-    return train_live_models(profiles, catalog)
+def profiles(training_catalog):
+    return load_profiles([c.career_id for c in training_catalog.careers])
+
+
+@pytest.fixture(scope="module")
+def models(profiles, training_catalog):
+    return train_live_models(profiles, training_catalog)
 
 
 @pytest.fixture(scope="module")
@@ -66,7 +73,9 @@ def test_live_comparison_runs_without_xgboost():
             "from src.services.catalog import load_catalog\n"
             "from src.evaluation.dataset import load_profiles\n"
             "from src.ml.comparison import train_live_models, compare_methods\n"
-            "c = load_catalog(); m = train_live_models(load_profiles([x.career_id for x in c.careers]), c)\n"
+            "from src.evaluation.snapshot import load_evaluation_catalog\n"
+            "t = load_evaluation_catalog(); c = load_catalog()\n"
+            "m = train_live_models(load_profiles([x.career_id for x in t.careers]), t)\n"
             "r = compare_methods({'skills': ['python']}, c, m)\n"
             "assert all(len(r['methods'][k]['careers']) == 5 for k in r['order'])\n")
     done = subprocess.run([sys.executable, "-c", code], cwd=ROOT, capture_output=True, text=True,
@@ -74,8 +83,8 @@ def test_live_comparison_runs_without_xgboost():
     assert done.returncode == 0, done.stderr
 
 
-def test_training_is_reproducible(models, profiles, catalog):
-    again = train_live_models(profiles, catalog)
+def test_training_is_reproducible(models, profiles, training_catalog, catalog):
+    again = train_live_models(profiles, training_catalog)
     _, rows = profile_matrix(PROFILE, catalog)
     X = np.asarray(rows, dtype=float)
     for name in LIVE_MODELS:
@@ -195,13 +204,13 @@ def test_a_failing_model_does_not_stop_the_others(models, catalog, monkeypatch):
     assert len(out["methods"][FORMULA]["careers"]) == 5
 
 
-def test_training_needs_both_classes(profiles, catalog):
+def test_training_needs_both_classes(profiles, training_catalog):
     from dataclasses import replace
     no_positives = [replace(p, relevant_career_ids=()) for p in profiles]
     with pytest.raises(ComparisonUnavailableError):
-        train_live_models(no_positives, catalog)
+        train_live_models(no_positives, training_catalog)
 
 
-def test_unknown_model_is_rejected(profiles, catalog):
+def test_unknown_model_is_rejected(profiles, training_catalog):
     with pytest.raises(ValueError):
-        train_live_models(profiles, catalog, models=("xgboost",))
+        train_live_models(profiles, training_catalog, models=("xgboost",))

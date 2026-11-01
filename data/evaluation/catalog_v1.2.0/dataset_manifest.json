@@ -1,0 +1,19 @@
+{
+  "dataset_version": "1.2.0",
+  "careers": 50,
+  "skills": 114,
+  "resources": 114,
+  "note": "Frozen copy of the 50-career catalogue used by every saved evaluation report. Never edit these files; the SHA-256 values are checked by tests.",
+  "sha256": {
+    "careers.csv": "d97b995b82f8bfdb9b61a4523d5dcdbe7a70501703fd0b3885ba2ef0b985eee9",
+    "resources.csv": "9e75fc629de4e31e3b621d024403a11534931b076020d3423f792db0152806ee",
+    "skill_aliases.csv": "218fc6541101b195ae609e4fa822dbb565ba368affe279faf592c0b500874daa"
+  },
+  "used_by": [
+    "reports/evaluation_results.json",
+    "reports/research_results.json",
+    "reports/ml_results.json",
+    "reports/ml_interpretation.json",
+    "reports/ml_sensitivity.json"
+  ]
+}

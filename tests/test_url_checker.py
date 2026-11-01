@@ -113,7 +113,8 @@ def test_check_all_is_sequential_with_host_delay():
 
 def test_collect_targets_reads_real_files():
     targets = uc.collect_targets()
-    assert sum(1 for t in targets if t[0] == "resource") == 114
+    from tests.conftest import live_counts
+    assert sum(1 for t in targets if t[0] == "resource") == live_counts()["resources"]
     assert sum(1 for t in targets if t[0] == "career_source") == 47
 
 

@@ -12,9 +12,9 @@ import numpy as np
 from sklearn.tree import export_text
 
 from src.evaluation.dataset import load_profiles
+from src.evaluation.snapshot import load_evaluation_catalog
 from src.ml.features import FEATURE_NAMES, build_pair_dataset
 from src.ml.models import MODEL_NAMES, make_model, xgboost_available
-from src.services.catalog import load_catalog
 
 DECIMALS = 4
 
@@ -26,7 +26,7 @@ def most_common_params(chosen):
 
 def run(ml_report_path="reports/ml_results.json"):
     report = json.loads(Path(ml_report_path).read_text(encoding="utf-8"))
-    catalog = load_catalog()
+    catalog = load_evaluation_catalog()
     profiles = load_profiles([c.career_id for c in catalog.careers])
     X, y, _, _ = build_pair_dataset(profiles, catalog)
     X, y = np.asarray(X, dtype=float), np.asarray(y)

@@ -80,11 +80,14 @@ def sync_feedback_with_url(career_ids, catalog=None):
 @st.cache_resource(show_spinner="Training the comparison models (once per server)...")
 def _cached_live_models(data_dir):
     # Trained once per server process and shared read-only by every visitor, never retrained per view
+    # Training uses the frozen 50-career catalogue the labels were written for; careers added later have no
+    # labels, so they are ranked by the trained models but never counted as negatives in training
     from src.evaluation.dataset import load_profiles
+    from src.evaluation.snapshot import load_evaluation_catalog
     from src.ml.comparison import train_live_models
-    catalog = _cached_catalog(data_dir)
-    profiles = load_profiles([c.career_id for c in catalog.careers])
-    return train_live_models(profiles, catalog)
+    training_catalog = load_evaluation_catalog()
+    profiles = load_profiles([c.career_id for c in training_catalog.careers])
+    return train_live_models(profiles, training_catalog)
 
 
 def get_live_models():

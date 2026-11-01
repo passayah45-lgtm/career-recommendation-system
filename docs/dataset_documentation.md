@@ -21,6 +21,8 @@ Scope: 50 careers in 8 categories, 114 unique skills, 114 learning resources, 37
 | data/raw/careers.csv | 50 | Career records |
 | data/raw/resources.csv | 114 | One learning resource per skill |
 | data/raw/skill_aliases.csv | 37 | Alternative names that map to a canonical skill |
+| data/raw/dataset_manifest.json | n/a | Expected counts (careers, unique skills, resources) that the validator enforces |
+| data/evaluation/catalog_v1.2.0/ | n/a | Frozen copy of the 50-career dataset (v1.2.0) used by every saved evaluation report; never edited, checked by SHA-256 |
 
 All files are UTF-8 CSV with a header row.
 
@@ -123,6 +125,8 @@ Controlled interest vocabulary (20 values): analysis, building software, busines
 
 Cleaning is explicit and separate from validation. src/data/preprocessing.py holds clean_skill_text and normalize_skill, which are covered by tests. The validator never repairs data.
 
+Accents: learner input is accent-folded before matching (Unicode NFKD with combining marks removed), so "Géologie", "géologie" and "geologie" all give "geologie". Alias lookup tries the exact text first, then the folded text, then folded alias keys. The validator rejects aliases whose folded forms would point to two different skills or shadow another canonical skill.
+
 ## 8. Skill statistics
 
 | Measure | Count |
@@ -214,10 +218,10 @@ Limits:
 ## 13. How to add a career
 
 1. Add a row to data/raw/careers.csv with the next free id (C051). Never reuse or renumber ids.
-2. Pick a category from the 8 approved values.
+2. Pick a category from the approved values (CATEGORIES in src/data/validation.py). Law and Social Sciences are planned but not yet approved.
 3. Write skills, interests and goals with the normalisation rules in section 7. Reuse existing skill names where possible.
 4. Add onet_code and source_url when an O*NET occupation matches. Leave both empty otherwise.
-5. Change EXPECTED_CAREER_COUNT in src/data/validation.py and update this document.
+5. Update the counts in data/raw/dataset_manifest.json (careers, skills, resources) in the same change, and update this document. Never edit data/evaluation/catalog_v1.2.0/, which keeps the original evaluation reproducible.
 6. Run validation. If a new skill has no resource, add one (next section).
 
 ## 14. How to add a skill or resource

@@ -115,6 +115,7 @@ def train_live_models(profiles, catalog, models=LIVE_MODELS):
         "pairs": len(y),
         "relevant_pairs": int(y.sum()),
         "features": len(FEATURE_NAMES),
+        "careers": len(catalog.careers),
         "seconds": round(time.perf_counter() - start, 3),
         "sklearn_version": sklearn.__version__,
     }

@@ -3,7 +3,6 @@
 
 import streamlit as st
 
-from src.data.validation import CATEGORIES
 from src.engine.scoring import DEFAULT_WEIGHTS
 from src.ui.components import (
     ASSESSMENT_PAGE, EXPLORER_PAGE, RECOMMENDATIONS_PAGE, SKILL_GAP_PAGE, career_list_links, icon_heading,
@@ -39,7 +38,8 @@ with hero:
 with st.container(key="stats"):
     c1, c2, c3, c4 = st.columns(4)
     stat_card(c1, "Careers", len(catalog.careers), ":material/work:", "blue", "careers")
-    stat_card(c2, "Categories", len(CATEGORIES), ":material/category:", "violet", "categories")
+    stat_card(c2, "Categories", len({c.category for c in catalog.careers}), ":material/category:", "violet",
+              "categories")
     stat_card(c3, "Unique skills", len(catalog.known_skills), ":material/lightbulb:", "green", "skills")
     stat_card(c4, "Learning resources", len(catalog.resources), ":material/menu_book:", "orange", "resources")
 

@@ -7,7 +7,7 @@ from types import MappingProxyType
 
 from src.data.loader import load_aliases, load_careers, load_resources
 from src.data.validation import (
-    ALIASES_FILE, CAREERS_FILE, DEFAULT_DATA_DIR, EXPECTED_CAREER_COUNT, INTERESTS, RESOURCES_FILE, validate_all,
+    ALIASES_FILE, CAREERS_FILE, DEFAULT_DATA_DIR, INTERESTS, RESOURCES_FILE, validate_all,
 )
 from src.engine.models import Career
 from src.services.learning_resources import ResourceCatalog
@@ -73,7 +73,8 @@ def build_catalog(careers, resources, aliases=None, interests=INTERESTS):
     )
 
 
-def load_catalog(data_dir=None, validate=True, expected_count=EXPECTED_CAREER_COUNT):
+def load_catalog(data_dir=None, validate=True, expected_count=None):
+    # expected_count None: the folder's dataset_manifest.json decides, see src/data/validation.py
     # Loads the CSV files, by default refusing data that fails Phase 2 validation
     data_dir = Path(data_dir) if data_dir else DEFAULT_DATA_DIR
     if validate:

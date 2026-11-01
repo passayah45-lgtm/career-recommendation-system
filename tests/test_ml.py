@@ -10,13 +10,13 @@ from src.evaluation.dataset import load_profiles
 from src.ml import models as ml_models
 from src.ml.features import FEATURE_NAMES, build_pair_dataset, pair_features, profile_matrix
 from src.ml.ranker import NotTrainedError, TrainedRanker, rank_by_probability
-from src.services.catalog import load_catalog
+from src.evaluation.snapshot import load_evaluation_catalog
 from src.services.recommendations import profile_from_input
 
 
 @pytest.fixture(scope="module")
 def catalog():
-    return load_catalog()
+    return load_evaluation_catalog()
 
 
 @pytest.fixture(scope="module")

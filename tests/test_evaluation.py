@@ -10,7 +10,7 @@ from src.engine.scoring import ScoringWeights
 from src.evaluation import metrics as m
 from src.evaluation.dataset import EvaluationDataError, load_profiles, parse_profiles
 from src.evaluation.experiments import CONFIGURATIONS, evaluate_profile, run, to_json
-from src.services.catalog import load_catalog
+from src.evaluation.snapshot import load_evaluation_catalog
 
 REPORT = Path(__file__).resolve().parents[1] / "reports" / "evaluation_results.json"
 RANKING = ["C001", "C002", "C003", "C004", "C005", "C006"]
@@ -65,7 +65,7 @@ def test_coverage_and_category_distribution():
 
 @pytest.fixture(scope="module")
 def catalog():
-    return load_catalog()
+    return load_evaluation_catalog()
 
 
 @pytest.fixture(scope="module")

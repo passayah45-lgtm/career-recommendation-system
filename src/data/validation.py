@@ -4,6 +4,7 @@
 
 import argparse
 import csv
+import json
 import re
 import sys
 from collections import Counter, defaultdict
@@ -12,11 +13,16 @@ from datetime import date
 from pathlib import Path
 from urllib.parse import urlparse
 
+from src.data.preprocessing import clean_skill_text
+
 # Dataset locations relative to the project root
 DEFAULT_DATA_DIR = Path(__file__).resolve().parents[2] / "data" / "raw"
 CAREERS_FILE = "careers.csv"
 RESOURCES_FILE = "resources.csv"
 ALIASES_FILE = "skill_aliases.csv"
+# Expected counts live next to the data, so an expansion changes them deliberately in the same commit
+MANIFEST_FILE = "dataset_manifest.json"
+MANIFEST_COUNTS = ("careers", "skills", "resources")
 
 # Schema definitions
 CAREER_COLUMNS = [
@@ -38,12 +44,16 @@ RESOURCE_REQUIRED_FIELDS = [
 ALIAS_COLUMNS = ["alias", "canonical_skill"]
 
 # Allowed values
+# Fallback for a data folder without a manifest (tests and older copies); the live folder has a manifest
 EXPECTED_CAREER_COUNT = 50
 LIST_DELIMITER = "|"
 CATEGORIES = (
     "Data and AI", "Software", "Cybersecurity", "Design",
     "Business", "Education", "Healthcare", "Engineering",
 )
+# Proposed in docs/african_career_expansion_audit.md, not yet approved: records using them still fail validation
+# Colours are prepared in src/ui/theme.py so the Analytics page keeps working once they are approved
+PLANNED_CATEGORIES = ("Law", "Social Sciences")
 EDUCATION_LEVELS = {
     0: "No formal qualification specified",
     1: "Secondary education or equivalent",
@@ -320,6 +330,17 @@ def validate_aliases(rows, columns, canonical_skills):
     for alias, c in Counter(r["alias"] for r in rows).items():
         if c > 1:
             issues.append(Issue(ERROR, ds, alias, "alias", f"alias appears {c} times"))
+    # Accent-folded forms are also looked up, so they must not point two ways or shadow another skill
+    folded = defaultdict(set)
+    for r in rows:
+        if r["alias"]:
+            folded[clean_skill_text(r["alias"])].add(r["canonical_skill"])
+    for key, targets in folded.items():
+        if len(targets) > 1:
+            issues.append(Issue(ERROR, ds, key, "alias",
+                                f"aliases fold to the same text but point to {sorted(targets)}"))
+        elif key in canonical_skills and key not in targets:
+            issues.append(Issue(ERROR, ds, key, "alias", "folded alias equals a different canonical skill"))
     for r in rows:
         alias, target = r["alias"], r["canonical_skill"]
         if alias and (alias != alias.strip().lower() or "  " in alias):
@@ -339,9 +360,33 @@ def _load(path, dataset, report):
         return None
 
 
-def validate_all(data_dir=DEFAULT_DATA_DIR, expected_count=EXPECTED_CAREER_COUNT):
+def read_manifest(data_dir):
+    # Returns (manifest dict or None, list of issues); a manifest that exists must be well formed
+    path = Path(data_dir) / MANIFEST_FILE
+    if not path.exists():
+        return None, []
+    try:
+        data = json.loads(path.read_text(encoding="utf-8"))
+    except (OSError, ValueError) as exc:
+        return None, [Issue(ERROR, "manifest", "file", MANIFEST_FILE, f"cannot read manifest: {exc}")]
+    issues = []
+    if not isinstance(data, dict):
+        return None, [Issue(ERROR, "manifest", "file", MANIFEST_FILE, "manifest must be a JSON object")]
+    for key in MANIFEST_COUNTS:
+        value = data.get(key)
+        if not isinstance(value, int) or isinstance(value, bool) or value < 1:
+            issues.append(Issue(ERROR, "manifest", "file", key, "must be a positive whole number"))
+    return (data if not issues else None), issues
+
+
+def validate_all(data_dir=DEFAULT_DATA_DIR, expected_count=None):
+    # expected_count overrides the manifest; without either, EXPECTED_CAREER_COUNT applies
     data_dir = Path(data_dir)
     report = ValidationReport()
+    manifest, manifest_issues = read_manifest(data_dir)
+    report.extend(manifest_issues)
+    if expected_count is None:
+        expected_count = manifest["careers"] if manifest else EXPECTED_CAREER_COUNT
     careers = _load(data_dir / CAREERS_FILE, "careers", report)
     if careers is None:
         return report
@@ -352,6 +397,14 @@ def validate_all(data_dir=DEFAULT_DATA_DIR, expected_count=EXPECTED_CAREER_COUNT
     resources = _load(data_dir / RESOURCES_FILE, "resources", report)
     if resources is not None:
         report.extend(validate_resources(*resources, required, preferred))
+    if manifest:
+        n_skills = len((required | preferred) - {""})
+        if n_skills != manifest["skills"]:
+            report.extend([Issue(ERROR, "manifest", "dataset", "skills",
+                                 f"expected {manifest['skills']} unique skills, found {n_skills}")])
+        if resources is not None and len(resources[0]) != manifest["resources"]:
+            report.extend([Issue(ERROR, "manifest", "dataset", "resources",
+                                 f"expected {manifest['resources']} resources, found {len(resources[0])}")])
 
     aliases_path = data_dir / ALIASES_FILE
     if aliases_path.exists():

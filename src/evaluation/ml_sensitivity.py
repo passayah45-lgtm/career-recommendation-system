@@ -20,10 +20,10 @@ from sklearn.model_selection import GridSearchCV, GroupKFold, LeaveOneGroupOut
 from src.evaluation import metrics as m
 from src.evaluation.dataset import load_profiles
 from src.evaluation.ml_experiments import INNER_FOLDS, RANK_METRICS, _r, baseline_scores, outer_splits, ranking_metrics
+from src.evaluation.snapshot import load_evaluation_catalog
 from src.ml.features import build_pair_dataset
 from src.ml.models import make_model
 from src.ml.ranker import rank_by_probability
-from src.services.catalog import load_catalog
 
 MODELS = ("logistic_regression", "decision_tree", "random_forest")
 BASELINE = "weighted_formula"
@@ -98,7 +98,7 @@ def permuted_profiles(profiles, seed=PERMUTATION_SEED):
 
 
 def run(catalog=None, profiles=None, models=MODELS):
-    catalog = catalog or load_catalog()
+    catalog = catalog or load_evaluation_catalog()
     profiles = list(profiles or load_profiles([c.career_id for c in catalog.careers]))
     X, y, groups, _ = build_pair_dataset(profiles, catalog)
     X, y, groups = np.asarray(X, dtype=float), np.asarray(y), np.asarray(groups)

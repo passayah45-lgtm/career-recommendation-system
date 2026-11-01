@@ -32,7 +32,26 @@ COMPONENT_COLORS = {
 }
 
 # One color per career category in analytics, labelled on the axis so color is never the only cue
-CATEGORY_PALETTE = ["#0F9D94", "#3B82F6", "#8B5CF6", "#F59E0B", "#14213D", "#7DD3C8", "#EC4899", "#64748B"]
+# The first 8 keep their original colors; Law and Social Sciences are prepared for the planned expansion
+CATEGORY_COLORS = {
+    "Data and AI": "#0F9D94",
+    "Software": "#3B82F6",
+    "Cybersecurity": "#8B5CF6",
+    "Design": "#F59E0B",
+    "Business": "#14213D",
+    "Education": "#7DD3C8",
+    "Healthcare": "#EC4899",
+    "Engineering": "#64748B",
+    "Law": "#B45309",
+    "Social Sciences": "#65A30D",
+}
+CATEGORY_PALETTE = list(CATEGORY_COLORS.values())
+# Used for any category without its own color, so a new category can never break a chart
+CATEGORY_FALLBACK_COLOR = "#94A3B8"
+
+
+def category_color(category):
+    return CATEGORY_COLORS.get(category, CATEGORY_FALLBACK_COLOR)
 
 # Ordered levels in the education donut, light to dark
 LEVEL_PALETTE = ["#CBD5E1", "#93C5FD", "#7DD3C8", "#0F9D94", "#14213D"]

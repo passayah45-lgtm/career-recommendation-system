@@ -3,6 +3,7 @@
 import pytest
 
 from src.services.catalog import load_catalog
+from tests.conftest import live_counts
 from src.services.recommendations import recommend
 from src.services.skill_gap import analyze_skill_gap
 from src.ui.charts import bar_chart, contribution_chart, coverage_chart
@@ -35,7 +36,7 @@ def test_education_label():
 
 
 def test_filter_careers_on_real_data(catalog):
-    assert len(filter_careers(catalog.careers)) == 50
+    assert len(filter_careers(catalog.careers)) == live_counts()["careers"]
     healthcare = filter_careers(catalog.careers, ["Healthcare"])
     assert len(healthcare) == 6 and {c.category for c in healthcare} == {"Healthcare"}
     analysts = filter_careers(catalog.careers, query="  ANALYST ")
@@ -44,7 +45,7 @@ def test_filter_careers_on_real_data(catalog):
 
 
 def test_dataset_counts_match_catalog(catalog):
-    assert sum(r["Careers"] for r in category_counts(catalog.careers)) == 50
+    assert sum(r["Careers"] for r in category_counts(catalog.careers)) == live_counts()["careers"]
     edu = {r["Level"]: r["Careers"] for r in education_counts(catalog.careers)}
     assert edu[education_label(3)] == 42
     top = required_skill_frequency(catalog.careers, limit=3)
@@ -83,7 +84,7 @@ def test_charts_use_given_data(catalog):
 
 def test_career_rows_are_compact_and_complete(catalog):
     rows = career_rows(catalog.careers)
-    assert len(rows) == 50
+    assert len(rows) == live_counts()["careers"]
     assert list(rows[0]) == ["Career", "Category", "Required skills", "Preferred skills", "Entry education", "ID"]
     first = catalog.careers[0]
     assert rows[0]["Required skills"] == len(first.required_skills)
@@ -99,7 +100,7 @@ def test_career_list_rows_follow_filtered_order(catalog):
 def test_donut_and_colored_bars_use_dataset_values(catalog):
     from src.ui.charts import donut_chart
     donut = donut_chart(education_counts(catalog.careers), "Level", "Careers", "t")
-    assert sum(donut.data[0].values) == 50
+    assert sum(donut.data[0].values) == live_counts()["careers"]
     bars = bar_chart(category_counts(catalog.careers), "Category", "Careers", "t", colors=["#111111", "#222222"])
     assert list(bars.data[0].marker.color)[:3] == ["#111111", "#222222", "#111111"]
     assert list(bars.data[0].y) == [r["Careers"] for r in category_counts(catalog.careers)]

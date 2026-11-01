@@ -32,7 +32,7 @@ def test_roadmap_for_a_valid_career_uses_the_skill_gap(catalog):
     rm = build_roadmap(PROFILE, "C001", catalog)
     career = catalog.get_career("C001")
     assert rm["career_title"] == "Data Scientist" and rm["category"] == "Data and AI"
-    assert rm["fit"] == {"score": 61.5, "rank": 1, "careers_ranked": 50}
+    assert rm["fit"] == {"score": 61.5, "rank": 1, "careers_ranked": len(catalog.careers)}
     assert rm["missing_required_skills"] == ["data visualization"]
     assert sorted(rm["missing_preferred_skills"]) == sorted(career.preferred_skills)
     assert skills_of(rm)[0] == "data visualization"

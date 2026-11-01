@@ -8,7 +8,7 @@ import pytest
 from src.evaluation import metrics as m
 from src.evaluation import research_experiments as rx
 from src.evaluation.dataset import load_profiles
-from src.services.catalog import load_catalog
+from src.evaluation.snapshot import load_evaluation_catalog
 
 REPORT = Path(__file__).resolve().parents[1] / "reports" / "research_results.json"
 RANKING = ["C001", "C002", "C003", "C004", "C005", "C006"]
@@ -48,7 +48,7 @@ def test_reference_method_uses_production_weights():
 
 
 def test_popularity_baseline_leaves_the_profile_out():
-    catalog = load_catalog()
+    catalog = load_evaluation_catalog()
     ids = sorted(c.career_id for c in catalog.careers)
     profiles = load_profiles(ids)
     target = profiles[0]

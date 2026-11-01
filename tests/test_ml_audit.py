@@ -11,14 +11,14 @@ from src.evaluation.dataset import load_profiles
 from src.evaluation.ml_experiments import outer_splits, run
 from src.evaluation.ml_sensitivity import evaluate, permuted_profiles, random_tie_ranking
 from src.ml.features import FEATURE_NAMES, build_pair_dataset
-from src.services.catalog import load_catalog
+from src.evaluation.snapshot import load_evaluation_catalog
 
 ROOT = Path(__file__).resolve().parents[1]
 
 
 @pytest.fixture(scope="module")
 def catalog():
-    return load_catalog()
+    return load_evaluation_catalog()
 
 
 @pytest.fixture(scope="module")

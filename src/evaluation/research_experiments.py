@@ -12,7 +12,7 @@ from pathlib import Path
 from src.engine.scoring import DEFAULT_WEIGHTS, ScoringWeights
 from src.evaluation import metrics as m
 from src.evaluation.dataset import load_profiles
-from src.services.catalog import load_catalog
+from src.evaluation.snapshot import load_evaluation_catalog
 from src.services.recommendations import recommend
 
 K = 5
@@ -137,7 +137,7 @@ def significance(results, family):
 
 
 def run(catalog=None, profiles=None):
-    catalog = catalog or load_catalog()
+    catalog = catalog or load_evaluation_catalog()
     career_ids = sorted(c.career_id for c in catalog.careers)
     profiles = profiles or load_profiles(career_ids)
     results = {}

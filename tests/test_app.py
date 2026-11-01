@@ -8,6 +8,9 @@ pytest.importorskip("streamlit")
 from streamlit.testing.v1 import AppTest  # noqa: E402
 
 from src.ui.state import DATA_DIR_ENV, PROFILE_KEY, SELECTED_CAREER_KEY  # noqa: E402
+from tests.conftest import live_counts  # noqa: E402
+
+N_CAREERS = live_counts()["careers"]
 
 TIMEOUT = 60
 APP = str(Path(__file__).resolve().parents[1] / "app.py")
@@ -39,7 +42,11 @@ def open_page(page=None, profile=None, **state):
 def test_home_page_starts_and_shows_dataset_size():
     at = open_page()
     assert at.title[0].value == "Career Recommendation System"
-    assert [m.value for m in at.metric][:4] == ["50", "8", "114", "114"]
+    from src.services.catalog import load_catalog
+    counts, catalog = live_counts(), load_catalog()
+    categories = len({c.category for c in catalog.careers})
+    expected = [str(counts["careers"]), str(categories), str(counts["skills"]), str(counts["resources"])]
+    assert [m.value for m in at.metric][:4] == expected
 
 
 def test_assessment_saves_normalized_profile_and_reports_unknown_skills():
@@ -125,11 +132,11 @@ def test_skill_gap_without_profile_shows_all_skills_missing():
 
 def test_explorer_filters_by_category_and_search():
     at = open_page("pages/4_Career_Explorer.py")
-    assert "Showing 50 of 50 careers." in text_of(at)
+    assert f"Showing {N_CAREERS} of {N_CAREERS} careers." in text_of(at)
     at.multiselect[0].set_value(["Healthcare"]).run()
-    assert "Showing 6 of 50 careers." in text_of(at)
+    assert f"Showing 6 of {N_CAREERS} careers." in text_of(at)
     at.text_input[0].input("nurse").run()
-    assert "Showing 1 of 50 careers." in text_of(at)
+    assert f"Showing 1 of {N_CAREERS} careers." in text_of(at)
     assert "Registered Nurse" in text_of(at)
     at.text_input[0].input("zzz").run()
     assert "No careers match" in text_of(at)
@@ -255,7 +262,7 @@ def test_skill_gap_labels_required_and_optional_resources_differently():
 def test_explorer_list_shows_title_and_category_only():
     at = open_page("pages/4_Career_Explorer.py")
     assert list(at.dataframe[0].value.columns) == ["Career", "Category"]
-    assert len(at.dataframe[0].value) == 50
+    assert len(at.dataframe[0].value) == N_CAREERS
 
 
 def test_feedback_adapts_the_recommendation_list():

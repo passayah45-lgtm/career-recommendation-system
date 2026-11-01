@@ -16,10 +16,10 @@ from sklearn.model_selection import GridSearchCV, GroupKFold, StratifiedGroupKFo
 
 from src.evaluation import metrics as m
 from src.evaluation.dataset import load_profiles
+from src.evaluation.snapshot import load_evaluation_catalog
 from src.ml.features import FEATURE_NAMES, build_pair_dataset
 from src.ml.models import MODEL_NAMES, make_model, xgboost_available
 from src.ml.ranker import rank_by_probability
-from src.services.catalog import load_catalog
 from src.services.recommendations import recommend
 
 K = 5
@@ -75,7 +75,7 @@ def outer_splits(groups_arr, strata, seed):
 
 
 def run(catalog=None, profiles=None, models=None, repeats=REPEATS):
-    catalog = catalog or load_catalog()
+    catalog = catalog or load_evaluation_catalog()
     profiles = profiles or load_profiles([c.career_id for c in catalog.careers])
     models = [n for n in (models or MODEL_NAMES) if n != "xgboost" or xgboost_available()]
     X, y, groups, career_ids = build_pair_dataset(profiles, catalog)

@@ -63,9 +63,9 @@ def model_rankings_section(profile, catalog):
     st.subheader("How the Models Rank Your Careers", anchor=False)
     st.markdown(
         "Your saved answers ranked by the **weighted formula** the app uses, and by three machine-learning models "
-        "trained for comparison. All four see the same 50 careers and the same 13 features built from your "
-        "skills, interests and education. The formula stays the primary method. Your Interested and Not for me "
-        "feedback is not included here, so every method gets exactly the same input."
+        f"trained for comparison. All four see the same {len(catalog.careers)} careers and the same 13 features "
+        "built from your skills, interests and education. The formula stays the primary method. Your Interested "
+        "and Not for me feedback is not included here, so every method gets exactly the same input."
     )
     if not profile:
         st.info("Complete the career assessment to see how each method ranks careers for your answers.",
@@ -99,8 +99,8 @@ def model_rankings_section(profile, catalog):
         f":material/info: Model scores (0 to 1) are relative ranking scores, not your chance of success. The "
         f"models were trained with balanced class weights on {info['profiles']} synthetic profiles "
         f"({info['pairs']:,} learner-career pairs, {info['relevant_pairs']} labelled relevant) written and labelled "
-        "by the project author. Agreement here shows how the methods differ for your answers, not which one is "
-        "right for you."
+        f"by the project author for the original {info['careers']}-career catalogue (dataset v1.2.0). Agreement "
+        "here shows how the methods differ for your answers, not which one is right for you."
     )
     st.caption(f":material/timer: Measured on this server: models trained once in {info['seconds']:.2f} s and "
                f"reused for every visitor; this comparison took {result['seconds'] * 1000:.0f} ms.")

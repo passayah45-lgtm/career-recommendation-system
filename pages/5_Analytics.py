@@ -2,7 +2,6 @@
 
 import streamlit as st
 
-from src.data.validation import CATEGORIES
 from src.services.profiles import ProfileValidationError
 from src.services.recommendations import recommend
 from src.services.skill_gap import analyze_skill_gap
@@ -12,7 +11,7 @@ from src.ui.components import (
 )
 from src.ui.model_rankings import model_rankings_section
 from src.ui.state import get_catalog, get_profile, get_top_k
-from src.ui.theme import BLUE, CATEGORY_PALETTE, TEAL
+from src.ui.theme import BLUE, TEAL, category_color
 from src.ui.views import (
     category_counts, contribution_rows, education_counts, load_ml_report, model_comparison_rows,
     required_skill_frequency,
@@ -27,7 +26,6 @@ st.caption(":material/info: Dataset and personal charts are descriptive. The Mod
            "answers with each method and shows the saved offline evaluation; details are in the research folder.")
 
 CHART_CONFIG = {"displayModeBar": False}
-CATEGORY_COLORS = dict(zip(CATEGORIES, CATEGORY_PALETTE))
 # Same height as the education donut, so the two chart cards line up
 DONUT_HEIGHT = 430
 
@@ -44,7 +42,7 @@ with dataset_tab:
     left, right = st.columns(2)
     with left, st.container(border=True, key="panel_categories", height="stretch"):
         rows = sorted(category_counts(catalog.careers), key=lambda r: -r["Careers"])
-        colors = [CATEGORY_COLORS[r["Category"]] for r in rows]
+        colors = [category_color(r["Category"]) for r in rows]
         st.plotly_chart(bar_chart(rows, "Category", "Careers", "Careers by category", x_title="",
                                   y_title="Number of careers", horizontal=True, colors=colors,
                                   height=DONUT_HEIGHT),
@@ -88,7 +86,8 @@ with model_tab:
     st.subheader("Offline evaluation results", anchor=False)
     st.caption("Fixed results from the research experiments. They are the same for every learner and do not change "
                "with your answers.")
-    rows = model_comparison_rows(load_ml_report())
+    report = load_ml_report()
+    rows = model_comparison_rows(report)
     if not rows:
         st.info("The saved model comparison results are not available.", icon=":material/info:")
     else:
@@ -110,6 +109,8 @@ with model_tab:
         table = [{k: v for k, v in r.items() if k != "Trained model"} for r in rows]
         st.dataframe(table, hide_index=True, width="stretch")
         st.caption(
-            ":material/warning: These results come from 36 synthetic profiles written and labelled by the project "
-            "author. They measure agreement with those labels, not how well careers suit real learners."
+            f":material/warning: These results come from {report['data']['profiles']} synthetic profiles written and "
+            f"labelled by the project author for the original {report['data']['careers']}-career catalogue (dataset "
+            "v1.2.0). They measure agreement with those labels, not how well careers suit real learners, and they do "
+            "not cover careers added later."
         )

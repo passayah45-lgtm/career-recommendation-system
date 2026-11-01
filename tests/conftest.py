@@ -1,10 +1,16 @@
 # Shared helpers that build small temporary datasets for negative tests
 
 import csv
+import json
 
 import pytest
 
-from src.data.validation import ALIAS_COLUMNS, CAREER_COLUMNS, RESOURCE_COLUMNS
+from src.data.validation import ALIAS_COLUMNS, CAREER_COLUMNS, DEFAULT_DATA_DIR, MANIFEST_FILE, RESOURCE_COLUMNS
+
+
+def live_counts():
+    # Live catalogue counts from data/raw/dataset_manifest.json, so tests follow a deliberate expansion
+    return json.loads((DEFAULT_DATA_DIR / MANIFEST_FILE).read_text(encoding="utf-8"))
 
 
 def career_row(n, **overrides):

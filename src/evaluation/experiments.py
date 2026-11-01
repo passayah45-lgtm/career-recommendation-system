@@ -7,11 +7,10 @@ import json
 import sys
 from pathlib import Path
 
-from src.data.validation import CATEGORIES
 from src.engine.scoring import DEFAULT_WEIGHTS, ScoringWeights
 from src.evaluation import metrics as m
 from src.evaluation.dataset import load_profiles
-from src.services.catalog import load_catalog
+from src.evaluation.snapshot import EVALUATION_CATEGORIES, load_evaluation_catalog
 from src.services.recommendations import recommend
 
 K = 5
@@ -83,7 +82,7 @@ def evaluate_configuration(profiles, catalog, weights, k=K):
     category_of = {c.career_id: c.category for c in catalog.careers}
     top_lists = [row["top_k"] for row in rows]
     by_category = {}
-    for cat in CATEGORIES:
+    for cat in EVALUATION_CATEGORIES:
         subset = [row for row in rows if row["primary_category"] == cat]
         if subset:
             by_category[cat] = {
@@ -143,7 +142,7 @@ def worked_example_check(results, profile_id="P21", career_id="C029"):
 
 
 def run(catalog=None, profiles=None):
-    catalog = catalog or load_catalog()
+    catalog = catalog or load_evaluation_catalog()
     profiles = profiles or load_profiles([c.career_id for c in catalog.careers])
     results = {name: evaluate_configuration(profiles, catalog, w) for name, w in CONFIGURATIONS.items()}
     types = {}

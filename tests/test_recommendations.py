@@ -81,8 +81,10 @@ def real_catalog():
 
 
 def test_real_catalog_loads(real_catalog):
-    assert len(real_catalog.careers) == 50
-    assert len(real_catalog.known_skills) == 114
+    from tests.conftest import live_counts
+    counts = live_counts()
+    assert len(real_catalog.careers) == counts["careers"]
+    assert len(real_catalog.known_skills) == counts["skills"]
     assert real_catalog.resources.skills == real_catalog.known_skills
 
 

@@ -5,14 +5,14 @@ import pytest
 from src.engine.scoring import DEFAULT_WEIGHTS, ScoringWeights
 from src.evaluation.dataset import load_profiles
 from src.evaluation.experiments import CONFIGURATIONS
-from src.services.catalog import load_catalog
+from src.evaluation.snapshot import load_evaluation_catalog
 from src.services.recommendations import recommend
 from src.services.skill_gap import analyze_skill_gap
 
 
 @pytest.fixture(scope="module")
 def catalog():
-    return load_catalog()
+    return load_evaluation_catalog()
 
 
 @pytest.fixture(scope="module")
