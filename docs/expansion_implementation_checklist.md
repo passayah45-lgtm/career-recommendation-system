@@ -1,5 +1,7 @@
 # Catalogue expansion: preparation and checklist
 
+**Status, 1 November 2026:** the expansion is implemented in dataset v1.3.0. It adds 14 careers (C051 to C064), 30 skills with 30 resources (R115 to R144), 19 aliases, and the categories Law and Social Sciences. The lecturer's titles are used exactly. Civil Engineer, Electrical Engineer and Human Resources Specialist were not duplicated. Records, sources and gaps: `docs/african_expansion_sources.md`; risks: `docs/african_expansion_risks.md`; future evaluation: `docs/expansion_evaluation_plan.md`. The sections below record the preparation phase and remain valid for the snapshot rules.
+
 Prepared on 1 November 2026, starting from commit c71b445. It follows `docs/african_career_expansion_audit.md`. **No career, skill, resource, alias or category was added.** The live catalogue still holds the original 50 careers, 114 skills and 114 resources.
 
 ## 1. How the original 50-career evaluation stays separate

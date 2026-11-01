@@ -12,15 +12,15 @@ The dataset supports three later features:
 2. Skill-gap analysis: list the skills a learner lacks for a career.
 3. Learning resources: point each missing skill to at least one learning resource.
 
-Scope: 50 careers in 8 categories, 114 unique skills, 114 learning resources, 37 skill aliases. The data is an academic MVP dataset. It is not a labour market database.
+Scope (dataset v1.3.0): 64 careers in 10 categories, 144 unique skills, 144 learning resources, 56 skill aliases. The original v1.2.0 dataset (50 careers, 8 categories, 114 skills, 114 resources, 37 aliases) is frozen in data/evaluation/catalog_v1.2.0/ and is the only dataset the saved evaluation reports describe. The data is an academic MVP dataset. It is not a labour market database.
 
 ## 2. Files
 
 | File | Rows | Purpose |
 |---|---|---|
-| data/raw/careers.csv | 50 | Career records |
-| data/raw/resources.csv | 114 | One learning resource per skill |
-| data/raw/skill_aliases.csv | 37 | Alternative names that map to a canonical skill |
+| data/raw/careers.csv | 64 | Career records |
+| data/raw/resources.csv | 144 | One learning resource per skill |
+| data/raw/skill_aliases.csv | 56 | Alternative names that map to a canonical skill, including French forms |
 | data/raw/dataset_manifest.json | n/a | Expected counts (careers, unique skills, resources) that the validator enforces |
 | data/evaluation/catalog_v1.2.0/ | n/a | Frozen copy of the 50-career dataset (v1.2.0) used by every saved evaluation report; never edited, checked by SHA-256 |
 
@@ -28,17 +28,19 @@ All files are UTF-8 CSV with a header row.
 
 ## 3. Categories and record counts
 
-| Category | Careers |
-|---|---|
-| Data and AI | 8 |
-| Software | 8 |
-| Business | 7 |
-| Cybersecurity | 6 |
-| Healthcare | 6 |
-| Design | 5 |
-| Education | 5 |
-| Engineering | 5 |
-| Total | 50 |
+| Category | Careers (v1.3.0) | Of which added in v1.3.0 |
+|---|---|---|
+| Engineering | 11 | 6 |
+| Business | 10 | 3 |
+| Data and AI | 8 | 0 |
+| Software | 8 | 0 |
+| Healthcare | 7 | 1 |
+| Cybersecurity | 6 | 0 |
+| Design | 5 | 0 |
+| Education | 5 | 0 |
+| Law | 2 | 2 (new category) |
+| Social Sciences | 2 | 2 (new category) |
+| Total | 64 | 14 |
 
 The split is not equal. Data and AI and Software have more careers because they are closest to the T-Career audience. Every category has at least 5 careers.
 
@@ -96,7 +98,9 @@ Resource type definitions:
 | 3 | Bachelor's degree or equivalent |
 | 4 | Master's degree or higher |
 
-Distribution: level 2 has 1 career, level 3 has 42, level 4 has 7.
+Distribution (v1.3.0, 64 careers): level 2 has 2 careers, level 3 has 50, level 4 has 12. The original 50 careers keep their v1.2.0 distribution: level 2 has 1, level 3 has 42, level 4 has 7.
+
+For the 14 careers added in v1.3.0, `research/data/expansion_education_basis.csv` labels each level either `estimate` (9 careers) or `estimate_supported_by_us_reference` (5 careers, with the O*NET or BLS evidence quoted). No level was taken from an African source.
 
 Interpretation rules:
 
@@ -131,20 +135,20 @@ Accents: learner input is accent-folded before matching (Unicode NFKD with combi
 
 | Measure | Count |
 |---|---|
-| Unique required skills | 102 |
-| Unique preferred skills | 48 |
-| Preferred skills that are never required | 12 |
-| Unique skills needing a resource | 114 |
+| Unique required skills | 131 |
+| Unique preferred skills | 62 |
+| Preferred skills that are never required | 13 |
+| Unique skills needing a resource | 144 |
 | Skills without a resource | 0 |
-| Average required skills per career | 3.76 |
+| Average required skills per career | 3.81 |
 
-Most common required skills: communication (8 careers), python, sql, excel, linux (6 each), git, network security, cad (5 each).
+Most common required skills in v1.3.0: communication (12 careers). In v1.2.0: communication (8 careers), python, sql, excel, linux (6 each), git, network security, cad (5 each).
 
 ## 9. Sources and collection method
 
 ### Career records
 
-1. Occupation mapping: 47 of 50 careers map to an O*NET-SOC occupation. The source_url points to the O*NET OnLine summary page for that code. O*NET is maintained for the U.S. Department of Labor.
+1. Occupation mapping: 47 of the original 50 careers map to an O*NET-SOC occupation; 5 of the 14 careers added in v1.3.0 do (52 of 64). See docs/african_expansion_sources.md for the new careers. The source_url points to the O*NET OnLine summary page for that code. O*NET is maintained for the U.S. Department of Labor.
 2. Careers without a matching O*NET occupation: Data Analyst, Machine Learning Engineer and Mobile App Developer. Their onet_code and source_url are empty. The validator reports them as warnings.
 3. Nearest-occupation mappings: some titles map to a broader O*NET occupation. Data Engineer maps to Data Warehousing Specialists (15-1243.01), Cloud Engineer to Computer Systems Engineers/Architects (15-1299.08), Instructional Designer to Instructional Coordinators (25-9031.00), Digital Marketing Specialist to Search Marketing Strategists (13-1161.01), UX Designer to Web and Digital Interface Designers (15-1255.00), DevOps Engineer to Software Developers (15-1252.00, where O*NET OnLine lists "DevOps Engineer" as a reported job title, checked 2026-10-26), AI Research Scientist to Computer and Information Research Scientists (15-1221.00).
 
@@ -168,7 +172,7 @@ Each resource was found by targeted web search for the specific skill. Selection
 
 ## 10. Free access assessment
 
-is_free is true only when the learning content itself is available at no cost. All 114 rows are currently true. Conditions that do not change the value but are recorded in notes:
+is_free is true only when the learning content itself is available at no cost. All 144 rows are currently true. Conditions that do not change the value but are recorded in notes:
 
 1. A free account is required: MATLAB Onramp, Cisco Networking Academy, Saylor Academy, PortSwigger labs, British Council courses, CDC lab training.
 2. The software is free: Blender, FreeCAD, Inkscape, QGIS, DaVinci Resolve (free edition).
@@ -251,3 +255,4 @@ Errors stop the GitHub Actions workflow. Warnings (missing optional source URL, 
 | 1.0.0 | 2026-10-14 | First release: 50 careers, 114 resources, 37 aliases, validator and tests |
 | 1.1.0 | 2026-10-14 | HTTP link check: 104 resources http_checked, R045 replaced after a 404 |
 | 1.2.0 | 2026-10-26 | C013 DevOps Engineer mapped to O*NET 15-1252.00 as a nearest-broader occupation; AI Research Scientist recorded as nearest-broader. Its source URL is the same page already checked for C009 on 2026-10-14 |
+| 1.3.0 | 2026-11-01 | African career expansion from the lecturer's list: 14 careers added (C051 to C064), 30 skills with 30 resources (R115 to R144), 19 aliases including French forms, categories Law and Social Sciences. Civil Engineer, Electrical Engineer and Human Resources Specialist already existed (C046, C048, C033) and were not duplicated. The 50 original rows are unchanged. Sources and gaps: docs/african_expansion_sources.md |

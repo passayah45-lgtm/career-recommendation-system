@@ -1,6 +1,6 @@
 # Career Recommendation System
 
-A transparent career recommender with skill-gap analysis and free learning resources. A learner enters skills, interests and education level. The system ranks 50 careers, explains every score, shows which skills are missing, and links a learning resource for each one.
+A transparent career recommender with skill-gap analysis and free learning resources. A learner enters skills, interests and education level. The system ranks 64 careers in 10 categories, explains every score, shows which skills are missing, and links a learning resource for each one.
 
 Built as an MSc Computer Science and Data Analysis assignment at KIIT University. The engine is designed for later integration into T-Career.
 
@@ -16,7 +16,7 @@ The app sleeps after 12 hours without visitors. If you see a sleep page, click "
 | Career Assessment | Skills (list plus free text with aliases such as ML or CI/CD), interests, education level, optional experience |
 | Recommendations | Top K careers with score, matched and missing skills, interests, reasons and a score breakdown. Interested and Not for me buttons move a career into its own list, shown with a count beside the main list |
 | Skill-Gap Analysis | Required and optional gaps, coverage, and learning resources with links and verification status |
-| Career Explorer | Browse all 50 careers, filter by category, search by title, view details and sources |
+| Career Explorer | Browse all 64 careers, filter by category, search by title, view details and sources |
 | Skill Roadmap | "My Skill Development Roadmap": an ordered learning plan for an Interested or recommended career, with a free resource per step, Not started / In progress / Completed status per step, progress totals, and an explicit confirmation before a learned skill is added to the profile (`docs/skill_roadmap.md`) |
 | Analytics | Dataset charts, your own score contributions and skill coverage, and "How the Models Rank Your Careers": your top 5 from the formula next to Logistic Regression, Decision Tree and Random Forest (comparison only), plus the saved offline evaluation |
 
@@ -97,8 +97,8 @@ Both functions take and return plain dicts, ready for a REST API.
 
 | File | Content |
 |---|---|
-| data/raw/careers.csv | 50 careers in 8 categories |
-| data/raw/resources.csv | 114 free learning resources, one per skill |
+| data/raw/careers.csv | 64 careers in 10 categories (dataset v1.3.0; the original 50 are frozen in data/evaluation/catalog_v1.2.0/) |
+| data/raw/resources.csv | 144 free learning resources, one per skill |
 | data/raw/skill_aliases.csv | 37 alternative skill names |
 
 ## How the score works
@@ -108,10 +108,10 @@ Compatibility score (0 to 100) = required skills 55% + preferred skills 15% + in
 ## Limitations
 
 1. Skills are matched by exact name after alias resolution. Related skills (statistics and probability) earn no partial credit.
-2. Career skills, interests and education levels are curated by the author. 46 of 50 careers link to an O*NET occupation for source context.
+2. Career skills, interests and education levels are curated by the author. 52 of 64 careers link to an O*NET occupation for source context.
 3. Skill coverage divides by the length of each career's required list, so one shared skill counts more for careers with short lists (for example Excel and Financial Analyst). Phase 5 found this and kept the weights. See docs/evaluation_report.md.
 4. One resource per skill, in English, several from US or UK sources (tax, health privacy, medical coding).
-5. 104 of 114 resource links passed an HTTP check on 2026-10-14. The other 10 block automated checks or were temporarily down, and keep their search-confirmed status.
+5. 104 of the original 114 resource links passed an HTTP check on 2026-10-14. The other 10 block automated checks or were temporarily down, and keep their search-confirmed status. The 30 links added on 2026-11-01 all loaded with a web tool, but the project's link checker could not reach them from the build environment, so they also keep search-confirmed status (see `docs/african_expansion_link_check.md`).
 6. Evaluation uses 36 synthetic profiles labelled by the author. It measures agreement with those labels, not real-world accuracy.
 
 Details: docs/dataset_documentation.md and docs/recommendation_algorithm.md.

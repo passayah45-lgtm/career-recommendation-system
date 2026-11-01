@@ -134,7 +134,7 @@ def test_explorer_filters_by_category_and_search():
     at = open_page("pages/4_Career_Explorer.py")
     assert f"Showing {N_CAREERS} of {N_CAREERS} careers." in text_of(at)
     at.multiselect[0].set_value(["Healthcare"]).run()
-    assert f"Showing 6 of {N_CAREERS} careers." in text_of(at)
+    assert f"Showing 7 of {N_CAREERS} careers." in text_of(at)
     at.text_input[0].input("nurse").run()
     assert f"Showing 1 of {N_CAREERS} careers." in text_of(at)
     assert "Registered Nurse" in text_of(at)
@@ -642,3 +642,37 @@ def test_analytics_caption_without_counts(tmp_path, monkeypatch):
     text = text_of(at)
     assert "These results come from synthetic profiles" in text and "the original catalogue" in text
     assert len(at.dataframe) == 1
+
+
+def test_expanded_catalogue_in_the_interface():
+    at = open_page()
+    assert [m.value for m in at.metric][:2] == ["64", "10"]
+    at = open_page("pages/4_Career_Explorer.py")
+    at.multiselect[0].set_value(["Law"]).run()
+    assert "Showing 2 of 64 careers." in text_of(at)
+    at.multiselect[0].set_value(["Social Sciences"]).run()
+    assert "Showing 2 of 64 careers." in text_of(at)
+
+
+def test_analytics_category_chart_has_all_ten_categories():
+    at = open_page("pages/5_Analytics.py")
+    assert not at.exception
+    chart = at.get("plotly_chart")[0]
+    import json as _json
+    spec = _json.loads(chart.proto.spec)
+    labels = spec["data"][0]["y"]
+    assert len(labels) == 10 and {"Law", "Social Sciences"} <= set(labels)
+    colors = spec["data"][0]["marker"]["color"]
+    assert len(set(colors)) == 10
+
+
+def test_new_career_recommendation_and_skill_gap_pages():
+    law_profile = {"skills": ["legal research", "contract law", "ohada business law", "communication"],
+                   "interests": ["analysis", "writing", "business"], "education_level": 4}
+    at = open_page("pages/2_Recommendations.py", profile=law_profile)
+    assert "### 1. Private Law Specialist" in text_of(at)
+    at = open_page("pages/3_Skill_Gap_Analysis.py", profile={"skills": ["geology"], "interests": ["science"]},
+                   **{SELECTED_CAREER_KEY: "C056"})
+    assert not at.exception
+    text = text_of(at)
+    assert "Geophysicist" in text and "Geophysics for Practicing Geoscientists" in text

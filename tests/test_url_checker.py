@@ -115,7 +115,8 @@ def test_collect_targets_reads_real_files():
     targets = uc.collect_targets()
     from tests.conftest import live_counts
     assert sum(1 for t in targets if t[0] == "resource") == live_counts()["resources"]
-    assert sum(1 for t in targets if t[0] == "career_source") == 47
+    # 47 original O*NET links plus 5 in the expansion (C051, C052, C056, C060, C063)
+    assert sum(1 for t in targets if t[0] == "career_source") == 52
 
 
 def test_apply_only_marks_reachable_and_keeps_earlier_status(tmp_path):

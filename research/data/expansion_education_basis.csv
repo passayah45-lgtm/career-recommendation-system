@@ -1,0 +1,15 @@
+career_id,career_title,education_level,basis,reference,reference_url,reference_evidence,note
+C051,Mining Engineer,3,estimate_supported_by_us_reference,O*NET 17-2151.00,https://www.onetonline.org/link/summary/17-2151.00,"Job Zone Four; new-hire education: 79% bachelor's, 17% post-baccalaureate certificate, 3% master's",US data; Guinea not verified
+C052,Geological Engineer,3,estimate_supported_by_us_reference,O*NET 17-2151.00,https://www.onetonline.org/link/summary/17-2151.00,Same O*NET occupation as Mining Engineer: 79% bachelor's,O*NET combines mining and geological engineers; US data
+C053,Telecommunications Engineer,3,estimate,,,,No O*NET occupation matches the title
+C054,Building Engineer,3,estimate,,,,Title meaning varies by country
+C055,Geotechnical Engineer,3,estimate,,,,No O*NET occupation matches the title
+C056,Geophysicist,3,estimate_supported_by_us_reference,O*NET 19-2042.00,https://www.onetonline.org/link/summary/19-2042.00,"Job Zone Four; new-hire education: 48% bachelor's, 37% master's, 7% doctoral","Bachelor's is the most common answer, but 44% report a graduate degree; US data"
+C057,Private Law Specialist,4,estimate,,,,"Practice needs national bar or professional admission, not represented by the scale"
+C058,Public Law Specialist,4,estimate,,,,"Practice needs national bar or professional admission, not represented by the scale"
+C059,Management Information Systems Specialist (MIAGE),4,estimate,,,,Level follows the MIAGE master's route; other entry routes exist
+C060,Economist,4,estimate_supported_by_us_reference,O*NET 19-3011.00 and BLS OOH,https://www.onetonline.org/skills/zone/19-3011.00,O*NET: most of these occupations require graduate school; BLS: typical entry-level education is a master's degree,US data
+C061,Business Administration Specialist,3,estimate,,,,"Business administration is a degree field, not one occupation"
+C062,Laboratory Technician,2,estimate,,,,Medical and chemical technician routes differ
+C063,Sociologist,4,estimate_supported_by_us_reference,O*NET 19-3041.00 and BLS OOH,https://www.onetonline.org/skills/zone/19-3041.00,O*NET Job Zone Five: most of these occupations require graduate school; BLS: typical entry-level education is a master's degree,US data
+C064,Community Relations Specialist,3,estimate,,,,No O*NET occupation matches the title

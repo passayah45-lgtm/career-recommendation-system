@@ -50,10 +50,11 @@ LIST_DELIMITER = "|"
 CATEGORIES = (
     "Data and AI", "Software", "Cybersecurity", "Design",
     "Business", "Education", "Healthcare", "Engineering",
+    # Added in dataset v1.3.0 for the lecturer's African career expansion (docs/african_career_expansion_audit.md)
+    "Law", "Social Sciences",
 )
-# Proposed in docs/african_career_expansion_audit.md, not yet approved: records using them still fail validation
-# Colours are prepared in src/ui/theme.py so the Analytics page keeps working once they are approved
-PLANNED_CATEGORIES = ("Law", "Social Sciences")
+# Categories proposed but not yet approved; records using them fail validation. None are pending now
+PLANNED_CATEGORIES = ()
 EDUCATION_LEVELS = {
     0: "No formal qualification specified",
     1: "Secondary education or equivalent",

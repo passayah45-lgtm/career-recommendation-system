@@ -38,7 +38,10 @@ def test_education_label():
 def test_filter_careers_on_real_data(catalog):
     assert len(filter_careers(catalog.careers)) == live_counts()["careers"]
     healthcare = filter_careers(catalog.careers, ["Healthcare"])
-    assert len(healthcare) == 6 and {c.category for c in healthcare} == {"Healthcare"}
+    # 6 original healthcare careers plus C062 Laboratory Technician
+    assert len(healthcare) == 7 and {c.category for c in healthcare} == {"Healthcare"}
+    assert [c.career_id for c in filter_careers(catalog.careers, ["Law"])] == ["C057", "C058"]
+    assert [c.career_id for c in filter_careers(catalog.careers, ["Social Sciences"])] == ["C060", "C063"]
     analysts = filter_careers(catalog.careers, query="  ANALYST ")
     assert analysts and all("analyst" in c.title.lower() for c in analysts)
     assert filter_careers(catalog.careers, ["Design"], "nurse") == []
@@ -47,9 +50,14 @@ def test_filter_careers_on_real_data(catalog):
 def test_dataset_counts_match_catalog(catalog):
     assert sum(r["Careers"] for r in category_counts(catalog.careers)) == live_counts()["careers"]
     edu = {r["Level"]: r["Careers"] for r in education_counts(catalog.careers)}
-    assert edu[education_label(3)] == 42
+    # Original 50: 42 careers at level 3 and communication required by 8; the expansion adds 8 and 4
+    assert edu[education_label(3)] == 50
     top = required_skill_frequency(catalog.careers, limit=3)
-    assert top[0] == {"Skill": "communication", "Careers": 8}
+    assert top[0] == {"Skill": "communication", "Careers": 12}
+    from src.evaluation.snapshot import load_evaluation_catalog
+    original = load_evaluation_catalog().careers
+    assert {r["Level"]: r["Careers"] for r in education_counts(original)}[education_label(3)] == 42
+    assert required_skill_frequency(original, limit=1)[0] == {"Skill": "communication", "Careers": 8}
 
 
 def test_resource_rows_keep_verification_and_gap_type(catalog):

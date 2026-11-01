@@ -1,5 +1,7 @@
 # African career expansion audit (Phase 8, audit only)
 
+> **Update, 1 November 2026:** the lecturer confirmed the 17 official titles exactly as listed, with no renaming or merging. The 14 missing careers are now implemented in dataset v1.3.0 under those exact titles, so the refined titles and merge suggestions below are superseded. See `docs/african_expansion_sources.md` and `docs/african_expansion_risks.md`. This report is kept as the record of the audit.
+
 Audit date: 1 November 2026. Repository state: commit c71b445 on `main`. No dataset, code, test or evaluation file was changed. This report is the only new file, and it is not committed.
 
 **How to read this report.** Each statement is marked as one of:

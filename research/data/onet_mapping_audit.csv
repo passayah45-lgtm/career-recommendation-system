@@ -49,3 +49,17 @@ C047,Mechanical Engineer,17-2141.00,Mechanical Engineers,same_or_close,no,
 C048,Electrical Engineer,17-2071.00,Electrical Engineers,same_or_close,no,
 C049,Environmental Engineer,17-2081.00,Environmental Engineers,same_or_close,no,
 C050,Biomedical Engineer,17-2031.00,Bioengineers and Biomedical Engineers,same_or_close,no,
+C051,Mining Engineer,17-2151.00,"Mining and Geological Engineers, Including Mining Safety Engineers",same_or_close,no,Reported titles include Mining Engineer; shares the occupation with C052
+C052,Geological Engineer,17-2151.00,"Mining and Geological Engineers, Including Mining Safety Engineers",same_or_close,no,O*NET combines mining and geological engineering; kept as a separate career on the lecturer's instruction
+C053,Telecommunications Engineer,,,none,no,Candidate to check: 15-1241.01 Telecommunications Engineering Specialists (reported title Telecommunications Engineer); left empty because its parent group is computer network architecture
+C054,Building Engineer,,,none,no,No O*NET occupation; title meaning varies by country (ESCO construction engineer under ISCO-08 2142 is closest)
+C055,Geotechnical Engineer,,,none,no,"No separate O*NET occupation; civil engineering specialisation (ESCO mining geotechnical engineer, ANZSCO 233212)"
+C056,Geophysicist,19-2042.00,"Geoscientists, Except Hydrologists and Geographers",nearest_broader,no,Reported titles include Project Geophysicist
+C057,Private Law Specialist,,,none,no,"Nearest: 23-1011.00 Lawyers (ISCO-08 2611); a specialisation, and practising law needs national admission"
+C058,Public Law Specialist,,,none,no,"Nearest: 23-1011.00 Lawyers (ISCO-08 2611); a specialisation, and practising law needs national admission"
+C059,Management Information Systems Specialist (MIAGE),,,none,no,MIAGE is a French degree; nearest O*NET 11-3021.00 Computer and Information Systems Managers
+C060,Economist,19-3011.00,Economists,same_or_close,no,
+C061,Business Administration Specialist,,,none,no,Business administration is a degree field; no single O*NET occupation
+C062,Laboratory Technician,,,none,no,"Candidates: 29-2012.00 Medical and Clinical Laboratory Technicians, 19-4031.00 Chemical Technicians"
+C063,Sociologist,19-3041.00,Sociologists,same_or_close,no,
+C064,Community Relations Specialist,,,none,no,Nearest: 27-3031.00 Public Relations Specialists (ISCO-08 2432)

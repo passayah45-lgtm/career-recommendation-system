@@ -38,9 +38,26 @@ def test_existing_english_aliases_are_unchanged():
 
 def test_profile_reports_french_skill_as_typed():
     # Unknown skills are reported back exactly as the learner typed them
-    profile, report = profile_from_input({"skills": ["Géologie", "Python"]}, load_catalog())
-    assert list(report.unknown_skills) == ["Géologie"]
+    profile, report = profile_from_input({"skills": ["Cartographie", "Python"]}, load_catalog())
+    assert list(report.unknown_skills) == ["Cartographie"]
     assert list(profile.skills) == ["python"]
+
+
+@pytest.mark.parametrize("text", ["Géologie", "géologie", "geologie", "GÉOLOGIE", "GEOLOGIE"])
+def test_french_geology_reaches_the_live_skill(text):
+    # The live alias file maps géologie to the geology skill added in dataset v1.3.0
+    catalog = load_catalog()
+    profile, report = profile_from_input({"skills": [text]}, catalog)
+    assert list(profile.skills) == ["geology"] and list(report.unknown_skills) == []
+
+
+@pytest.mark.parametrize("text, skill", [
+    ("Mécanique des sols", "soil mechanics"), ("mecanique des sols", "soil mechanics"),
+    ("Droit administratif", "administrative law"), ("ÉCONOMIE", "economics"), ("Sociologie", "sociology"),
+    ("RF engineering", "radio frequency engineering"), ("ML", "machine learning"),
+])
+def test_new_french_and_english_aliases(text, skill):
+    assert normalize_skill(text, load_catalog().aliases) == skill
 
 
 def test_colliding_folded_aliases_are_rejected():

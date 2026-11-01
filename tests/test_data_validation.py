@@ -15,12 +15,22 @@ def test_real_datasets_pass_validation():
     assert report.errors == [], "\n".join(str(e) for e in report.errors)
 
 
-def test_real_dataset_has_fifty_careers_in_all_categories():
-    rows, _ = read_csv(DEFAULT_DATA_DIR / "careers.csv")
+def test_original_snapshot_has_fifty_careers_in_eight_categories():
+    from src.evaluation.snapshot import EVALUATION_CATALOG_DIR, EVALUATION_CATEGORIES
+    rows, _ = read_csv(EVALUATION_CATALOG_DIR / "careers.csv")
     assert len(rows) == EXPECTED_CAREER_COUNT
     counts = Counter(r["category"] for r in rows)
-    assert set(counts) == set(CATEGORIES)
+    assert set(counts) == set(EVALUATION_CATEGORIES)
     assert min(counts.values()) >= 5
+
+
+def test_live_dataset_uses_every_category():
+    from tests.conftest import live_counts
+    rows, _ = read_csv(DEFAULT_DATA_DIR / "careers.csv")
+    assert len(rows) == live_counts()["careers"]
+    counts = Counter(r["category"] for r in rows)
+    assert set(counts) == set(CATEGORIES)
+    assert min(counts.values()) >= 2
 
 
 def test_every_real_skill_has_a_resource():
