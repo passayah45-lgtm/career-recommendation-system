@@ -111,3 +111,11 @@ def dataset_dir(tmp_path, valid_careers, valid_resources):
     write_csv(tmp_path / "resources.csv", RESOURCE_COLUMNS, valid_resources)
     write_csv(tmp_path / "skill_aliases.csv", ALIAS_COLUMNS, [{"alias": "py", "canonical_skill": "python"}])
     return tmp_path
+
+
+# eval64_v1 labels are withheld from the public repository until the second review is complete
+from src.evaluation.eval64_data import EVAL64_DIR as _EVAL64_DIR, LABELS_FILE as _LABELS_FILE  # noqa: E402
+
+EVAL64_LABELS_AVAILABLE = (_EVAL64_DIR / _LABELS_FILE).exists()
+needs_eval64_labels = pytest.mark.skipif(
+    not EVAL64_LABELS_AVAILABLE, reason="eval64 labels are withheld from the public repository until the second review")

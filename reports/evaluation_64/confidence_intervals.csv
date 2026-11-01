@@ -1,0 +1,100 @@
+scope,metric,mean,ci_low,ci_high,defined_profiles,excluded_profiles,resamples
+all profiles,precision_at_1,0.8119,0.7308,0.8857,101,10,2000
+all profiles,precision_at_3,0.4125,0.3718,0.4521,101,10,2000
+all profiles,precision_at_5,0.303,0.2765,0.3278,101,10,2000
+all profiles,recall_at_5,0.901,0.8592,0.9403,101,10,2000
+all profiles,f1_at_5,0.437,0.4071,0.4654,101,10,2000
+all profiles,hit_at_5,1.0,1.0,1.0,101,10,2000
+all profiles,reciprocal_rank,0.8843,0.8314,0.9299,101,10,2000
+all profiles,average_precision,0.7948,0.7426,0.8421,101,10,2000
+all profiles,ndcg_at_5,0.7592,0.7174,0.7993,111,0,2000
+category: Data and AI,precision_at_1,0.9,0.7,1.0,10,1,2000
+category: Data and AI,precision_at_3,0.7,0.5926,0.8148,10,1,2000
+category: Data and AI,precision_at_5,0.5,0.44,0.5636,10,1,2000
+category: Data and AI,recall_at_5,0.9667,0.9,1.0,10,1,2000
+category: Data and AI,f1_at_5,0.6536,0.5909,0.7143,10,1,2000
+category: Data and AI,hit_at_5,1.0,1.0,1.0,10,1,2000
+category: Data and AI,reciprocal_rank,0.95,0.85,1.0,10,1,2000
+category: Data and AI,average_precision,0.8921,0.7745,0.9833,10,1,2000
+category: Data and AI,ndcg_at_5,0.8304,0.6937,0.9327,11,0,2000
+category: Software,precision_at_1,0.7273,0.4545,0.9091,11,0,2000
+category: Software,precision_at_3,0.4545,0.3333,0.5758,11,0,2000
+category: Software,precision_at_5,0.4182,0.3273,0.4909,11,0,2000
+category: Software,recall_at_5,0.8333,0.6818,0.9545,11,0,2000
+category: Software,f1_at_5,0.5406,0.4406,0.6331,11,0,2000
+category: Software,hit_at_5,1.0,1.0,1.0,11,0,2000
+category: Software,reciprocal_rank,0.8364,0.6455,0.9545,11,0,2000
+category: Software,average_precision,0.6957,0.5553,0.8174,11,0,2000
+category: Software,ndcg_at_5,0.7201,0.5661,0.8339,11,0,2000
+category: Cybersecurity,precision_at_1,0.7,0.375,1.0,10,1,2000
+category: Cybersecurity,precision_at_3,0.3333,0.2424,0.4242,10,1,2000
+category: Cybersecurity,precision_at_5,0.28,0.22,0.34,10,1,2000
+category: Cybersecurity,recall_at_5,0.6667,0.5278,0.8182,10,1,2000
+category: Cybersecurity,f1_at_5,0.3869,0.3084,0.4675,10,1,2000
+category: Cybersecurity,hit_at_5,1.0,1.0,1.0,10,1,2000
+category: Cybersecurity,reciprocal_rank,0.8033,0.5917,1.0,10,1,2000
+category: Cybersecurity,average_precision,0.6022,0.4374,0.7698,10,1,2000
+category: Cybersecurity,ndcg_at_5,0.61,0.4687,0.7435,11,0,2000
+category: Design,precision_at_1,0.7,0.4,1.0,10,1,2000
+category: Design,precision_at_3,0.3333,0.2381,0.4333,10,1,2000
+category: Design,precision_at_5,0.24,0.2,0.2909,10,1,2000
+category: Design,recall_at_5,0.9,0.75,1.0,10,1,2000
+category: Design,f1_at_5,0.3714,0.316,0.4381,10,1,2000
+category: Design,hit_at_5,1.0,1.0,1.0,10,1,2000
+category: Design,reciprocal_rank,0.825,0.6364,1.0,10,1,2000
+category: Design,average_precision,0.7367,0.5778,0.8867,10,1,2000
+category: Design,ndcg_at_5,0.735,0.6457,0.8241,11,0,2000
+category: Business,precision_at_1,0.8,0.5,1.0,10,1,2000
+category: Business,precision_at_3,0.4,0.2667,0.5185,10,1,2000
+category: Business,precision_at_5,0.32,0.24,0.4,10,1,2000
+category: Business,recall_at_5,0.8,0.6429,0.95,10,1,2000
+category: Business,f1_at_5,0.4512,0.3524,0.5574,10,1,2000
+category: Business,hit_at_5,1.0,1.0,1.0,10,1,2000
+category: Business,reciprocal_rank,0.875,0.6944,1.0,10,1,2000
+category: Business,average_precision,0.6965,0.5275,0.8437,10,1,2000
+category: Business,ndcg_at_5,0.7087,0.5773,0.8192,11,0,2000
+category: Education,precision_at_1,0.7,0.4,1.0,10,1,2000
+category: Education,precision_at_3,0.3667,0.3333,0.4444,10,1,2000
+category: Education,precision_at_5,0.22,0.2,0.2667,10,1,2000
+category: Education,recall_at_5,1.0,1.0,1.0,10,1,2000
+category: Education,f1_at_5,0.3571,0.3333,0.4127,10,1,2000
+category: Education,hit_at_5,1.0,1.0,1.0,10,1,2000
+category: Education,reciprocal_rank,0.8333,0.65,1.0,10,1,2000
+category: Education,average_precision,0.8333,0.65,1.0,10,1,2000
+category: Education,ndcg_at_5,0.8147,0.7183,0.896,11,0,2000
+category: Healthcare,precision_at_1,0.8,0.5455,1.0,10,1,2000
+category: Healthcare,precision_at_3,0.3,0.1852,0.4074,10,1,2000
+category: Healthcare,precision_at_5,0.22,0.2,0.26,10,1,2000
+category: Healthcare,recall_at_5,1.0,1.0,1.0,10,1,2000
+category: Healthcare,f1_at_5,0.3571,0.3333,0.4048,10,1,2000
+category: Healthcare,hit_at_5,1.0,1.0,1.0,10,1,2000
+category: Healthcare,reciprocal_rank,0.85,0.6591,1.0,10,1,2000
+category: Healthcare,average_precision,0.85,0.6591,1.0,10,1,2000
+category: Healthcare,ndcg_at_5,0.8098,0.7118,0.8988,11,0,2000
+category: Engineering,precision_at_1,0.9231,0.7692,1.0,13,1,2000
+category: Engineering,precision_at_3,0.4359,0.359,0.5238,13,1,2000
+category: Engineering,precision_at_5,0.2769,0.2286,0.3286,13,1,2000
+category: Engineering,recall_at_5,0.9231,0.8182,1.0,13,1,2000
+category: Engineering,f1_at_5,0.4176,0.3553,0.4841,13,1,2000
+category: Engineering,hit_at_5,1.0,1.0,1.0,13,1,2000
+category: Engineering,reciprocal_rank,0.9615,0.8846,1.0,13,1,2000
+category: Engineering,average_precision,0.8666,0.7601,0.9583,13,1,2000
+category: Engineering,ndcg_at_5,0.8241,0.7079,0.9227,14,0,2000
+category: Law,precision_at_1,0.875,0.625,1.0,8,2,2000
+category: Law,precision_at_3,0.375,0.2381,0.5185,8,2,2000
+category: Law,precision_at_5,0.25,0.2,0.3143,8,2,2000
+category: Law,recall_at_5,1.0,1.0,1.0,8,2,2000
+category: Law,f1_at_5,0.3929,0.3333,0.4694,8,2,2000
+category: Law,hit_at_5,1.0,1.0,1.0,8,2,2000
+category: Law,reciprocal_rank,0.9062,0.7188,1.0,8,2,2000
+category: Law,average_precision,0.8854,0.6833,1.0,8,2,2000
+category: Law,ndcg_at_5,0.7092,0.5269,0.8523,10,0,2000
+category: Social Sciences,precision_at_1,1.0,1.0,1.0,9,1,2000
+category: Social Sciences,precision_at_3,0.4074,0.3333,0.5,9,1,2000
+category: Social Sciences,precision_at_5,0.2889,0.2,0.4,9,1,2000
+category: Social Sciences,recall_at_5,0.9444,0.8333,1.0,9,1,2000
+category: Social Sciences,f1_at_5,0.4272,0.3286,0.5381,9,1,2000
+category: Social Sciences,hit_at_5,1.0,1.0,1.0,9,1,2000
+category: Social Sciences,reciprocal_rank,1.0,1.0,1.0,9,1,2000
+category: Social Sciences,average_precision,0.9077,0.7913,1.0,9,1,2000
+category: Social Sciences,ndcg_at_5,0.8122,0.7126,0.9042,10,0,2000

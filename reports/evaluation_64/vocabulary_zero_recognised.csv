@@ -1,0 +1,23 @@
+profile_id,profile_type,primary_category,skill_entries,skills
+E64-S09,incomplete_skills,Software,3,C++|algorithms|data structures
+E64-Y05,strong_match,Cybersecurity,5,network design|routing and switching|Cisco|cloud networking|security
+E64-Y07,career_change,Cybersecurity,4,investigation|report writing|evidence handling|basic computer skills
+E64-Y09,lower_education,Cybersecurity,3,networking basics|Linux basics|CompTIA Security+
+E64-Y11,mixed_interests,Cybersecurity,4,risk assessment|regulatory compliance|data protection|policy writing
+E64-G05,strong_match,Design,5,2D animation|3D animation|Blender|storyboarding|drawing
+E64-G06,career_change,Design,4,AutoCAD|technical drawing|project coordination|client communication
+E64-G07,lower_education,Design,2,drawing|creativity
+E64-G10,french_vocabulary,Design,4,conception graphique|dessin|Photoshop|typographie
+E64-G11,no_clear_fit,Design,3,photography|travel writing|languages
+E64-B04,strong_match,Business,5,recruitment|employee relations|labour law|payroll|interviewing
+E64-E07,lower_education,Education,2,tutoring|English
+E64-E08,french_vocabulary,Education,4,enseignement|pédagogie|gestion de classe|français
+E64-H07,strong_match,Healthcare,4,anatomy|exercise therapy|rehabilitation|patient assessment
+E64-H08,career_change,Healthcare,4,exercise|fitness training|first aid|coaching
+E64-H10,french_vocabulary,Healthcare,4,soins infirmiers|soins aux patients|hygiène|anatomie
+E64-N13,career_change,Engineering,4,electrical installation|wiring|troubleshooting|electrical safety
+E64-N14,lower_education,Engineering,2,welding|machinery maintenance
+E64-L09,mixed_interests,Law,3,environmental law|environmental impact assessment|public consultation
+E64-L10,lower_education,Law,4,typing|filing|legal terminology|word processing
+E64-X09,career_change,Social Sciences,4,interviewing|writing|research|social media
+E64-X10,no_clear_fit,Social Sciences,3,history|philosophy|debate

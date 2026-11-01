@@ -1,0 +1,16 @@
+measure,value
+profiles,111
+"display-score tie at rank 5/6 (one decimal, as shown to users)",62
+total-score tie at rank 5/6 (engine precision),62
+rank 5/6 tie resolved by required-skill coverage,0
+rank 5/6 tie resolved by number of matched required skills,0
+rank 5/6 tie resolved by career id,62
+"career-id tie groups (equal on all three score keys), any rank",671
+"original-before-new pairs decided by career id, any rank",20638
+"original-before-new pairs decided by career id, at least one in top 5",79
+career-id tie groups crossing the rank 5 cut-off,62
+new careers kept out of the top 5 by career id,30
+relevant (grade 2+) new careers kept out of the top 5 by career id,0
+relevant (grade 2+) careers of any kind kept out of the top 5 by career id,10
+of which original careers,10
+"new-before-original pairs decided by career id, any rank",0

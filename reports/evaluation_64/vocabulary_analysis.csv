@@ -1,0 +1,24 @@
+scope,profiles,profiles_with_skills,skill_entries,unrecognised_entries,recognised_entries,unrecognised_share,profiles_no_skill_recognised,profiles_without_skills
+all profiles,111,108,480,269,211,0.5604,22,3
+type: strong_match,61,61,303,151,152,0.4983,4,0
+type: incomplete_skills,4,4,12,7,5,0.5833,1,0
+type: career_change,9,9,37,28,9,0.7568,5,0
+type: transferable_skills,4,4,16,10,6,0.625,0,0
+type: mixed_interests,6,6,22,13,9,0.5909,2,0
+type: unfamiliar_vocabulary,2,2,8,6,2,0.75,0,0
+type: french_vocabulary,10,10,40,28,12,0.7,3,0
+type: interests_only,3,0,0,0,0,,0,3
+type: minimal_input,1,1,1,0,1,0.0,0,0
+type: many_inputs,1,1,14,3,11,0.2143,0,0
+type: no_clear_fit,2,2,6,6,0,1.0,2,0
+type: lower_education,8,8,21,17,4,0.8095,5,0
+category: Business,11,11,54,36,18,0.6667,1,0
+category: Cybersecurity,11,10,47,30,17,0.6383,4,1
+category: Data and AI,11,11,49,11,38,0.2245,0,0
+category: Design,11,11,46,35,11,0.7609,5,0
+category: Education,11,10,39,25,14,0.641,2,1
+category: Engineering,14,14,63,37,26,0.5873,2,0
+category: Healthcare,11,11,46,31,15,0.6739,3,0
+category: Law,10,9,35,22,13,0.6286,2,1
+category: Social Sciences,10,10,39,22,17,0.5641,2,0
+category: Software,11,11,62,20,42,0.3226,1,0

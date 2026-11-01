@@ -1,0 +1,257 @@
+rule,career_id,career_title,category,top5_appearances,relevant_top5,relevant_labels,median_rank_when_relevant
+current,C001,Data Scientist,Data and AI,10,6,6,2.5
+current,C002,Data Analyst,Data and AI,23,5,5,2
+current,C003,Machine Learning Engineer,Data and AI,14,2,2,2.0
+current,C004,Business Intelligence Analyst,Data and AI,26,3,3,1
+current,C005,Data Engineer,Data and AI,16,2,2,1.5
+current,C006,Statistician,Data and AI,15,5,5,3
+current,C007,AI Research Scientist,Data and AI,6,1,2,4.0
+current,C008,Database Administrator,Data and AI,16,2,2,1.5
+current,C009,Software Developer,Software,8,6,7,4
+current,C010,Web Developer,Software,13,4,5,5
+current,C011,Software Quality Assurance Tester,Software,6,1,1,1
+current,C012,Mobile App Developer,Software,6,1,1,1
+current,C013,DevOps Engineer,Software,5,2,3,5
+current,C014,Cloud Engineer,Software,6,2,3,5
+current,C015,Computer Programmer,Software,11,3,4,1.5
+current,C016,Computer Systems Analyst,Software,4,1,2,4.5
+current,C017,Information Security Analyst,Cybersecurity,5,4,7,5
+current,C018,Penetration Tester,Cybersecurity,8,1,1,1
+current,C019,Digital Forensics Analyst,Cybersecurity,13,2,2,1.0
+current,C020,Network and Systems Administrator,Cybersecurity,8,4,6,4.5
+current,C021,Computer Network Architect,Cybersecurity,6,3,4,3.5
+current,C022,Information Security Engineer,Cybersecurity,2,1,3,6
+current,C023,Graphic Designer,Design,7,4,4,1.0
+current,C024,UX Designer,Design,15,1,2,3.5
+current,C025,Interior Designer,Design,8,2,2,2.0
+current,C026,Industrial Designer,Design,12,1,1,1
+current,C027,Animator,Design,9,1,1,4
+current,C028,Management Analyst,Business,8,2,3,5
+current,C029,Financial Analyst,Business,11,3,3,1
+current,C030,Accountant,Business,6,2,2,1.5
+current,C031,Market Research Analyst,Business,16,4,5,3
+current,C032,Project Manager,Business,8,2,3,5
+current,C033,Human Resources Specialist,Business,12,1,1,1
+current,C034,Digital Marketing Specialist,Business,3,1,2,3.5
+current,C035,Secondary School Teacher,Education,11,4,4,1.5
+current,C036,Instructional Designer,Education,2,2,2,2.0
+current,C037,English as a Second Language Teacher,Education,11,2,2,1.5
+current,C038,School Counselor,Education,10,1,1,1
+current,C039,Computer Science Lecturer,Education,5,1,1,1
+current,C040,Registered Nurse,Healthcare,11,2,2,1.0
+current,C041,Pharmacist,Healthcare,7,1,1,1
+current,C042,Medical Laboratory Technologist,Healthcare,8,1,1,1
+current,C043,Medical Records Specialist,Healthcare,6,2,2,1.0
+current,C044,Dietitian and Nutritionist,Healthcare,11,2,2,1.0
+current,C045,Physical Therapist,Healthcare,4,1,1,4
+current,C046,Civil Engineer,Engineering,4,1,3,9
+current,C047,Mechanical Engineer,Engineering,4,2,2,3.5
+current,C048,Electrical Engineer,Engineering,8,2,2,1.0
+current,C049,Environmental Engineer,Engineering,6,1,1,1
+current,C050,Biomedical Engineer,Engineering,5,1,1,1
+current,C051,Mining Engineer,Engineering,5,1,1,1
+current,C052,Geological Engineer,Engineering,6,4,4,1.5
+current,C053,Telecommunications Engineer,Engineering,6,2,2,1.5
+current,C054,Building Engineer,Engineering,4,3,3,2
+current,C055,Geotechnical Engineer,Engineering,5,1,1,1
+current,C056,Geophysicist,Engineering,6,2,2,2.5
+current,C057,Private Law Specialist,Law,9,5,5,1
+current,C058,Public Law Specialist,Law,12,5,5,1
+current,C059,Management Information Systems Specialist (MIAGE),Business,7,2,2,2.0
+current,C060,Economist,Social Sciences,10,5,5,1
+current,C061,Business Administration Specialist,Business,3,2,4,5.5
+current,C062,Laboratory Technician,Healthcare,4,3,3,2
+current,C063,Sociologist,Social Sciences,17,5,5,1
+current,C064,Community Relations Specialist,Business,6,2,3,3
+none,C001,Data Scientist,Data and AI,73,5,6,2.5
+none,C002,Data Analyst,Data and AI,77,5,5,2
+none,C003,Machine Learning Engineer,Data and AI,62,2,2,1.5
+none,C004,Business Intelligence Analyst,Data and AI,44,3,3,1
+none,C005,Data Engineer,Data and AI,30,2,2,1.5
+none,C006,Statistician,Data and AI,9,4,5,5
+none,C007,AI Research Scientist,Data and AI,3,1,2,3.5
+none,C008,Database Administrator,Data and AI,9,1,2,3.5
+none,C009,Software Developer,Software,5,4,7,5
+none,C010,Web Developer,Software,6,4,5,4
+none,C011,Software Quality Assurance Tester,Software,4,1,1,1
+none,C012,Mobile App Developer,Software,3,1,1,1
+none,C013,DevOps Engineer,Software,3,1,3,6
+none,C014,Cloud Engineer,Software,7,2,3,2
+none,C015,Computer Programmer,Software,11,3,4,1.0
+none,C016,Computer Systems Analyst,Software,5,1,2,8.5
+none,C017,Information Security Analyst,Cybersecurity,4,2,7,16
+none,C018,Penetration Tester,Cybersecurity,4,1,1,1
+none,C019,Digital Forensics Analyst,Cybersecurity,7,1,2,9.0
+none,C020,Network and Systems Administrator,Cybersecurity,6,4,6,5.0
+none,C021,Computer Network Architect,Cybersecurity,4,3,4,4.0
+none,C022,Information Security Engineer,Cybersecurity,1,1,3,8
+none,C023,Graphic Designer,Design,2,1,4,22.0
+none,C024,UX Designer,Design,4,1,2,15.5
+none,C025,Interior Designer,Design,1,1,2,12.5
+none,C026,Industrial Designer,Design,2,1,1,1
+none,C027,Animator,Design,3,0,1,25
+none,C028,Management Analyst,Business,6,3,3,4
+none,C029,Financial Analyst,Business,8,3,3,1
+none,C030,Accountant,Business,9,2,2,1.5
+none,C031,Market Research Analyst,Business,8,3,5,2
+none,C032,Project Manager,Business,3,1,3,12
+none,C033,Human Resources Specialist,Business,3,0,1,31
+none,C034,Digital Marketing Specialist,Business,2,1,2,18.0
+none,C035,Secondary School Teacher,Education,2,2,4,17.5
+none,C036,Instructional Designer,Education,2,1,2,28.0
+none,C037,English as a Second Language Teacher,Education,2,1,2,18.5
+none,C038,School Counselor,Education,3,1,1,1
+none,C039,Computer Science Lecturer,Education,6,1,1,1
+none,C040,Registered Nurse,Healthcare,3,1,2,18.0
+none,C041,Pharmacist,Healthcare,4,1,1,1
+none,C042,Medical Laboratory Technologist,Healthcare,5,1,1,2
+none,C043,Medical Records Specialist,Healthcare,10,2,2,3.0
+none,C044,Dietitian and Nutritionist,Healthcare,6,2,2,1.0
+none,C045,Physical Therapist,Healthcare,1,0,1,45
+none,C046,Civil Engineer,Engineering,2,1,3,40
+none,C047,Mechanical Engineer,Engineering,3,2,2,3.0
+none,C048,Electrical Engineer,Engineering,3,1,2,21.5
+none,C049,Environmental Engineer,Engineering,4,1,1,1
+none,C050,Biomedical Engineer,Engineering,4,1,1,2
+none,C051,Mining Engineer,Engineering,3,1,1,1
+none,C052,Geological Engineer,Engineering,5,3,4,1.5
+none,C053,Telecommunications Engineer,Engineering,1,1,2,23.5
+none,C054,Building Engineer,Engineering,2,2,3,2
+none,C055,Geotechnical Engineer,Engineering,4,1,1,1
+none,C056,Geophysicist,Engineering,6,2,2,2.5
+none,C057,Private Law Specialist,Law,6,4,5,1
+none,C058,Public Law Specialist,Law,5,3,5,2
+none,C059,Management Information Systems Specialist (MIAGE),Business,1,1,2,30.5
+none,C060,Economist,Social Sciences,9,5,5,1
+none,C061,Business Administration Specialist,Business,3,1,4,12.5
+none,C062,Laboratory Technician,Healthcare,12,3,3,1
+none,C063,Sociologist,Social Sciences,7,4,5,1
+none,C064,Community Relations Specialist,Business,3,1,3,53
+fixed_unit,C001,Data Scientist,Data and AI,33,6,6,2.5
+fixed_unit,C002,Data Analyst,Data and AI,21,5,5,2
+fixed_unit,C003,Machine Learning Engineer,Data and AI,11,2,2,2.0
+fixed_unit,C004,Business Intelligence Analyst,Data and AI,22,3,3,1
+fixed_unit,C005,Data Engineer,Data and AI,14,2,2,1.5
+fixed_unit,C006,Statistician,Data and AI,13,5,5,3
+fixed_unit,C007,AI Research Scientist,Data and AI,5,1,2,4.0
+fixed_unit,C008,Database Administrator,Data and AI,15,2,2,1.5
+fixed_unit,C009,Software Developer,Software,7,5,7,4
+fixed_unit,C010,Web Developer,Software,13,4,5,5
+fixed_unit,C011,Software Quality Assurance Tester,Software,5,1,1,1
+fixed_unit,C012,Mobile App Developer,Software,6,1,1,1
+fixed_unit,C013,DevOps Engineer,Software,5,2,3,5
+fixed_unit,C014,Cloud Engineer,Software,6,2,3,5
+fixed_unit,C015,Computer Programmer,Software,10,3,4,1.5
+fixed_unit,C016,Computer Systems Analyst,Software,4,1,2,5.0
+fixed_unit,C017,Information Security Analyst,Cybersecurity,5,4,7,5
+fixed_unit,C018,Penetration Tester,Cybersecurity,7,1,1,1
+fixed_unit,C019,Digital Forensics Analyst,Cybersecurity,13,2,2,1.0
+fixed_unit,C020,Network and Systems Administrator,Cybersecurity,8,4,6,4.5
+fixed_unit,C021,Computer Network Architect,Cybersecurity,6,3,4,3.5
+fixed_unit,C022,Information Security Engineer,Cybersecurity,2,1,3,6
+fixed_unit,C023,Graphic Designer,Design,7,4,4,1.0
+fixed_unit,C024,UX Designer,Design,14,1,2,3.5
+fixed_unit,C025,Interior Designer,Design,8,2,2,2.0
+fixed_unit,C026,Industrial Designer,Design,12,1,1,1
+fixed_unit,C027,Animator,Design,9,1,1,4
+fixed_unit,C028,Management Analyst,Business,8,2,3,5
+fixed_unit,C029,Financial Analyst,Business,11,3,3,1
+fixed_unit,C030,Accountant,Business,6,2,2,1.5
+fixed_unit,C031,Market Research Analyst,Business,13,3,5,3
+fixed_unit,C032,Project Manager,Business,7,2,3,5
+fixed_unit,C033,Human Resources Specialist,Business,11,1,1,1
+fixed_unit,C034,Digital Marketing Specialist,Business,3,1,2,3.5
+fixed_unit,C035,Secondary School Teacher,Education,11,4,4,1.5
+fixed_unit,C036,Instructional Designer,Education,2,2,2,2.0
+fixed_unit,C037,English as a Second Language Teacher,Education,11,2,2,1.5
+fixed_unit,C038,School Counselor,Education,10,1,1,1
+fixed_unit,C039,Computer Science Lecturer,Education,4,1,1,1
+fixed_unit,C040,Registered Nurse,Healthcare,11,2,2,1.0
+fixed_unit,C041,Pharmacist,Healthcare,7,1,1,1
+fixed_unit,C042,Medical Laboratory Technologist,Healthcare,8,1,1,2
+fixed_unit,C043,Medical Records Specialist,Healthcare,6,2,2,1.0
+fixed_unit,C044,Dietitian and Nutritionist,Healthcare,11,2,2,1.0
+fixed_unit,C045,Physical Therapist,Healthcare,4,1,1,4
+fixed_unit,C046,Civil Engineer,Engineering,3,1,3,9
+fixed_unit,C047,Mechanical Engineer,Engineering,4,2,2,3.5
+fixed_unit,C048,Electrical Engineer,Engineering,8,2,2,1.0
+fixed_unit,C049,Environmental Engineer,Engineering,6,1,1,1
+fixed_unit,C050,Biomedical Engineer,Engineering,5,1,1,1
+fixed_unit,C051,Mining Engineer,Engineering,6,1,1,1
+fixed_unit,C052,Geological Engineer,Engineering,6,4,4,1.5
+fixed_unit,C053,Telecommunications Engineer,Engineering,6,2,2,1.5
+fixed_unit,C054,Building Engineer,Engineering,4,3,3,2
+fixed_unit,C055,Geotechnical Engineer,Engineering,5,1,1,1
+fixed_unit,C056,Geophysicist,Engineering,6,2,2,2.5
+fixed_unit,C057,Private Law Specialist,Law,9,5,5,1
+fixed_unit,C058,Public Law Specialist,Law,12,5,5,1
+fixed_unit,C059,Management Information Systems Specialist (MIAGE),Business,7,2,2,1.0
+fixed_unit,C060,Economist,Social Sciences,10,5,5,1
+fixed_unit,C061,Business Administration Specialist,Business,3,2,4,6.0
+fixed_unit,C062,Laboratory Technician,Healthcare,6,3,3,1
+fixed_unit,C063,Sociologist,Social Sciences,17,5,5,1
+fixed_unit,C064,Community Relations Specialist,Business,7,2,3,3
+cosine,C001,Data Scientist,Data and AI,10,6,6,2.5
+cosine,C002,Data Analyst,Data and AI,23,5,5,2
+cosine,C003,Machine Learning Engineer,Data and AI,14,2,2,2.5
+cosine,C004,Business Intelligence Analyst,Data and AI,26,3,3,1
+cosine,C005,Data Engineer,Data and AI,16,2,2,1.5
+cosine,C006,Statistician,Data and AI,15,5,5,3
+cosine,C007,AI Research Scientist,Data and AI,6,1,2,4.0
+cosine,C008,Database Administrator,Data and AI,15,2,2,1.5
+cosine,C009,Software Developer,Software,8,6,7,4
+cosine,C010,Web Developer,Software,13,4,5,5
+cosine,C011,Software Quality Assurance Tester,Software,6,1,1,1
+cosine,C012,Mobile App Developer,Software,6,1,1,1
+cosine,C013,DevOps Engineer,Software,5,2,3,5
+cosine,C014,Cloud Engineer,Software,6,2,3,5
+cosine,C015,Computer Programmer,Software,11,3,4,1.0
+cosine,C016,Computer Systems Analyst,Software,3,1,2,5.0
+cosine,C017,Information Security Analyst,Cybersecurity,6,5,7,2
+cosine,C018,Penetration Tester,Cybersecurity,9,1,1,1
+cosine,C019,Digital Forensics Analyst,Cybersecurity,13,2,2,1.0
+cosine,C020,Network and Systems Administrator,Cybersecurity,7,3,6,5.0
+cosine,C021,Computer Network Architect,Cybersecurity,6,3,4,3.5
+cosine,C022,Information Security Engineer,Cybersecurity,2,1,3,6
+cosine,C023,Graphic Designer,Design,7,4,4,1.0
+cosine,C024,UX Designer,Design,15,1,2,3.5
+cosine,C025,Interior Designer,Design,8,2,2,2.0
+cosine,C026,Industrial Designer,Design,12,1,1,1
+cosine,C027,Animator,Design,9,1,1,4
+cosine,C028,Management Analyst,Business,8,2,3,5
+cosine,C029,Financial Analyst,Business,11,3,3,1
+cosine,C030,Accountant,Business,6,2,2,1.5
+cosine,C031,Market Research Analyst,Business,17,4,5,3
+cosine,C032,Project Manager,Business,7,2,3,5
+cosine,C033,Human Resources Specialist,Business,12,1,1,1
+cosine,C034,Digital Marketing Specialist,Business,3,1,2,3.5
+cosine,C035,Secondary School Teacher,Education,11,4,4,1.5
+cosine,C036,Instructional Designer,Education,2,2,2,1.5
+cosine,C037,English as a Second Language Teacher,Education,11,2,2,1.5
+cosine,C038,School Counselor,Education,10,1,1,1
+cosine,C039,Computer Science Lecturer,Education,5,1,1,1
+cosine,C040,Registered Nurse,Healthcare,11,2,2,1.0
+cosine,C041,Pharmacist,Healthcare,7,1,1,1
+cosine,C042,Medical Laboratory Technologist,Healthcare,8,1,1,2
+cosine,C043,Medical Records Specialist,Healthcare,6,2,2,1.0
+cosine,C044,Dietitian and Nutritionist,Healthcare,11,2,2,1.0
+cosine,C045,Physical Therapist,Healthcare,4,1,1,4
+cosine,C046,Civil Engineer,Engineering,3,1,3,9
+cosine,C047,Mechanical Engineer,Engineering,4,2,2,3.5
+cosine,C048,Electrical Engineer,Engineering,8,2,2,1.0
+cosine,C049,Environmental Engineer,Engineering,6,1,1,1
+cosine,C050,Biomedical Engineer,Engineering,5,1,1,1
+cosine,C051,Mining Engineer,Engineering,6,1,1,1
+cosine,C052,Geological Engineer,Engineering,6,4,4,1.5
+cosine,C053,Telecommunications Engineer,Engineering,6,2,2,1.5
+cosine,C054,Building Engineer,Engineering,4,3,3,2
+cosine,C055,Geotechnical Engineer,Engineering,5,1,1,1
+cosine,C056,Geophysicist,Engineering,6,2,2,2.5
+cosine,C057,Private Law Specialist,Law,9,5,5,1
+cosine,C058,Public Law Specialist,Law,12,5,5,1
+cosine,C059,Management Information Systems Specialist (MIAGE),Business,7,2,2,1.5
+cosine,C060,Economist,Social Sciences,10,5,5,1
+cosine,C061,Business Administration Specialist,Business,3,2,4,5.5
+cosine,C062,Laboratory Technician,Healthcare,5,3,3,1
+cosine,C063,Sociologist,Social Sciences,17,5,5,1
+cosine,C064,Community Relations Specialist,Business,6,2,3,3

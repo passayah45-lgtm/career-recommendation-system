@@ -1,0 +1,41 @@
+rule,category,top5_slots,slot_share
+current,Business,80,0.1441
+current,Cybersecurity,42,0.0757
+current,Data and AI,126,0.227
+current,Design,51,0.0919
+current,Education,39,0.0703
+current,Engineering,59,0.1063
+current,Healthcare,51,0.0919
+current,Law,21,0.0378
+current,Social Sciences,27,0.0486
+current,Software,59,0.1063
+none,Business,46,0.0829
+none,Cybersecurity,26,0.0468
+none,Data and AI,307,0.5532
+none,Design,12,0.0216
+none,Education,15,0.027
+none,Engineering,37,0.0667
+none,Healthcare,41,0.0739
+none,Law,11,0.0198
+none,Social Sciences,16,0.0288
+none,Software,44,0.0793
+fixed_unit,Business,76,0.1369
+fixed_unit,Cybersecurity,41,0.0739
+fixed_unit,Data and AI,134,0.2414
+fixed_unit,Design,50,0.0901
+fixed_unit,Education,38,0.0685
+fixed_unit,Engineering,59,0.1063
+fixed_unit,Healthcare,53,0.0955
+fixed_unit,Law,21,0.0378
+fixed_unit,Social Sciences,27,0.0486
+fixed_unit,Software,56,0.1009
+cosine,Business,80,0.1441
+cosine,Cybersecurity,43,0.0775
+cosine,Data and AI,125,0.2252
+cosine,Design,51,0.0919
+cosine,Education,39,0.0703
+cosine,Engineering,59,0.1063
+cosine,Healthcare,52,0.0937
+cosine,Law,21,0.0378
+cosine,Social Sciences,27,0.0486
+cosine,Software,58,0.1045

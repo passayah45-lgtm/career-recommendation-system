@@ -1,0 +1,112 @@
+profile_id,primary_category,profile_type,learner_stage,education_level,experience_years,skills,interests,learning_goal,description
+E64-D01,Data and AI,strong_match,masters,3,0,Python|statistics|machine learning|SQL|data visualization,analysis|research|mathematics,Become a data scientist,Master's student in applied statistics who builds predictive models in Python.
+E64-D02,Data and AI,incomplete_skills,undergraduate,2,0,Excel|SQL|communication,analysis|business,First job analysing sales data,Second-year business student who writes simple SQL queries for a club budget.
+E64-D03,Data and AI,career_change,professional,3,6,accounting|Excel|SQL|financial reporting,analysis|business,Move from accounting into business intelligence,Accountant for six years who now builds reporting queries.
+E64-D04,Data and AI,strong_match,advanced,4,3,python|deep learning|TensorFlow|docker|cloud computing|git,technology|problem solving,Deploy machine learning models in production,ML practitioner with a master's who ships models as services.
+E64-D05,Data and AI,strong_match,intermediate,3,2,Python|SQL|ETL|Apache Spark|data warehousing|Airflow,technology|organization,Build data pipelines,Junior data engineer who maintains nightly batch jobs.
+E64-D06,Data and AI,strong_match,professional,3,5,SQL|database administration|Linux|backup and recovery|Oracle,technology|organization,Senior database administrator,Database administrator for five years in a bank.
+E64-D07,Data and AI,strong_match,masters,4,1,machine learning|deep learning|research methods|linear algebra|Python|academic writing,research|mathematics|science,Join an AI research lab,Research master's graduate with one workshop paper on neural networks.
+E64-D08,Data and AI,strong_match,masters,4,0,statistics|R programming|probability|survey design|SAS,mathematics|research,Work in a national statistics office,Master's graduate in statistics.
+E64-D09,Data and AI,unfamiliar_vocabulary,intermediate,3,2,Power BI|Tableau dashboards|KPI reporting|spreadsheets,business|analysis,Business intelligence analyst,Operations assistant who builds dashboards for managers.
+E64-D10,Data and AI,minimal_input,beginner,,,python,technology,Something with data,Learner who has finished one Python course.
+E64-D11,Data and AI,mixed_interests,masters,4,1,python|statistics|epidemiology|SQL,healthcare|analysis|helping people,Health data analyst,Public health master's student who analyses survey data.
+E64-S01,Software,strong_match,undergraduate,3,1,HTML|CSS|JavaScript|React|git|responsive design,technology|design|building software,Front-end developer,Computer science graduate with a portfolio of web apps.
+E64-S02,Software,strong_match,intermediate,3,2,Java|SQL|Spring Boot|git|REST APIs|object-oriented programming,technology|problem solving|building software,Back-end software engineer,Junior back-end developer in a fintech company.
+E64-S03,Software,strong_match,intermediate,3,2,manual testing|test automation|Selenium|SQL|bug tracking,technology|organization,QA engineer,Software tester who automates regression tests.
+E64-S04,Software,strong_match,undergraduate,3,0,Kotlin|Swift|Flutter|git|UI design,technology|design|building software,Mobile app developer,Graduate who published two apps on app stores.
+E64-S05,Software,strong_match,professional,3,4,Linux|Docker|Kubernetes|CI/CD|AWS|bash scripting,technology|problem solving,DevOps or site reliability engineer,Operations engineer who runs container platforms.
+E64-S06,Software,career_change,professional,3,7,networking|Linux|Windows Server|cloud computing|AWS basics,technology|security,Move from network administration to cloud engineering,Network administrator for seven years.
+E64-S07,Software,strong_match,professional,3,3,business analysis|requirements gathering|SQL|UML|communication,business|technology|organization,Computer systems analyst,Business analyst in an IT department.
+E64-S08,Software,lower_education,beginner,1,0,python|JavaScript basics|git,technology|building software,Junior programmer,Secondary-school graduate who completed a coding bootcamp.
+E64-S09,Software,incomplete_skills,undergraduate,3,0,C++|algorithms|data structures,problem solving|mathematics,Software engineer,Third-year computer science student who does programming contests.
+E64-S10,Software,french_vocabulary,undergraduate,3,1,développement web|programmation|base de données|JavaScript,technology|building software,Développeur web,"Licence graduate in computer science from Conakry, writing skills in French."
+E64-S11,Software,many_inputs,professional,4,8,python|java|javascript|sql|git|docker|aws|linux|react|unit testing|agile|communication|project management|machine learning,technology|leadership|problem solving|business,Technical lead,"Senior engineer with eight years across web, cloud and data."
+E64-Y01,Cybersecurity,strong_match,professional,3,3,network security|SIEM|incident response|firewalls|Linux|risk assessment,security|technology|problem solving,Security operations analyst,SOC analyst for three years.
+E64-Y02,Cybersecurity,strong_match,intermediate,3,2,penetration testing|ethical hacking|Kali Linux|python|web application security|networking,security|problem solving,Red team member,Junior penetration tester with two years of client tests.
+E64-Y03,Cybersecurity,strong_match,intermediate,3,2,digital forensics|evidence handling|incident response|file systems|report writing,security|analysis,Digital forensics investigator,Forensics analyst in a consultancy.
+E64-Y04,Cybersecurity,strong_match,professional,3,4,Windows Server|Active Directory|networking|Linux|troubleshooting,technology|organization,Network and systems administrator,IT support lead for four years.
+E64-Y05,Cybersecurity,strong_match,professional,3,10,network design|routing and switching|Cisco|cloud networking|security,technology|engineering,Design enterprise networks,Senior network engineer for ten years.
+E64-Y06,Cybersecurity,strong_match,masters,4,2,security architecture|cryptography|cloud security|python|DevSecOps,security|technology|engineering,Information security engineer,Master's in cybersecurity with two years in industry.
+E64-Y07,Cybersecurity,career_change,professional,3,10,investigation|report writing|evidence handling|basic computer skills,security|helping people|analysis,Move from police work into digital forensics,Police investigator for ten years.
+E64-Y08,Cybersecurity,interests_only,beginner,3,0,,security|technology|problem solving,"A cybersecurity job, role not decided",Graduate in an unrelated field who is curious about security.
+E64-Y09,Cybersecurity,lower_education,beginner,2,1,networking basics|Linux basics|CompTIA Security+,security|technology,First security job,Diploma holder with a Security+ certificate.
+E64-Y10,Cybersecurity,french_vocabulary,intermediate,3,2,sécurité informatique|réseaux|Linux|pare-feu,security|technology,Analyste sécurité,Network technician writing skills in French.
+E64-Y11,Cybersecurity,mixed_interests,masters,4,3,risk assessment|regulatory compliance|data protection|policy writing,security|writing|analysis,Cyber compliance and data protection,Governance analyst with a master's in information law.
+E64-G01,Design,strong_match,undergraduate,3,1,Adobe Photoshop|Illustrator|typography|branding|layout,design|visual arts,Brand designer,Graphic design graduate with an agency internship.
+E64-G02,Design,strong_match,intermediate,3,2,user research|wireframing|Figma|prototyping|usability testing,design|technology|helping people,UX designer,Junior product designer in a start-up.
+E64-G03,Design,strong_match,undergraduate,3,0,space planning|AutoCAD|SketchUp|color theory|materials,design|visual arts,Interior designer,Interior architecture graduate.
+E64-G04,Design,strong_match,undergraduate,3,1,product design|3D modeling|SolidWorks|prototyping|ergonomics,design|engineering,Industrial designer,Product design graduate.
+E64-G05,Design,strong_match,undergraduate,3,0,2D animation|3D animation|Blender|storyboarding|drawing,visual arts|design,Animator in a studio,Animation graduate with a short film.
+E64-G06,Design,career_change,professional,3,5,AutoCAD|technical drawing|project coordination|client communication,design|organization,Move from drafting into interior design,Architectural draftsman for five years.
+E64-G07,Design,lower_education,beginner,1,0,drawing|creativity,visual arts|design,Work as a designer,Secondary-school leaver who draws.
+E64-G08,Design,unfamiliar_vocabulary,beginner,2,1,Canva|Instagram content|photo editing|video editing,visual arts|communication,Social media designer,Diploma holder who runs a shop's social accounts.
+E64-G09,Design,transferable_skills,masters,4,2,psychology research|interviewing|survey design|statistics,helping people|research|design,UX researcher,Psychology master's graduate.
+E64-G10,Design,french_vocabulary,undergraduate,3,0,conception graphique|dessin|Photoshop|typographie,design|visual arts,Graphiste,Design graduate writing skills in French.
+E64-G11,Design,no_clear_fit,undergraduate,3,0,photography|travel writing|languages,visual arts|writing,Not decided,Literature graduate who photographs and writes.
+E64-B01,Business,strong_match,undergraduate,3,1,financial modeling|Excel|accounting|valuation|financial statements,analysis|business|mathematics,Investment analyst,Finance graduate with a bank internship.
+E64-B02,Business,strong_match,professional,3,4,bookkeeping|accounting|taxation|Excel|auditing,organization|mathematics|business,Chartered accountant,Accountant in an audit firm.
+E64-B03,Business,strong_match,intermediate,3,2,SEO|social media marketing|Google Analytics|content writing|email marketing,business|communication|writing,Digital marketing specialist,Marketing assistant for two years.
+E64-B04,Business,strong_match,professional,3,3,recruitment|employee relations|labour law|payroll|interviewing,helping people|communication|organization,Human resources specialist,HR officer for three years.
+E64-B05,Business,strong_match,professional,3,6,project management|scheduling|budgeting|risk management|stakeholder communication|agile,leadership|organization|business,Certified project manager,Project coordinator for six years.
+E64-B06,Business,strong_match,masters,4,3,business strategy|process improvement|data analysis|presentation skills|Excel,business|analysis|leadership,Management consultant,MBA graduate.
+E64-B07,Business,strong_match,undergraduate,3,1,survey design|statistics|SPSS|consumer research|report writing,research|analysis|business,Market research analyst,Marketing graduate.
+E64-B08,Business,strong_match,masters,4,0,information systems|databases|Java|business processes|ERP,technology|business|organization,Information systems manager after a MIAGE master's,MIAGE master's student in Dakar.
+E64-B09,Business,strong_match,undergraduate,3,1,management|accounting|marketing basics|human resources|office administration,business|leadership|organization,Run the operations of a company,Business administration graduate.
+E64-B10,Business,strong_match,professional,3,4,stakeholder engagement|community development|negotiation|local languages|report writing,helping people|communication|environment,Community relations officer at a mine in Guinea,NGO field officer for four years in Boke.
+E64-B11,Business,lower_education,beginner,1,2,Excel|cash handling|customer service,business|helping people,Office job in finance,Shop cashier with a secondary certificate.
+E64-E01,Education,strong_match,undergraduate,3,1,teaching|lesson planning|classroom management|mathematics,teaching|helping people|mathematics,Secondary mathematics teacher,Mathematics education graduate.
+E64-E02,Education,strong_match,professional,3,3,English|TEFL|lesson planning|communication,teaching|communication,English as a second language teacher abroad,TEFL-certified teacher for three years.
+E64-E03,Education,strong_match,masters,4,2,instructional design|e-learning|Articulate Storyline|adult learning|video editing,teaching|design|technology,Corporate learning designer,Master's in educational technology.
+E64-E04,Education,strong_match,masters,4,1,counseling|child development|active listening|psychology,helping people|teaching,School counselor,Master's in school counselling.
+E64-E05,Education,strong_match,masters,4,2,Python|algorithms|teaching|research methods|curriculum development,teaching|research|technology,University lecturer in computer science,Master's graduate and teaching assistant.
+E64-E06,Education,career_change,professional,3,8,physics|mathematics|engineering|mentoring,teaching|science,Become a secondary physics teacher,Engineer for eight years who mentors interns.
+E64-E07,Education,lower_education,beginner,2,1,tutoring|English,teaching|helping people,Teacher,Diploma holder who tutors English.
+E64-E08,Education,french_vocabulary,undergraduate,3,2,enseignement|pédagogie|gestion de classe|français,teaching|helping people,Professeur de lycée,Teacher writing skills in French.
+E64-E09,Education,transferable_skills,intermediate,3,3,HTML|video production|learning management systems|training delivery,teaching|technology,Education technology,Corporate trainer who builds course pages.
+E64-E10,Education,interests_only,beginner,3,0,,teaching|helping people,Work with young people,Graduate in an unrelated field.
+E64-E11,Education,mixed_interests,undergraduate,3,1,nutrition|health education|public speaking,healthcare|teaching,Community health educator,Public health graduate who runs nutrition talks.
+E64-H01,Healthcare,strong_match,undergraduate,3,2,patient care|clinical assessment|medication administration|infection control|nursing,healthcare|helping people,Registered nurse,Nursing graduate with clinical placements.
+E64-H02,Healthcare,strong_match,masters,4,1,pharmacology|pharmaceutical calculations|patient counseling|chemistry,healthcare|science,Pharmacist,Pharmacy graduate in internship.
+E64-H03,Healthcare,strong_match,undergraduate,3,1,laboratory techniques|microbiology|hematology|clinical chemistry|quality control,science|healthcare|analysis,Hospital laboratory scientist,Biomedical science graduate.
+E64-H04,Healthcare,strong_match,intermediate,2,1,laboratory safety|sample preparation|pipetting|chemistry basics,science|organization,Laboratory technician in a mining assay laboratory,Laboratory technician diploma holder.
+E64-H05,Healthcare,strong_match,intermediate,2,2,medical coding|health information management|data entry|confidentiality|Excel,healthcare|organization,Medical records specialist,Health information diploma holder.
+E64-H06,Healthcare,strong_match,undergraduate,3,0,nutrition|dietetics|meal planning|biochemistry|counseling,healthcare|helping people|science,Dietitian,Nutrition and dietetics graduate.
+E64-H07,Healthcare,strong_match,masters,4,1,anatomy|exercise therapy|rehabilitation|patient assessment,healthcare|helping people,Physical therapist,Doctor of physical therapy student.
+E64-H08,Healthcare,career_change,professional,3,6,exercise|fitness training|first aid|coaching,healthcare|helping people|teaching,Become a physical therapist,Sports coach for six years.
+E64-H09,Healthcare,lower_education,beginner,1,0,biology|chemistry,healthcare|science,Work in the health sector,Secondary-school leaver with science subjects.
+E64-H10,Healthcare,french_vocabulary,undergraduate,3,1,soins infirmiers|soins aux patients|hygiène|anatomie,healthcare|helping people,Infirmier diplômé,Nursing graduate writing skills in French.
+E64-H11,Healthcare,transferable_skills,intermediate,3,3,hospital administration|patient scheduling|medical terminology|communication,healthcare|organization,Health service administration,Hospital front-desk supervisor.
+E64-N01,Engineering,strong_match,undergraduate,3,1,structural analysis|AutoCAD|surveying|concrete design|project management,engineering|mathematics,Civil engineer,Civil engineering graduate.
+E64-N02,Engineering,strong_match,undergraduate,3,1,thermodynamics|SolidWorks|mechanics|manufacturing|MATLAB,engineering|problem solving,Mechanical engineer,Mechanical engineering graduate.
+E64-N03,Engineering,strong_match,undergraduate,3,1,circuit analysis|power systems|electronics|PLC programming|MATLAB,engineering|technology,Power systems engineer,Electrical engineering graduate.
+E64-N04,Engineering,strong_match,undergraduate,3,1,environmental science|water treatment|environmental impact assessment|GIS|chemistry,environment|engineering|science,Environmental engineer,Environmental engineering graduate.
+E64-N05,Engineering,mixed_interests,undergraduate,3,0,biology|electronics|medical devices|MATLAB,engineering|healthcare,Biomedical engineer,Biomedical engineering graduate.
+E64-N06,Engineering,strong_match,undergraduate,3,1,mine planning|rock mechanics|mining safety|Surpac|geology,engineering|environment,Mining engineer at a bauxite mine in Boke,Mining engineering graduate from Guinea.
+E64-N07,Engineering,strong_match,undergraduate,3,1,field geology|geological mapping|GIS|mineralogy|geophysics basics,science|environment|engineering,Exploration geologist or geological engineer,Geology graduate.
+E64-N08,Engineering,strong_match,intermediate,3,2,soil mechanics|foundation design|slope stability|soil testing,engineering|science,Geotechnical engineer,Civil engineer who works in a soils laboratory.
+E64-N09,Engineering,strong_match,masters,4,1,physics|seismic interpretation|Python|signal processing|geology,science|research|mathematics,Geophysicist,Master's in geophysics.
+E64-N10,Engineering,strong_match,undergraduate,3,1,telecommunications|RF|networking|fiber optics|signal processing,engineering|technology,Telecommunications engineer,Telecommunications engineering graduate.
+E64-N11,Engineering,strong_match,professional,3,5,construction management|site supervision|reinforced concrete|building codes|AutoCAD,engineering|organization,Building engineer,Site engineer for five years.
+E64-N12,Engineering,french_vocabulary,undergraduate,3,0,géologie|mécanique des roches|cartographie|SIG,science|engineering,Ingénieur géologue,Geology graduate writing skills in French.
+E64-N13,Engineering,career_change,professional,2,8,electrical installation|wiring|troubleshooting|electrical safety,engineering|technology,Become an electrical engineer,Electrician for eight years with a diploma.
+E64-N14,Engineering,lower_education,beginner,1,3,welding|machinery maintenance,engineering,Technician job,Welder with a secondary certificate.
+E64-L01,Law,strong_match,masters,4,1,contract law|commercial law|legal research|legal writing|OHADA,writing|analysis|business,Business lawyer in Conakry,Master's in business law.
+E64-L02,Law,strong_match,masters,4,1,constitutional law|administrative law|public policy|legal research,writing|analysis|leadership,Legal adviser in public administration,Master's in public law.
+E64-L03,Law,incomplete_skills,undergraduate,3,0,legal research|civil law|legal writing,writing|analysis,"A legal career, branch not decided",Law bachelor's graduate.
+E64-L04,Law,career_change,professional,3,6,employment law|HR policies|negotiation|conflict resolution,helping people|writing|analysis,Employment law specialist,HR manager for six years with labour law courses.
+E64-L05,Law,transferable_skills,masters,4,4,regulatory compliance|contracts|risk management|anti-money laundering,analysis|business|writing,Compliance officer in a bank,Bank compliance analyst with a master's in finance.
+E64-L06,Law,french_vocabulary,masters,4,1,droit des affaires|droit OHADA|rédaction juridique|droit des contrats,writing|analysis|business,Juriste d'entreprise,Business law master's graduate writing skills in French.
+E64-L07,Law,french_vocabulary,masters,4,1,droit administratif|droit constitutionnel|finances publiques|fonction publique,writing|leadership|helping people,Juriste dans l'administration publique,Public law master's graduate writing skills in French.
+E64-L08,Law,interests_only,beginner,3,0,,writing|analysis|helping people,Possibly law,Graduate in history thinking about law.
+E64-L09,Law,mixed_interests,masters,4,2,environmental law|environmental impact assessment|public consultation,environment|writing|helping people,Regulator for the mining sector,Master's in environmental law.
+E64-L10,Law,lower_education,beginner,2,3,typing|filing|legal terminology|word processing,organization|writing,Legal assistant,Secretary in a law firm with a diploma.
+E64-X01,Social Sciences,strong_match,masters,4,1,economics|econometrics|statistics|Stata|macroeconomics,analysis|research|mathematics,Economist at the central bank,Master's in economics.
+E64-X02,Social Sciences,strong_match,masters,4,1,sociology|qualitative research|interviews|survey design|social theory,research|helping people|writing,Social researcher,Master's in sociology.
+E64-X03,Social Sciences,strong_match,masters,4,2,economics|impact evaluation|R programming|field surveys,research|analysis|helping people,Development economist at an NGO,Master's in development economics.
+E64-X04,Social Sciences,incomplete_skills,undergraduate,3,1,sociology|report writing|community work,research|helping people,Social research assistant,Sociology bachelor's graduate.
+E64-X05,Social Sciences,strong_match,masters,4,3,public finance|economics|policy analysis,analysis|leadership|research,Economist in a ministry,Policy analyst with a master's in public economics.
+E64-X06,Social Sciences,french_vocabulary,masters,4,1,économie|statistiques|analyse économique|Excel,analysis|research,Économiste,Economics master's graduate writing skills in French.
+E64-X07,Social Sciences,french_vocabulary,masters,4,1,sociologie|enquête de terrain|entretiens|analyse qualitative,research|helping people,Sociologue,Sociology master's graduate writing skills in French.
+E64-X08,Social Sciences,mixed_interests,masters,4,1,python|machine learning|economics|statistics,analysis|research|technology,Data science for economics,Master's in quantitative economics.
+E64-X09,Social Sciences,career_change,professional,3,7,interviewing|writing|research|social media,writing|research|helping people,Move from journalism to social research,Journalist for seven years.
+E64-X10,Social Sciences,no_clear_fit,undergraduate,3,0,history|philosophy|debate,writing|research,Not decided,Humanities graduate.

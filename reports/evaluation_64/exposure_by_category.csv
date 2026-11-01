@@ -1,0 +1,11 @@
+category,profile_share,career_share,top5_slots,slot_share,slots_from_own_category_profiles,slots_from_other_profiles,relevant_slots_grade2plus,weak_slots_grade1,not_relevant_slots_grade0,slots_skills_matched,slots_interests_only
+Business,0.0991,0.1562,80,0.1441,30,50,21,15,44,51,29
+Cybersecurity,0.0991,0.0938,42,0.0757,25,17,15,7,20,25,17
+Data and AI,0.0991,0.125,126,0.227,29,97,26,8,92,71,55
+Design,0.0991,0.0781,51,0.0919,34,17,9,8,34,12,39
+Education,0.0991,0.0781,39,0.0703,28,11,10,9,20,12,27
+Engineering,0.1261,0.1719,59,0.1063,48,11,20,15,24,37,22
+Healthcare,0.0991,0.1094,51,0.0919,38,13,12,5,34,25,26
+Law,0.0901,0.0312,21,0.0378,14,7,10,7,4,10,11
+Social Sciences,0.0901,0.0312,27,0.0486,11,16,10,5,12,17,10
+Software,0.0991,0.125,59,0.1063,30,29,20,8,31,43,16

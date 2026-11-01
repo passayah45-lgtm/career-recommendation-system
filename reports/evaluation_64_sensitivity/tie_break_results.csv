@@ -1,0 +1,9 @@
+experiment,method,metric,current,alternative,difference,diff_ci_low,diff_ci_high,profiles,profiles_with_top5_membership_change,top5_positions_changed,relevant_entering_top5,relevant_leaving_top5,new_career_top5_slots_before,new_career_top5_slots_after
+tie_break,career_id_current,precision_at_5,0.303,0.303,0.0,0.0,0.0,101,0,0,0,0,100,100
+tie_break,career_id_current,recall_at_5,0.901,0.901,0.0,0.0,0.0,101,0,0,0,0,100,100
+tie_break,career_id_current,average_precision,0.7948,0.7948,0.0,0.0,0.0,101,0,0,0,0,100,100
+tie_break,career_id_current,ndcg_at_5,0.7592,0.7592,0.0,0.0,0.0,111,0,0,0,0,100,100
+tie_break,hash_deterministic,precision_at_5,0.303,0.299,-0.004,-0.012,0.0038,101,54,219,1,3,100,107
+tie_break,hash_deterministic,recall_at_5,0.901,0.8861,-0.0149,-0.0441,0.0053,101,54,219,1,3,100,107
+tie_break,hash_deterministic,average_precision,0.7948,0.7763,-0.0185,-0.0447,0.0056,101,54,219,1,3,100,107
+tie_break,hash_deterministic,ndcg_at_5,0.7592,0.7467,-0.0125,-0.0321,0.0051,111,54,219,1,3,100,107

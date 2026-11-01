@@ -1,0 +1,511 @@
+{
+  "label": "Exploratory, post-hoc sensitivity analysis. Not deployed; production formula and ranking unchanged.",
+  "study_id": "eval64_v1",
+  "profiles": 111,
+  "replica_reproduces_production": true,
+  "tie_break": {
+    "methods": {
+      "career_id_current": "production: score, required coverage, matched required count, career id",
+      "hash_deterministic": "same first three keys, then SHA-256 of 'profile_id|career_id'",
+      "random_seeded": "same first three keys, then a seeded random number; 200 runs, seeds 2026 to 2225"
+    },
+    "results": {
+      "career_id_current": {
+        "comparison": {
+          "profiles_with_top5_membership_change": 0,
+          "top5_positions_changed": 0,
+          "relevant_entering_top5": 0,
+          "relevant_leaving_top5": 0,
+          "new_career_top5_slots_before": 100,
+          "new_career_top5_slots_after": 100,
+          "category_slots_before": {
+            "Data and AI": 126,
+            "Business": 80,
+            "Social Sciences": 27,
+            "Software": 59,
+            "Cybersecurity": 42,
+            "Engineering": 59,
+            "Education": 39,
+            "Design": 51,
+            "Law": 21,
+            "Healthcare": 51
+          },
+          "category_slots_after": {
+            "Data and AI": 126,
+            "Business": 80,
+            "Social Sciences": 27,
+            "Software": 59,
+            "Cybersecurity": 42,
+            "Engineering": 59,
+            "Education": 39,
+            "Design": 51,
+            "Law": 21,
+            "Healthcare": 51
+          }
+        },
+        "metrics": {
+          "precision_at_5": {
+            "current": 0.303,
+            "alternative": 0.303,
+            "difference": 0.0,
+            "diff_ci_low": 0.0,
+            "diff_ci_high": 0.0,
+            "profiles": 101
+          },
+          "recall_at_5": {
+            "current": 0.901,
+            "alternative": 0.901,
+            "difference": 0.0,
+            "diff_ci_low": 0.0,
+            "diff_ci_high": 0.0,
+            "profiles": 101
+          },
+          "average_precision": {
+            "current": 0.7948,
+            "alternative": 0.7948,
+            "difference": 0.0,
+            "diff_ci_low": 0.0,
+            "diff_ci_high": 0.0,
+            "profiles": 101
+          },
+          "ndcg_at_5": {
+            "current": 0.7592,
+            "alternative": 0.7592,
+            "difference": 0.0,
+            "diff_ci_low": 0.0,
+            "diff_ci_high": 0.0,
+            "profiles": 111
+          }
+        }
+      },
+      "hash_deterministic": {
+        "comparison": {
+          "profiles_with_top5_membership_change": 54,
+          "top5_positions_changed": 219,
+          "relevant_entering_top5": 1,
+          "relevant_leaving_top5": 3,
+          "new_career_top5_slots_before": 100,
+          "new_career_top5_slots_after": 107,
+          "category_slots_before": {
+            "Data and AI": 126,
+            "Business": 80,
+            "Social Sciences": 27,
+            "Software": 59,
+            "Cybersecurity": 42,
+            "Engineering": 59,
+            "Education": 39,
+            "Design": 51,
+            "Law": 21,
+            "Healthcare": 51
+          },
+          "category_slots_after": {
+            "Data and AI": 81,
+            "Business": 91,
+            "Social Sciences": 27,
+            "Software": 60,
+            "Cybersecurity": 51,
+            "Engineering": 70,
+            "Education": 43,
+            "Design": 47,
+            "Healthcare": 64,
+            "Law": 21
+          }
+        },
+        "metrics": {
+          "precision_at_5": {
+            "current": 0.303,
+            "alternative": 0.299,
+            "difference": -0.004,
+            "diff_ci_low": -0.012,
+            "diff_ci_high": 0.0038,
+            "profiles": 101
+          },
+          "recall_at_5": {
+            "current": 0.901,
+            "alternative": 0.8861,
+            "difference": -0.0149,
+            "diff_ci_low": -0.0441,
+            "diff_ci_high": 0.0053,
+            "profiles": 101
+          },
+          "average_precision": {
+            "current": 0.7948,
+            "alternative": 0.7763,
+            "difference": -0.0185,
+            "diff_ci_low": -0.0447,
+            "diff_ci_high": 0.0056,
+            "profiles": 101
+          },
+          "ndcg_at_5": {
+            "current": 0.7592,
+            "alternative": 0.7467,
+            "difference": -0.0125,
+            "diff_ci_low": -0.0321,
+            "diff_ci_high": 0.0051,
+            "profiles": 111
+          }
+        }
+      },
+      "random_seeded": {
+        "runs": 200,
+        "base_seed": 2026,
+        "summary": {
+          "profiles_with_top5_membership_change": {
+            "mean": 54.235,
+            "p2_5": 50,
+            "p97_5": 59,
+            "min": 48,
+            "max": 61
+          },
+          "top5_positions_changed": {
+            "mean": 208.565,
+            "p2_5": 189,
+            "p97_5": 225,
+            "min": 178,
+            "max": 232
+          },
+          "relevant_entering_top5": {
+            "mean": 1.78,
+            "p2_5": 0,
+            "p97_5": 4,
+            "min": 0,
+            "max": 5
+          },
+          "relevant_leaving_top5": {
+            "mean": 2.765,
+            "p2_5": 1,
+            "p97_5": 5,
+            "min": 0,
+            "max": 5
+          },
+          "new_career_top5_slots_after": {
+            "mean": 106.755,
+            "p2_5": 103,
+            "p97_5": 111,
+            "min": 102,
+            "max": 113
+          },
+          "data_and_ai_top5_slots": {
+            "mean": 82.825,
+            "p2_5": 77,
+            "p97_5": 89,
+            "min": 74,
+            "max": 91
+          },
+          "precision_at_5": {
+            "mean": 0.301,
+            "p2_5": 0.295,
+            "p97_5": 0.3069,
+            "min": 0.295,
+            "max": 0.3129
+          },
+          "recall_at_5": {
+            "mean": 0.8944,
+            "p2_5": 0.8812,
+            "p97_5": 0.9109,
+            "min": 0.8762,
+            "max": 0.9241
+          },
+          "average_precision": {
+            "mean": 0.7846,
+            "p2_5": 0.7682,
+            "p97_5": 0.8044,
+            "min": 0.7657,
+            "max": 0.8096
+          },
+          "ndcg_at_5": {
+            "mean": 0.7522,
+            "p2_5": 0.7395,
+            "p97_5": 0.7663,
+            "min": 0.7344,
+            "max": 0.7766
+          }
+        }
+      }
+    }
+  },
+  "interest_scoring": {
+    "rules": {
+      "current": "matched interests / career's listed interests, weight 0.25",
+      "none": "interest weight 0; other weights share the total as in production",
+      "fixed_unit": "min(matched, 3) / 3: each matched interest worth the same for every career",
+      "cosine": "matched / sqrt(career interests x learner interests): neutral to both list lengths"
+    },
+    "tie_break": "production (career id) for every rule, to isolate the interest effect",
+    "results": {
+      "current": {
+        "comparison": {
+          "profiles_with_top5_membership_change": 0,
+          "top5_positions_changed": 0,
+          "relevant_entering_top5": 0,
+          "relevant_leaving_top5": 0,
+          "new_career_top5_slots_before": 100,
+          "new_career_top5_slots_after": 100,
+          "category_slots_before": {
+            "Data and AI": 126,
+            "Business": 80,
+            "Social Sciences": 27,
+            "Software": 59,
+            "Cybersecurity": 42,
+            "Engineering": 59,
+            "Education": 39,
+            "Design": 51,
+            "Law": 21,
+            "Healthcare": 51
+          },
+          "category_slots_after": {
+            "Data and AI": 126,
+            "Business": 80,
+            "Social Sciences": 27,
+            "Software": 59,
+            "Cybersecurity": 42,
+            "Engineering": 59,
+            "Education": 39,
+            "Design": 51,
+            "Law": 21,
+            "Healthcare": 51
+          }
+        },
+        "metrics": {
+          "precision_at_5": {
+            "current": 0.303,
+            "alternative": 0.303,
+            "difference": 0.0,
+            "diff_ci_low": 0.0,
+            "diff_ci_high": 0.0,
+            "profiles": 101
+          },
+          "recall_at_5": {
+            "current": 0.901,
+            "alternative": 0.901,
+            "difference": 0.0,
+            "diff_ci_low": 0.0,
+            "diff_ci_high": 0.0,
+            "profiles": 101
+          },
+          "average_precision": {
+            "current": 0.7948,
+            "alternative": 0.7948,
+            "difference": 0.0,
+            "diff_ci_low": 0.0,
+            "diff_ci_high": 0.0,
+            "profiles": 101
+          },
+          "ndcg_at_5": {
+            "current": 0.7592,
+            "alternative": 0.7592,
+            "difference": 0.0,
+            "diff_ci_low": 0.0,
+            "diff_ci_high": 0.0,
+            "profiles": 111
+          }
+        }
+      },
+      "none": {
+        "comparison": {
+          "profiles_with_top5_membership_change": 98,
+          "top5_positions_changed": 382,
+          "relevant_entering_top5": 2,
+          "relevant_leaving_top5": 35,
+          "new_career_top5_slots_before": 100,
+          "new_career_top5_slots_after": 67,
+          "category_slots_before": {
+            "Data and AI": 126,
+            "Business": 80,
+            "Social Sciences": 27,
+            "Software": 59,
+            "Cybersecurity": 42,
+            "Engineering": 59,
+            "Education": 39,
+            "Design": 51,
+            "Law": 21,
+            "Healthcare": 51
+          },
+          "category_slots_after": {
+            "Data and AI": 307,
+            "Business": 46,
+            "Software": 44,
+            "Cybersecurity": 26,
+            "Education": 15,
+            "Social Sciences": 16,
+            "Engineering": 37,
+            "Design": 12,
+            "Healthcare": 41,
+            "Law": 11
+          }
+        },
+        "metrics": {
+          "precision_at_5": {
+            "current": 0.303,
+            "alternative": 0.2376,
+            "difference": -0.0653,
+            "diff_ci_low": -0.0871,
+            "diff_ci_high": -0.0434,
+            "profiles": 101
+          },
+          "recall_at_5": {
+            "current": 0.901,
+            "alternative": 0.6865,
+            "difference": -0.2145,
+            "diff_ci_low": -0.2896,
+            "diff_ci_high": -0.1431,
+            "profiles": 101
+          },
+          "average_precision": {
+            "current": 0.7948,
+            "alternative": 0.6534,
+            "difference": -0.1414,
+            "diff_ci_low": -0.1993,
+            "diff_ci_high": -0.0851,
+            "profiles": 101
+          },
+          "ndcg_at_5": {
+            "current": 0.7592,
+            "alternative": 0.5596,
+            "difference": -0.1995,
+            "diff_ci_low": -0.2546,
+            "diff_ci_high": -0.1436,
+            "profiles": 111
+          }
+        }
+      },
+      "fixed_unit": {
+        "comparison": {
+          "profiles_with_top5_membership_change": 27,
+          "top5_positions_changed": 96,
+          "relevant_entering_top5": 0,
+          "relevant_leaving_top5": 2,
+          "new_career_top5_slots_before": 100,
+          "new_career_top5_slots_after": 104,
+          "category_slots_before": {
+            "Data and AI": 126,
+            "Business": 80,
+            "Social Sciences": 27,
+            "Software": 59,
+            "Cybersecurity": 42,
+            "Engineering": 59,
+            "Education": 39,
+            "Design": 51,
+            "Law": 21,
+            "Healthcare": 51
+          },
+          "category_slots_after": {
+            "Data and AI": 134,
+            "Social Sciences": 27,
+            "Business": 76,
+            "Software": 56,
+            "Cybersecurity": 41,
+            "Engineering": 59,
+            "Education": 38,
+            "Design": 50,
+            "Law": 21,
+            "Healthcare": 53
+          }
+        },
+        "metrics": {
+          "precision_at_5": {
+            "current": 0.303,
+            "alternative": 0.299,
+            "difference": -0.004,
+            "diff_ci_low": -0.01,
+            "diff_ci_high": 0.0,
+            "profiles": 101
+          },
+          "recall_at_5": {
+            "current": 0.901,
+            "alternative": 0.8911,
+            "difference": -0.0099,
+            "diff_ci_low": -0.025,
+            "diff_ci_high": 0.0,
+            "profiles": 101
+          },
+          "average_precision": {
+            "current": 0.7948,
+            "alternative": 0.8055,
+            "difference": 0.0107,
+            "diff_ci_low": -0.001,
+            "diff_ci_high": 0.0291,
+            "profiles": 101
+          },
+          "ndcg_at_5": {
+            "current": 0.7592,
+            "alternative": 0.7614,
+            "difference": 0.0022,
+            "diff_ci_low": -0.0073,
+            "diff_ci_high": 0.0121,
+            "profiles": 111
+          }
+        }
+      },
+      "cosine": {
+        "comparison": {
+          "profiles_with_top5_membership_change": 5,
+          "top5_positions_changed": 39,
+          "relevant_entering_top5": 1,
+          "relevant_leaving_top5": 1,
+          "new_career_top5_slots_before": 100,
+          "new_career_top5_slots_after": 102,
+          "category_slots_before": {
+            "Data and AI": 126,
+            "Business": 80,
+            "Social Sciences": 27,
+            "Software": 59,
+            "Cybersecurity": 42,
+            "Engineering": 59,
+            "Education": 39,
+            "Design": 51,
+            "Law": 21,
+            "Healthcare": 51
+          },
+          "category_slots_after": {
+            "Data and AI": 125,
+            "Business": 80,
+            "Social Sciences": 27,
+            "Software": 58,
+            "Cybersecurity": 43,
+            "Engineering": 59,
+            "Education": 39,
+            "Design": 51,
+            "Law": 21,
+            "Healthcare": 52
+          }
+        },
+        "metrics": {
+          "precision_at_5": {
+            "current": 0.303,
+            "alternative": 0.303,
+            "difference": 0.0,
+            "diff_ci_low": 0.0,
+            "diff_ci_high": 0.0,
+            "profiles": 101
+          },
+          "recall_at_5": {
+            "current": 0.901,
+            "alternative": 0.901,
+            "difference": 0.0,
+            "diff_ci_low": 0.0,
+            "diff_ci_high": 0.0,
+            "profiles": 101
+          },
+          "average_precision": {
+            "current": 0.7948,
+            "alternative": 0.8034,
+            "difference": 0.0086,
+            "diff_ci_low": 0.0019,
+            "diff_ci_high": 0.0166,
+            "profiles": 101
+          },
+          "ndcg_at_5": {
+            "current": 0.7592,
+            "alternative": 0.7637,
+            "difference": 0.0045,
+            "diff_ci_low": -0.0,
+            "diff_ci_high": 0.0098,
+            "profiles": 111
+          }
+        }
+      }
+    }
+  },
+  "bootstrap": "paired, profile-level, 2,000 resamples, seed 64, on the per-profile difference"
+}

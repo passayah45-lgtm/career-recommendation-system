@@ -9,3 +9,15 @@ __pycache__/
 data/processed/*
 !data/processed/.gitkeep
 .streamlit/secrets.toml
+# Private reviewer anonymisation key and any completed reviewer sheets: never published
+data/evaluation/catalog_v1.3.0/review/private/
+data/evaluation/catalog_v1.3.0/review/*reviewer_sheet_*.csv
+data/evaluation/catalog_v1.3.0/review/anonymised/*reviewer_sheet_*.csv
+reports/evaluation_64_review/
+# eval64_v1 labels and per-pair label outputs: withheld until the independent second review is complete
+data/evaluation/catalog_v1.3.0/relevance_labels.csv
+reports/evaluation_64/ranking_rows.csv
+reports/evaluation_64/profile_results.csv
+reports/evaluation_64/exposure_examples_C004.csv
+reports/evaluation_64/tie_groups_crossing_rank5.csv
+reports/evaluation_64_review_design/review_sample_pairs.csv

@@ -1,0 +1,65 @@
+career_id,career_title,category,added_in_v1_3_0,education_level,relevant_labels,grade3_labels,top5_appearances,top1_appearances,relevant_found_in_top5,career_recall_at_5,median_rank_when_relevant,never_in_top5,careers_sharing_a_skill,sample_note
+C001,Data Scientist,Data and AI,False,3,6,1,10,2,6,1.0,2.5,False,33,
+C002,Data Analyst,Data and AI,False,3,5,1,23,1,5,1.0,2,False,46,
+C003,Machine Learning Engineer,Data and AI,False,3,2,1,14,1,2,1.0,2.0,False,24,too few labels for a per-career conclusion
+C004,Business Intelligence Analyst,Data and AI,False,3,3,2,26,2,3,1.0,1,False,32,
+C005,Data Engineer,Data and AI,False,3,2,1,16,1,2,1.0,1.5,False,29,too few labels for a per-career conclusion
+C006,Statistician,Data and AI,False,4,5,1,15,1,5,1.0,3,False,24,
+C007,AI Research Scientist,Data and AI,False,4,2,1,6,1,1,0.5,4.0,False,30,too few labels for a per-career conclusion
+C008,Database Administrator,Data and AI,False,3,2,1,16,1,2,1.0,1.5,False,22,too few labels for a per-career conclusion
+C009,Software Developer,Software,False,3,7,3,8,0,6,0.8571,4,False,16,
+C010,Web Developer,Software,False,3,5,2,13,3,4,0.8,5,False,16,
+C011,Software Quality Assurance Tester,Software,False,3,1,1,6,1,1,1.0,1,False,44,too few labels for a per-career conclusion
+C012,Mobile App Developer,Software,False,3,1,1,6,1,1,1.0,1,False,9,too few labels for a per-career conclusion
+C013,DevOps Engineer,Software,False,3,3,1,5,2,2,0.6667,5,False,16,
+C014,Cloud Engineer,Software,False,3,3,2,6,0,2,0.6667,5,False,25,
+C015,Computer Programmer,Software,False,3,4,0,11,3,3,0.75,1.5,False,26,
+C016,Computer Systems Analyst,Software,False,3,2,1,4,2,1,0.5,4.5,False,34,too few labels for a per-career conclusion
+C017,Information Security Analyst,Cybersecurity,False,3,7,2,5,3,4,0.5714,5,False,25,
+C018,Penetration Tester,Cybersecurity,False,3,1,1,8,2,1,1.0,1,False,23,too few labels for a per-career conclusion
+C019,Digital Forensics Analyst,Cybersecurity,False,3,2,1,13,3,2,1.0,1.0,False,20,too few labels for a per-career conclusion
+C020,Network and Systems Administrator,Cybersecurity,False,3,6,1,8,2,4,0.6667,4.5,False,13,
+C021,Computer Network Architect,Cybersecurity,False,3,4,1,6,1,3,0.75,3.5,False,39,
+C022,Information Security Engineer,Cybersecurity,False,3,3,1,2,1,1,0.3333,6,False,24,
+C023,Graphic Designer,Design,False,3,4,2,7,7,4,1.0,1.0,False,5,
+C024,UX Designer,Design,False,3,2,1,15,1,1,0.5,3.5,False,7,too few labels for a per-career conclusion
+C025,Interior Designer,Design,False,3,2,1,8,0,2,1.0,2.0,False,32,too few labels for a per-career conclusion
+C026,Industrial Designer,Design,False,3,1,1,12,2,1,1.0,1,False,9,too few labels for a per-career conclusion
+C027,Animator,Design,False,3,1,1,9,0,1,1.0,4,False,3,too few labels for a per-career conclusion
+C028,Management Analyst,Business,False,3,3,1,8,0,2,0.6667,5,False,34,
+C029,Financial Analyst,Business,False,3,3,1,11,4,3,1.0,1,False,32,
+C030,Accountant,Business,False,3,2,1,6,1,2,1.0,1.5,False,27,too few labels for a per-career conclusion
+C031,Market Research Analyst,Business,False,3,5,1,16,2,4,0.8,3,False,33,
+C032,Project Manager,Business,False,3,3,1,8,1,2,0.6667,5,False,33,
+C033,Human Resources Specialist,Business,False,3,1,1,12,1,1,1.0,1,False,31,too few labels for a per-career conclusion
+C034,Digital Marketing Specialist,Business,False,3,2,1,3,1,1,0.5,3.5,False,8,too few labels for a per-career conclusion
+C035,Secondary School Teacher,Education,False,3,4,2,11,5,4,1.0,1.5,False,25,
+C036,Instructional Designer,Education,False,4,2,1,2,1,2,1.0,2.0,False,18,too few labels for a per-career conclusion
+C037,English as a Second Language Teacher,Education,False,3,2,1,11,1,2,1.0,1.5,False,25,too few labels for a per-career conclusion
+C038,School Counselor,Education,False,4,1,1,10,1,1,1.0,1,False,24,too few labels for a per-career conclusion
+C039,Computer Science Lecturer,Education,False,4,1,1,5,1,1,1.0,1,False,33,too few labels for a per-career conclusion
+C040,Registered Nurse,Healthcare,False,3,2,2,11,3,2,1.0,1.0,False,27,too few labels for a per-career conclusion
+C041,Pharmacist,Healthcare,False,4,1,1,7,1,1,1.0,1,False,27,too few labels for a per-career conclusion
+C042,Medical Laboratory Technologist,Healthcare,False,3,1,1,8,2,1,1.0,1,False,13,too few labels for a per-career conclusion
+C043,Medical Records Specialist,Healthcare,False,2,2,1,6,3,2,1.0,1.0,False,13,too few labels for a per-career conclusion
+C044,Dietitian and Nutritionist,Healthcare,False,3,2,1,11,2,2,1.0,1.0,False,32,too few labels for a per-career conclusion
+C045,Physical Therapist,Healthcare,False,4,1,1,4,0,1,1.0,4,False,29,too few labels for a per-career conclusion
+C046,Civil Engineer,Engineering,False,3,3,1,4,1,1,0.3333,9,False,38,
+C047,Mechanical Engineer,Engineering,False,3,2,1,4,0,2,1.0,3.5,False,28,too few labels for a per-career conclusion
+C048,Electrical Engineer,Engineering,False,3,2,1,8,4,2,1.0,1.0,False,18,too few labels for a per-career conclusion
+C049,Environmental Engineer,Engineering,False,3,1,1,6,1,1,1.0,1,False,30,too few labels for a per-career conclusion
+C050,Biomedical Engineer,Engineering,False,3,1,1,5,1,1,1.0,1,False,31,too few labels for a per-career conclusion
+C051,Mining Engineer,Engineering,True,3,1,1,5,2,1,1.0,1,False,21,too few labels for a per-career conclusion
+C052,Geological Engineer,Engineering,True,3,4,2,6,2,4,1.0,1.5,False,14,
+C053,Telecommunications Engineer,Engineering,True,3,2,1,6,1,2,1.0,1.5,False,29,too few labels for a per-career conclusion
+C054,Building Engineer,Engineering,True,3,3,1,4,1,3,1.0,2,False,38,
+C055,Geotechnical Engineer,Engineering,True,3,1,1,5,1,1,1.0,1,False,12,too few labels for a per-career conclusion
+C056,Geophysicist,Engineering,True,3,2,1,6,2,2,1.0,2.5,False,23,too few labels for a per-career conclusion
+C057,Private Law Specialist,Law,True,4,5,2,9,4,5,1.0,1,False,33,
+C058,Public Law Specialist,Law,True,4,5,2,12,4,5,1.0,1,False,34,
+C059,Management Information Systems Specialist (MIAGE),Business,True,4,2,1,7,0,2,1.0,2.0,False,34,too few labels for a per-career conclusion
+C060,Economist,Social Sciences,True,4,5,4,10,4,5,1.0,1,False,30,
+C061,Business Administration Specialist,Business,True,3,4,1,3,1,2,0.5,5.5,False,31,
+C062,Laboratory Technician,Healthcare,True,2,3,1,4,1,3,1.0,2,False,15,
+C063,Sociologist,Social Sciences,True,4,5,2,17,5,5,1.0,1,False,22,
+C064,Community Relations Specialist,Business,True,3,3,1,6,2,2,0.6667,3,False,29,

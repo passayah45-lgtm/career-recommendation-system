@@ -1,0 +1,228 @@
+{
+  "study_id": "eval64_v1",
+  "note": "Synthetic profiles with single-author graded labels written before any engine run. Measures agreement with those labels, not real-world accuracy, employment outcomes or suitability for regulated professions. Separate from the original 50-career study.",
+  "configuration": {
+    "weights": {
+      "required_skills": 0.55,
+      "preferred_skills": 0.15,
+      "interests": 0.25,
+      "education": 0.05
+    },
+    "k": 5,
+    "binary_threshold": 2,
+    "sensitivity_thresholds": [
+      1,
+      3
+    ],
+    "bootstrap": {
+      "type": "profile-level percentile",
+      "resamples": 2000,
+      "seed": 64,
+      "confidence": 0.95
+    },
+    "ndcg_gain": "grade (0 to 3), log2(rank + 1) discount, ideal from the profile's labels",
+    "unlisted_pairs": "grade 0 (rule R8)"
+  },
+  "data": {
+    "dataset_version": "1.3.0",
+    "careers": 64,
+    "categories": 10,
+    "profiles": 111,
+    "explicit_labels": 363,
+    "labels_by_grade": {
+      "0": 10,
+      "1": 175,
+      "2": 99,
+      "3": 79
+    },
+    "labeller": "Claude (AI assistant), single labeller; also author of the 14 careers added in v1.3.0",
+    "second_reviewer": null,
+    "inter_rater_agreement": null,
+    "sha256": {
+      "careers.csv": "a515dc9add6386390bca1ec047c3deef5c73d864e3b03f5adc4134bde35f993a",
+      "resources.csv": "07ee4ebe98af565239ca58237e6f2161421ce3add3e5a85145314f1a0522bae0",
+      "skill_aliases.csv": "4634068bddfba14633342c7c5342e4fa66600a791731768c89b9be5ea88a4737",
+      "dataset_manifest.json": "22c95e828bf27e7bc7bb14549f10210da96e0decc7f846ef4973369871d804a2",
+      "profiles.csv": "ffe7ecb4d4ce1d72474fad4d177da1f53d656c6f0ef186a7095d07c472314b55",
+      "relevance_labels.csv": "ac4eeae920188d94a3b87c6923d90b220febc5ba5ae1d2fdcbfe16320777e392"
+    },
+    "frozen_files_verified": true,
+    "live_catalogue_matches_frozen": true
+  },
+  "exclusions": {
+    "count": 10,
+    "profile_ids": "withheld until the second review; listed in profile_results.csv",
+    "effect": "Excluded from binary metrics only; included in NDCG@5 and coverage"
+  },
+  "overall": {
+    "precision_at_1": {
+      "mean": 0.8119,
+      "ci_low": 0.7308,
+      "ci_high": 0.8857,
+      "defined_profiles": 101,
+      "undefined_profiles": 10,
+      "resamples": 2000
+    },
+    "precision_at_3": {
+      "mean": 0.4125,
+      "ci_low": 0.3718,
+      "ci_high": 0.4521,
+      "defined_profiles": 101,
+      "undefined_profiles": 10,
+      "resamples": 2000
+    },
+    "precision_at_5": {
+      "mean": 0.303,
+      "ci_low": 0.2765,
+      "ci_high": 0.3278,
+      "defined_profiles": 101,
+      "undefined_profiles": 10,
+      "resamples": 2000
+    },
+    "recall_at_5": {
+      "mean": 0.901,
+      "ci_low": 0.8592,
+      "ci_high": 0.9403,
+      "defined_profiles": 101,
+      "undefined_profiles": 10,
+      "resamples": 2000
+    },
+    "f1_at_5": {
+      "mean": 0.437,
+      "ci_low": 0.4071,
+      "ci_high": 0.4654,
+      "defined_profiles": 101,
+      "undefined_profiles": 10,
+      "resamples": 2000
+    },
+    "hit_at_5": {
+      "mean": 1.0,
+      "ci_low": 1.0,
+      "ci_high": 1.0,
+      "defined_profiles": 101,
+      "undefined_profiles": 10,
+      "resamples": 2000
+    },
+    "reciprocal_rank": {
+      "mean": 0.8843,
+      "ci_low": 0.8314,
+      "ci_high": 0.9299,
+      "defined_profiles": 101,
+      "undefined_profiles": 10,
+      "resamples": 2000
+    },
+    "average_precision": {
+      "mean": 0.7948,
+      "ci_low": 0.7426,
+      "ci_high": 0.8421,
+      "defined_profiles": 101,
+      "undefined_profiles": 10,
+      "resamples": 2000
+    },
+    "ndcg_at_5": {
+      "mean": 0.7592,
+      "ci_low": 0.7174,
+      "ci_high": 0.7993,
+      "defined_profiles": 111,
+      "undefined_profiles": 0,
+      "resamples": 2000
+    }
+  },
+  "coverage": {
+    "careers_with_relevant_label": 64,
+    "categories_with_relevant_label": 10,
+    "careers_in_any_top5": 64,
+    "careers_never_in_top5": 0,
+    "careers_never_in_top5_ids": [],
+    "top5_career_coverage": 1.0,
+    "categories_in_any_top5": 10,
+    "profiles_with_relevant_in_top5_share": 1.0
+  },
+  "scores": {
+    "top1_mean": 43.864,
+    "top1_median": 45.0,
+    "top5_mean": 29.8308,
+    "top5_median": 27.1,
+    "relevant_rank_median": 2.0,
+    "relevant_in_top5_share": 0.8596,
+    "relevant_pairs": 178
+  },
+  "engine_checks": {
+    "every_career_ranked_for_every_profile": true,
+    "careers_in_catalogue": 64,
+    "max_score_empty_profile": 0.0,
+    "max_score_unknown_skills_only": 0.0,
+    "earth_science_trio_separate_records": true,
+    "duplicate_titles": 0
+  },
+  "original_study": {
+    "report": "reports/evaluation_results.json",
+    "careers": 50,
+    "profiles": 36,
+    "labelled_careers": 42,
+    "label_type": "binary, at most 3 relevant per profile",
+    "metrics": {
+      "precision_at_5": {
+        "mean": 0.32,
+        "ci95": [
+          0.28,
+          0.3657
+        ],
+        "defined_profiles": 35
+      },
+      "recall_at_5": {
+        "mean": 1.0,
+        "ci95": [
+          1.0,
+          1.0
+        ],
+        "defined_profiles": 35
+      },
+      "f1_at_5": {
+        "mean": 0.4694,
+        "ci95": [
+          0.4217,
+          0.5204
+        ],
+        "defined_profiles": 35
+      },
+      "hit_at_5": {
+        "mean": 1.0,
+        "ci95": [
+          1.0,
+          1.0
+        ],
+        "defined_profiles": 35
+      },
+      "reciprocal_rank": {
+        "mean": 0.9857,
+        "ci95": [
+          0.9571,
+          1.0
+        ],
+        "defined_profiles": 35
+      },
+      "average_precision": {
+        "mean": 0.9714,
+        "ci95": [
+          0.9357,
+          0.9976
+        ],
+        "defined_profiles": 35
+      }
+    }
+  },
+  "comparison_note": "Separate studies with different profiles, labelling procedures, label granularity and catalogue size. Differences are not evidence that the expansion improved or reduced accuracy.",
+  "execution": {
+    "date": "2026-11-01",
+    "python": "3.13.16",
+    "platform": "Linux",
+    "packages": {
+      "scikit-learn": "1.9.1",
+      "numpy": "2.5.4",
+      "pandas": "3.0.6",
+      "streamlit": "1.65.0",
+      "matplotlib": "3.11.2"
+    }
+  }
+}

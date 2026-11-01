@@ -1,0 +1,16 @@
+threshold,metric,mean,defined_profiles,excluded_profiles
+grade >= 2,precision_at_5,0.303,101,10
+grade >= 2,recall_at_5,0.901,101,10
+grade >= 2,hit_at_5,1.0,101,10
+grade >= 2,reciprocal_rank,0.8843,101,10
+grade >= 2,average_precision,0.7948,101,10
+grade >= 1,precision_at_5,0.4324,111,0
+grade >= 1,recall_at_5,0.6918,111,0
+grade >= 1,hit_at_5,0.991,111,0
+grade >= 1,reciprocal_rank,0.9142,111,0
+grade >= 1,average_precision,0.6781,111,0
+grade >= 3,precision_at_5,0.1949,78,33
+grade >= 3,recall_at_5,0.9615,78,33
+grade >= 3,hit_at_5,0.9615,78,33
+grade >= 3,reciprocal_rank,0.8781,78,33
+grade >= 3,average_precision,0.8743,78,33

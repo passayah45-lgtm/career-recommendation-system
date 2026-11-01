@@ -1,0 +1,13 @@
+profile_type,profiles,defined_profiles,excluded_no_relevant,sample_status,precision_at_1,precision_at_5,recall_at_5,reciprocal_rank,average_precision,ndcg_at_5,ndcg_at_5_ci_low,ndcg_at_5_ci_high
+strong_match,61,61,0,reported (10 or more profiles),0.8689,0.3148,0.9098,0.9221,0.8213,0.8082,0.7649,0.8473
+incomplete_skills,4,4,0,insufficient (fewer than 5 profiles),0.75,0.3,0.75,0.8,0.6944,0.6926,0.403,0.9404
+career_change,9,8,1,indicative only (5 to 9 profiles),0.5,0.325,0.9583,0.7188,0.6674,0.6904,0.5861,0.8028
+transferable_skills,4,4,0,insufficient (fewer than 5 profiles),0.75,0.2,0.875,0.8333,0.75,0.6742,0.6332,0.7298
+mixed_interests,6,6,0,indicative only (5 to 9 profiles),0.8333,0.3667,0.9167,0.8889,0.8264,0.7975,0.625,0.9337
+unfamiliar_vocabulary,2,2,0,insufficient (fewer than 5 profiles),1.0,0.3,0.75,1.0,0.8333,0.8066,0.6131,1.0
+french_vocabulary,10,10,0,reported (10 or more profiles),0.9,0.22,0.95,0.92,0.9017,0.8146,0.6539,0.9306
+interests_only,3,0,3,insufficient (fewer than 5 profiles),,,,,,0.8521,0.6367,1.0
+minimal_input,1,0,1,insufficient (fewer than 5 profiles),,,,,,0.2346,,
+many_inputs,1,1,0,insufficient (fewer than 5 profiles),0.0,0.4,0.3333,0.5,0.4111,0.2951,,
+no_clear_fit,2,0,2,insufficient (fewer than 5 profiles),,,,,,0.56,0.4693,0.6508
+lower_education,8,5,3,indicative only (5 to 9 profiles),0.6,0.28,0.9,0.75,0.6018,0.5666,0.3427,0.7635

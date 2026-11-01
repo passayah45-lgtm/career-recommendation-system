@@ -1,0 +1,17 @@
+experiment,method,metric,current,alternative,difference,diff_ci_low,diff_ci_high,profiles,profiles_with_top5_membership_change,top5_positions_changed,relevant_entering_top5,relevant_leaving_top5,new_career_top5_slots_before,new_career_top5_slots_after
+interest_scoring,current,precision_at_5,0.303,0.303,0.0,0.0,0.0,101,0,0,0,0,100,100
+interest_scoring,current,recall_at_5,0.901,0.901,0.0,0.0,0.0,101,0,0,0,0,100,100
+interest_scoring,current,average_precision,0.7948,0.7948,0.0,0.0,0.0,101,0,0,0,0,100,100
+interest_scoring,current,ndcg_at_5,0.7592,0.7592,0.0,0.0,0.0,111,0,0,0,0,100,100
+interest_scoring,none,precision_at_5,0.303,0.2376,-0.0653,-0.0871,-0.0434,101,98,382,2,35,100,67
+interest_scoring,none,recall_at_5,0.901,0.6865,-0.2145,-0.2896,-0.1431,101,98,382,2,35,100,67
+interest_scoring,none,average_precision,0.7948,0.6534,-0.1414,-0.1993,-0.0851,101,98,382,2,35,100,67
+interest_scoring,none,ndcg_at_5,0.7592,0.5596,-0.1995,-0.2546,-0.1436,111,98,382,2,35,100,67
+interest_scoring,fixed_unit,precision_at_5,0.303,0.299,-0.004,-0.01,0.0,101,27,96,0,2,100,104
+interest_scoring,fixed_unit,recall_at_5,0.901,0.8911,-0.0099,-0.025,0.0,101,27,96,0,2,100,104
+interest_scoring,fixed_unit,average_precision,0.7948,0.8055,0.0107,-0.001,0.0291,101,27,96,0,2,100,104
+interest_scoring,fixed_unit,ndcg_at_5,0.7592,0.7614,0.0022,-0.0073,0.0121,111,27,96,0,2,100,104
+interest_scoring,cosine,precision_at_5,0.303,0.303,0.0,0.0,0.0,101,5,39,1,1,100,102
+interest_scoring,cosine,recall_at_5,0.901,0.901,0.0,0.0,0.0,101,5,39,1,1,100,102
+interest_scoring,cosine,average_precision,0.7948,0.8034,0.0086,0.0019,0.0166,101,5,39,1,1,100,102
+interest_scoring,cosine,ndcg_at_5,0.7592,0.7637,0.0045,-0.0,0.0098,111,5,39,1,1,100,102

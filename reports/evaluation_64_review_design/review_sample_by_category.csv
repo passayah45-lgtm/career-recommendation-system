@@ -1,0 +1,21 @@
+grouping,category,explicit_pairs,unlisted_pairs,total_pairs
+profile_category,Business,41,22,63
+profile_category,Cybersecurity,37,22,59
+profile_category,Data and AI,47,22,69
+profile_category,Design,31,22,53
+profile_category,Education,31,22,53
+profile_category,Engineering,46,28,74
+profile_category,Healthcare,29,22,51
+profile_category,Law,28,20,48
+profile_category,Social Sciences,29,20,49
+profile_category,Software,44,22,66
+career_category,Business,63,37,100
+career_category,Cybersecurity,36,21,57
+career_category,Data and AI,48,30,78
+career_category,Design,24,17,41
+career_category,Education,30,20,50
+career_category,Engineering,48,32,80
+career_category,Healthcare,29,26,55
+career_category,Law,24,7,31
+career_category,Social Sciences,20,6,26
+career_category,Software,41,26,67

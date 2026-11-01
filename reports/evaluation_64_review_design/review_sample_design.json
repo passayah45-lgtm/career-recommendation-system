@@ -1,0 +1,25 @@
+{
+  "sheet_reproduced_byte_for_byte": true,
+  "seed": 6464,
+  "population": {
+    "pairs": 7104,
+    "explicit": 363,
+    "unlisted": 6741
+  },
+  "sample": {
+    "pairs": 585,
+    "explicit": 363,
+    "unlisted": 222,
+    "careers_represented": 64,
+    "profiles_represented": 111
+  },
+  "design": "Stratified by first-labeller listing. Stratum explicit_label: all 363 listed pairs, inclusion probability 1 (a census, chosen by the labeller, so enriched for relevant pairs). Stratum unlisted_random: 2 pairs per profile drawn uniformly without replacement from that profile's unlisted careers, inclusion probability 2 / (64 - listed careers of the profile).",
+  "unlisted_inclusion_probabilities": [
+    0.032258,
+    0.032787,
+    0.033333,
+    0.033898,
+    0.035088
+  ],
+  "sum_of_design_weights": 7104.0
+}

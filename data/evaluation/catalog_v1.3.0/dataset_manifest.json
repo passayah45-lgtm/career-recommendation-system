@@ -1,0 +1,7 @@
+{
+  "dataset_version": "1.3.0",
+  "careers": 64,
+  "skills": 144,
+  "resources": 144,
+  "note": "Live catalogue counts. Change these numbers deliberately in the same commit that adds careers, skills or resources."
+}
