@@ -14,8 +14,10 @@ N_CAREERS = live_counts()["careers"]
 
 TIMEOUT = 60
 APP = str(Path(__file__).resolve().parents[1] / "app.py")
+# Interest assignments changed in dataset v1.4.0 (taxonomy 2.0), so the scores below changed with them
 WORKED_EXAMPLE = {"skills": ["Python", "SQL", "Excel", "ML", "statistics"],
-                  "interests": ["analysis", "mathematics"], "education_level": 3}
+                  "interests": ["Analysing data and information", "Working with numbers and calculations"],
+                  "education_level": 3}
 
 
 def text_of(at):
@@ -53,12 +55,13 @@ def test_assessment_saves_normalized_profile_and_reports_unknown_skills():
     at = open_page("pages/1_Career_Assessment.py")
     at.multiselect[0].set_value(["python", "sql"])
     at.text_area[0].input("ML, machine learning, blockchain")
-    at.multiselect[1].set_value(["analysis"])
+    at.checkbox(key="interest_analysing data and information").check()
     at.selectbox[0].set_value(3)
     at.button[0].click().run()
     assert not at.exception
     saved = at.session_state[PROFILE_KEY]
     assert saved["skills"] == ["python", "sql", "ML", "machine learning", "blockchain"]
+    assert saved["interests"] == ["analysing data and information"]
     assert saved["education_level"] == 3
     text = text_of(at)
     assert "blockchain" in text and "Assessment saved" in text
@@ -81,7 +84,7 @@ def test_recommendations_need_a_profile():
 def test_recommendations_show_real_service_results():
     at = open_page("pages/2_Recommendations.py", profile=WORKED_EXAMPLE)
     scores = [m.value for m in at.metric]
-    assert scores[:5] == ["61.5 / 100", "59.6 / 100", "55.0 / 100", "50.8 / 100", "41.7 / 100"]
+    assert scores[:5] == ["65.7 / 100", "59.6 / 100", "55.0 / 100", "50.8 / 100", "44.2 / 100"]
     text = text_of(at)
     assert "1. Data Scientist" in text
     assert "not a probability" in text
@@ -303,7 +306,7 @@ def test_model_rankings_section_shows_four_methods_for_the_profile():
         assert f"#### {label}" in text
     assert "Primary method, used by this app" in text
     assert text.count("Trained model, comparison only") == 3
-    assert "1. **Data Scientist** :gray[61.5 / 100]" in text
+    assert "1. **Data Scientist** :gray[65.7 / 100]" in text
     assert "not your chance of success" in text
     assert "Offline evaluation results" in text
     assert "measured on this server" in text.lower()
@@ -563,7 +566,7 @@ def test_learned_skill_needs_confirmation_and_recalculates():
     assert not at.exception
     assert "data visualization" in at.session_state[PROFILE_KEY]["skills"]
     labels = {m.label: m.value for m in at.metric}
-    assert labels["Required skills you have"] == "5 of 5" and labels["Compatibility score"] != "61.5 / 100"
+    assert labels["Required skills you have"] == "5 of 5" and labels["Compatibility score"] != "65.7 / 100"
     assert "learned_C001_data_visualization" not in button_keys(at)
 
 
@@ -676,3 +679,51 @@ def test_new_career_recommendation_and_skill_gap_pages():
     assert not at.exception
     text = text_of(at)
     assert "Geophysicist" in text and "Geophysics for Practicing Geoscientists" in text
+
+
+# ---------- Interest taxonomy 2.0 in the assessment form ----------
+
+def test_assessment_groups_the_23_interests_under_riasec_headings():
+    from src.data.interest_taxonomy import INTEREST_TERMS, RIASEC_ORDER
+    at = open_page("pages/1_Career_Assessment.py")
+    keys = {c.key for c in at.checkbox}
+    assert {f"interest_{t.key}" for t in INTEREST_TERMS} <= keys
+    text = text_of(at)
+    assert all(f"**{group}**" in text for group in RIASEC_ORDER)
+    assert "You do not need the skills yet" in text and "up to 5" in text
+    first = at.checkbox(key=f"interest_{INTEREST_TERMS[0].key}")
+    assert first.label == INTEREST_TERMS[0].label and "Example:" in first.help and "Related skill" in first.help
+    # Draft French names are not shown until reviewed
+    assert not any(t.label_fr_draft in text for t in INTEREST_TERMS)
+
+
+def test_more_than_five_interests_warns_but_saves_all():
+    from src.data.interest_taxonomy import INTEREST_TERMS
+    at = open_page("pages/1_Career_Assessment.py")
+    for term in INTEREST_TERMS[:6]:
+        at.checkbox(key=f"interest_{term.key}").check()
+    at.button[0].click().run()
+    assert not at.exception
+    assert len(at.session_state[PROFILE_KEY]["interests"]) == 6
+    assert any("You chose 6 interests" in w.value for w in at.warning)
+
+
+def test_saved_old_interest_names_are_preselected_after_migration():
+    at = open_page("pages/1_Career_Assessment.py", profile={"interests": ["mathematics", "technology"]})
+    assert at.checkbox(key="interest_working with numbers and calculations").value is True
+    assert any("old interest names" in i.value and "technology" in i.value for i in at.info)
+
+
+def test_explorer_shows_full_interest_names():
+    at = open_page("pages/4_Career_Explorer.py")
+    assert not at.exception
+    assert "Analysing data and information" in text_of(at)
+
+
+def test_assessment_explains_the_interest_update():
+    from src.data.interest_taxonomy import INTEREST_UPDATE_NOTICE
+    at = open_page("pages/1_Career_Assessment.py")
+    notice = [i.value for i in at.info if i.value == INTEREST_UPDATE_NOTICE]
+    assert notice and "reselect your interests" in notice[0] and "v1.4.0" in notice[0]
+    assert "lecturer" not in notice[0].lower()
+

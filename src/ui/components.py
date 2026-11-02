@@ -7,6 +7,7 @@ from pathlib import Path
 import streamlit as st
 
 from src.services.recommendations import SCORE_DISCLAIMER
+from src.data.interest_taxonomy import labels_for
 from src.services.session_data import SessionFileError, export_session, import_session_data
 from src.ui.illustrations import HERO_SVG, SIDEBAR_ART, initial_tile, ring_svg
 from src.services.feedback import split_lists
@@ -80,7 +81,8 @@ def optional_badges(items, empty="None"):
 
 
 def interest_badges(items, empty="None"):
-    return badges(items, "blue", None, empty)
+    # Stored interest keys are shown with their full names
+    return badges(labels_for(items), "blue", None, empty)
 
 
 def label(text):

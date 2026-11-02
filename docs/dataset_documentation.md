@@ -1,7 +1,7 @@
 # Dataset Documentation
 
-Version: 1.2.0
-Last updated: 2026-10-26
+Version: 1.4.0 (document structure from 1.2.0; dataset changes listed in section 16)
+Last updated: 2026-11-03
 Phase: 2 (Dataset Engineering and Validation)
 
 ## 1. Purpose and scope
@@ -12,7 +12,7 @@ The dataset supports three later features:
 2. Skill-gap analysis: list the skills a learner lacks for a career.
 3. Learning resources: point each missing skill to at least one learning resource.
 
-Scope (dataset v1.3.0): 64 careers in 10 categories, 144 unique skills, 144 learning resources, 56 skill aliases. The original v1.2.0 dataset (50 careers, 8 categories, 114 skills, 114 resources, 37 aliases) is frozen in data/evaluation/catalog_v1.2.0/ and is the only dataset the saved evaluation reports describe. The data is an academic MVP dataset. It is not a labour market database.
+Scope (dataset v1.4.0): 64 careers in 10 categories, 144 unique skills, 144 learning resources, 56 skill aliases. The original v1.2.0 dataset (50 careers, 8 categories, 114 skills, 114 resources, 37 aliases) is frozen in data/evaluation/catalog_v1.2.0/ and is the only dataset the saved evaluation reports describe. The v1.3.0 dataset is frozen in data/evaluation/catalog_v1.3.0/ (eval64_v1) and v1.4.0 in data/evaluation/catalog_v1.4.0/. v1.4.0 differs from v1.3.0 only in the interests column. The data is an academic MVP dataset. It is not a labour market database.
 
 ## 2. Files
 
@@ -55,7 +55,7 @@ The split is not equal. Data and AI and Software have more careers because they 
 | required_skills | list | yes | Canonical skill names, pipe separated |
 | preferred_skills | list | no | Same rules as required_skills. No skill may appear in both lists |
 | education_level | integer | yes | 0 to 4, see section 6 |
-| interests | list | yes | Values from the controlled interest vocabulary (section 7) |
+| interests | list | yes | Values from the controlled interest vocabulary (section 7), exactly three per career from v1.4.0 |
 | learning_goals | list | yes | Short outcomes a learner can work towards, pipe separated |
 | onet_code | string | no | O*NET-SOC code such as 15-2051.00 |
 | source_url | string | no | O*NET OnLine summary page for onet_code |
@@ -125,7 +125,18 @@ Skill names (and interests and learning goals):
 
 Aliases: data/raw/skill_aliases.csv maps other names to the canonical skill, for example ml to machine learning, ci/cd to ci cd, data visualisation to data visualization. An alias may not be a canonical skill itself, and every target must exist in careers.csv. The alias file is for normalising learner input in later phases. It does not add skills.
 
-Controlled interest vocabulary (20 values): analysis, building software, business, communication, design, engineering, environment, healthcare, helping people, leadership, mathematics, organization, problem solving, research, science, security, teaching, technology, visual arts, writing.
+Controlled interest vocabulary (interest taxonomy 2.0, dataset v1.4.0, 23 values, exactly three per career). Owner-authorized implementation pending lecturer feedback; details in docs/interest_taxonomy_implementation.md. Names, descriptions, examples, related skills and RIASEC display groups are in src/data/interest_taxonomy.py. Each value is stored as its name in lowercase with punctuation removed (rule 3 above), for example "Caring for people's health" is stored as caring for peoples health:
+
+| RIASEC group (display only) | Interests (full names) |
+|---|---|
+| Realistic | Setting up and running computer systems and networks. Working with tools, machines and equipment. Working outdoors and with the natural environment. Designing buildings, structures and physical products |
+| Investigative | Analysing data and information. Researching and investigating. Working with numbers and calculations. Scientific and laboratory work. Writing software and building apps |
+| Artistic | Creating visual art and graphics. Designing apps, websites and user experiences. Writing and editing |
+| Social | Teaching and training others. Caring for people's health. Helping and advising people. Working with communities |
+| Enterprising | Leading people and projects. Running and growing a business. Persuading, presenting and negotiating |
+| Conventional | Keeping information, records and procedures in order. Keeping computer systems and data safe. Working with laws, rules and regulations. Managing money and financial information |
+
+The manifest field interest_taxonomy ("2.0") selects this vocabulary. A folder without the field uses the legacy 20-value vocabulary of datasets 1.0.0 to 1.3.0 (analysis, building software, business, communication, design, engineering, environment, healthcare, helping people, leadership, mathematics, organization, problem solving, research, science, security, teaching, technology, visual arts, writing), which keeps the frozen snapshots valid.
 
 Cleaning is explicit and separate from validation. src/data/preprocessing.py holds clean_skill_text and normalize_skill, which are covered by tests. The validator never repairs data.
 
@@ -159,7 +170,8 @@ What is sourced and what is curated:
 | career_title, onet_code, source_url | Sourced: the O*NET occupation and URL were confirmed |
 | description | Curated: written by the project author as a short summary. Not quoted from O*NET |
 | required_skills, preferred_skills | Curated: selected by the project author to fit the occupation and the resource catalogue |
-| interests, learning_goals | Curated: written for the recommender, not taken from O*NET interest profiles |
+| interests | v1.4.0: from docs/interest_taxonomy_second_review.md, checked against O*NET interest codes for the 52 careers with an O*NET code (12 careers provisional). Not lecturer-approved yet |
+| learning_goals | Curated: written for the recommender, not taken from O*NET |
 | education_level | Curated: see section 6 |
 
 ### Resource records
@@ -256,3 +268,4 @@ Errors stop the GitHub Actions workflow. Warnings (missing optional source URL, 
 | 1.1.0 | 2026-10-14 | HTTP link check: 104 resources http_checked, R045 replaced after a 404 |
 | 1.2.0 | 2026-10-26 | C013 DevOps Engineer mapped to O*NET 15-1252.00 as a nearest-broader occupation; AI Research Scientist recorded as nearest-broader. Its source URL is the same page already checked for C009 on 2026-10-14 |
 | 1.3.0 | 2026-11-01 | African career expansion from the lecturer's list: 14 careers added (C051 to C064), 30 skills with 30 resources (R115 to R144), 19 aliases including French forms, categories Law and Social Sciences. Civil Engineer, Electrical Engineer and Human Resources Specialist already existed (C046, C048, C033) and were not duplicated. The 50 original rows are unchanged. Sources and gaps: docs/african_expansion_sources.md |
+| 1.4.0 | 2026-11-03 | Interest taxonomy 2.0: the interests column of all 64 careers replaced with the second review's assignments (23-term vocabulary, exactly three per career); manifest field interest_taxonomy added. No other column changed. Owner-authorized pending lecturer feedback. Details: docs/interest_taxonomy_implementation.md |

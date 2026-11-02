@@ -105,6 +105,7 @@ Local headless Chromium run against `streamlit run app.py` with the redesigned i
 |---|---|---|
 | Full learner flow at 1440, 1280, 820 and 390 px wide | verified locally | Assessment, recommendations, skill gap, explorer search, analytics: 50 of 50 checks passed |
 | Worked-example scores unchanged (61.5, 59.6, 55.0) | verified locally | Same values as before the redesign |
+| Dataset v1.4.0 (interest taxonomy 2.0) | verified locally (3 November 2026) | The worked example now uses the new interest names and gives 65.7, 59.6, 55.0, 50.8, 44.2, because Data Scientist lists three interests instead of four. The rows above record the values before v1.4.0 |
 | No horizontal scroll on any page at any of the four widths | verified locally | |
 | Resource cards show the stored verification status | verified locally | Also covered by tests/test_app.py and tests/test_theme.py |
 | No JavaScript page errors | verified locally | |

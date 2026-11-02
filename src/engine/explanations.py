@@ -1,11 +1,20 @@
 # Plain-language reasons built only from values used in the score
 # Every sentence maps to one scoring component
 
+from src.data.interest_taxonomy import labels_for
 from src.engine.scoring import EDUCATION, INTERESTS, PREFERRED_SKILLS, REQUIRED_SKILLS
 
 
 def _join(items):
     return ", ".join(items)
+
+
+def _join_interests(keys):
+    # Current interest names contain commas, so they are quoted; legacy terms keep the original plain format
+    labels = labels_for(keys)
+    if tuple(labels) == tuple(keys):
+        return _join(keys)
+    return ", ".join(f'"{label}"' for label in labels)
 
 
 def _required_reason(match):
@@ -29,7 +38,7 @@ def _preferred_reason(match):
 def _interest_reason(match):
     total = len(match.career.interests)
     if match.matched_interests:
-        return f"Your interests match {len(match.matched_interests)} of {total} for this career: {_join(match.matched_interests)}."
+        return f"Your interests match {len(match.matched_interests)} of {total} for this career: {_join_interests(match.matched_interests)}."
     return None
 
 

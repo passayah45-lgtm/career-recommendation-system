@@ -1,6 +1,7 @@
 # Public entry point: raw profile in, ranked and explained careers out
 # Output is plain dicts and lists so Streamlit and a future REST API can use it directly
 
+from src.data.interest_taxonomy import SOFT_SELECTION_LIMIT, TERMS_BY_KEY, label_for, labels_for
 from src.engine.explanations import build_notes, build_reasons
 from src.engine.ranking import rank_careers
 from src.engine.scoring import COMPONENT_ORDER, DEFAULT_WEIGHTS
@@ -47,6 +48,8 @@ def recommendation_to_dict(ranked):
         "missing_preferred_skills": list(sk.missing_preferred),
         "matched_interests": list(match.matched_interests),
         "career_interests": list(career.interests),
+        "matched_interest_labels": list(labels_for(match.matched_interests)),
+        "career_interest_labels": list(labels_for(career.interests)),
         "education": {
             "learner_level": edu.learner_level,
             "career_level": edu.career_level,
@@ -66,6 +69,16 @@ def _profile_warnings(report):
         warnings.append(f"These skills are not in the dataset and were not scored: {', '.join(report.unknown_skills)}.")
     if report.unknown_interests:
         warnings.append(f"These interests are not in the interest list and were not scored: {', '.join(report.unknown_interests)}.")
+    if report.migrated_interests:
+        changes = ", ".join(f"{old} became {label_for(new)}" for old, new in report.migrated_interests)
+        warnings.append(f"Old interest names were updated to the current list: {changes}.")
+    if report.retired_interests:
+        retired = "; ".join(f"{old} {note}" for old, note in report.retired_interests)
+        warnings.append(f"These old interest names are no longer used and were not scored: {retired}.")
+    chosen = report.recognized_interests
+    if len(chosen) > SOFT_SELECTION_LIMIT and all(k in TERMS_BY_KEY for k in chosen):
+        warnings.append(f"{len(chosen)} interests were chosen. More than {SOFT_SELECTION_LIMIT} gives points to many "
+                        "careers without narrowing the results. All of them were still scored.")
     if report.duplicate_skills:
         warnings.append(f"Repeated skills were counted once: {', '.join(report.duplicate_skills)}.")
     if len(report.missing_fields) == 3:

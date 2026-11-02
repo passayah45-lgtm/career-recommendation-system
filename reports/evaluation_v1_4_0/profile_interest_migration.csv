@@ -1,0 +1,112 @@
+profile_id,primary_category,old_interests,new_interests,migrated,retired,unknown,interests_before,interests_after
+E64-D01,Data and AI,analysis|research|mathematics,analysing data and information|researching and investigating|working with numbers and calculations,3,0,0,3,3
+E64-D02,Data and AI,analysis|business,analysing data and information|running and growing a business,2,0,0,2,2
+E64-D03,Data and AI,analysis|business,analysing data and information|running and growing a business,2,0,0,2,2
+E64-D04,Data and AI,technology|problem solving,,0,2,0,2,0
+E64-D05,Data and AI,technology|organization,keeping information records and procedures in order,1,1,0,2,1
+E64-D06,Data and AI,technology|organization,keeping information records and procedures in order,1,1,0,2,1
+E64-D07,Data and AI,research|mathematics|science,researching and investigating|working with numbers and calculations|scientific and laboratory work,3,0,0,3,3
+E64-D08,Data and AI,mathematics|research,working with numbers and calculations|researching and investigating,2,0,0,2,2
+E64-D09,Data and AI,business|analysis,running and growing a business|analysing data and information,2,0,0,2,2
+E64-D10,Data and AI,technology,,0,1,0,1,0
+E64-D11,Data and AI,healthcare|analysis|helping people,caring for peoples health|analysing data and information|helping and advising people,3,0,0,3,3
+E64-S01,Software,technology|design|building software,writing software and building apps,1,2,0,3,1
+E64-S02,Software,technology|problem solving|building software,writing software and building apps,1,2,0,3,1
+E64-S03,Software,technology|organization,keeping information records and procedures in order,1,1,0,2,1
+E64-S04,Software,technology|design|building software,writing software and building apps,1,2,0,3,1
+E64-S05,Software,technology|problem solving,,0,2,0,2,0
+E64-S06,Software,technology|security,keeping computer systems and data safe,1,1,0,2,1
+E64-S07,Software,business|technology|organization,running and growing a business|keeping information records and procedures in order,2,1,0,3,2
+E64-S08,Software,technology|building software,writing software and building apps,1,1,0,2,1
+E64-S09,Software,problem solving|mathematics,working with numbers and calculations,1,1,0,2,1
+E64-S10,Software,technology|building software,writing software and building apps,1,1,0,2,1
+E64-S11,Software,technology|leadership|problem solving|business,leading people and projects|running and growing a business,2,2,0,4,2
+E64-Y01,Cybersecurity,security|technology|problem solving,keeping computer systems and data safe,1,2,0,3,1
+E64-Y02,Cybersecurity,security|problem solving,keeping computer systems and data safe,1,1,0,2,1
+E64-Y03,Cybersecurity,security|analysis,keeping computer systems and data safe|analysing data and information,2,0,0,2,2
+E64-Y04,Cybersecurity,technology|organization,keeping information records and procedures in order,1,1,0,2,1
+E64-Y05,Cybersecurity,technology|engineering,,0,2,0,2,0
+E64-Y06,Cybersecurity,security|technology|engineering,keeping computer systems and data safe,1,2,0,3,1
+E64-Y07,Cybersecurity,security|helping people|analysis,keeping computer systems and data safe|helping and advising people|analysing data and information,3,0,0,3,3
+E64-Y08,Cybersecurity,security|technology|problem solving,keeping computer systems and data safe,1,2,0,3,1
+E64-Y09,Cybersecurity,security|technology,keeping computer systems and data safe,1,1,0,2,1
+E64-Y10,Cybersecurity,security|technology,keeping computer systems and data safe,1,1,0,2,1
+E64-Y11,Cybersecurity,security|writing|analysis,keeping computer systems and data safe|writing and editing|analysing data and information,3,0,0,3,3
+E64-G01,Design,design|visual arts,creating visual art and graphics,1,1,0,2,1
+E64-G02,Design,design|technology|helping people,helping and advising people,1,2,0,3,1
+E64-G03,Design,design|visual arts,creating visual art and graphics,1,1,0,2,1
+E64-G04,Design,design|engineering,,0,2,0,2,0
+E64-G05,Design,visual arts|design,creating visual art and graphics,1,1,0,2,1
+E64-G06,Design,design|organization,keeping information records and procedures in order,1,1,0,2,1
+E64-G07,Design,visual arts|design,creating visual art and graphics,1,1,0,2,1
+E64-G08,Design,visual arts|communication,creating visual art and graphics,1,1,0,2,1
+E64-G09,Design,helping people|research|design,helping and advising people|researching and investigating,2,1,0,3,2
+E64-G10,Design,design|visual arts,creating visual art and graphics,1,1,0,2,1
+E64-G11,Design,visual arts|writing,creating visual art and graphics|writing and editing,2,0,0,2,2
+E64-B01,Business,analysis|business|mathematics,analysing data and information|running and growing a business|working with numbers and calculations,3,0,0,3,3
+E64-B02,Business,organization|mathematics|business,keeping information records and procedures in order|working with numbers and calculations|running and growing a business,3,0,0,3,3
+E64-B03,Business,business|communication|writing,running and growing a business|writing and editing,2,1,0,3,2
+E64-B04,Business,helping people|communication|organization,helping and advising people|keeping information records and procedures in order,2,1,0,3,2
+E64-B05,Business,leadership|organization|business,leading people and projects|keeping information records and procedures in order|running and growing a business,3,0,0,3,3
+E64-B06,Business,business|analysis|leadership,running and growing a business|analysing data and information|leading people and projects,3,0,0,3,3
+E64-B07,Business,research|analysis|business,researching and investigating|analysing data and information|running and growing a business,3,0,0,3,3
+E64-B08,Business,technology|business|organization,running and growing a business|keeping information records and procedures in order,2,1,0,3,2
+E64-B09,Business,business|leadership|organization,running and growing a business|leading people and projects|keeping information records and procedures in order,3,0,0,3,3
+E64-B10,Business,helping people|communication|environment,helping and advising people|working outdoors and with the natural environment,2,1,0,3,2
+E64-B11,Business,business|helping people,running and growing a business|helping and advising people,2,0,0,2,2
+E64-E01,Education,teaching|helping people|mathematics,teaching and training others|helping and advising people|working with numbers and calculations,3,0,0,3,3
+E64-E02,Education,teaching|communication,teaching and training others,1,1,0,2,1
+E64-E03,Education,teaching|design|technology,teaching and training others,1,2,0,3,1
+E64-E04,Education,helping people|teaching,helping and advising people|teaching and training others,2,0,0,2,2
+E64-E05,Education,teaching|research|technology,teaching and training others|researching and investigating,2,1,0,3,2
+E64-E06,Education,teaching|science,teaching and training others|scientific and laboratory work,2,0,0,2,2
+E64-E07,Education,teaching|helping people,teaching and training others|helping and advising people,2,0,0,2,2
+E64-E08,Education,teaching|helping people,teaching and training others|helping and advising people,2,0,0,2,2
+E64-E09,Education,teaching|technology,teaching and training others,1,1,0,2,1
+E64-E10,Education,teaching|helping people,teaching and training others|helping and advising people,2,0,0,2,2
+E64-E11,Education,healthcare|teaching,caring for peoples health|teaching and training others,2,0,0,2,2
+E64-H01,Healthcare,healthcare|helping people,caring for peoples health|helping and advising people,2,0,0,2,2
+E64-H02,Healthcare,healthcare|science,caring for peoples health|scientific and laboratory work,2,0,0,2,2
+E64-H03,Healthcare,science|healthcare|analysis,scientific and laboratory work|caring for peoples health|analysing data and information,3,0,0,3,3
+E64-H04,Healthcare,science|organization,scientific and laboratory work|keeping information records and procedures in order,2,0,0,2,2
+E64-H05,Healthcare,healthcare|organization,caring for peoples health|keeping information records and procedures in order,2,0,0,2,2
+E64-H06,Healthcare,healthcare|helping people|science,caring for peoples health|helping and advising people|scientific and laboratory work,3,0,0,3,3
+E64-H07,Healthcare,healthcare|helping people,caring for peoples health|helping and advising people,2,0,0,2,2
+E64-H08,Healthcare,healthcare|helping people|teaching,caring for peoples health|helping and advising people|teaching and training others,3,0,0,3,3
+E64-H09,Healthcare,healthcare|science,caring for peoples health|scientific and laboratory work,2,0,0,2,2
+E64-H10,Healthcare,healthcare|helping people,caring for peoples health|helping and advising people,2,0,0,2,2
+E64-H11,Healthcare,healthcare|organization,caring for peoples health|keeping information records and procedures in order,2,0,0,2,2
+E64-N01,Engineering,engineering|mathematics,working with numbers and calculations,1,1,0,2,1
+E64-N02,Engineering,engineering|problem solving,,0,2,0,2,0
+E64-N03,Engineering,engineering|technology,,0,2,0,2,0
+E64-N04,Engineering,environment|engineering|science,working outdoors and with the natural environment|scientific and laboratory work,2,1,0,3,2
+E64-N05,Engineering,engineering|healthcare,caring for peoples health,1,1,0,2,1
+E64-N06,Engineering,engineering|environment,working outdoors and with the natural environment,1,1,0,2,1
+E64-N07,Engineering,science|environment|engineering,scientific and laboratory work|working outdoors and with the natural environment,2,1,0,3,2
+E64-N08,Engineering,engineering|science,scientific and laboratory work,1,1,0,2,1
+E64-N09,Engineering,science|research|mathematics,scientific and laboratory work|researching and investigating|working with numbers and calculations,3,0,0,3,3
+E64-N10,Engineering,engineering|technology,,0,2,0,2,0
+E64-N11,Engineering,engineering|organization,keeping information records and procedures in order,1,1,0,2,1
+E64-N12,Engineering,science|engineering,scientific and laboratory work,1,1,0,2,1
+E64-N13,Engineering,engineering|technology,,0,2,0,2,0
+E64-N14,Engineering,engineering,,0,1,0,1,0
+E64-L01,Law,writing|analysis|business,writing and editing|analysing data and information|running and growing a business,3,0,0,3,3
+E64-L02,Law,writing|analysis|leadership,writing and editing|analysing data and information|leading people and projects,3,0,0,3,3
+E64-L03,Law,writing|analysis,writing and editing|analysing data and information,2,0,0,2,2
+E64-L04,Law,helping people|writing|analysis,helping and advising people|writing and editing|analysing data and information,3,0,0,3,3
+E64-L05,Law,analysis|business|writing,analysing data and information|running and growing a business|writing and editing,3,0,0,3,3
+E64-L06,Law,writing|analysis|business,writing and editing|analysing data and information|running and growing a business,3,0,0,3,3
+E64-L07,Law,writing|leadership|helping people,writing and editing|leading people and projects|helping and advising people,3,0,0,3,3
+E64-L08,Law,writing|analysis|helping people,writing and editing|analysing data and information|helping and advising people,3,0,0,3,3
+E64-L09,Law,environment|writing|helping people,working outdoors and with the natural environment|writing and editing|helping and advising people,3,0,0,3,3
+E64-L10,Law,organization|writing,keeping information records and procedures in order|writing and editing,2,0,0,2,2
+E64-X01,Social Sciences,analysis|research|mathematics,analysing data and information|researching and investigating|working with numbers and calculations,3,0,0,3,3
+E64-X02,Social Sciences,research|helping people|writing,researching and investigating|helping and advising people|writing and editing,3,0,0,3,3
+E64-X03,Social Sciences,research|analysis|helping people,researching and investigating|analysing data and information|helping and advising people,3,0,0,3,3
+E64-X04,Social Sciences,research|helping people,researching and investigating|helping and advising people,2,0,0,2,2
+E64-X05,Social Sciences,analysis|leadership|research,analysing data and information|leading people and projects|researching and investigating,3,0,0,3,3
+E64-X06,Social Sciences,analysis|research,analysing data and information|researching and investigating,2,0,0,2,2
+E64-X07,Social Sciences,research|helping people,researching and investigating|helping and advising people,2,0,0,2,2
+E64-X08,Social Sciences,analysis|research|technology,analysing data and information|researching and investigating,2,1,0,3,2
+E64-X09,Social Sciences,writing|research|helping people,writing and editing|researching and investigating|helping and advising people,3,0,0,3,3
+E64-X10,Social Sciences,writing|research,writing and editing|researching and investigating,2,0,0,2,2

@@ -1,0 +1,19 @@
+{
+  "study_id": "eval_v1.4.0_taxonomy",
+  "frozen_on": "2026-11-02",
+  "note": "Frozen copy of the v1.4.0 catalogue (interest taxonomy 2.0, owner-authorized pending lecturer feedback). Profiles and labels are not copied: they are read from eval64_v1, whose SHA-256 values are recorded below and checked before every run. Never edit these files.",
+  "sha256": {
+    "careers.csv": "3a0dde7ae575ea9caafb84819cef79fd2c1aca12a9585f620c8b3b21ed9d144e",
+    "resources.csv": "07ee4ebe98af565239ca58237e6f2161421ce3add3e5a85145314f1a0522bae0",
+    "skill_aliases.csv": "4634068bddfba14633342c7c5342e4fa66600a791731768c89b9be5ea88a4737",
+    "dataset_manifest.json": "b945323f153b8ff72fae7eda0dec5394454b010c042a9f358166d42cd1d27a95"
+  },
+  "eval64_inputs": {
+    "directory": "data/evaluation/catalog_v1.3.0",
+    "sha256": {
+      "profiles.csv": "ffe7ecb4d4ce1d72474fad4d177da1f53d656c6f0ef186a7095d07c472314b55",
+      "relevance_labels.csv": "ac4eeae920188d94a3b87c6923d90b220febc5ba5ae1d2fdcbfe16320777e392"
+    }
+  },
+  "profile_interest_migration": "src.data.interest_taxonomy.migrate_interest_list"
+}

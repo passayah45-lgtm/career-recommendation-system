@@ -14,7 +14,8 @@ from tests.conftest import make_career
 OUTPUT_KEYS = {
     "rank", "career_id", "career_title", "category", "score", "score_components", "matched_required_skills",
     "missing_required_skills", "matched_preferred_skills", "missing_preferred_skills", "matched_interests",
-    "career_interests", "education", "learning_goals", "reasons", "notes", "source_url",
+    "career_interests", "matched_interest_labels", "career_interest_labels", "education", "learning_goals",
+    "reasons", "notes", "source_url",
 }
 
 
@@ -90,10 +91,13 @@ def test_real_catalog_loads(real_catalog):
 
 def test_real_data_worked_example(real_catalog):
     # Same illustrative profile as docs/recommendation_algorithm.md
-    profile = {"skills": ["Python", "SQL", "Excel", "ML", "statistics"], "interests": ["analysis", "mathematics"], "education_level": 3}
+    # Interest assignments changed in dataset v1.4.0 (taxonomy 2.0); C001 now lists 3 interests, not 4
+    profile = {"skills": ["Python", "SQL", "Excel", "ML", "statistics"],
+               "interests": ["Analysing data and information", "Working with numbers and calculations"],
+               "education_level": 3}
     recs = recommend(profile, real_catalog, top_k=5)["recommendations"]
     assert [(r["career_id"], r["score"]) for r in recs] == [
-        ("C001", 61.5), ("C002", 59.6), ("C029", 55.0), ("C031", 50.8), ("C006", 41.7),
+        ("C001", 65.7), ("C002", 59.6), ("C029", 55.0), ("C031", 50.8), ("C060", 44.2),
     ]
     assert recs[0]["missing_required_skills"] == ["data visualization"]
 

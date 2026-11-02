@@ -13,7 +13,7 @@ The app sleeps after 12 hours without visitors. If you see a sleep page, click "
 | Page | What it does |
 |---|---|
 | Home | Purpose, dataset size, how the system works |
-| Career Assessment | Skills (list plus free text with aliases such as ML or CI/CD), interests, education level, optional experience |
+| Career Assessment | Skills (list plus free text with aliases such as ML or CI/CD), interests (23 kinds of work grouped under the six RIASEC types, each with an explanation and example, soft warning above 5), education level, optional experience |
 | Recommendations | Top K careers with score, matched and missing skills, interests, reasons and a score breakdown. Interested and Not for me buttons move a career into its own list, shown with a count beside the main list |
 | Skill-Gap Analysis | Required and optional gaps, coverage, and learning resources with links and verification status |
 | Career Explorer | Browse all 64 careers, filter by category, search by title, view details and sources |
@@ -73,7 +73,8 @@ from src.services.recommendations import recommend
 from src.services.skill_gap import analyze_skill_gap
 
 catalog = load_catalog()
-result = recommend({"skills": ["Python", "SQL"], "interests": ["analysis"], "education_level": 3}, catalog, top_k=5)
+result = recommend({"skills": ["Python", "SQL"], "interests": ["Analysing data and information"], "education_level": 3},
+                   catalog, top_k=5)
 gap = analyze_skill_gap({"skills": ["Python", "SQL"]}, "C002", catalog)
 ```
 
@@ -97,7 +98,7 @@ Both functions take and return plain dicts, ready for a REST API.
 
 | File | Content |
 |---|---|
-| data/raw/careers.csv | 64 careers in 10 categories (dataset v1.3.0; the original 50 are frozen in data/evaluation/catalog_v1.2.0/) |
+| data/raw/careers.csv | 64 careers in 10 categories (dataset v1.4.0 with interest taxonomy 2.0; the original 50 are frozen in data/evaluation/catalog_v1.2.0/, v1.3.0 in catalog_v1.3.0/, v1.4.0 in catalog_v1.4.0/) |
 | data/raw/resources.csv | 144 free learning resources, one per skill |
 | data/raw/skill_aliases.csv | 37 alternative skill names |
 
@@ -112,7 +113,8 @@ Compatibility score (0 to 100) = required skills 55% + preferred skills 15% + in
 3. Skill coverage divides by the length of each career's required list, so one shared skill counts more for careers with short lists (for example Excel and Financial Analyst). Phase 5 found this and kept the weights. See docs/evaluation_report.md.
 4. One resource per skill, in English, several from US or UK sources (tax, health privacy, medical coding).
 5. 104 of the original 114 resource links passed an HTTP check on 2026-10-14. The other 10 block automated checks or were temporarily down, and keep their search-confirmed status. The 30 links added on 2026-11-01 all loaded with a web tool, but the project's link checker could not reach them from the build environment, so they also keep search-confirmed status (see `docs/african_expansion_link_check.md`).
-6. Evaluation uses 36 synthetic profiles labelled by the author. It measures agreement with those labels, not real-world accuracy.
+6. The original evaluation uses 36 synthetic profiles and the independent 64-career evaluation (eval64_v1) uses 111, all labelled by the author, with no second review yet. They measure agreement with those labels, not real-world accuracy.
+7. The interest taxonomy (23 interests, dataset v1.4.0) is an owner-authorized implementation of the second review's proposal. Lecturer feedback is still pending and it is not academically validated. On the eval64 profiles, which were written in the old vocabulary and migrated, NDCG@5 is 0.677 against 0.759 before. That comparison is confounded by the migration (docs/interest_taxonomy_implementation.md).
 
 Details: docs/dataset_documentation.md and docs/recommendation_algorithm.md.
 

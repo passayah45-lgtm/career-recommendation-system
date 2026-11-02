@@ -5,7 +5,7 @@ Last updated: 2026-10-14
 
 ## 1. Overview
 
-The engine is a transparent, content-based recommender. It compares one learner profile with each of the 50 careers in data/raw/careers.csv, computes four component scores, combines them with fixed weights into a compatibility score from 0 to 100, ranks the careers, and explains each result with the values used in the calculation.
+The engine is a transparent, content-based recommender. It compares one learner profile with each of the 64 careers in data/raw/careers.csv (dataset v1.4.0), computes four component scores, combines them with fixed weights into a compatibility score from 0 to 100, ranks the careers, and explains each result with the values used in the calculation.
 
 The compatibility score ranks careers for one learner against this dataset. It is not a probability of being hired, of succeeding in the career, or of liking it.
 
@@ -51,7 +51,7 @@ The Catalog is created once with load_catalog() and passed into every call. Ther
 ```python
 {
     "skills": ["Python", "SQL", "ML"],          # list of text, optional
-    "interests": ["analysis", "mathematics"],   # list of text, optional
+    "interests": ["Analysing data and information"],  # list of text, optional (full name or stored form)
     "education_level": 3,                       # int 0 to 4, optional
     "experience_years": 2                       # int 0 to 70, optional, not scored in version 1
 }
@@ -65,6 +65,8 @@ Validation (ProfileValidationError on failure):
 4. education_level and experience_years must be whole numbers in range. Booleans and numeric strings are rejected.
 5. Unsupported fields are ignored and reported in ignored_fields.
 
+Interests (dataset v1.4.0, interest taxonomy 2.0): an interest may be sent as its full name ("Caring for people's health"), its stored form (caring for peoples health), in any capitalisation, or as its draft French name. Old names from the 20-term vocabulary are migrated (for example mathematics becomes Working with numbers and calculations) and reported in migrated_interests. Five old names with no single replacement (communication, design, engineering, problem solving, technology) are not scored and are reported in retired_interests. More than 5 interests adds a warning but all are scored. Frozen evaluation catalogues keep the old vocabulary and never migrate. Details: docs/interest_taxonomy_implementation.md.
+
 ## 5. Normalization and aliases
 
 The engine reuses the Phase 2 functions. There is no second normalization system.
@@ -73,7 +75,7 @@ The engine reuses the Phase 2 functions. There is no second normalization system
 2. The result counts as a skill only if it is one of the 114 canonical skills used by the careers.
 3. Aliases and repeats collapse to one canonical skill. "machine learning", "ML" and "Machine_Learning" count once. Extra entries are listed in duplicate_skills.
 4. Anything else goes to unknown_skills with the learner's original text, so the interface can show it. Unknown skills never count as matches.
-5. Interests are cleaned with clean_skill_text and kept only if they belong to the 20-value interest vocabulary. Others go to unknown_interests.
+5. Interests are cleaned with clean_skill_text and kept only if they belong to the catalogue's interest vocabulary: the 23-value vocabulary of interest taxonomy 2.0 for the live catalogue, or the legacy 20-value vocabulary for the frozen v1.2.0 and v1.3.0 snapshots. With the live catalogue, old names are first migrated or reported as retired (section 4). Others go to unknown_interests.
 
 ## 6. Scoring formula
 
@@ -101,7 +103,7 @@ Missing learner input is different from a non-applicable component. A missing fi
 | Required skills | 0.55 | Main signal. The required list is the core of each career record |
 | Preferred skills | 0.15 | Useful but optional, so one preferred skill is worth less than one required skill |
 | Interests | 0.25 | Separates careers when a learner has few skills, which is common for students |
-| Education | 0.05 | Weak signal: 42 of 50 careers sit at level 3, and levels are curated estimates |
+| Education | 0.05 | Weak signal: 50 of 64 careers sit at level 3 (42 of the original 50), and levels are curated estimates |
 
 Properties that follow from these weights:
 
@@ -138,22 +140,24 @@ recommend(profile, catalog, top_k=5, weights=DEFAULT_WEIGHTS) returns:
   "profile": {
     "skills": [...], "interests": [...], "education_level": 3, "experience_years": None,
     "report": {"recognized_skills", "unknown_skills", "duplicate_skills",
-               "recognized_interests", "unknown_interests", "missing_fields", "ignored_fields"},
+               "recognized_interests", "unknown_interests", "migrated_interests", "retired_interests",
+               "missing_fields", "ignored_fields"},
     "profile_complete": bool
   },
   "weights": {"required_skills": 0.55, "preferred_skills": 0.15, "interests": 0.25, "education": 0.05},
-  "careers_scored": 50,
+  "careers_scored": 64,
   "recommendations": [
     {
       "rank": 1, "career_id": "C001", "career_title": "...", "category": "...",
-      "score": 61.5,                                    # 0 to 100, one decimal
+      "score": 65.7,                                    # 0 to 100, one decimal
       "score_components": {
         "required_skills": {"value": 0.8, "weight": 0.55, "applicable": True, "provided": True, "contribution": 44.0},
         ...
       },
       "matched_required_skills": [...], "missing_required_skills": [...],
       "matched_preferred_skills": [...], "missing_preferred_skills": [...],
-      "matched_interests": [...], "career_interests": [...],
+      "matched_interests": [...], "career_interests": [...],         # stored forms
+      "matched_interest_labels": [...], "career_interest_labels": [...],  # full names
       "education": {"learner_level": 3, "career_level": 3, "meets_level": True, "levels_below": 0},
       "learning_goals": [...],
       "reasons": [...],      # why the score is what it is
@@ -220,13 +224,13 @@ With C careers, average k required plus preferred skills and i interests per car
 
 ## 14. Worked example (real dataset)
 
-The profile below is illustrative. It is not a real learner and the result is not an evaluation metric. tests/test_recommendations.py reruns this example on every build.
+Values below are for dataset v1.4.0. Before v1.4.0 the same profile (with the old interests analysis and mathematics) gave C001 61.5, because C001 then listed four interests, and C006 Statistician 41.7 in fifth place. The profile below is illustrative. It is not a real learner and the result is not an evaluation metric. tests/test_recommendations.py reruns this example on every build.
 
 Input:
 
 ```python
 {"skills": ["Python", "SQL", "Excel", "ML", "statistics"],
- "interests": ["analysis", "mathematics"],
+ "interests": ["Analysing data and information", "Working with numbers and calculations"],
  "education_level": 3}
 ```
 
@@ -236,20 +240,21 @@ Top 5:
 
 | Rank | Career | S_req | S_pref | S_int | S_edu | Score |
 |---|---|---|---|---|---|---|
-| 1 | C001 Data Scientist | 4/5 | 0/3 | 2/4 | 1.00 | 61.5 |
+| 1 | C001 Data Scientist | 4/5 | 0/3 | 2/3 | 1.00 | 65.7 |
 | 2 | C002 Data Analyst | 3/4 | 1/3 | 1/3 | 1.00 | 59.6 |
 | 3 | C029 Financial Analyst | 1/3 | 3/3 | 2/3 | 1.00 | 55.0 |
 | 4 | C031 Market Research Analyst | 2/4 | 2/3 | 1/3 | 1.00 | 50.8 |
-| 5 | C006 Statistician | 1/4 | 1/2 | 2/3 | 0.75 | 41.7 |
+| 5 | C060 Economist | 1/4 | 2/3 | 2/3 | 0.75 | 44.2 |
 
 Calculation for C001 Data Scientist:
 
 ```
 required:  python, statistics, machine learning, sql matched, data visualization missing -> 0.8
 preferred: deep learning, cloud computing, git all missing                             -> 0.0
-interests: analysis, mathematics matched of analysis, mathematics, research, technology -> 0.5
+interests: 2 matched of Analysing data and information, Working with numbers and
+           calculations, Writing software and building apps                            -> 0.667
 education: learner 3, career 3                                                          -> 1.0
-score = 100 x (0.55 x 0.8 + 0.15 x 0.0 + 0.25 x 0.5 + 0.05 x 1.0) = 44.0 + 0 + 12.5 + 5.0 = 61.5
+score = 100 x (0.55 x 0.8 + 0.15 x 0.0 + 0.25 x 0.667 + 0.05 x 1.0) = 44.0 + 0 + 16.7 + 5.0 = 65.7
 ```
 
 Skill gap for C001: required coverage 0.8, preferred coverage 0.0, overall 0.5. Resources returned:

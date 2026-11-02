@@ -16,7 +16,8 @@ from src.services.roadmap import (
 from src.services.session_data import SessionFileError, export_session, import_session, import_session_data
 
 PROFILE = {"skills": ["python", "sql", "excel", "machine learning", "statistics"],
-           "interests": ["analysis", "mathematics"], "education_level": 3}
+           "interests": ["analysing data and information", "working with numbers and calculations"],
+           "education_level": 3}
 
 
 @pytest.fixture(scope="module")
@@ -32,7 +33,7 @@ def test_roadmap_for_a_valid_career_uses_the_skill_gap(catalog):
     rm = build_roadmap(PROFILE, "C001", catalog)
     career = catalog.get_career("C001")
     assert rm["career_title"] == "Data Scientist" and rm["category"] == "Data and AI"
-    assert rm["fit"] == {"score": 61.5, "rank": 1, "careers_ranked": len(catalog.careers)}
+    assert rm["fit"] == {"score": 65.7, "rank": 1, "careers_ranked": len(catalog.careers)}
     assert rm["missing_required_skills"] == ["data visualization"]
     assert sorted(rm["missing_preferred_skills"]) == sorted(career.preferred_skills)
     assert skills_of(rm)[0] == "data visualization"

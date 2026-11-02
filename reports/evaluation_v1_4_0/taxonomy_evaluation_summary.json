@@ -1,0 +1,643 @@
+{
+  "study_id": "eval_v1.4.0_taxonomy",
+  "status": "Owner-authorized implementation pending lecturer feedback. Separate from eval64_v1 and from the original 50-career study; neither is changed.",
+  "conditions": {
+    "A_v130_original": "v1.3.0 catalogue, original eval64 profiles (frozen eval64_v1 configuration)",
+    "A2_v130_retired_removed": "v1.3.0 catalogue, profiles without the five retired old interest names",
+    "B_v140_migrated": "v1.4.0 catalogue, profile interests migrated to interest taxonomy 2.0"
+  },
+  "data": {
+    "profiles": 111,
+    "explicit_labels": 363,
+    "labels_source": "eval64_v1 (single author, no second review yet)",
+    "snapshot_sha256": {
+      "careers.csv": "3a0dde7ae575ea9caafb84819cef79fd2c1aca12a9585f620c8b3b21ed9d144e",
+      "resources.csv": "07ee4ebe98af565239ca58237e6f2161421ce3add3e5a85145314f1a0522bae0",
+      "skill_aliases.csv": "4634068bddfba14633342c7c5342e4fa66600a791731768c89b9be5ea88a4737",
+      "dataset_manifest.json": "b945323f153b8ff72fae7eda0dec5394454b010c042a9f358166d42cd1d27a95"
+    },
+    "a_reproduces_frozen_eval64_v1": true
+  },
+  "profile_interest_migration": {
+    "interests_before": 269,
+    "interests_after": 197,
+    "migrated": 197,
+    "retired": 72,
+    "unknown": 0,
+    "profiles_by_interest_count_before": {
+      "1": 2,
+      "2": 61,
+      "3": 47,
+      "4": 1
+    },
+    "profiles_by_interest_count_after": {
+      "0": 10,
+      "1": 34,
+      "2": 38,
+      "3": 29
+    },
+    "profiles_left_without_interests": 10,
+    "retired_terms_seen": {
+      "communication": 5,
+      "design": 12,
+      "engineering": 16,
+      "problem solving": 9,
+      "technology": 30
+    }
+  },
+  "overall": {
+    "A_v130_original": {
+      "precision_at_1": {
+        "mean": 0.8119,
+        "ci_low": 0.7308,
+        "ci_high": 0.8857,
+        "defined_profiles": 101,
+        "undefined_profiles": 10,
+        "resamples": 2000
+      },
+      "precision_at_3": {
+        "mean": 0.4125,
+        "ci_low": 0.3718,
+        "ci_high": 0.4521,
+        "defined_profiles": 101,
+        "undefined_profiles": 10,
+        "resamples": 2000
+      },
+      "precision_at_5": {
+        "mean": 0.303,
+        "ci_low": 0.2765,
+        "ci_high": 0.3278,
+        "defined_profiles": 101,
+        "undefined_profiles": 10,
+        "resamples": 2000
+      },
+      "recall_at_5": {
+        "mean": 0.901,
+        "ci_low": 0.8592,
+        "ci_high": 0.9403,
+        "defined_profiles": 101,
+        "undefined_profiles": 10,
+        "resamples": 2000
+      },
+      "f1_at_5": {
+        "mean": 0.437,
+        "ci_low": 0.4071,
+        "ci_high": 0.4654,
+        "defined_profiles": 101,
+        "undefined_profiles": 10,
+        "resamples": 2000
+      },
+      "hit_at_5": {
+        "mean": 1.0,
+        "ci_low": 1.0,
+        "ci_high": 1.0,
+        "defined_profiles": 101,
+        "undefined_profiles": 10,
+        "resamples": 2000
+      },
+      "reciprocal_rank": {
+        "mean": 0.8843,
+        "ci_low": 0.8314,
+        "ci_high": 0.9299,
+        "defined_profiles": 101,
+        "undefined_profiles": 10,
+        "resamples": 2000
+      },
+      "average_precision": {
+        "mean": 0.7948,
+        "ci_low": 0.7426,
+        "ci_high": 0.8421,
+        "defined_profiles": 101,
+        "undefined_profiles": 10,
+        "resamples": 2000
+      },
+      "ndcg_at_5": {
+        "mean": 0.7592,
+        "ci_low": 0.7174,
+        "ci_high": 0.7993,
+        "defined_profiles": 111,
+        "undefined_profiles": 0,
+        "resamples": 2000
+      }
+    },
+    "A2_v130_retired_removed": {
+      "precision_at_1": {
+        "mean": 0.7921,
+        "ci_low": 0.71,
+        "ci_high": 0.87,
+        "defined_profiles": 101,
+        "undefined_profiles": 10,
+        "resamples": 2000
+      },
+      "precision_at_3": {
+        "mean": 0.396,
+        "ci_low": 0.35,
+        "ci_high": 0.4399,
+        "defined_profiles": 101,
+        "undefined_profiles": 10,
+        "resamples": 2000
+      },
+      "precision_at_5": {
+        "mean": 0.2911,
+        "ci_low": 0.2604,
+        "ci_high": 0.3212,
+        "defined_profiles": 101,
+        "undefined_profiles": 10,
+        "resamples": 2000
+      },
+      "recall_at_5": {
+        "mean": 0.8597,
+        "ci_low": 0.7965,
+        "ci_high": 0.915,
+        "defined_profiles": 101,
+        "undefined_profiles": 10,
+        "resamples": 2000
+      },
+      "f1_at_5": {
+        "mean": 0.4187,
+        "ci_low": 0.3795,
+        "ci_high": 0.4544,
+        "defined_profiles": 101,
+        "undefined_profiles": 10,
+        "resamples": 2000
+      },
+      "hit_at_5": {
+        "mean": 0.9307,
+        "ci_low": 0.875,
+        "ci_high": 0.9796,
+        "defined_profiles": 101,
+        "undefined_profiles": 10,
+        "resamples": 2000
+      },
+      "reciprocal_rank": {
+        "mean": 0.8511,
+        "ci_low": 0.7862,
+        "ci_high": 0.9074,
+        "defined_profiles": 101,
+        "undefined_profiles": 10,
+        "resamples": 2000
+      },
+      "average_precision": {
+        "mean": 0.7709,
+        "ci_low": 0.7103,
+        "ci_high": 0.8283,
+        "defined_profiles": 101,
+        "undefined_profiles": 10,
+        "resamples": 2000
+      },
+      "ndcg_at_5": {
+        "mean": 0.7303,
+        "ci_low": 0.6741,
+        "ci_high": 0.7806,
+        "defined_profiles": 111,
+        "undefined_profiles": 0,
+        "resamples": 2000
+      }
+    },
+    "B_v140_migrated": {
+      "precision_at_1": {
+        "mean": 0.7426,
+        "ci_low": 0.6531,
+        "ci_high": 0.828,
+        "defined_profiles": 101,
+        "undefined_profiles": 10,
+        "resamples": 2000
+      },
+      "precision_at_3": {
+        "mean": 0.3927,
+        "ci_low": 0.3498,
+        "ci_high": 0.4369,
+        "defined_profiles": 101,
+        "undefined_profiles": 10,
+        "resamples": 2000
+      },
+      "precision_at_5": {
+        "mean": 0.2772,
+        "ci_low": 0.248,
+        "ci_high": 0.3068,
+        "defined_profiles": 101,
+        "undefined_profiles": 10,
+        "resamples": 2000
+      },
+      "recall_at_5": {
+        "mean": 0.8168,
+        "ci_low": 0.7492,
+        "ci_high": 0.881,
+        "defined_profiles": 101,
+        "undefined_profiles": 10,
+        "resamples": 2000
+      },
+      "f1_at_5": {
+        "mean": 0.3989,
+        "ci_low": 0.3618,
+        "ci_high": 0.4353,
+        "defined_profiles": 101,
+        "undefined_profiles": 10,
+        "resamples": 2000
+      },
+      "hit_at_5": {
+        "mean": 0.9109,
+        "ci_low": 0.85,
+        "ci_high": 0.9612,
+        "defined_profiles": 101,
+        "undefined_profiles": 10,
+        "resamples": 2000
+      },
+      "reciprocal_rank": {
+        "mean": 0.8151,
+        "ci_low": 0.7488,
+        "ci_high": 0.8776,
+        "defined_profiles": 101,
+        "undefined_profiles": 10,
+        "resamples": 2000
+      },
+      "average_precision": {
+        "mean": 0.7264,
+        "ci_low": 0.6602,
+        "ci_high": 0.7908,
+        "defined_profiles": 101,
+        "undefined_profiles": 10,
+        "resamples": 2000
+      },
+      "ndcg_at_5": {
+        "mean": 0.6774,
+        "ci_low": 0.6193,
+        "ci_high": 0.7326,
+        "defined_profiles": 111,
+        "undefined_profiles": 0,
+        "resamples": 2000
+      }
+    }
+  },
+  "paired_differences": {
+    "B_minus_A": {
+      "precision_at_1": {
+        "mean_difference": -0.0693,
+        "ci_low": -0.1373,
+        "ci_high": 0.0,
+        "profiles_better": 3,
+        "profiles_worse": 10,
+        "profiles_unchanged": 88,
+        "defined_profiles": 101
+      },
+      "precision_at_3": {
+        "mean_difference": -0.0198,
+        "ci_low": -0.0533,
+        "ci_high": 0.0131,
+        "profiles_better": 8,
+        "profiles_worse": 12,
+        "profiles_unchanged": 81,
+        "defined_profiles": 101
+      },
+      "precision_at_5": {
+        "mean_difference": -0.0257,
+        "ci_low": -0.044,
+        "ci_high": -0.0083,
+        "profiles_better": 3,
+        "profiles_worse": 14,
+        "profiles_unchanged": 84,
+        "defined_profiles": 101
+      },
+      "recall_at_5": {
+        "mean_difference": -0.0842,
+        "ci_low": -0.1414,
+        "ci_high": -0.0317,
+        "profiles_better": 3,
+        "profiles_worse": 14,
+        "profiles_unchanged": 84,
+        "defined_profiles": 101
+      },
+      "f1_at_5": {
+        "mean_difference": -0.0381,
+        "ci_low": -0.0642,
+        "ci_high": -0.0132,
+        "profiles_better": 3,
+        "profiles_worse": 14,
+        "profiles_unchanged": 84,
+        "defined_profiles": 101
+      },
+      "hit_at_5": {
+        "mean_difference": -0.0891,
+        "ci_low": -0.15,
+        "ci_high": -0.0388,
+        "profiles_better": 0,
+        "profiles_worse": 9,
+        "profiles_unchanged": 92,
+        "defined_profiles": 101
+      },
+      "reciprocal_rank": {
+        "mean_difference": -0.0692,
+        "ci_low": -0.1214,
+        "ci_high": -0.0199,
+        "profiles_better": 7,
+        "profiles_worse": 16,
+        "profiles_unchanged": 78,
+        "defined_profiles": 101
+      },
+      "average_precision": {
+        "mean_difference": -0.0684,
+        "ci_low": -0.1164,
+        "ci_high": -0.0256,
+        "profiles_better": 19,
+        "profiles_worse": 31,
+        "profiles_unchanged": 51,
+        "defined_profiles": 101
+      },
+      "ndcg_at_5": {
+        "mean_difference": -0.0818,
+        "ci_low": -0.1214,
+        "ci_high": -0.0441,
+        "profiles_better": 24,
+        "profiles_worse": 50,
+        "profiles_unchanged": 37,
+        "defined_profiles": 111
+      }
+    },
+    "B_minus_A2": {
+      "precision_at_1": {
+        "mean_difference": -0.0495,
+        "ci_low": -0.1146,
+        "ci_high": 0.0099,
+        "profiles_better": 3,
+        "profiles_worse": 8,
+        "profiles_unchanged": 90,
+        "defined_profiles": 101
+      },
+      "precision_at_3": {
+        "mean_difference": -0.0033,
+        "ci_low": -0.03,
+        "ci_high": 0.0227,
+        "profiles_better": 7,
+        "profiles_worse": 7,
+        "profiles_unchanged": 87,
+        "defined_profiles": 101
+      },
+      "precision_at_5": {
+        "mean_difference": -0.0139,
+        "ci_low": -0.03,
+        "ci_high": 0.002,
+        "profiles_better": 4,
+        "profiles_worse": 10,
+        "profiles_unchanged": 87,
+        "defined_profiles": 101
+      },
+      "recall_at_5": {
+        "mean_difference": -0.0429,
+        "ci_low": -0.09,
+        "ci_high": 0.0017,
+        "profiles_better": 4,
+        "profiles_worse": 10,
+        "profiles_unchanged": 87,
+        "defined_profiles": 101
+      },
+      "f1_at_5": {
+        "mean_difference": -0.0198,
+        "ci_low": -0.0431,
+        "ci_high": 0.0023,
+        "profiles_better": 4,
+        "profiles_worse": 10,
+        "profiles_unchanged": 87,
+        "defined_profiles": 101
+      },
+      "hit_at_5": {
+        "mean_difference": -0.0198,
+        "ci_low": -0.068,
+        "ci_high": 0.0208,
+        "profiles_better": 2,
+        "profiles_worse": 4,
+        "profiles_unchanged": 95,
+        "defined_profiles": 101
+      },
+      "reciprocal_rank": {
+        "mean_difference": -0.036,
+        "ci_low": -0.0847,
+        "ci_high": 0.0082,
+        "profiles_better": 7,
+        "profiles_worse": 13,
+        "profiles_unchanged": 81,
+        "defined_profiles": 101
+      },
+      "average_precision": {
+        "mean_difference": -0.0445,
+        "ci_low": -0.085,
+        "ci_high": -0.0103,
+        "profiles_better": 15,
+        "profiles_worse": 24,
+        "profiles_unchanged": 62,
+        "defined_profiles": 101
+      },
+      "ndcg_at_5": {
+        "mean_difference": -0.053,
+        "ci_low": -0.0861,
+        "ci_high": -0.0217,
+        "profiles_better": 18,
+        "profiles_worse": 39,
+        "profiles_unchanged": 54,
+        "defined_profiles": 111
+      }
+    },
+    "A2_minus_A": {
+      "precision_at_1": {
+        "mean_difference": -0.0198,
+        "ci_low": -0.06,
+        "ci_high": 0.0104,
+        "profiles_better": 1,
+        "profiles_worse": 3,
+        "profiles_unchanged": 97,
+        "defined_profiles": 101
+      },
+      "precision_at_3": {
+        "mean_difference": -0.0165,
+        "ci_low": -0.0392,
+        "ci_high": 0.0034,
+        "profiles_better": 2,
+        "profiles_worse": 6,
+        "profiles_unchanged": 93,
+        "defined_profiles": 101
+      },
+      "precision_at_5": {
+        "mean_difference": -0.0119,
+        "ci_low": -0.0263,
+        "ci_high": -0.0,
+        "profiles_better": 2,
+        "profiles_worse": 7,
+        "profiles_unchanged": 92,
+        "defined_profiles": 101
+      },
+      "recall_at_5": {
+        "mean_difference": -0.0413,
+        "ci_low": -0.085,
+        "ci_high": -0.0063,
+        "profiles_better": 2,
+        "profiles_worse": 7,
+        "profiles_unchanged": 92,
+        "defined_profiles": 101
+      },
+      "f1_at_5": {
+        "mean_difference": -0.0183,
+        "ci_low": -0.0393,
+        "ci_high": -0.0008,
+        "profiles_better": 2,
+        "profiles_worse": 7,
+        "profiles_unchanged": 92,
+        "defined_profiles": 101
+      },
+      "hit_at_5": {
+        "mean_difference": -0.0693,
+        "ci_low": -0.125,
+        "ci_high": -0.0204,
+        "profiles_better": 0,
+        "profiles_worse": 7,
+        "profiles_unchanged": 94,
+        "defined_profiles": 101
+      },
+      "reciprocal_rank": {
+        "mean_difference": -0.0332,
+        "ci_low": -0.0684,
+        "ci_high": -0.0047,
+        "profiles_better": 1,
+        "profiles_worse": 8,
+        "profiles_unchanged": 92,
+        "defined_profiles": 101
+      },
+      "average_precision": {
+        "mean_difference": -0.024,
+        "ci_low": -0.0528,
+        "ci_high": -0.0014,
+        "profiles_better": 10,
+        "profiles_worse": 16,
+        "profiles_unchanged": 75,
+        "defined_profiles": 101
+      },
+      "ndcg_at_5": {
+        "mean_difference": -0.0288,
+        "ci_low": -0.0588,
+        "ci_high": -0.0054,
+        "profiles_better": 12,
+        "profiles_worse": 17,
+        "profiles_unchanged": 82,
+        "defined_profiles": 111
+      }
+    }
+  },
+  "exposure": {
+    "A_v130_original": {
+      "category_slot_share": {
+        "Data and AI": 0.227,
+        "Software": 0.1063,
+        "Cybersecurity": 0.0757,
+        "Design": 0.0919,
+        "Business": 0.1441,
+        "Education": 0.0703,
+        "Healthcare": 0.0919,
+        "Engineering": 0.1063,
+        "Law": 0.0378,
+        "Social Sciences": 0.0486
+      },
+      "careers_ever_in_top5": 64,
+      "profiles_with_tie_at_rank5_boundary": 62,
+      "profiles_with_tie_within_top5": 84
+    },
+    "A2_v130_retired_removed": {
+      "category_slot_share": {
+        "Data and AI": 0.2468,
+        "Software": 0.0919,
+        "Cybersecurity": 0.0811,
+        "Design": 0.0829,
+        "Business": 0.1514,
+        "Education": 0.0757,
+        "Healthcare": 0.1099,
+        "Engineering": 0.0739,
+        "Law": 0.0378,
+        "Social Sciences": 0.0486
+      },
+      "careers_ever_in_top5": 64,
+      "profiles_with_tie_at_rank5_boundary": 63,
+      "profiles_with_tie_within_top5": 85
+    },
+    "B_v140_migrated": {
+      "category_slot_share": {
+        "Data and AI": 0.2523,
+        "Software": 0.1189,
+        "Cybersecurity": 0.0667,
+        "Design": 0.0919,
+        "Business": 0.1477,
+        "Education": 0.0847,
+        "Healthcare": 0.1135,
+        "Engineering": 0.0775,
+        "Law": 0.0144,
+        "Social Sciences": 0.0324
+      },
+      "careers_ever_in_top5": 64,
+      "profiles_with_tie_at_rank5_boundary": 64,
+      "profiles_with_tie_within_top5": 88
+    }
+  },
+  "migration_reachability": {
+    "note": "Interests a migrated profile can hold. Careers whose interests are unreachable cannot earn interest points from any migrated profile, which biases condition B against them.",
+    "unreachable_new_interests": [
+      "Designing apps, websites and user experiences",
+      "Designing buildings, structures and physical products",
+      "Managing money and financial information",
+      "Persuading, presenting and negotiating",
+      "Setting up and running computer systems and networks",
+      "Working with communities",
+      "Working with laws, rules and regulations",
+      "Working with tools, machines and equipment"
+    ],
+    "careers_by_reachable_interest_count": {
+      "1": 12,
+      "2": 31,
+      "3": 21
+    },
+    "unreachable_career_interest_slots_by_category": {
+      "Data and AI": 4,
+      "Software": 7,
+      "Cybersecurity": 4,
+      "Design": 8,
+      "Business": 9,
+      "Education": 3,
+      "Healthcare": 3,
+      "Engineering": 12,
+      "Law": 4,
+      "Social Sciences": 1
+    }
+  },
+  "profiles_with_changed_top5_A_to_B": 105,
+  "configuration": {
+    "k": 5,
+    "binary_threshold": 2,
+    "bootstrap": {
+      "type": "profile-level percentile, paired for differences",
+      "resamples": 2000,
+      "seed": 64
+    },
+    "weights": {
+      "required_skills": 0.55,
+      "preferred_skills": 0.15,
+      "interests": 0.25,
+      "education": 0.05
+    }
+  },
+  "limitations": [
+    "Synthetic profiles and single-author labels; results describe agreement with those labels, not real-world recommendation accuracy.",
+    "The eval64 profiles were written with the old 20-term vocabulary and were migrated mechanically; a learner choosing from the new 23 terms could choose differently.",
+    "8 of the 23 new interests cannot be reached from any old interest name, so careers that carry them (for example law, money, community and equipment work) cannot gain interest points in condition B.",
+    "Five old terms are retired rather than guessed, so migrated profiles lose 72 of 269 interests and 10 profiles keep none.",
+    "The labels were written while the author knew the v1.3.0 catalogue.",
+    "Exploratory comparison designed after the taxonomy was chosen; not pre-registered.",
+    "The interest taxonomy has not yet received lecturer approval."
+  ],
+  "execution": {
+    "date": "2026-11-02",
+    "python": "3.13.16",
+    "platform": "Linux",
+    "packages": {
+      "scikit-learn": "1.9.1",
+      "numpy": "2.5.4",
+      "pandas": "3.0.6",
+      "streamlit": "1.65.0",
+      "matplotlib": "3.11.2"
+    }
+  }
+}

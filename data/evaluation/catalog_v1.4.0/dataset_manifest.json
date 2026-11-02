@@ -1,0 +1,8 @@
+{
+  "dataset_version": "1.4.0",
+  "careers": 64,
+  "skills": 144,
+  "resources": 144,
+  "interest_taxonomy": "2.0",
+  "note": "Live catalogue counts. Change these numbers deliberately in the same commit that adds careers, skills or resources. v1.4.0 changed only the interests column (23-term taxonomy 2.0, owner-authorized pending lecturer feedback)."
+}

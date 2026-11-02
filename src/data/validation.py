@@ -13,6 +13,10 @@ from datetime import date
 from pathlib import Path
 from urllib.parse import urlparse
 
+from src.data.interest_taxonomy import (
+    CURRENT_INTERESTS, CURRENT_TAXONOMY, INTERESTS_PER_CAREER, LEGACY_INTERESTS, LEGACY_TAXONOMY, MANIFEST_FIELD,
+    vocabulary_for,
+)
 from src.data.preprocessing import clean_skill_text
 
 # Dataset locations relative to the project root
@@ -62,12 +66,10 @@ EDUCATION_LEVELS = {
     3: "Bachelor's degree or equivalent",
     4: "Master's degree or higher",
 }
-INTERESTS = (
-    "analysis", "building software", "business", "communication", "design", "engineering",
-    "environment", "healthcare", "helping people", "leadership", "mathematics", "organization",
-    "problem solving", "research", "science", "security", "teaching", "technology",
-    "visual arts", "writing",
-)
+# Live controlled interest vocabulary (taxonomy 2.0, 23 terms, dataset v1.4.0); see src/data/interest_taxonomy.py
+INTERESTS = CURRENT_INTERESTS
+# The 20-term vocabulary of datasets up to v1.3.0; folders whose manifest has no interest_taxonomy field use it
+LEGACY_INTEREST_VOCABULARY = LEGACY_INTERESTS
 RESOURCE_TYPES = ("book", "course", "documentation", "guide", "standard", "tutorial")
 LEVELS = ("beginner", "intermediate", "advanced")
 BOOLEAN_VALUES = ("true", "false")
@@ -188,8 +190,10 @@ def check_token_list(value, record, field_name, dataset, allow_empty=False):
     return issues
 
 
-def validate_careers(rows, columns, expected_count=EXPECTED_CAREER_COUNT):
+def validate_careers(rows, columns, expected_count=EXPECTED_CAREER_COUNT, taxonomy=LEGACY_TAXONOMY):
+    # taxonomy picks the interest vocabulary; the current taxonomy also requires exactly three interests per career
     ds = "careers"
+    vocabulary = vocabulary_for(taxonomy)
     issues = check_columns(columns, CAREER_COLUMNS, ds)
     if any(i.severity == ERROR for i in issues):
         return issues
@@ -236,8 +240,12 @@ def validate_careers(rows, columns, expected_count=EXPECTED_CAREER_COUNT):
 
         issues += check_token_list(r["interests"], rec, "interests", ds)
         for t in split_list(r["interests"]):
-            if t and is_normalized_token(t) and t not in INTERESTS:
+            if t and is_normalized_token(t) and t not in vocabulary:
                 issues.append(Issue(ERROR, ds, rec, "interests", f"'{t}' is not in the controlled interest vocabulary"))
+        n_interests = len([t for t in split_list(r["interests"]) if t])
+        if taxonomy == CURRENT_TAXONOMY and r["interests"] and n_interests != INTERESTS_PER_CAREER:
+            issues.append(Issue(ERROR, ds, rec, "interests",
+                                f"has {n_interests} interests; taxonomy {CURRENT_TAXONOMY} needs exactly {INTERESTS_PER_CAREER}"))
         issues += check_token_list(r["learning_goals"], rec, "learning_goals", ds)
 
         onet, src = r["onet_code"], r["source_url"]
@@ -377,7 +385,16 @@ def read_manifest(data_dir):
         value = data.get(key)
         if not isinstance(value, int) or isinstance(value, bool) or value < 1:
             issues.append(Issue(ERROR, "manifest", "file", key, "must be a positive whole number"))
+    if MANIFEST_FIELD in data and data[MANIFEST_FIELD] not in (LEGACY_TAXONOMY, CURRENT_TAXONOMY):
+        issues.append(Issue(ERROR, "manifest", "file", MANIFEST_FIELD,
+                            f"must be '{LEGACY_TAXONOMY}' or '{CURRENT_TAXONOMY}'"))
     return (data if not issues else None), issues
+
+
+def taxonomy_for_dir(data_dir):
+    # Interest taxonomy declared by a folder's manifest; no manifest or no field means the legacy vocabulary
+    manifest, _ = read_manifest(data_dir)
+    return (manifest or {}).get(MANIFEST_FIELD, LEGACY_TAXONOMY)
 
 
 def validate_all(data_dir=DEFAULT_DATA_DIR, expected_count=None):
@@ -392,7 +409,8 @@ def validate_all(data_dir=DEFAULT_DATA_DIR, expected_count=None):
     if careers is None:
         return report
     rows, cols = careers
-    report.extend(validate_careers(rows, cols, expected_count))
+    taxonomy = (manifest or {}).get(MANIFEST_FIELD, LEGACY_TAXONOMY)
+    report.extend(validate_careers(rows, cols, expected_count, taxonomy))
     required, preferred = career_skill_sets(rows)
 
     resources = _load(data_dir / RESOURCES_FILE, "resources", report)

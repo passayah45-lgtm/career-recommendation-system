@@ -34,11 +34,14 @@ def test_snapshot_is_intact_and_holds_the_original_catalogue():
 
 
 def test_original_50_careers_are_unchanged_in_the_live_catalogue():
+    # Dataset v1.4.0 changed only the interests column (taxonomy 2.0); every other field must match the original
     snapshot = rows(EVALUATION_CATALOG_DIR / "careers.csv", "career_id")
     live = rows(DEFAULT_DATA_DIR / "careers.csv", "career_id")
     assert len(snapshot) == 50
     for cid, row in snapshot.items():
-        assert live.get(cid) == row, f"{cid} differs from the frozen original"
+        assert cid in live, f"{cid} is missing from the live catalogue"
+        assert {k: v for k, v in live[cid].items() if k != "interests"} == \
+            {k: v for k, v in row.items() if k != "interests"}, f"{cid} differs from the frozen original"
 
 
 def test_original_resources_and_aliases_are_unchanged_in_the_live_catalogue():
@@ -97,7 +100,9 @@ NEW_CAREER = {
     "career_id": "C065", "career_title": "Test Expansion Career", "category": "Engineering",
     "description": "A test career that reuses existing skills to check the expansion path.",
     "required_skills": "engineering mathematics|cad|gis", "preferred_skills": "project management",
-    "education_level": "3", "interests": "engineering|environment", "learning_goals": "plan a site|draw a map",
+    "education_level": "3",
+    "interests": "designing buildings structures and physical products|working outdoors and with the natural environment"
+                 "|working with numbers and calculations", "learning_goals": "plan a site|draw a map",
 }
 
 

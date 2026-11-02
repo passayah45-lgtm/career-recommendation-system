@@ -2,7 +2,11 @@
 
 import streamlit as st
 
+from src.data.interest_taxonomy import (
+    CURRENT_TAXONOMY, INTEREST_UPDATE_NOTICE, RIASEC_DESCRIPTIONS, SOFT_SELECTION_LIMIT, label_for, terms_by_group,
+)
 from src.data.validation import EDUCATION_LEVELS
+from src.services.profiles import resolve_interests
 from src.services.profiles import MAX_EXPERIENCE_YEARS, ProfileValidationError
 from src.services.recommendations import profile_from_input
 from src.ui.components import (
@@ -25,6 +29,9 @@ preselected = [s for s in saved_skills if s in catalog.known_skills]
 other_text = ", ".join(s for s in saved_skills if s not in catalog.known_skills)
 education_options = [None] + sorted(EDUCATION_LEVELS)
 saved_level = saved.get("education_level")
+# Saved answers may use old interest names; they are translated here so the form shows the current choices
+saved_interests, _, saved_migrated, saved_retired = resolve_interests(saved.get("interests", []), catalog.interests)
+grouped_interests = catalog.interest_taxonomy == CURRENT_TAXONOMY
 
 with st.form("assessment_form"):
     section(1, "Your skills", f"Select from the {len(known_skills)} skills used by the careers, or type your own.",
@@ -46,14 +53,37 @@ with st.form("assessment_form"):
     )
 
     st.divider()
-    section(2, "Your interests", "Choose the kinds of work you enjoy. Interests carry 25% of the score.",
+    section(2, "Your interests", "Choose the kinds of work you enjoy or would like to do. You do not need the "
+            "skills yet. Skills are asked separately. Interests carry 25% of the score.",
             ":material/favorite:", "red")
-    interests = st.multiselect(
-        "Kinds of work that interest you",
-        options=sorted(catalog.interests),
-        default=[i for i in saved.get("interests", []) if i in catalog.interests],
-        placeholder="Type to search, for example analysis or design",
-    )
+    if grouped_interests:
+        st.info(INTEREST_UPDATE_NOTICE, icon=":material/new_releases:")
+        st.caption(f"Choose up to {SOFT_SELECTION_LIMIT} that you enjoy most. Hover over the question mark next to "
+                   "an interest for an explanation, an example and a related skill. The groups only help you read "
+                   "the list. They do not change the score.")
+        if saved_migrated or saved_retired:
+            notes = [f"{old} became {label_for(new)}" for old, new in saved_migrated]
+            notes += [f"{old} {note}" for old, note in saved_retired]
+            st.info("Your saved answers used old interest names. " + ". ".join(notes) + ".",
+                    icon=":material/update:")
+        interests = []
+        group_cols = st.columns(2)
+        for n, (group, terms) in enumerate(terms_by_group().items()):
+            with group_cols[n % 2]:
+                st.markdown(f"**{group}**")
+                st.caption(RIASEC_DESCRIPTIONS[group])
+                for term in terms:
+                    if st.checkbox(term.label, value=term.key in saved_interests, key=f"interest_{term.key}",
+                                   help=f"{term.explanation}. Example: {term.example}. "
+                                        f"Related skill (not the same thing): {term.related_skill}."):
+                        interests.append(term.key)
+    else:
+        interests = st.multiselect(
+            "Kinds of work that interest you",
+            options=sorted(catalog.interests),
+            default=[i for i in saved_interests if i in catalog.interests],
+            placeholder="Type to search",
+        )
 
     st.divider()
     section(3, "Education level", "Education has a 5% weight. It is never used to exclude a career.",
@@ -116,6 +146,11 @@ if submitted:
             with st.container(border=True, key="panel_saved"):
                 st.success("Assessment saved for this browser session.", icon=":material/check_circle:")
                 st.markdown(f"**Recognized skills** {have_badges(report.recognized_skills)}")
+                if len(report.recognized_interests) > SOFT_SELECTION_LIMIT:
+                    st.warning(f"You chose {len(report.recognized_interests)} interests. Choosing more than "
+                               f"{SOFT_SELECTION_LIMIT} gives points to many careers without narrowing your results. "
+                               f"Consider keeping the {SOFT_SELECTION_LIMIT} you enjoy most. Your answers were saved.",
+                               icon=":material/tune:")
                 if report.unknown_skills:
                     st.warning(f"Not in the dataset, so not scored: {', '.join(report.unknown_skills)}.",
                                icon=":material/warning:")

@@ -571,6 +571,30 @@ def write_outputs(out_dir):
     return summary
 
 
+def _live_version():
+    path = DEFAULT_DATA_DIR / "dataset_manifest.json"
+    return json.loads(path.read_text(encoding="utf-8"))["dataset_version"]
+
+
+LIVE_FIELD = "live_catalogue_matches_frozen"
+
+
+def _live_field_issues(saved, recomputed):
+    # LIVE_FIELD records the live catalogue at freezing time, when it was v1.3.0 and identical, so it is saved as true
+    # While the live catalogue is still v1.3.0 the field is compared like any other
+    # After the live catalogue moves on, the recomputed value must be false and the saved value must still be
+    # exactly true; any other combination is reported, and only then is the field set aside for the full comparison
+    if _live_version() == read_manifest()["dataset_version"]:
+        return []
+    old, new = saved.get("data", {}).pop(LIVE_FIELD, None), recomputed.get("data", {}).pop(LIVE_FIELD, None)
+    issues = []
+    if old is not True:
+        issues.append(f"{SUMMARY_FILE}: saved {LIVE_FIELD} is {old!r}, expected the frozen value True")
+    if new is not False:
+        issues.append(f"{SUMMARY_FILE}: recomputed {LIVE_FIELD} is {new!r}, expected False for a later live catalogue")
+    return issues
+
+
 def check_outputs(saved_dir):
     # Recomputes everything and compares with the saved files; the execution block is ignored
     catalog, profiles, labels = load_frozen()
@@ -586,6 +610,7 @@ def check_outputs(saved_dir):
         if name == SUMMARY_FILE:
             a, b = json.loads(saved), json.loads(text)
             a.pop("execution", None)
+            diffs += _live_field_issues(a, b)
             if a != b:
                 diffs.append(f"{name}: differs")
         elif saved != text:

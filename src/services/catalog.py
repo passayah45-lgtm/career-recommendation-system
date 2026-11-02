@@ -6,8 +6,9 @@ from pathlib import Path
 from types import MappingProxyType
 
 from src.data.loader import load_aliases, load_careers, load_resources
+from src.data.interest_taxonomy import taxonomy_of, vocabulary_for
 from src.data.validation import (
-    ALIASES_FILE, CAREERS_FILE, DEFAULT_DATA_DIR, INTERESTS, RESOURCES_FILE, validate_all,
+    ALIASES_FILE, CAREERS_FILE, DEFAULT_DATA_DIR, INTERESTS, RESOURCES_FILE, taxonomy_for_dir, validate_all,
 )
 from src.engine.models import Career
 from src.services.learning_resources import ResourceCatalog
@@ -27,6 +28,11 @@ class Catalog:
     resources: ResourceCatalog
     aliases: MappingProxyType
     interests: frozenset
+
+    @property
+    def interest_taxonomy(self):
+        # "2.0" for the live 23-term vocabulary, "1.0" for frozen snapshots and legacy test catalogues
+        return taxonomy_of(self.interests)
 
     @property
     def known_skills(self):
@@ -86,6 +92,7 @@ def load_catalog(data_dir=None, validate=True, expected_count=None):
         careers = careers_from_dataframe(load_careers(data_dir / CAREERS_FILE))
         resources = ResourceCatalog.from_dataframe(load_resources(data_dir / RESOURCES_FILE))
         aliases = load_aliases(data_dir / ALIASES_FILE)
+        interests = vocabulary_for(taxonomy_for_dir(data_dir))
     except (OSError, KeyError, ValueError) as exc:
         raise DatasetError(f"Could not load the dataset: {exc}") from exc
-    return build_catalog(careers, resources, aliases)
+    return build_catalog(careers, resources, aliases, interests)
