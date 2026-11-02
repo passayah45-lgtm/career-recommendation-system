@@ -30,8 +30,14 @@ def test_snapshot_is_never_overwritten():
 
 
 def test_earlier_snapshots_are_untouched_and_legacy():
-    assert verify_frozen() == [] and verify_original_snapshot() == []
+    assert verify_original_snapshot() == []
     assert load_catalog(ROOT / "data" / "evaluation" / "catalog_v1.3.0").interest_taxonomy == LEGACY_TAXONOMY
+
+
+@needs_eval64_labels
+def test_frozen_eval64_inputs_are_untouched():
+    # verify_frozen hashes the withheld labels file too, so it runs only where the labels exist
+    assert verify_frozen() == []
 
 
 def test_published_outputs_hold_no_per_pair_labels():
