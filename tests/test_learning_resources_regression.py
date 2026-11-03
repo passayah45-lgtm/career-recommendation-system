@@ -125,6 +125,24 @@ def test_plan_my_learning_opens_the_roadmap_for_that_career():
     assert at.session_state[ROADMAP_CAREER_KEY] == "C001"
 
 
+def test_link_check_notice_is_gone_but_verification_stays():
+    # The block notice explaining link checks was removed from the page at the owner's request on 3 November 2026
+    catalog = load_catalog()
+    gap = analyze_skill_gap(PROFILE, "C001", catalog)
+    at = open_page("pages/3_Skill_Gap_Analysis.py", profile=PROFILE, **{SELECTED_CAREER_KEY: "C001"})
+    page = "\n".join(str(e.value) for e in list(at.info) + list(at.markdown) + list(at.caption))
+    assert "Each resource shows how its link was checked" not in page
+    assert gap["resource_note"] not in page
+    # Verification data and its display remain: the service note, the badges with tooltips and the table column
+    assert "was not opened by the checker" in gap["resource_note"]
+    badges = [m for m in at.markdown if "Link checked" in m.value or "Found in search" in m.value]
+    assert badges and all(m.help for m in badges)
+    resources = [r for group in ("required", "preferred") for e in gap["resources"][group] for r in e["resources"]]
+    assert all(r["url_verification"] and r["url_verification_meaning"] for r in resources)
+    assert all(r.get("verified_on") for r in resources if r["url_verification"] == "http_checked")
+    assert set(at.dataframe[0].value["Link status"]) <= {"http checked", "search index confirmed", "unverified"}
+
+
 # ---------- Skill Roadmap ----------
 
 def test_roadmap_gives_a_free_resource_link_for_each_step():

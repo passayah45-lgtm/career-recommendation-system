@@ -155,7 +155,8 @@ with optional_tab:
     st.caption("Preferred skills help but are not essential for this career.")
     resource_group(gap["resources"]["preferred"], "preferred", "No missing preferred skills.")
 
-st.info(gap["resource_note"], icon=":material/verified_user:")
+# The general link-check notice was removed at the owner's request on 3 November 2026. Each resource card still
+# shows its own link-check badge with a tooltip, and analyze_skill_gap() still returns resource_note for the API
 
 if gap["learning_goals"]:
     with st.container(border=True, key="panel_goals"):

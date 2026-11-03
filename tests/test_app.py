@@ -123,7 +123,8 @@ def test_skill_gap_shows_coverage_and_resources():
     table = at.dataframe[0].value
     assert list(table["Skill"]) == ["data visualization"]
     assert list(table["Link status"])[0] in ("search index confirmed", "http checked")
-    assert "was not opened by the checker" in text_of(at)
+    # The general link-check notice was removed on 3 November 2026; the per-resource status above stays
+    assert "was not opened by the checker" not in text_of(at)
 
 
 def test_skill_gap_without_profile_shows_all_skills_missing():
