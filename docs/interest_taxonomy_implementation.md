@@ -393,3 +393,11 @@ Interests, codes, descriptions, career assignments, dataset v1.4.0, scoring, ran
 - Typed interests are shown as plain text. `src/ui/text.py` escapes every punctuation mark and adds an invisible zero-width space after colons and before dots and @, so Markdown, HTML and bare web or email addresses never become links or images. This applies to the own-interest card, the suggestion captions, the saved note and the Recommendations warnings. Saved values are unchanged.
 - Suggestion buttons wrap onto more lines on phones instead of ending in "...". The CSS is scoped to the buttons inside the own-interest card.
 - Tests: `tests/test_text.py`, plus app tests with Markdown and HTML-like interests, and a style test for the button rule.
+
+## 12. Dropdown exchange (4 November 2026, owner decision, local, not yet committed)
+
+- Section 1 "Your skills" shows the 23 interests (label "Skills you already have"). Section 2 "Your interests" shows the 144 skills with their career-field groups (label "Kinds of work you enjoy").
+- The section does not decide what a value is. The assessment page saves each choice by the catalogue it comes from: interests from section 1 go to the interests field, skills from section 2 go to the skills field. The engine, the weights (55/15/25/5), the saved session format and the frozen evaluations are unchanged.
+- Typed text keeps the meaning of its section. Typed in section 1 it is a skill, with aliases such as ML. Typed in section 2 it is the student's own interest: saved, and scored only when it names one of the 23 interests.
+- Restoring: official interests (including old names) return to section 1, catalogue skills to section 2, other skills to the Other skills box, and own or retired interests to section 2 as typed chips.
+- The legacy interest list keeps the original layout.

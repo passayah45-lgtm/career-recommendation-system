@@ -2,7 +2,7 @@
 
 import streamlit as st
 
-from src.data.interest_taxonomy import CURRENT_TAXONOMY, SOFT_SELECTION_LIMIT, label_for
+from src.data.interest_taxonomy import CURRENT_TAXONOMY, SOFT_SELECTION_LIMIT, TERMS_BY_KEY, label_for
 from src.data.validation import EDUCATION_LEVELS
 from src.services.profiles import resolve_interests
 from src.services.profiles import MAX_EXPERIENCE_YEARS, ProfileValidationError
@@ -11,8 +11,8 @@ from src.ui.components import (
     RECOMMENDATIONS_PAGE, have_badges, page_setup, reset_button, section, session_data_panel,
     sidebar_profile_summary,
 )
-from src.ui.interest_picker import render_interest_picker
-from src.ui.skill_picker import render_skill_picker
+from src.ui.interest_picker import render_interest_picker, split_selection
+from src.ui.skill_picker import render_skill_picker, skill_groups, split_entries
 from src.ui.state import get_catalog, get_profile, set_profile
 from src.ui.text import plain_markdown
 from src.ui.views import build_profile_input, education_label
@@ -34,12 +34,40 @@ saved_level = saved.get("education_level")
 saved_interests, saved_custom, saved_migrated, saved_retired = resolve_interests(saved.get("interests", []),
                                                                                  catalog.interests)
 grouped_interests = catalog.interest_taxonomy == CURRENT_TAXONOMY
+# Exchange of 4 November 2026 (owner decision): with the current interest list, the Skills section shows the 23
+# official interests and the Interests section shows the 144 skills. The section never decides what a value is:
+# every choice is saved by the catalogue it comes from, so interests stay interests and skills stay skills, and the
+# engine, the weights and the saved session format are unchanged. Typed text keeps the meaning of its section:
+# typed under Skills it is a skill (aliases apply), typed under Interests it is the student's own interest
+exchanged = grouped_interests
+if exchanged:
+    groups = skill_groups(catalog)
+    # Restore: catalogue skills go back to the Interests dropdown, other saved skills to the Other skills box,
+    # official interests (including old names) to the Skills dropdown and the student's own interests, kept
+    # exactly as saved, to the Interests dropdown as typed chips
+    restore_skills = [s for s in dict.fromkeys(saved_skills) if s in groups]
+    other_text = ", ".join(s for s in saved_skills if s not in groups)
+    restore_own_interests = list(saved_custom) + [old for old, _ in saved_retired]
 
 # A bordered panel instead of a form: the interest picker must react while the student chooses
 with st.container(border=True, key="panel_assessment"):
-    section(1, "Your skills", f"Select from the {len(known_skills)} skills used by the careers, or type your own.",
-            ":material/lightbulb:", "green")
-    selected_skills = render_skill_picker(catalog, preselected)
+    if exchanged:
+        section(1, "Your skills", f"This list shows the {len(TERMS_BY_KEY)} interests (kinds of work you enjoy). "
+                "Each choice counts as an interest, 25% of the score. Type a skill and press Enter to add it as a "
+                "skill, or use the Other skills box. Skills count for 70% of the score.",
+                ":material/lightbulb:", "green")
+        if saved_migrated or saved_retired:
+            notes = [f"{old} became {label_for(new)}" for old, new in saved_migrated]
+            notes += [f"{old} {note}" for old, note in saved_retired]
+            st.info("Your saved answers used old interest names. " + ". ".join(notes) + ".",
+                    icon=":material/update:")
+        section1 = render_interest_picker(saved_interests, (), as_skills=True)
+        # Choices from the list are interests; text typed here is a skill
+        section1_interests, section1_skills = split_selection(section1)
+    else:
+        section(1, "Your skills", f"Select from the {len(known_skills)} skills used by the careers, or type your own.",
+                ":material/lightbulb:", "green")
+        selected_skills = render_skill_picker(catalog, preselected)
     other_skills = st.text_area(
         "Other skills (optional)",
         value=other_text,
@@ -50,18 +78,22 @@ with st.container(border=True, key="panel_assessment"):
     )
 
     st.divider()
-    section(2, "Your interests", "Choose the kinds of work you enjoy or would like to do. You do not need the "
-            "skills yet. Skills are asked separately. Interests carry 25% of the score.",
-            ":material/favorite:", "red")
-    if grouped_interests:
-        # The November 2026 update notice was removed at the owner's request; the old-session note below stays
-        if saved_migrated or saved_retired:
-            notes = [f"{old} became {label_for(new)}" for old, new in saved_migrated]
-            notes += [f"{old} {note}" for old, note in saved_retired]
-            st.info("Your saved answers used old interest names. " + ". ".join(notes) + ".",
-                    icon=":material/update:")
-        interests = render_interest_picker(saved_interests, saved_custom if grouped_interests else ())
+    if exchanged:
+        section(2, "Your interests", f"This list shows the {len(groups)} skills used by the careers, grouped by "
+                "career field. Each choice counts as a skill you have. Type your own interest and press Enter: it "
+                "is saved, and scored only when it names one of the interests in section 1.",
+                ":material/favorite:", "red")
+        section2 = render_skill_picker(catalog, restore_skills + restore_own_interests, as_interests=True)
+        # Choices from the list are skills; text typed here is the student's own interest
+        section2_skills, section2_typed = split_entries(section2, groups)
+        typed_official, own_interests = split_selection(section2_typed)
+        selected_skills = section2_skills + section1_skills
+        interests = list(dict.fromkeys(section1_interests + typed_official)) + own_interests
     else:
+        # Legacy interest list (older data folders): the original layout, unchanged
+        section(2, "Your interests", "Choose the kinds of work you enjoy or would like to do. You do not need the "
+                "skills yet. Skills are asked separately. Interests carry 25% of the score.",
+                ":material/favorite:", "red")
         interests = st.multiselect(
             "Kinds of work that interest you",
             options=sorted(catalog.interests),

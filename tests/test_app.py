@@ -703,7 +703,8 @@ def test_assessment_offers_the_23_interests_in_one_grouped_dropdown():
     assert words == sorted(words, key=list(dict.fromkeys(words)).index)
     assert labels[0] == f"Practical · {INTEREST_TERMS[0].label}" and len(ordered_keys()) == 23
     text = text_of(at)
-    assert "You do not need the skills yet" in text
+    # Since the exchange of 4 November 2026 this list is shown in section 1 with its own explanation
+    assert "This list shows the 23 interests (kinds of work you enjoy)" in text
     assert any(e.label == "Browse all 23 interests with descriptions" for e in at.expander)
     assert not any(t.label_fr_draft in text for t in INTEREST_TERMS)
 
@@ -725,7 +726,8 @@ def test_selecting_updates_chips_counter_and_descriptions_at_once():
     assert not at.exception
     assert picker(at).value == ["managing money and financial information", "working with communities"]
     text = text_of(at)
-    assert "2 interests selected" in text and "Your selected interests" in text
+    # The card title names its list since the exchange of 4 November 2026
+    assert "2 interests selected" in text and "Interests chosen from this list" in text
     assert "Planning a budget for an event" in text and "Related skill, not the same thing: Accounting" in text
     assert PROFILE_KEY not in at.session_state
 
@@ -778,7 +780,8 @@ def test_dropdown_and_direct_input_give_identical_recommendations():
     from src.services.recommendations import recommend
     chosen = ["running and growing a business", "analysing data and information", "working with communities"]
     at = open_page("pages/1_Career_Assessment.py")
-    at.multiselect[0].set_value(["python", "excel"])
+    # The skills list moved to section 2 on 4 November 2026, so it is found by its key instead of its position
+    at.multiselect(key="skill_picker").set_value(["python", "excel"])
     picker(at).set_value(chosen).run()
     at.selectbox[0].set_value(3)
     at.button(key="save_assessment").click().run()
@@ -805,7 +808,7 @@ def test_outdated_interest_update_notice_is_gone():
         assert "interest list was updated" not in page and "old list of 20 short words" not in page
         # Everything else in the interest section is still there
         assert picker(at).proto.select_all == 0 and len(picker(at).options) == 23
-        assert "You do not need the skills yet" in page
+        assert "This list shows the 23 interests (kinds of work you enjoy)" in page
 
 
 def test_old_session_note_still_explains_migrated_names():
@@ -851,15 +854,17 @@ def test_saved_skills_are_preselected_after_restore():
 
 
 def test_own_interests_become_chips_are_explained_and_saved():
+    # Since the exchange of 4 November 2026 official interests come from section 1 and own interests are typed in
+    # section 2; the saved interests are the same as before
     at = open_page("pages/1_Career_Assessment.py")
-    picker(at).set_value(["writing and editing", "Agricultural development", "  agricultural   development ",
-                          "Community leadership"]).run()
+    picker(at).set_value(["writing and editing"]).run()
+    skills(at).set_value(["Agricultural development", "  agricultural   development ", "Community leadership"]).run()
     assert not at.exception
-    assert picker(at).value == ["writing and editing", "Agricultural development", "Community leadership"]
+    assert skills(at).value == ["Agricultural development", "Community leadership"]
     text = text_of(at)
-    assert "Plus 2 of your own, saved but not scored" in text and "do not change the score" in text
-    picker(at).unselect("Community leadership").run()
-    assert picker(at).value == ["writing and editing", "Agricultural development"]
+    assert "Plus 2 interests you typed, saved but only scored when they name one of the 23 interests" in text
+    skills(at).unselect("Community leadership").run()
+    assert skills(at).value == ["Agricultural development"]
     at.button(key="save_assessment").click().run()
     assert at.session_state[PROFILE_KEY]["interests"] == ["writing and editing", "Agricultural development"]
     assert any("saved but are not scored: Agricultural development" in i.value for i in at.info)
@@ -879,7 +884,9 @@ def test_own_interests_survive_a_session_file_round_trip():
     restored, _, _, _ = import_session_data(export_session(profile, {}), load_catalog())
     assert restored["interests"] == ["writing and editing", "Rural entrepreneurship"]
     at = open_page("pages/1_Career_Assessment.py", profile=restored)
-    assert picker(at).value == ["writing and editing", "Rural entrepreneurship"]
+    # Official interest back in section 1, own interest back in section 2 as a typed chip
+    assert picker(at).value == ["writing and editing"]
+    assert skills(at).value == ["python", "Rural entrepreneurship"]
 
 
 MARKDOWN_INTEREST = "![x](https://example.com/t.png) [link](https://example.com)"
@@ -893,17 +900,20 @@ def _no_live_markdown(value):
 
 def test_own_interests_with_markdown_or_html_show_as_plain_text():
     at = open_page("pages/1_Career_Assessment.py")
-    skills(at).set_value(["python"]).run()
-    picker(at).set_value(["Financial analysis", MARKDOWN_INTEREST, HTML_INTEREST]).run()
+    # Own interests are typed in section 2 since the exchange of 4 November 2026; "Financial analysis" there
+    # matches the listed skill, so a different own interest is used to keep three typed interests
+    skills(at).set_value(["python", "Farm cooperatives", MARKDOWN_INTEREST, HTML_INTEREST]).run()
+    # Text typed in section 1 is a skill; it must be shown as plain text as well
+    picker(at).set_value([MARKDOWN_INTEREST]).run()
     assert not at.exception
     # The chips and the saved value keep exactly what the student typed
-    assert picker(at).value == ["Financial analysis", MARKDOWN_INTEREST, HTML_INTEREST]
+    assert skills(at).value == ["python", "Farm cooperatives", MARKDOWN_INTEREST, HTML_INTEREST]
     shown = [e.value for e in list(at.markdown) + list(at.caption) if "example" in e.value]
     assert shown and all(_no_live_markdown(v) for v in shown), shown
     at.button(key="save_assessment").click().run()
-    assert at.session_state[PROFILE_KEY]["interests"] == ["Financial analysis", MARKDOWN_INTEREST, HTML_INTEREST]
+    assert at.session_state[PROFILE_KEY]["interests"] == ["Farm cooperatives", MARKDOWN_INTEREST, HTML_INTEREST]
     note = [i.value for i in at.info if "saved but are not scored" in i.value]
-    assert note and _no_live_markdown(note[0]) and "Financial analysis" in note[0]
+    assert note and _no_live_markdown(note[0]) and "Farm cooperatives" in note[0]
 
 
 def test_recommendation_warnings_show_typed_interests_as_plain_text():
@@ -922,7 +932,8 @@ def test_typed_markdown_survives_a_session_file_round_trip_unchanged():
     restored, _, _, _ = import_session_data(export_session(profile, {}), load_catalog())
     assert restored["interests"] == ["writing and editing", MARKDOWN_INTEREST]
     at = open_page("pages/1_Career_Assessment.py", profile=restored)
-    assert picker(at).value == ["writing and editing", MARKDOWN_INTEREST]
+    assert picker(at).value == ["writing and editing"]
+    assert skills(at).value == ["python", MARKDOWN_INTEREST]
     assert all(_no_live_markdown(m.value) for m in at.markdown if "example" in m.value)
 
 
@@ -941,3 +952,104 @@ def test_new_pickers_give_the_same_recommendations_as_direct_input():
     a = recommend(saved, catalog, top_k=None)["recommendations"]
     b = recommend(direct, catalog, top_k=None)["recommendations"]
     assert [(r["career_id"], r["score"]) for r in a] == [(r["career_id"], r["score"]) for r in b]
+
+
+# ---------- Exchange of the two dropdown lists (4 November 2026, owner decision) ----------
+# Section 1 shows the 23 interests, section 2 the 144 skills; every choice is saved by its own catalogue
+
+def _scores(profile):
+    from src.services.catalog import load_catalog
+    from src.services.recommendations import recommend
+    return [(r["career_id"], r["score"]) for r in recommend(profile, load_catalog(), top_k=None)["recommendations"]]
+
+
+def test_both_dropdowns_hold_the_exchanged_lists_with_group_labels():
+    from src.data.interest_taxonomy import INTEREST_TERMS
+    from src.services.catalog import load_catalog
+    from src.ui.interest_picker import option_label, ordered_keys
+    from src.ui.skill_picker import ordered_skills, skill_groups, skill_label
+    at = open_page("pages/1_Career_Assessment.py")
+    first, second = picker(at), skills(at)
+    assert first.label == "Skills you already have" and second.label == "Kinds of work you enjoy"
+    assert list(first.options) == [option_label(k) for k in ordered_keys()] and len(first.options) == len(INTEREST_TERMS)
+    assert first.options[0] == "Practical · Setting up and running computer systems and networks"
+    assert first.options[-1] == "Organised · Managing money and financial information"
+    groups = skill_groups(load_catalog())
+    assert list(second.options) == [skill_label(s, groups) for s in ordered_skills(groups)] and len(second.options) == 144
+    assert second.options[0] == "Data and AI · apache spark" and second.options[-1] == "Several fields · web accessibility"
+    for widget in (first, second):
+        proto = widget.proto
+        assert proto.select_all == 0 and proto.wrap is True
+        mode = proto.DESCRIPTOR.fields_by_name["filter_mode"].enum_type.values_by_number[proto.filter_mode].name
+        assert mode == "FILTER_MODE_CONTAINS"
+
+
+def test_every_listed_skill_and_interest_is_saved_and_scored_by_its_own_catalogue():
+    from src.ui.interest_picker import ordered_keys
+    from src.services.catalog import load_catalog
+    from src.ui.skill_picker import ordered_skills, skill_groups
+    all_skills = ordered_skills(skill_groups(load_catalog()))
+    at = open_page("pages/1_Career_Assessment.py")
+    picker(at).set_value(ordered_keys()).run()
+    skills(at).set_value(all_skills).run()
+    at.selectbox[0].set_value(3)
+    at.button(key="save_assessment").click().run()
+    saved = at.session_state[PROFILE_KEY]
+    assert saved["skills"] == all_skills and saved["interests"] == ordered_keys()
+    assert _scores(saved) == _scores({"skills": all_skills, "interests": ordered_keys(), "education_level": 3})
+
+
+def test_skill_choices_alone_score_like_direct_skill_input():
+    at = open_page("pages/1_Career_Assessment.py")
+    skills(at).set_value(["python", "sql", "patient care"]).run()
+    at.button(key="save_assessment").click().run()
+    saved = at.session_state[PROFILE_KEY]
+    assert saved == {"skills": ["python", "sql", "patient care"], "interests": []}
+    assert _scores(saved) == _scores({"skills": ["python", "sql", "patient care"]})
+
+
+def test_interest_choices_alone_score_like_direct_interest_input():
+    chosen = ["caring for peoples health", "working outdoors and with the natural environment"]
+    at = open_page("pages/1_Career_Assessment.py")
+    picker(at).set_value(chosen).run()
+    at.button(key="save_assessment").click().run()
+    saved = at.session_state[PROFILE_KEY]
+    assert saved == {"skills": [], "interests": chosen}
+    assert _scores(saved) == _scores({"interests": chosen})
+
+
+def test_typed_entries_keep_the_meaning_of_their_section_and_change_nothing_else():
+    at = open_page("pages/1_Career_Assessment.py")
+    # Typed in section 1: skills (aliases apply); typed in section 2: the student's own interests
+    picker(at).set_value(["analysing data and information", "ML", "quantum origami", " quantum   ORIGAMI "]).run()
+    skills(at).set_value(["sql", "Rural entrepreneurship", "rural entrepreneurship", "Writing and editing"]).run()
+    assert picker(at).value == ["analysing data and information", "ML", "quantum origami"]
+    assert skills(at).value == ["sql", "Rural entrepreneurship", "Writing and editing"]
+    at.button(key="save_assessment").click().run()
+    saved = at.session_state[PROFILE_KEY]
+    assert saved["skills"] == ["sql", "ML", "quantum origami"]
+    # A typed official interest name becomes that interest; an unmatched one is kept and not scored
+    assert saved["interests"] == ["analysing data and information", "writing and editing", "Rural entrepreneurship"]
+    assert _scores(saved) == _scores({"skills": ["sql", "machine learning"],
+                                      "interests": ["analysing data and information", "writing and editing"]})
+
+
+def test_old_and_new_sessions_restore_without_losing_anything():
+    old = {"skills": ["python", "patient care", "ML", "my own skill"],
+           "interests": ["writing and editing", "mathematics", "technology", "Rural entrepreneurship"],
+           "education_level": 2}
+    at = open_page("pages/1_Career_Assessment.py", profile=old)
+    assert picker(at).value == ["writing and editing", "working with numbers and calculations"]
+    assert skills(at).value == ["python", "patient care", "Rural entrepreneurship", "technology"]
+    assert at.text_area[0].value == "ML, my own skill"
+    at.button(key="save_assessment").click().run()
+    saved = at.session_state[PROFILE_KEY]
+    # Skills stay skills, interests stay interests; the old name is translated as before and scores the same
+    assert saved["skills"] == old["skills"]
+    assert saved["interests"] == ["writing and editing", "working with numbers and calculations",
+                                  "Rural entrepreneurship", "technology"]
+    assert _scores(saved) == _scores(old)
+    # Saving the restored answers again changes nothing
+    again = open_page("pages/1_Career_Assessment.py", profile=saved)
+    again.button(key="save_assessment").click().run()
+    assert again.session_state[PROFILE_KEY] == saved

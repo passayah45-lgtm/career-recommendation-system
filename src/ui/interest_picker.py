@@ -14,6 +14,8 @@ from src.ui.text import plain_markdown
 PICKER_KEY = "interest_picker"
 # styles.css targets the open dropdown through this label, so both must change together
 PICKER_LABEL = "Kinds of work you enjoy"
+# Since the exchange of 4 November 2026 (owner decision) this list is shown in the Skills section under this label
+SKILLS_SECTION_LABEL = "Skills you already have"
 # The separate description search box was replaced by suggestions under custom interests (owner decision, 3 Nov 2026)
 MAX_SUGGESTIONS = 3
 # Plain group words shown to students; the RIASEC names stay in the data and in the browse list
@@ -111,9 +113,13 @@ def suggestions(text, exclude=()):
     return [key for _, _, key in sorted(scored)[:MAX_SUGGESTIONS]]
 
 
-def custom_note(custom):
+def custom_note(custom, as_skills=False):
     # Typed text is escaped so Markdown or HTML in it shows as plain characters, never as a link or image
     names = ", ".join(f'"{plain_markdown(c)}"' for c in custom)
+    if as_skills:
+        return (f"Skills you typed: {names}. They are saved as skills and count toward the skill part of the "
+                "score when they are in the dataset. Short names such as ML are recognized. Skills that are not in "
+                "the dataset are listed back to you and are not scored.")
     return (f"Your own interests: {names}. They are saved with your assessment but do not change the score, "
             "because no career lists them.")
 
@@ -152,32 +158,45 @@ def soft_warning(n):
             f"narrowing your results. All of them will still be saved and scored.")
 
 
-def render_interest_picker(saved_keys, saved_custom=()):
-    # Returns official keys followed by the student's own interests; outside any form, so everything updates at once
+def render_interest_picker(saved_keys, saved_custom=(), as_skills=False):
+    # Returns official keys followed by the student's own entries; outside any form, so everything updates at once
+    # as_skills=True: the list is shown in the Skills section (exchange of 4 November 2026); choices from the list
+    # are still saved and scored as interests, and text the student types here is saved as a skill
     if PICKER_KEY not in st.session_state:
         official, custom = split_selection(list(saved_keys) + list(saved_custom))
         st.session_state[PICKER_KEY] = official + custom
 
+    if as_skills:
+        help_text = ("This list shows the 23 interests (kinds of work), grouped as Practical, Analytical, Creative, "
+                     "People, Leading and Organised. Each choice counts as an interest. To add a skill, type it and "
+                     "press Enter, or use the Other skills box. Remove a choice with the x on its chip.")
+        placeholder = "Choose an interest or type a skill, for example data or python"
+    else:
+        help_text = ("Options are grouped: Practical, Analytical, Creative, People, Leading and Organised. "
+                     "Not in the list? Type your own interest and press Enter. Your own interests are saved but not "
+                     "scored. Remove a choice with the x on its chip.")
+        placeholder = "Choose or type, for example data, health, business"
     selection = st.multiselect(
-        PICKER_LABEL,
+        SKILLS_SECTION_LABEL if as_skills else PICKER_LABEL,
         options=ordered_keys(),
         format_func=option_label,
         key=PICKER_KEY,
-        placeholder="Choose or type, for example data, health, business",
+        placeholder=placeholder,
         filter_mode=FILTER_MODE,
         select_all=SELECT_ALL,
         accept_new_options=True,
         wrap=True,
         on_change=_tidy_selection,
-        help="Options are grouped: Practical, Analytical, Creative, People, Leading and Organised. "
-             "Not in the list? Type your own interest and press Enter. Your own interests are saved but not "
-             "scored. Remove a choice with the x on its chip.",
+        help=help_text,
     )
     picked, custom = split_selection(selection)
 
     counter = counter_text(len(picked))
+    if as_skills:
+        counter = counter.replace(" selected.", " selected from the list. They count as interests.", 1)
     if custom:
-        counter += f" Plus {len(custom)} of your own, saved but not scored."
+        counter += (f" Plus {len(custom)} {'skill' if len(custom) == 1 else 'skills'} you typed." if as_skills
+                    else f" Plus {len(custom)} of your own, saved but not scored.")
     st.caption(counter)
     warning = soft_warning(len(picked))
     if warning:
@@ -185,12 +204,13 @@ def render_interest_picker(saved_keys, saved_custom=()):
 
     if custom:
         with st.container(border=True, key="card_own_interests"):
-            st.markdown(custom_note(custom))
+            st.markdown(custom_note(custom, as_skills))
             for i, text in enumerate(custom):
                 close = suggestions(text, exclude=picked)
                 if not close:
                     continue
-                st.caption(f'Official interests with similar words to "{plain_markdown(text)}" (these are scored):')
+                scored = " (they count as interests)" if as_skills else " (these are scored)"
+                st.caption(f'Official interests with similar words to "{plain_markdown(text)}"{scored}:')
                 with st.container(horizontal=True, gap="small", key=f"suggestions_{i}"):
                     for key in close:
                         st.button(f"Add {TERMS_BY_KEY[key].label}", key=f"suggest_{i}_{key}",
@@ -198,7 +218,7 @@ def render_interest_picker(saved_keys, saved_custom=()):
 
     if picked:
         with st.container(border=True, key="card_selected_interests"):
-            st.markdown("**Your selected interests**")
+            st.markdown("**Interests chosen from this list**" if as_skills else "**Your selected interests**")
             for k in picked:
                 t = TERMS_BY_KEY[k]
                 st.markdown(f"**{t.label}** :gray[({GROUP_WORDS[t.riasec]})]  \n"
