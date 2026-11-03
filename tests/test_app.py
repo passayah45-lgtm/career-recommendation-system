@@ -55,9 +55,9 @@ def test_assessment_saves_normalized_profile_and_reports_unknown_skills():
     at = open_page("pages/1_Career_Assessment.py")
     at.multiselect[0].set_value(["python", "sql"])
     at.text_area[0].input("ML, machine learning, blockchain")
-    at.checkbox(key="interest_analysing data and information").check()
+    at.multiselect(key="interest_picker").select("analysing data and information").run()
     at.selectbox[0].set_value(3)
-    at.button[0].click().run()
+    at.button(key="save_assessment").click().run()
     assert not at.exception
     saved = at.session_state[PROFILE_KEY]
     assert saved["skills"] == ["python", "sql", "ML", "machine learning", "blockchain"]
@@ -683,35 +683,106 @@ def test_new_career_recommendation_and_skill_gap_pages():
 
 # ---------- Interest taxonomy 2.0 in the assessment form ----------
 
-def test_assessment_groups_the_23_interests_under_riasec_headings():
-    from src.data.interest_taxonomy import INTEREST_TERMS, RIASEC_ORDER
+def picker(at):
+    return at.multiselect(key="interest_picker")
+
+
+def test_assessment_offers_the_23_interests_in_one_grouped_dropdown():
+    from src.data.interest_taxonomy import INTEREST_TERMS
+    from src.ui.interest_picker import GROUP_WORDS, ordered_keys
     at = open_page("pages/1_Career_Assessment.py")
-    keys = {c.key for c in at.checkbox}
-    assert {f"interest_{t.key}" for t in INTEREST_TERMS} <= keys
+    assert len(at.checkbox) == 0
+    widget = picker(at)
+    labels = list(widget.options)
+    assert len(labels) == 23 == len(set(labels))
+    # Grouped: every option starts with its plain group word, and the groups appear in order
+    words = [label.split(" · ")[0] for label in labels]
+    assert set(words) == set(GROUP_WORDS.values())
+    assert words == sorted(words, key=list(dict.fromkeys(words)).index)
+    assert labels[0] == f"Practical · {INTEREST_TERMS[0].label}" and len(ordered_keys()) == 23
     text = text_of(at)
-    assert all(f"**{group}**" in text for group in RIASEC_ORDER)
-    assert "You do not need the skills yet" in text and "up to 5" in text
-    first = at.checkbox(key=f"interest_{INTEREST_TERMS[0].key}")
-    assert first.label == INTEREST_TERMS[0].label and "Example:" in first.help and "Related skill" in first.help
-    # Draft French names are not shown until reviewed
+    assert "You do not need the skills yet" in text
+    assert any(e.label == "Browse all 23 interests with descriptions" for e in at.expander)
     assert not any(t.label_fr_draft in text for t in INTEREST_TERMS)
 
 
-def test_more_than_five_interests_warns_but_saves_all():
-    from src.data.interest_taxonomy import INTEREST_TERMS
+def test_dropdown_never_offers_select_all_and_searches_by_substring():
     at = open_page("pages/1_Career_Assessment.py")
-    for term in INTEREST_TERMS[:6]:
-        at.checkbox(key=f"interest_{term.key}").check()
-    at.button[0].click().run()
+    proto = picker(at).proto
+    # 0 hides the option; the skills dropdown keeps Streamlit's default, which shows it, so the check is sensitive
+    assert proto.select_all == 0 and at.multiselect[0].proto.select_all > 0
+    mode = proto.DESCRIPTOR.fields_by_name["filter_mode"].enum_type.values_by_number[proto.filter_mode].name
+    assert mode == "FILTER_MODE_CONTAINS" and proto.wrap is True
+
+
+def test_selecting_updates_chips_counter_and_descriptions_at_once():
+    at = open_page("pages/1_Career_Assessment.py")
+    picker(at).select("managing money and financial information").run()
+    picker(at).select("working with communities").run()
     assert not at.exception
-    assert len(at.session_state[PROFILE_KEY]["interests"]) == 6
+    assert picker(at).value == ["managing money and financial information", "working with communities"]
+    text = text_of(at)
+    assert "2 interests selected" in text and "Your selected interests" in text
+    assert "Planning a budget for an event" in text and "Related skill, not the same thing: Accounting" in text
+    assert PROFILE_KEY not in at.session_state
+
+
+def test_removing_a_chip_updates_the_counter():
+    at = open_page("pages/1_Career_Assessment.py")
+    picker(at).set_value(["writing and editing", "teaching and training others"]).run()
+    picker(at).unselect("writing and editing").run()
+    assert picker(at).value == ["teaching and training others"]
+    assert "1 interest selected" in text_of(at)
+
+
+def test_more_than_five_interests_warns_live_and_saves_all():
+    from src.ui.interest_picker import ordered_keys
+    at = open_page("pages/1_Career_Assessment.py")
+    picker(at).set_value(ordered_keys()[:5]).run()
+    assert not any("You chose" in w.value for w in at.warning)
+    picker(at).set_value(ordered_keys()[:6]).run()
     assert any("You chose 6 interests" in w.value for w in at.warning)
+    assert "6 interests selected" in text_of(at)
+    at.button(key="save_assessment").click().run()
+    assert not at.exception
+    assert at.session_state[PROFILE_KEY]["interests"] == ordered_keys()[:6]
+
+
+def test_description_search_narrows_options_and_keeps_choices():
+    at = open_page("pages/1_Career_Assessment.py")
+    picker(at).select("writing and editing").run()
+    at.text_input(key="interest_search").input("mine").run()
+    labels = list(picker(at).options)
+    assert "Practical · Working outdoors and with the natural environment" in labels
+    assert "Creative · Writing and editing" in labels
+    assert len(labels) < 23
+    assert picker(at).value == ["writing and editing"]
+    at.text_input(key="interest_search").input("").run()
+    assert len(picker(at).options) == 23
 
 
 def test_saved_old_interest_names_are_preselected_after_migration():
     at = open_page("pages/1_Career_Assessment.py", profile={"interests": ["mathematics", "technology"]})
-    assert at.checkbox(key="interest_working with numbers and calculations").value is True
+    assert picker(at).value == ["working with numbers and calculations"]
     assert any("old interest names" in i.value and "technology" in i.value for i in at.info)
+
+
+def test_dropdown_and_direct_input_give_identical_recommendations():
+    from src.services.catalog import load_catalog
+    from src.services.recommendations import recommend
+    chosen = ["running and growing a business", "analysing data and information", "working with communities"]
+    at = open_page("pages/1_Career_Assessment.py")
+    at.multiselect[0].set_value(["python", "excel"])
+    picker(at).set_value(chosen).run()
+    at.selectbox[0].set_value(3)
+    at.button(key="save_assessment").click().run()
+    saved = at.session_state[PROFILE_KEY]
+    assert saved["interests"] == chosen
+    catalog = load_catalog()
+    via_form = recommend(saved, catalog, top_k=None)["recommendations"]
+    direct = recommend({"skills": ["python", "excel"], "interests": list(reversed(chosen)), "education_level": 3},
+                       catalog, top_k=None)["recommendations"]
+    assert [(r["career_id"], r["score"]) for r in via_form] == [(r["career_id"], r["score"]) for r in direct]
 
 
 def test_explorer_shows_full_interest_names():
@@ -722,8 +793,13 @@ def test_explorer_shows_full_interest_names():
 
 def test_assessment_explains_the_interest_update():
     from src.data.interest_taxonomy import INTEREST_UPDATE_NOTICE
-    at = open_page("pages/1_Career_Assessment.py")
+    # Returning students with saved answers see the full notice
+    at = open_page("pages/1_Career_Assessment.py", profile={"interests": ["writing and editing"]})
     notice = [i.value for i in at.info if i.value == INTEREST_UPDATE_NOTICE]
     assert notice and "reselect your interests" in notice[0] and "v1.4.0" in notice[0]
     assert "lecturer" not in notice[0].lower()
+    # New visitors get one short line instead, so the form stays compact
+    at = open_page("pages/1_Career_Assessment.py")
+    assert not any(i.value == INTEREST_UPDATE_NOTICE for i in at.info)
+    assert any("interest list was updated in November 2026 (dataset v1.4.0)" in c.value for c in at.caption)
 

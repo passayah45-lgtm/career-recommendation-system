@@ -2,9 +2,7 @@
 
 import streamlit as st
 
-from src.data.interest_taxonomy import (
-    CURRENT_TAXONOMY, INTEREST_UPDATE_NOTICE, RIASEC_DESCRIPTIONS, SOFT_SELECTION_LIMIT, label_for, terms_by_group,
-)
+from src.data.interest_taxonomy import CURRENT_TAXONOMY, INTEREST_UPDATE_NOTICE, SOFT_SELECTION_LIMIT, label_for
 from src.data.validation import EDUCATION_LEVELS
 from src.services.profiles import resolve_interests
 from src.services.profiles import MAX_EXPERIENCE_YEARS, ProfileValidationError
@@ -13,6 +11,7 @@ from src.ui.components import (
     RECOMMENDATIONS_PAGE, have_badges, page_setup, reset_button, section, session_data_panel,
     sidebar_profile_summary,
 )
+from src.ui.interest_picker import render_interest_picker
 from src.ui.state import get_catalog, get_profile, set_profile
 from src.ui.views import build_profile_input, education_label
 
@@ -33,7 +32,8 @@ saved_level = saved.get("education_level")
 saved_interests, _, saved_migrated, saved_retired = resolve_interests(saved.get("interests", []), catalog.interests)
 grouped_interests = catalog.interest_taxonomy == CURRENT_TAXONOMY
 
-with st.form("assessment_form"):
+# A bordered panel instead of a form: the interest picker must react while the student chooses
+with st.container(border=True, key="panel_assessment"):
     section(1, "Your skills", f"Select from the {len(known_skills)} skills used by the careers, or type your own.",
             ":material/lightbulb:", "green")
     selected_skills = st.multiselect(
@@ -57,32 +57,24 @@ with st.form("assessment_form"):
             "skills yet. Skills are asked separately. Interests carry 25% of the score.",
             ":material/favorite:", "red")
     if grouped_interests:
-        st.info(INTEREST_UPDATE_NOTICE, icon=":material/new_releases:")
-        st.caption(f"Choose up to {SOFT_SELECTION_LIMIT} that you enjoy most. Hover over the question mark next to "
-                   "an interest for an explanation, an example and a related skill. The groups only help you read "
-                   "the list. They do not change the score.")
+        # The full update notice is for returning students with saved answers; new visitors get one short line
+        if saved.get("interests"):
+            st.info(INTEREST_UPDATE_NOTICE, icon=":material/new_releases:")
+        else:
+            st.caption(":material/new_releases: The interest list was updated in November 2026 (dataset v1.4.0).")
         if saved_migrated or saved_retired:
             notes = [f"{old} became {label_for(new)}" for old, new in saved_migrated]
             notes += [f"{old} {note}" for old, note in saved_retired]
             st.info("Your saved answers used old interest names. " + ". ".join(notes) + ".",
                     icon=":material/update:")
-        interests = []
-        group_cols = st.columns(2)
-        for n, (group, terms) in enumerate(terms_by_group().items()):
-            with group_cols[n % 2]:
-                st.markdown(f"**{group}**")
-                st.caption(RIASEC_DESCRIPTIONS[group])
-                for term in terms:
-                    if st.checkbox(term.label, value=term.key in saved_interests, key=f"interest_{term.key}",
-                                   help=f"{term.explanation}. Example: {term.example}. "
-                                        f"Related skill (not the same thing): {term.related_skill}."):
-                        interests.append(term.key)
+        interests = render_interest_picker(saved_interests)
     else:
         interests = st.multiselect(
             "Kinds of work that interest you",
             options=sorted(catalog.interests),
             default=[i for i in saved_interests if i in catalog.interests],
             placeholder="Type to search",
+            select_all=False,
         )
 
     st.divider()
@@ -117,8 +109,8 @@ with st.form("assessment_form"):
         st.markdown(":gray-badge[:material/block: Not scored]")
         st.caption("The current dataset has no experience requirements, so this answer does not change the score.")
 
-    submitted = st.form_submit_button("Save my assessment", type="primary", icon=":material/arrow_forward:",
-                                      width="stretch")
+    submitted = st.button("Save my assessment", type="primary", icon=":material/arrow_forward:",
+                          width="stretch", key="save_assessment")
 
 with st.expander("Why there is no learning goals field"):
     st.markdown(

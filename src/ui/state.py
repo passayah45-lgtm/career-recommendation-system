@@ -146,8 +146,16 @@ def set_progress(progress):
     st.session_state[ROADMAP_KEY] = {cid: dict(steps) for cid, steps in progress.items()}
 
 
+def _clear_assessment_widgets():
+    # The interest picker keeps its own widget state; it is reseeded from the saved answers after a restore or reset
+    from src.ui.interest_picker import PICKER_KEY, SEARCH_KEY
+    for key in (PICKER_KEY, SEARCH_KEY):
+        st.session_state.pop(key, None)
+
+
 def replace_session(profile, feedback, roadmaps=None):
     st.session_state[PROFILE_KEY] = profile
+    _clear_assessment_widgets()
     st.session_state[FEEDBACK_KEY] = dict(feedback)
     if roadmaps is not None:
         set_progress(roadmaps)
@@ -164,3 +172,4 @@ def select_career(career_id):
 def reset_assessment():
     for key in STATE_KEYS:
         st.session_state.pop(key, None)
+    _clear_assessment_widgets()

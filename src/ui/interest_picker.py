@@ -1,0 +1,135 @@
+# Compact interest picker for the assessment page: one searchable dropdown, chips, live counter and descriptions
+# Display only: it saves the same interest keys as before and never changes the taxonomy or the score
+
+import streamlit as st
+
+from src.data.interest_taxonomy import (
+    INTEREST_TERMS, RIASEC_DESCRIPTIONS, RIASEC_ORDER, SOFT_SELECTION_LIMIT, TERMS_BY_KEY,
+)
+from src.data.preprocessing import clean_skill_text
+
+PICKER_KEY = "interest_picker"
+# styles.css targets the open dropdown through this label, so both must change together
+PICKER_LABEL = "Kinds of work you enjoy"
+SEARCH_KEY = "interest_search"
+# Plain group words shown to students; the RIASEC names stay in the data and in the browse list
+GROUP_WORDS = {
+    "Realistic": "Practical", "Investigative": "Analytical", "Artistic": "Creative",
+    "Social": "People", "Enterprising": "Leading", "Conventional": "Organised",
+}
+# Select all would give every career the full interest score, so the picker never offers it
+SELECT_ALL = False
+FILTER_MODE = "contains"
+
+
+def ordered_keys():
+    # All 23 keys, grouped in RIASEC order and in the second review's order inside each group
+    return [t.key for g in RIASEC_ORDER for t in INTEREST_TERMS if t.riasec == g]
+
+
+def option_label(key):
+    term = TERMS_BY_KEY[key]
+    return f"{GROUP_WORDS[term.riasec]} · {term.label}"
+
+
+def _search_text(term):
+    # Everything a student might type: name, group words, explanation, example, related skill, draft French name
+    parts = (term.label, term.riasec, GROUP_WORDS[term.riasec], term.explanation, term.example,
+             term.related_skill, term.label_fr_draft)
+    return clean_skill_text(" ".join(parts))
+
+
+def search_keys(query, keys=None):
+    # Keys whose name or description contains every word of the query; an empty query keeps all
+    keys = list(keys) if keys is not None else ordered_keys()
+    words = clean_skill_text(query).split()
+    if not words:
+        return keys
+    return [k for k in keys if all(w in _search_text(TERMS_BY_KEY[k]) for w in words)]
+
+
+def picker_options(query, selected):
+    # Matching keys plus every selected key, so a search never drops a choice; order stays grouped
+    matches = set(search_keys(query))
+    chosen = set(selected)
+    return [k for k in ordered_keys() if k in matches or k in chosen]
+
+
+def unique_known(keys):
+    # Keeps the first occurrence of each known key; the dropdown already prevents duplicates
+    seen, out = set(), []
+    for k in keys:
+        if k in TERMS_BY_KEY and k not in seen:
+            seen.add(k)
+            out.append(k)
+    return out
+
+
+def search_caption(matches, query):
+    verb = "interest matches" if matches == 1 else "interests match"
+    return f"{matches} {verb} \"{query.strip()}\". Clear the search to see all 23."
+
+
+def counter_text(n):
+    noun = "interest" if n == 1 else "interests"
+    return f"{n} {noun} selected. Choosing up to {SOFT_SELECTION_LIMIT} you enjoy most works best."
+
+
+def soft_warning(n):
+    if n <= SOFT_SELECTION_LIMIT:
+        return None
+    return (f"You chose {n} interests. More than {SOFT_SELECTION_LIMIT} gives points to many careers without "
+            f"narrowing your results. All of them will still be saved and scored.")
+
+
+def render_interest_picker(saved_keys):
+    # Returns the selected keys; outside any form, so the chips, counter and warning update at once
+    if PICKER_KEY not in st.session_state:
+        st.session_state[PICKER_KEY] = unique_known(saved_keys)
+    selected = unique_known(st.session_state[PICKER_KEY])
+
+    query = st.text_input(
+        "Not sure of the name? Search the descriptions",
+        key=SEARCH_KEY,
+        placeholder="For example: mine, patients, money, code, village",
+        help="Narrows the list below by words in each interest's name, explanation, example or related skill.",
+    )
+    options = picker_options(query, selected)
+    matches = len([k for k in options if k not in selected])
+    if query.strip():
+        st.caption(search_caption(matches, query))
+
+    picked = st.multiselect(
+        PICKER_LABEL,
+        options=options,
+        format_func=option_label,
+        key=PICKER_KEY,
+        placeholder="Choose or type, for example data, health, business",
+        filter_mode=FILTER_MODE,
+        select_all=SELECT_ALL,
+        wrap=True,
+        help="Options are grouped: Practical, Analytical, Creative, People, Leading and Organised. "
+             "Remove a choice with the x on its chip.",
+    )
+    picked = unique_known(picked)
+
+    st.caption(counter_text(len(picked)))
+    warning = soft_warning(len(picked))
+    if warning:
+        st.warning(warning, icon=":material/tune:")
+
+    if picked:
+        with st.container(border=True, key="card_selected_interests"):
+            st.markdown("**Your selected interests**")
+            for k in picked:
+                t = TERMS_BY_KEY[k]
+                st.markdown(f"**{t.label}** :gray[({GROUP_WORDS[t.riasec]})]  \n"
+                            f"{t.explanation}. Example: {t.example}.  \n"
+                            f":gray[Related skill, not the same thing: {t.related_skill}]")
+
+    with st.expander("Browse all 23 interests with descriptions"):
+        for g in RIASEC_ORDER:
+            st.markdown(f"**{GROUP_WORDS[g]}** :gray[({g}): {RIASEC_DESCRIPTIONS[g]}]")
+            st.markdown("\n".join(f"- **{t.label}**: {t.explanation}. Example: {t.example}."
+                                  for t in INTEREST_TERMS if t.riasec == g))
+    return picked

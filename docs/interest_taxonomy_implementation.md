@@ -249,3 +249,90 @@ Every career changed, because the whole vocabulary changed. The last column mark
 On 3 November 2026 the project owner authorized committing v1.4.0 to `main` and deploying it to the live application, after reading the final pre-commit review (`docs/interest_taxonomy_final_precommit_review.md`). That review had recommended waiting for lecturer feedback and eval64_v2. The deployment is the owner's decision. Lecturer feedback is still pending, and eval64_v2 has not been run.
 
 Before deployment, a notice was added above the interest list. It explains that the list changed in November 2026, that scores can differ, and that learners with a saved session should review and reselect their interests. A notice for integrators is in `docs/integration_api.md`.
+
+## 10. Phase A interface redesign (local, not yet committed or deployed)
+
+Approved by the project owner on 3 November 2026 after the interface review (`docs/interest_interface_and_african_relevance_review.md`). It changes the interface only. The 23 interests, their stored codes, labels, descriptions, examples, related skills, groups, the career assignments, dataset v1.4.0, the scoring formula, the ranking and the explanations are unchanged.
+
+### What changed and why
+
+The 23 permanent checkboxes in two columns were replaced by one compact, searchable dropdown. This follows the owner's preference for the earlier dropdown and the review's option 2.
+
+Measured on the local app with no interest selected, the interest section shrinks:
+
+| Screen | v1.4.0 checkboxes | Phase A dropdown |
+|---|---|---|
+| Desktop, 1280 px wide | 1044 px tall | 421 px tall |
+| Phone, 390 px wide | 1863 px tall | 505 px tall |
+
+### How it works (`src/ui/interest_picker.py`)
+
+- **Dropdown:** one `st.multiselect` holds all 23 interests, in group order. Each option shows a plain group word and the exact interest name, for example "Analytical · Analysing data and information".
+- **Group words:** Practical (Realistic), Analytical (Investigative), Creative (Artistic), People (Social), Leading (Enterprising) and Organised (Conventional). The RIASEC names stay in the data and in the browse list.
+- **Choosing and removing:** typing filters by substring (`filter_mode="contains"`). Chosen interests appear as chips with an x to remove them. A chosen item disappears from the dropdown, so it cannot be chosen twice.
+- **Select all:** disabled with `select_all=False`. Streamlit otherwise adds a "Select all" option to every multiselect, and selecting everything gives every career the full interest score.
+- **Description search:** a small search box above the dropdown narrows the options by words in each interest's name, group, explanation, example, related skill or draft French name. Interests already chosen always stay in the list.
+- **Live feedback:**
+  - a counter ("3 interests selected").
+  - the soft warning above 5 interests (there is no hard cap).
+  - a "Your selected interests" card with each chosen interest's explanation, example and related skill.
+- **Browse list:** a collapsed expander lists all 23 interests with their descriptions, by group.
+- **Form changed to a container.** Streamlit form widgets only react when the form is submitted, so the assessment is now a bordered panel with a Save button. The four sections, the saved answers, the session file and the recommendations are the same.
+- **Update notice:** the full notice shows when the student already has saved interests (for example after uploading an older session). New visitors see one short line.
+- **Session handling:** restoring a session or starting a new assessment resets the picker, so it shows the restored answers.
+
+### Tests
+
+- `tests/test_interest_picker.py` (18 tests):
+  - grouping and order, and the exact labels.
+  - Select all disabled.
+  - description search, including a draft French word.
+  - chosen items kept during a search, and duplicates removed.
+  - the counter, the search caption and the soft warning.
+  - the same scores whatever the selection order.
+  - the unchanged formula when every interest is chosen by hand.
+  - the picker reset on restore and reset.
+- `tests/test_app.py`:
+  - checks that the page has one grouped dropdown and no checkboxes.
+  - checks that the widget hides Select all and uses substring search, with a control showing the skills dropdown still has it.
+  - covers chips, the counter and descriptions updating at once, removing a chip, and the live warning with all six saved.
+  - covers the description search keeping choices, old session names preselected after migration, and the conditional update notice.
+  - checks that a dropdown selection gives exactly the same recommendations as the same input sent directly.
+- The four earlier checkbox tests were rewritten for the dropdown with the same or stronger assertions.
+
+### Mobile readability refinement
+
+On phones, long names used to end in an ellipsis. Scoped CSS rules in `src/ui/styles.css` now apply only to the interest dropdown, its chips and the selected-interest card. The skills dropdown keeps Streamlit's default style (checked: its options remain single-line).
+
+- **Chips:** wrap onto extra lines instead of being cut. The x stays at the right of each chip.
+- **Chip area:** grows to show every chip, instead of scrolling inside a box capped at about 146 px.
+- **Dropdown options on screens up to 640 px:** wrap to at most two lines, with slightly smaller text. Streamlit's dropdown is a virtualised list whose rows have a fixed 37.5 px height. Free wrapping made rows overlap in testing, while two lines fit inside a row.
+- **Selected-interest card:** breaks very long words, so the page never becomes wider than the screen.
+
+Measured locally with three long interests selected. "Options cut" counts the rows shown in the open list:
+
+| Width | Chips cut, before | Chips cut, after | Options cut, before | Options cut, after |
+|---|---|---|---|---|
+| 320 px | 3 of 3 | 0 | 5 | 0 |
+| 375 px | 3 of 3 | 0 | 3 | 0 |
+| 390 px | 3 of 3 | 0 | 2 | 0 |
+| 430 px | 3 of 3 | 0 | 0 | 0 |
+| 1280 px | 0 | 0 | 0 | 0 |
+
+Further checks after the change:
+- At every width: no row overlap and no horizontal page overflow.
+- At 320 px, all 23 options were checked by scrolling the list, and none is cut.
+- With 6 long interests at 320 px, all chips are visible. Removing one with its x lowers the counter to 5 and removes the warning.
+
+The rule for the dropdown uses its label ("Kinds of work you enjoy", `PICKER_LABEL` in `src/ui/interest_picker.py`). A test checks that the stylesheet and the label stay in step, and that no rule styles every dropdown.
+
+### Remaining limitations
+
+- On very narrow screens, an option needing more than two lines would be shortened at the end of the second line. None of the 23 options does at 320 px.
+- The dropdown's placeholder text can be cut at 320 px. It is only an example hint.
+- The CSS relies on Streamlit 1.65's accessibility labels ("Selected values" and the listbox label). A future Streamlit upgrade should be checked visually.
+- The description search is a separate box, because a Streamlit dropdown can only search the text it displays.
+- The skills dropdown still offers Streamlit's "Select all" for the 144 skills. It was outside this phase.
+- Without Select all, a student can still choose all 23 interests one by one. The soft warning explains the effect, and the formula is unchanged by design.
+- The draft French names help the search but are not displayed.
+
