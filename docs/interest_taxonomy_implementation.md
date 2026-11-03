@@ -250,6 +250,8 @@ On 3 November 2026 the project owner authorized committing v1.4.0 to `main` and 
 
 Before deployment, a notice was added above the interest list. It explains that the list changed in November 2026, that scores can differ, and that learners with a saved session should review and reselect their interests. A notice for integrators is in `docs/integration_api.md`.
 
+Update, 3 November 2026: at the owner's request, the in-app update notice (both the blue box and the one-line caption) was removed once the migration was complete. The note that names migrated and retired interests for students who load an older session stays. The integrator notice in `docs/integration_api.md` is unchanged.
+
 ## 10. Phase A interface redesign (local, not yet committed or deployed)
 
 Approved by the project owner on 3 November 2026 after the interface review (`docs/interest_interface_and_african_relevance_review.md`). It changes the interface only. The 23 interests, their stored codes, labels, descriptions, examples, related skills, groups, the career assignments, dataset v1.4.0, the scoring formula, the ranking and the explanations are unchanged.
@@ -278,7 +280,7 @@ Measured on the local app with no interest selected, the interest section shrink
   - a "Your selected interests" card with each chosen interest's explanation, example and related skill.
 - **Browse list:** a collapsed expander lists all 23 interests with their descriptions, by group.
 - **Form changed to a container.** Streamlit form widgets only react when the form is submitted, so the assessment is now a bordered panel with a Save button. The four sections, the saved answers, the session file and the recommendations are the same.
-- **Update notice:** the full notice shows when the student already has saved interests (for example after uploading an older session). New visitors see one short line.
+- **Update notice:** the full notice shows when the student already has saved interests (for example after uploading an older session). New visitors see one short line. (Removed on 3 November 2026 at the owner's request. See section 9.)
 - **Session handling:** restoring a session or starting a new assessment resets the picker, so it shows the restored answers.
 
 ### Tests

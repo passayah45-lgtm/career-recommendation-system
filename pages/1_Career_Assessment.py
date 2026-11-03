@@ -2,7 +2,7 @@
 
 import streamlit as st
 
-from src.data.interest_taxonomy import CURRENT_TAXONOMY, INTEREST_UPDATE_NOTICE, SOFT_SELECTION_LIMIT, label_for
+from src.data.interest_taxonomy import CURRENT_TAXONOMY, SOFT_SELECTION_LIMIT, label_for
 from src.data.validation import EDUCATION_LEVELS
 from src.services.profiles import resolve_interests
 from src.services.profiles import MAX_EXPERIENCE_YEARS, ProfileValidationError
@@ -57,11 +57,7 @@ with st.container(border=True, key="panel_assessment"):
             "skills yet. Skills are asked separately. Interests carry 25% of the score.",
             ":material/favorite:", "red")
     if grouped_interests:
-        # The full update notice is for returning students with saved answers; new visitors get one short line
-        if saved.get("interests"):
-            st.info(INTEREST_UPDATE_NOTICE, icon=":material/new_releases:")
-        else:
-            st.caption(":material/new_releases: The interest list was updated in November 2026 (dataset v1.4.0).")
+        # The November 2026 update notice was removed at the owner's request; the old-session note below stays
         if saved_migrated or saved_retired:
             notes = [f"{old} became {label_for(new)}" for old, new in saved_migrated]
             notes += [f"{old} {note}" for old, note in saved_retired]

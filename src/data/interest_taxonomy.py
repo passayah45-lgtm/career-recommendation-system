@@ -16,14 +16,6 @@ INTERESTS_PER_CAREER = 3
 # Above this many selected interests the form shows a gentle warning; there is no hard cap (second review)
 SOFT_SELECTION_LIMIT = 5
 
-# Shown above the interest list since dataset v1.4.0; it makes no claim of lecturer approval
-INTEREST_UPDATE_NOTICE = (
-    "The interest list was updated in November 2026 (dataset v1.4.0). The old list of 20 short words was replaced "
-    "by 23 described kinds of work, and every career's interests were revised, so scores can differ from before. "
-    "If you saved a session earlier, please review and reselect your interests below. Old interest names are "
-    "translated where a clear match exists, and the others are listed for you to replace."
-)
-
 RIASEC_ORDER = ("Realistic", "Investigative", "Artistic", "Social", "Enterprising", "Conventional")
 RIASEC_DESCRIPTIONS = {
     "Realistic": "Practical work with systems, tools, sites and physical things",

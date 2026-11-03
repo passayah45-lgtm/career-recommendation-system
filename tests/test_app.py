@@ -791,15 +791,20 @@ def test_explorer_shows_full_interest_names():
     assert "Analysing data and information" in text_of(at)
 
 
-def test_assessment_explains_the_interest_update():
-    from src.data.interest_taxonomy import INTEREST_UPDATE_NOTICE
-    # Returning students with saved answers see the full notice
-    at = open_page("pages/1_Career_Assessment.py", profile={"interests": ["writing and editing"]})
-    notice = [i.value for i in at.info if i.value == INTEREST_UPDATE_NOTICE]
-    assert notice and "reselect your interests" in notice[0] and "v1.4.0" in notice[0]
-    assert "lecturer" not in notice[0].lower()
-    # New visitors get one short line instead, so the form stays compact
-    at = open_page("pages/1_Career_Assessment.py")
-    assert not any(i.value == INTEREST_UPDATE_NOTICE for i in at.info)
-    assert any("interest list was updated in November 2026 (dataset v1.4.0)" in c.value for c in at.caption)
+def test_outdated_interest_update_notice_is_gone():
+    # The November 2026 notice (blue box and one-line caption) was removed at the owner's request on 3 November 2026
+    for profile in (None, {"interests": ["writing and editing"]}, {"interests": ["mathematics", "technology"]}):
+        at = open_page("pages/1_Career_Assessment.py", profile=profile)
+        page = "\n".join(str(e.value) for e in list(at.info) + list(at.caption) + list(at.markdown))
+        assert "interest list was updated" not in page and "old list of 20 short words" not in page
+        # Everything else in the interest section is still there
+        assert picker(at).proto.select_all == 0 and len(picker(at).options) == 23
+        assert "You do not need the skills yet" in page
+
+
+def test_old_session_note_still_explains_migrated_names():
+    at = open_page("pages/1_Career_Assessment.py", profile={"interests": ["mathematics", "technology"]})
+    notes = [i.value for i in at.info if "old interest names" in i.value]
+    assert notes and "mathematics became Working with numbers and calculations" in notes[0]
+    assert "technology" in notes[0]
 
