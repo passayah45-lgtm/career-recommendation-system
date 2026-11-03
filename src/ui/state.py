@@ -147,9 +147,10 @@ def set_progress(progress):
 
 
 def _clear_assessment_widgets():
-    # The interest picker keeps its own widget state; it is reseeded from the saved answers after a restore or reset
-    from src.ui.interest_picker import PICKER_KEY, SEARCH_KEY
-    for key in (PICKER_KEY, SEARCH_KEY):
+    # The skill and interest pickers keep their own widget state; they are reseeded from the saved answers after a restore or reset
+    from src.ui.interest_picker import PICKER_KEY
+    from src.ui.skill_picker import SKILL_PICKER_KEY
+    for key in (PICKER_KEY, SKILL_PICKER_KEY):
         st.session_state.pop(key, None)
 
 

@@ -12,7 +12,9 @@ from src.ui.components import (
     sidebar_profile_summary,
 )
 from src.ui.interest_picker import render_interest_picker
+from src.ui.skill_picker import render_skill_picker
 from src.ui.state import get_catalog, get_profile, set_profile
+from src.ui.text import plain_markdown
 from src.ui.views import build_profile_input, education_label
 
 page_setup("Career Assessment", eyebrow="Step 1 of 3",
@@ -29,20 +31,15 @@ other_text = ", ".join(s for s in saved_skills if s not in catalog.known_skills)
 education_options = [None] + sorted(EDUCATION_LEVELS)
 saved_level = saved.get("education_level")
 # Saved answers may use old interest names; they are translated here so the form shows the current choices
-saved_interests, _, saved_migrated, saved_retired = resolve_interests(saved.get("interests", []), catalog.interests)
+saved_interests, saved_custom, saved_migrated, saved_retired = resolve_interests(saved.get("interests", []),
+                                                                                 catalog.interests)
 grouped_interests = catalog.interest_taxonomy == CURRENT_TAXONOMY
 
 # A bordered panel instead of a form: the interest picker must react while the student chooses
 with st.container(border=True, key="panel_assessment"):
     section(1, "Your skills", f"Select from the {len(known_skills)} skills used by the careers, or type your own.",
             ":material/lightbulb:", "green")
-    selected_skills = st.multiselect(
-        "Skills you already have",
-        options=known_skills,
-        default=preselected,
-        placeholder="Type to search, for example python or accounting",
-        help="This list contains every skill used by the careers in the dataset.",
-    )
+    selected_skills = render_skill_picker(catalog, preselected)
     other_skills = st.text_area(
         "Other skills (optional)",
         value=other_text,
@@ -63,7 +60,7 @@ with st.container(border=True, key="panel_assessment"):
             notes += [f"{old} {note}" for old, note in saved_retired]
             st.info("Your saved answers used old interest names. " + ". ".join(notes) + ".",
                     icon=":material/update:")
-        interests = render_interest_picker(saved_interests)
+        interests = render_interest_picker(saved_interests, saved_custom if grouped_interests else ())
     else:
         interests = st.multiselect(
             "Kinds of work that interest you",
@@ -142,6 +139,10 @@ if submitted:
                 if report.unknown_skills:
                     st.warning(f"Not in the dataset, so not scored: {', '.join(report.unknown_skills)}.",
                                icon=":material/warning:")
+                if report.unknown_interests:
+                    own = ", ".join(plain_markdown(i) for i in report.unknown_interests)
+                    st.info(f"Your own interests were saved but are not scored: {own}.",
+                            icon=":material/edit_note:")
                 if report.duplicate_skills:
                     st.info(f"Counted once because they repeat another skill: {', '.join(report.duplicate_skills)}.",
                             icon=":material/content_copy:")

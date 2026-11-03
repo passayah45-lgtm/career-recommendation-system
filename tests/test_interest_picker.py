@@ -1,5 +1,7 @@
 # Interest picker helpers (Phase A interface): grouping, search, duplicates, counter and soft warning
 
+import re
+
 import pytest
 
 from src.data.interest_taxonomy import CURRENT_INTERESTS, INTEREST_TERMS, RIASEC_ORDER, SOFT_SELECTION_LIMIT
@@ -44,21 +46,26 @@ def test_search_needs_every_word_and_empty_query_keeps_all():
     assert ip.search_keys("zzzz") == []
 
 
-def test_search_never_drops_a_selected_interest():
-    chosen = ["writing and editing"]
-    options = ip.picker_options("zzzz", chosen)
-    assert options == chosen
-    options = ip.picker_options("mine", chosen)
-    assert "writing and editing" in options and "working outdoors and with the natural environment" in options
+def test_suggestions_come_from_descriptions_and_skip_chosen_interests():
+    # Replaces the separate search box (removed 3 November 2026, owner decision)
+    assert ip.suggestions("mine")[0] == "working outdoors and with the natural environment"
+    assert "caring for peoples health" in ip.suggestions("patients")
+    assert "writing software and building apps" in ip.suggestions("code")
+    assert "working with communities" in ip.suggestions("Community leadership")
+    assert "leading people and projects" in ip.suggestions("Community leadership")
+    assert "running and growing a business" in ip.suggestions("Rural entrepreneurship")
+    assert "working with communities" not in ip.suggestions("Community leadership", exclude=["working with communities"])
+    assert ip.suggestions("zzzz") == [] and ip.suggestions("a an") == []
+    assert len(ip.suggestions("working with people")) <= ip.MAX_SUGGESTIONS
 
 
 def test_duplicates_and_unknown_values_are_removed():
     assert ip.unique_known(["writing and editing", "writing and editing", "analysis", "x"]) == ["writing and editing"]
 
 
-def test_search_caption_grammar():
-    assert ip.search_caption(1, " mine ") == '1 interest matches "mine". Clear the search to see all 23.'
-    assert ip.search_caption(0, "zz").startswith("0 interests match")
+def test_own_interest_note_explains_they_are_not_scored():
+    note = ip.custom_note(["Agricultural development", "Rural entrepreneurship"])
+    assert '"Agricultural development"' in note and "do not change the score" in note
 
 
 def test_counter_and_soft_warning():
@@ -89,36 +96,53 @@ def test_selecting_everything_is_still_scored_by_the_unchanged_formula():
 def test_restoring_or_resetting_a_session_reseeds_the_picker(monkeypatch):
     import streamlit as st
     from src.ui import state
-    fake = {ip.PICKER_KEY: ["writing and editing"], ip.SEARCH_KEY: "mine"}
+    from src.ui.skill_picker import SKILL_PICKER_KEY
+    fake = {ip.PICKER_KEY: ["writing and editing"], SKILL_PICKER_KEY: ["python"]}
     monkeypatch.setattr(st, "session_state", fake)
     monkeypatch.setattr(state, "set_progress", lambda roadmaps: None)
     state.replace_session({"interests": ["teaching and training others"]}, {})
-    assert ip.PICKER_KEY not in fake and ip.SEARCH_KEY not in fake
+    assert ip.PICKER_KEY not in fake and SKILL_PICKER_KEY not in fake
     fake.update({ip.PICKER_KEY: ["writing and editing"]})
     state.reset_assessment()
     assert ip.PICKER_KEY not in fake
 
 
-# ---------- Mobile readability styles (scoped to the interest picker) ----------
+# ---------- Mobile readability styles (scoped to the interest and skill pickers) ----------
 
 STYLES = (ip.__file__.rsplit("/", 1)[0] + "/styles.css")
 
 
 def _picker_css():
     css = open(STYLES, encoding="utf-8").read()
-    return css[css.index("/* Interest picker readability"):]
+    return css[css.index("/* Interest and skill picker readability"):]
 
 
-def test_mobile_styles_target_only_the_interest_picker():
-    css = _picker_css()
-    selectors = [line.strip() for line in css.splitlines() if line.strip().endswith("{") and "@media" not in line]
+def _selectors(css):
+    # Every selector of every rule, split on commas, ignoring comments and @media lines
+    css = re.sub(r"/\*.*?\*/", "", css, flags=re.S)
+    out = []
+    for head in re.findall(r"([^{}]+)\{", css):
+        head = head.strip()
+        if head.startswith("@media"):
+            continue
+        out += [part.strip() for part in head.split(",") if part.strip()]
+    return out
+
+
+def test_mobile_styles_target_only_the_two_pickers():
+    # Since 3 November 2026 the skills dropdown uses the same picker design (owner decision)
+    from src.ui.skill_picker import SKILL_PICKER_KEY, SKILL_PICKER_LABEL
+    selectors = _selectors(_picker_css())
     assert selectors
+    allowed = (f".st-key-{ip.PICKER_KEY}", f'aria-label="{ip.PICKER_LABEL}"', f".st-key-{SKILL_PICKER_KEY}",
+               f'aria-label="{SKILL_PICKER_LABEL}"', ".st-key-card_selected_interests", ".st-key-card_own_interests")
     for sel in selectors:
-        assert (f".st-key-{ip.PICKER_KEY}" in sel or f'aria-label="{ip.PICKER_LABEL}"' in sel
-                or ".st-key-card_selected_interests" in sel), sel
-    # The skills dropdown keeps Streamlit's default style: no rule names it or styles every listbox
-    assert "Skills you already have" not in css
-    assert not any(sel.startswith('[role="listbox"] ') for sel in selectors)
+        assert any(a in sel for a in allowed), sel
+    # No rule styles every dropdown in the app
+    assert not any(sel.startswith('[role="listbox"] ') or sel.startswith("[role=\"option\"]") for sel in selectors)
+    # Both pickers get the same chip and phone rules
+    assert sum(f".st-key-{SKILL_PICKER_KEY}" in sel for sel in selectors) == \
+        sum(f".st-key-{ip.PICKER_KEY}" in sel for sel in selectors)
 
 
 def test_chips_wrap_and_dropdown_options_fit_two_lines_on_phones():
@@ -126,6 +150,7 @@ def test_chips_wrap_and_dropdown_options_fit_two_lines_on_phones():
     assert '[aria-label="Selected values"] > span > span' in css and "text-overflow: clip" in css
     phone = css[css.index("@media (max-width: 640px)"):]
     assert f'aria-label="{ip.PICKER_LABEL}"' in phone and "-webkit-line-clamp: 2" in phone
+    assert 'aria-label="Skills you already have"' in phone
     assert "white-space: normal" in phone
 
 
@@ -133,3 +158,47 @@ def test_full_names_stay_available_to_assistive_technology():
     # Chips are named by their option label, which keeps the exact interest name after the group word
     for key in ip.ordered_keys():
         assert ip.option_label(key).endswith(next(t.label for t in INTEREST_TERMS if t.key == key))
+
+
+# ---------- Students' own interests (3 November 2026) ----------
+
+def test_own_interests_are_kept_trimmed_and_deduplicated():
+    official, custom = ip.split_selection(
+        ["  Agricultural   development ", "agricultural development", "Community leadership",
+         "Rural entrepreneurship", "", "   "])
+    assert official == []
+    assert custom == ["Agricultural development", "Community leadership", "Rural entrepreneurship"]
+
+
+def test_typed_official_names_become_official_interests():
+    official, custom = ip.split_selection(
+        ["Managing money and financial information", "caring for peoples health", "Gérer l'argent et les informations "
+         "financières", "helping people", "writing and editing"])
+    assert official == ["managing money and financial information", "caring for peoples health",
+                        "helping and advising people", "writing and editing"]
+    assert custom == []
+
+
+def test_retired_old_names_stay_as_own_interests_and_are_never_guessed():
+    official, custom = ip.split_selection(["technology", "writing and editing"])
+    assert official == ["writing and editing"] and custom == ["technology"]
+
+
+def test_own_interests_never_change_any_score():
+    catalog = load_catalog()
+    base = {"skills": ["python"], "interests": ["analysing data and information"], "education_level": 3}
+    with_own = {**base, "interests": base["interests"] + ["Agricultural development", "Rural entrepreneurship"]}
+    a = recommend(base, catalog, top_k=None)
+    b = recommend(with_own, catalog, top_k=None)
+    assert [(r["career_id"], r["score"]) for r in a["recommendations"]] == \
+        [(r["career_id"], r["score"]) for r in b["recommendations"]]
+    assert b["profile"]["report"]["unknown_interests"] == ["Agricultural development", "Rural entrepreneurship"]
+    assert any("not scored" in w and "Agricultural development" in w for w in b["warnings"])
+
+
+def test_suggestion_buttons_wrap_and_only_inside_the_own_interest_card():
+    css = _picker_css()
+    rules = [s for s in _selectors(css) if "st-key-suggestions_" in s]
+    assert rules and all(s.startswith(".st-key-card_own_interests ") for s in rules)
+    block = css[css.index("Suggestion buttons under own interests"):css.index("@media (max-width: 640px)")]
+    assert "white-space: normal" in block and "text-overflow: clip" in block and "height: auto" in block

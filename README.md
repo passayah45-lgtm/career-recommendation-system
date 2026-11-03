@@ -13,7 +13,7 @@ The app sleeps after 12 hours without visitors. If you see a sleep page, click "
 | Page | What it does |
 |---|---|
 | Home | Purpose, dataset size, how the system works |
-| Career Assessment | Skills (list plus free text with aliases such as ML or CI/CD), interests (23 kinds of work grouped under the six RIASEC types, each with an explanation and example, soft warning above 5), education level, optional experience |
+| Career Assessment | Skills (grouped dropdown by career field plus free text with aliases such as ML or CI/CD), interests (23 kinds of work grouped under the six RIASEC types, each with an explanation and example, soft warning above 5, plus your own typed interests, saved but not scored), education level, optional experience |
 | Recommendations | Top K careers with score, matched and missing skills, interests, reasons and a score breakdown. Interested and Not for me buttons move a career into its own list, shown with a count beside the main list |
 | Skill-Gap Analysis | Required and optional gaps, coverage, and learning resources with links and verification status |
 | Career Explorer | Browse all 64 careers, filter by category, search by title, view details and sources |

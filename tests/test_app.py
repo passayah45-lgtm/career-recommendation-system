@@ -1,5 +1,6 @@
 # Streamlit pages run through AppTest, starting from app.py like a real session
 
+import re
 from pathlib import Path
 
 import pytest
@@ -709,11 +710,12 @@ def test_assessment_offers_the_23_interests_in_one_grouped_dropdown():
 
 def test_dropdown_never_offers_select_all_and_searches_by_substring():
     at = open_page("pages/1_Career_Assessment.py")
-    proto = picker(at).proto
-    # 0 hides the option; the skills dropdown keeps Streamlit's default, which shows it, so the check is sensitive
-    assert proto.select_all == 0 and at.multiselect[0].proto.select_all > 0
-    mode = proto.DESCRIPTOR.fields_by_name["filter_mode"].enum_type.values_by_number[proto.filter_mode].name
-    assert mode == "FILTER_MODE_CONTAINS" and proto.wrap is True
+    # 0 hides the option. Since 3 November 2026 the skills dropdown also hides it (owner decision)
+    for widget in (picker(at), at.multiselect(key="skill_picker")):
+        proto = widget.proto
+        assert proto.select_all == 0, widget.label
+        mode = proto.DESCRIPTOR.fields_by_name["filter_mode"].enum_type.values_by_number[proto.filter_mode].name
+        assert mode == "FILTER_MODE_CONTAINS" and proto.wrap is True
 
 
 def test_selecting_updates_chips_counter_and_descriptions_at_once():
@@ -749,17 +751,20 @@ def test_more_than_five_interests_warns_live_and_saves_all():
     assert at.session_state[PROFILE_KEY]["interests"] == ordered_keys()[:6]
 
 
-def test_description_search_narrows_options_and_keeps_choices():
+def test_description_search_now_works_through_typed_interests():
+    # The separate search box was replaced on 3 November 2026 (owner decision): typing a word such as "mine"
+    # adds it as the student's own interest and suggests official interests whose descriptions use that word
     at = open_page("pages/1_Career_Assessment.py")
-    picker(at).select("writing and editing").run()
-    at.text_input(key="interest_search").input("mine").run()
-    labels = list(picker(at).options)
-    assert "Practical · Working outdoors and with the natural environment" in labels
-    assert "Creative · Writing and editing" in labels
-    assert len(labels) < 23
-    assert picker(at).value == ["writing and editing"]
-    at.text_input(key="interest_search").input("").run()
-    assert len(picker(at).options) == 23
+    assert len(at.text_input) == 0
+    picker(at).set_value(["writing and editing", "mine"]).run()
+    assert picker(at).value == ["writing and editing", "mine"]
+    add = [b for b in at.button if b.label == "Add Working outdoors and with the natural environment"]
+    assert add
+    add[0].click().run()
+    assert not at.exception
+    assert picker(at).value[:1] == ["writing and editing"]
+    assert "working outdoors and with the natural environment" in picker(at).value
+    assert "mine" in picker(at).value and len(picker(at).options) == 23
 
 
 def test_saved_old_interest_names_are_preselected_after_migration():
@@ -809,3 +814,130 @@ def test_old_session_note_still_explains_migrated_names():
     assert notes and "mathematics became Working with numbers and calculations" in notes[0]
     assert "technology" in notes[0]
 
+
+
+# ---------- Skills picker and students' own interests (3 November 2026) ----------
+
+def skills(at):
+    return at.multiselect(key="skill_picker")
+
+
+def test_skills_use_a_grouped_dropdown_with_chips_and_a_live_counter():
+    at = open_page("pages/1_Career_Assessment.py")
+    labels = list(skills(at).options)
+    assert len(labels) == 144 == len(set(labels))
+    assert all(" · " in label for label in labels)
+    assert "Healthcare · patient care" in labels and "Several fields · communication" in labels
+    skills(at).set_value(["python", "patient care"]).run()
+    assert "2 skills selected from the list" in text_of(at)
+    skills(at).unselect("python").run()
+    assert skills(at).value == ["patient care"] and "1 skill selected from the list" in text_of(at)
+
+
+def test_custom_skills_text_area_still_works_with_the_new_dropdown():
+    at = open_page("pages/1_Career_Assessment.py")
+    skills(at).set_value(["python"]).run()
+    at.text_area[0].input("ML, quantum origami").run()
+    at.button(key="save_assessment").click().run()
+    saved = at.session_state[PROFILE_KEY]
+    assert saved["skills"] == ["python", "ML", "quantum origami"]
+    assert "quantum origami" in text_of(at)
+
+
+def test_saved_skills_are_preselected_after_restore():
+    at = open_page("pages/1_Career_Assessment.py", profile={"skills": ["python", "patient care", "my own skill"]})
+    assert skills(at).value == ["python", "patient care"]
+    assert at.text_area[0].value == "my own skill"
+
+
+def test_own_interests_become_chips_are_explained_and_saved():
+    at = open_page("pages/1_Career_Assessment.py")
+    picker(at).set_value(["writing and editing", "Agricultural development", "  agricultural   development ",
+                          "Community leadership"]).run()
+    assert not at.exception
+    assert picker(at).value == ["writing and editing", "Agricultural development", "Community leadership"]
+    text = text_of(at)
+    assert "Plus 2 of your own, saved but not scored" in text and "do not change the score" in text
+    picker(at).unselect("Community leadership").run()
+    assert picker(at).value == ["writing and editing", "Agricultural development"]
+    at.button(key="save_assessment").click().run()
+    assert at.session_state[PROFILE_KEY]["interests"] == ["writing and editing", "Agricultural development"]
+    assert any("saved but are not scored: Agricultural development" in i.value for i in at.info)
+
+
+def test_typing_an_official_name_selects_the_official_interest():
+    at = open_page("pages/1_Career_Assessment.py")
+    picker(at).set_value(["Managing money and financial information"]).run()
+    assert picker(at).value == ["managing money and financial information"]
+
+
+def test_own_interests_survive_a_session_file_round_trip():
+    from src.services.catalog import load_catalog
+    from src.services.session_data import export_session, import_session_data
+    profile = {"skills": ["python"], "interests": ["writing and editing", "Rural entrepreneurship"],
+               "education_level": 3}
+    restored, _, _, _ = import_session_data(export_session(profile, {}), load_catalog())
+    assert restored["interests"] == ["writing and editing", "Rural entrepreneurship"]
+    at = open_page("pages/1_Career_Assessment.py", profile=restored)
+    assert picker(at).value == ["writing and editing", "Rural entrepreneurship"]
+
+
+MARKDOWN_INTEREST = "![x](https://example.com/t.png) [link](https://example.com)"
+HTML_INTEREST = "<img src=https://example.com/t.png> <b>bold</b>"
+
+
+def _no_live_markdown(value):
+    # An unescaped "](" or "<" would let Streamlit build a link, image or HTML tag
+    return "](" not in value and not re.search(r"(?<!\\)<", value)
+
+
+def test_own_interests_with_markdown_or_html_show_as_plain_text():
+    at = open_page("pages/1_Career_Assessment.py")
+    skills(at).set_value(["python"]).run()
+    picker(at).set_value(["Financial analysis", MARKDOWN_INTEREST, HTML_INTEREST]).run()
+    assert not at.exception
+    # The chips and the saved value keep exactly what the student typed
+    assert picker(at).value == ["Financial analysis", MARKDOWN_INTEREST, HTML_INTEREST]
+    shown = [e.value for e in list(at.markdown) + list(at.caption) if "example" in e.value]
+    assert shown and all(_no_live_markdown(v) for v in shown), shown
+    at.button(key="save_assessment").click().run()
+    assert at.session_state[PROFILE_KEY]["interests"] == ["Financial analysis", MARKDOWN_INTEREST, HTML_INTEREST]
+    note = [i.value for i in at.info if "saved but are not scored" in i.value]
+    assert note and _no_live_markdown(note[0]) and "Financial analysis" in note[0]
+
+
+def test_recommendation_warnings_show_typed_interests_as_plain_text():
+    profile = {"skills": ["python"], "interests": ["analysing data and information", MARKDOWN_INTEREST,
+                                                   HTML_INTEREST], "education_level": 3}
+    at = open_page("pages/2_Recommendations.py", profile=profile)
+    warning = [w.value for w in at.warning if "not in the interest list" in w.value]
+    assert warning and _no_live_markdown(warning[0])
+    assert warning[0].startswith("These interests are not in the interest list and were not scored: ")
+
+
+def test_typed_markdown_survives_a_session_file_round_trip_unchanged():
+    from src.services.catalog import load_catalog
+    from src.services.session_data import export_session, import_session_data
+    profile = {"skills": ["python"], "interests": ["writing and editing", MARKDOWN_INTEREST], "education_level": 3}
+    restored, _, _, _ = import_session_data(export_session(profile, {}), load_catalog())
+    assert restored["interests"] == ["writing and editing", MARKDOWN_INTEREST]
+    at = open_page("pages/1_Career_Assessment.py", profile=restored)
+    assert picker(at).value == ["writing and editing", MARKDOWN_INTEREST]
+    assert all(_no_live_markdown(m.value) for m in at.markdown if "example" in m.value)
+
+
+def test_new_pickers_give_the_same_recommendations_as_direct_input():
+    from src.services.catalog import load_catalog
+    from src.services.recommendations import recommend
+    at = open_page("pages/1_Career_Assessment.py")
+    skills(at).set_value(["python", "sql", "statistics"]).run()
+    picker(at).set_value(["analysing data and information", "Agricultural development"]).run()
+    at.selectbox[0].set_value(3)
+    at.button(key="save_assessment").click().run()
+    saved = at.session_state[PROFILE_KEY]
+    direct = {"skills": ["python", "sql", "statistics"], "interests": ["analysing data and information"],
+              "education_level": 3}
+    catalog = load_catalog()
+    a = recommend(saved, catalog, top_k=None)["recommendations"]
+    b = recommend(direct, catalog, top_k=None)["recommendations"]
+    assert [(r["career_id"], r["score"]) for r in a] == [(r["career_id"], r["score"]) for r in b]

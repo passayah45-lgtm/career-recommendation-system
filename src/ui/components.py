@@ -10,6 +10,7 @@ from src.services.recommendations import SCORE_DISCLAIMER
 from src.data.interest_taxonomy import labels_for
 from src.services.session_data import SessionFileError, export_session, import_session_data
 from src.ui.illustrations import HERO_SVG, SIDEBAR_ART, initial_tile, ring_svg
+from src.ui.text import escape_typed
 from src.services.feedback import split_lists
 from src.ui.state import (
     SELECTED_CAREER_KEY, get_catalog, get_feedback, get_progress, replace_session, reset_assessment, show_list,
@@ -130,9 +131,10 @@ def need_profile_message():
         st.page_link(ASSESSMENT_PAGE, label="Go to the Career Assessment", icon=":material/arrow_forward:")
 
 
-def show_profile_warnings(warnings):
+def show_profile_warnings(warnings, typed=()):
+    # typed: text the student entered (their own interests); it is shown as plain characters inside the warnings
     for w in warnings:
-        st.warning(w, icon=":material/warning:")
+        st.warning(escape_typed(w, typed), icon=":material/warning:")
 
 
 def verification_badge(status, verified_on=""):

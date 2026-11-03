@@ -206,9 +206,10 @@
   }
 }
 
-/* Interest picker readability (Phase A). Scoped to the interest dropdown and its chips; the skills dropdown is untouched */
+/* Interest and skill picker readability. Scoped to the two picker dropdowns, their chips and the selected-interest card */
 /* Chips wrap onto extra lines instead of ending in an ellipsis; the remove button stays at the right */
-.st-key-interest_picker [role="group"][aria-label="Selected values"] > span {
+.st-key-interest_picker [role="group"][aria-label="Selected values"] > span,
+.st-key-skill_picker [role="group"][aria-label="Selected values"] > span {
   height: auto !important;
   max-width: 100% !important;
   white-space: normal !important;
@@ -216,7 +217,8 @@
   padding-top: 0.15rem;
   padding-bottom: 0.15rem;
 }
-.st-key-interest_picker [role="group"][aria-label="Selected values"] > span > span {
+.st-key-interest_picker [role="group"][aria-label="Selected values"] > span > span,
+.st-key-skill_picker [role="group"][aria-label="Selected values"] > span > span {
   white-space: normal !important;
   overflow: visible !important;
   text-overflow: clip !important;
@@ -224,19 +226,36 @@
   line-height: 1.3;
 }
 /* The chip area grows to show every chip instead of scrolling inside a capped box */
-.st-key-interest_picker div[role="group"]:has([aria-label="Selected values"]) {
+.st-key-interest_picker div[role="group"]:has([aria-label="Selected values"]),
+.st-key-skill_picker div[role="group"]:has([aria-label="Selected values"]) {
   max-height: none !important;
 }
-.st-key-interest_picker div:has(> [role="group"][aria-label="Selected values"]) {
+.st-key-interest_picker div:has(> [role="group"][aria-label="Selected values"]),
+.st-key-skill_picker div:has(> [role="group"][aria-label="Selected values"]) {
   overflow: visible !important;
 }
 /* Selected-interest cards: long words never push the page wider than the screen */
-.st-key-card_selected_interests {
+.st-key-card_selected_interests,
+.st-key-card_own_interests {
+  overflow-wrap: anywhere;
+}
+/* Suggestion buttons under own interests: long labels wrap onto more lines instead of ending in an ellipsis */
+.st-key-card_own_interests [class*="st-key-suggestions_"] button {
+  max-width: 100% !important;
+  height: auto !important;
+  min-height: 2.5rem;
+  text-align: left;
+}
+.st-key-card_own_interests [class*="st-key-suggestions_"] button * {
+  white-space: normal !important;
+  overflow: visible !important;
+  text-overflow: clip !important;
   overflow-wrap: anywhere;
 }
 @media (max-width: 640px) {
   /* Dropdown rows have a fixed height, so each option wraps to at most two smaller lines that fit inside it */
-  [role="listbox"][aria-label="Kinds of work you enjoy"] [role="option"] div:not(:has(div)) {
+  [role="listbox"][aria-label="Kinds of work you enjoy"] [role="option"] div:not(:has(div)),
+  [role="listbox"][aria-label="Skills you already have"] [role="option"] div:not(:has(div)) {
     white-space: normal !important;
     display: -webkit-box !important;
     -webkit-box-orient: vertical;

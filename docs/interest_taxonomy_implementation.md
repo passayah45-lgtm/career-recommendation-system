@@ -273,7 +273,7 @@ Measured on the local app with no interest selected, the interest section shrink
 - **Group words:** Practical (Realistic), Analytical (Investigative), Creative (Artistic), People (Social), Leading (Enterprising) and Organised (Conventional). The RIASEC names stay in the data and in the browse list.
 - **Choosing and removing:** typing filters by substring (`filter_mode="contains"`). Chosen interests appear as chips with an x to remove them. A chosen item disappears from the dropdown, so it cannot be chosen twice.
 - **Select all:** disabled with `select_all=False`. Streamlit otherwise adds a "Select all" option to every multiselect, and selecting everything gives every career the full interest score.
-- **Description search:** a small search box above the dropdown narrows the options by words in each interest's name, group, explanation, example, related skill or draft French name. Interests already chosen always stay in the list.
+- **Description search:** a small search box above the dropdown narrows the options by words in each interest's name, group, explanation, example, related skill or draft French name. Interests already chosen always stay in the list. (Replaced on 3 November 2026 by suggestions under typed interests. See section 11.)
 - **Live feedback:**
   - a counter ("3 interests selected").
   - the soft warning above 5 interests (there is no hard cap).
@@ -333,8 +333,63 @@ The rule for the dropdown uses its label ("Kinds of work you enjoy", `PICKER_LAB
 - On very narrow screens, an option needing more than two lines would be shortened at the end of the second line. None of the 23 options does at 320 px.
 - The dropdown's placeholder text can be cut at 320 px. It is only an example hint.
 - The CSS relies on Streamlit 1.65's accessibility labels ("Selected values" and the listbox label). A future Streamlit upgrade should be checked visually.
-- The description search is a separate box, because a Streamlit dropdown can only search the text it displays.
+- The description search is a separate box, because a Streamlit dropdown can only search the text it displays. (Resolved on 3 November 2026. See section 11.)
 - The skills dropdown still offers Streamlit's "Select all" for the 144 skills. It was outside this phase.
 - Without Select all, a student can still choose all 23 interests one by one. The soft warning explains the effect, and the formula is unchanged by design.
 - The draft French names help the search but are not displayed.
 
+## 11. Skills and interests input update (3 November 2026, local, not yet committed)
+
+Requested by the owner: the skills and interests inputs were brought into line, and students can now type their own interests. The owner decided four open points before implementation:
+- the description search box is merged into custom interest entry.
+- "Select all" is disabled for skills as well.
+- interests keep the counter, warning, explanation card and browse list.
+- skills are grouped by career field.
+
+Interests, codes, descriptions, career assignments, dataset v1.4.0, scoring, ranking and tie-break are unchanged.
+
+### Skills (`src/ui/skill_picker.py`)
+
+- **Dropdown:** one grouped dropdown holds the same 144 catalogue skills. Each option shows the career field whose careers use the skill, for example "Healthcare · patient care", or "Several fields" when careers in different fields use it (34 skills). The groups are derived from the career data, and nothing is invented.
+- **Search and chips:** substring search, chips that wrap on phones, and a live counter ("2 skills selected from the list").
+- **Select all:** disabled. Before, a student could choose all 144 skills and get full skill points for every career.
+- **Custom skills:** the "Other skills" text area is unchanged. Typed skills are still matched through the alias file, and unmatched ones are still listed back and not scored.
+
+### Interests (`src/ui/interest_picker.py`)
+
+- **The search box is gone.** Students type straight into the interest dropdown.
+- **Typed interests:** if the text names an official interest, it becomes that interest. That covers the exact name, the stored form, a draft French name, or an old name with a direct match, for example "Managing money" typed in full, or "helping people". Anything else becomes the student's own interest, shown as a chip with an x.
+- **Tidying:** extra spaces are removed and duplicates are dropped, ignoring capitalisation, for example "  community   LEADERSHIP " after "Community leadership".
+- **Not scored:** the student's own interests are saved with the assessment and in session files, and restored with it. They are never scored, because no career lists them. This is the same rule as unmatched custom skills, and the recommendation output still lists them under `unknown_interests` with a warning. The page explains this next to the chips, in the counter ("Plus 2 of your own, saved but not scored") and after saving.
+- **Description search, kept in a new form:** under each typed interest, up to three official interests whose name or description shares a word with it are offered as "Add" buttons, for example "mine" offers "Working outdoors and with the natural environment".
+- **Unchanged:** the counter, the soft warning above 5 official interests, the selected-interest card, the browse list and the old-session note.
+
+### Tests
+
+- New `tests/test_skill_picker.py`: groups derived from the careers, every skill once, the order, the labels, Select all off.
+- New tests in `tests/test_interest_picker.py`:
+  - typed interests trimmed and deduplicated.
+  - typed official names mapped to official interests.
+  - retired old names never guessed.
+  - typed interests never changing any score.
+- New tests in `tests/test_app.py`:
+  - the grouped skills dropdown, its counter and chip removal.
+  - the "Other skills" text area.
+  - saved skills preselected.
+  - typed interests becoming chips, explained, removable and saved.
+  - typed official names selected.
+  - a session file round trip keeping typed interests.
+  - identical recommendations with or without typed interests.
+- Updated, because of the owner's decisions:
+  - the Select all check now covers both dropdowns.
+  - the description search test now drives the suggestion flow.
+  - the helper tests for the removed search box were replaced by suggestion and note tests.
+  - the restore test now covers the skill picker.
+  - the style tests now allow the skill picker and still forbid rules that would style every dropdown.
+
+
+### Review fixes (3 November 2026)
+
+- Typed interests are shown as plain text. `src/ui/text.py` escapes every punctuation mark and adds an invisible zero-width space after colons and before dots and @, so Markdown, HTML and bare web or email addresses never become links or images. This applies to the own-interest card, the suggestion captions, the saved note and the Recommendations warnings. Saved values are unchanged.
+- Suggestion buttons wrap onto more lines on phones instead of ending in "...". The CSS is scoped to the buttons inside the own-interest card.
+- Tests: `tests/test_text.py`, plus app tests with Markdown and HTML-like interests, and a style test for the button rule.

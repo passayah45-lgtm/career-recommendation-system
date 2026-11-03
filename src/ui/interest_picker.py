@@ -1,17 +1,21 @@
 # Compact interest picker for the assessment page: one searchable dropdown, chips, live counter and descriptions
 # Display only: it saves the same interest keys as before and never changes the taxonomy or the score
+# Students can also type their own interests; those are saved as text and never scored (like unmatched custom skills)
 
 import streamlit as st
 
 from src.data.interest_taxonomy import (
-    INTEREST_TERMS, RIASEC_DESCRIPTIONS, RIASEC_ORDER, SOFT_SELECTION_LIMIT, TERMS_BY_KEY,
+    CURRENT_INTERESTS, INTEREST_TERMS, RIASEC_DESCRIPTIONS, RIASEC_ORDER, SOFT_SELECTION_LIMIT, TERMS_BY_KEY,
+    resolve_interest,
 )
 from src.data.preprocessing import clean_skill_text
+from src.ui.text import plain_markdown
 
 PICKER_KEY = "interest_picker"
 # styles.css targets the open dropdown through this label, so both must change together
 PICKER_LABEL = "Kinds of work you enjoy"
-SEARCH_KEY = "interest_search"
+# The separate description search box was replaced by suggestions under custom interests (owner decision, 3 Nov 2026)
+MAX_SUGGESTIONS = 3
 # Plain group words shown to students; the RIASEC names stay in the data and in the browse list
 GROUP_WORDS = {
     "Realistic": "Practical", "Investigative": "Analytical", "Artistic": "Creative",
@@ -28,8 +32,9 @@ def ordered_keys():
 
 
 def option_label(key):
-    term = TERMS_BY_KEY[key]
-    return f"{GROUP_WORDS[term.riasec]} · {term.label}"
+    # Official interests show their group word; a student's own interest is shown exactly as typed
+    term = TERMS_BY_KEY.get(key)
+    return f"{GROUP_WORDS[term.riasec]} · {term.label}" if term else key
 
 
 def _search_text(term):
@@ -48,11 +53,81 @@ def search_keys(query, keys=None):
     return [k for k in keys if all(w in _search_text(TERMS_BY_KEY[k]) for w in words)]
 
 
-def picker_options(query, selected):
-    # Matching keys plus every selected key, so a search never drops a choice; order stays grouped
-    matches = set(search_keys(query))
-    chosen = set(selected)
-    return [k for k in ordered_keys() if k in matches or k in chosen]
+def normalize_custom(text):
+    # One consistent form for a typed interest: trimmed, single spaces, original capitalisation kept
+    return " ".join(str(text).split())
+
+
+def split_selection(values):
+    # Returns (official keys, own interests); typed text that names an official interest becomes that interest
+    # Official names, stored forms, draft French names and old names with a direct match count as official
+    # Duplicates are dropped, ignoring capitalisation and extra spaces
+    official, custom, seen_custom = [], [], set()
+    for value in values or ():
+        if value in TERMS_BY_KEY:
+            key = value
+        else:
+            text = normalize_custom(value)
+            if not text:
+                continue
+            resolved = resolve_interest(text, CURRENT_INTERESTS)
+            key = resolved.key if resolved.status in ("recognized", "migrated") else None
+            if key is None:
+                fold = clean_skill_text(text) or text.casefold()
+                if fold not in seen_custom:
+                    seen_custom.add(fold)
+                    custom.append(text)
+                continue
+        if key not in official:
+            official.append(key)
+    return official, custom
+
+
+SUFFIXES = ("ship", "ment", "ing", "ers", "ies", "er", "al", "s")
+
+
+def _stem(word):
+    # Drops up to two common English endings so "leadership" meets "leading" and "development" meets "developing"
+    for _ in range(2):
+        for suffix in SUFFIXES:
+            if word.endswith(suffix) and len(word) - len(suffix) >= 4:
+                word = word[:-len(suffix)]
+                break
+    return word[:5]
+
+
+def suggestions(text, exclude=()):
+    # Official interests whose name or description shares words with a typed interest, best match first
+    stems = [_stem(w) for w in clean_skill_text(text).split() if len(w) >= 4]
+    if not stems:
+        return []
+    scored = []
+    for i, key in enumerate(ordered_keys()):
+        if key in exclude:
+            continue
+        hits = sum(stem in _search_text(TERMS_BY_KEY[key]) for stem in stems)
+        if hits:
+            scored.append((-hits, i, key))
+    return [key for _, _, key in sorted(scored)[:MAX_SUGGESTIONS]]
+
+
+def custom_note(custom):
+    # Typed text is escaped so Markdown or HTML in it shows as plain characters, never as a link or image
+    names = ", ".join(f'"{plain_markdown(c)}"' for c in custom)
+    return (f"Your own interests: {names}. They are saved with your assessment but do not change the score, "
+            "because no career lists them.")
+
+
+def _tidy_selection():
+    # Runs when the dropdown changes: maps typed official names, trims spaces and removes duplicates
+    official, custom = split_selection(st.session_state.get(PICKER_KEY, []))
+    st.session_state[PICKER_KEY] = official + custom
+
+
+def _add_official(key):
+    current = list(st.session_state.get(PICKER_KEY, []))
+    if key not in current:
+        st.session_state[PICKER_KEY] = current + [key]
 
 
 def unique_known(keys):
@@ -63,11 +138,6 @@ def unique_known(keys):
             seen.add(k)
             out.append(k)
     return out
-
-
-def search_caption(matches, query):
-    verb = "interest matches" if matches == 1 else "interests match"
-    return f"{matches} {verb} \"{query.strip()}\". Clear the search to see all 23."
 
 
 def counter_text(n):
@@ -82,41 +152,49 @@ def soft_warning(n):
             f"narrowing your results. All of them will still be saved and scored.")
 
 
-def render_interest_picker(saved_keys):
-    # Returns the selected keys; outside any form, so the chips, counter and warning update at once
+def render_interest_picker(saved_keys, saved_custom=()):
+    # Returns official keys followed by the student's own interests; outside any form, so everything updates at once
     if PICKER_KEY not in st.session_state:
-        st.session_state[PICKER_KEY] = unique_known(saved_keys)
-    selected = unique_known(st.session_state[PICKER_KEY])
+        official, custom = split_selection(list(saved_keys) + list(saved_custom))
+        st.session_state[PICKER_KEY] = official + custom
 
-    query = st.text_input(
-        "Not sure of the name? Search the descriptions",
-        key=SEARCH_KEY,
-        placeholder="For example: mine, patients, money, code, village",
-        help="Narrows the list below by words in each interest's name, explanation, example or related skill.",
-    )
-    options = picker_options(query, selected)
-    matches = len([k for k in options if k not in selected])
-    if query.strip():
-        st.caption(search_caption(matches, query))
-
-    picked = st.multiselect(
+    selection = st.multiselect(
         PICKER_LABEL,
-        options=options,
+        options=ordered_keys(),
         format_func=option_label,
         key=PICKER_KEY,
         placeholder="Choose or type, for example data, health, business",
         filter_mode=FILTER_MODE,
         select_all=SELECT_ALL,
+        accept_new_options=True,
         wrap=True,
+        on_change=_tidy_selection,
         help="Options are grouped: Practical, Analytical, Creative, People, Leading and Organised. "
-             "Remove a choice with the x on its chip.",
+             "Not in the list? Type your own interest and press Enter. Your own interests are saved but not "
+             "scored. Remove a choice with the x on its chip.",
     )
-    picked = unique_known(picked)
+    picked, custom = split_selection(selection)
 
-    st.caption(counter_text(len(picked)))
+    counter = counter_text(len(picked))
+    if custom:
+        counter += f" Plus {len(custom)} of your own, saved but not scored."
+    st.caption(counter)
     warning = soft_warning(len(picked))
     if warning:
         st.warning(warning, icon=":material/tune:")
+
+    if custom:
+        with st.container(border=True, key="card_own_interests"):
+            st.markdown(custom_note(custom))
+            for i, text in enumerate(custom):
+                close = suggestions(text, exclude=picked)
+                if not close:
+                    continue
+                st.caption(f'Official interests with similar words to "{plain_markdown(text)}" (these are scored):')
+                with st.container(horizontal=True, gap="small", key=f"suggestions_{i}"):
+                    for key in close:
+                        st.button(f"Add {TERMS_BY_KEY[key].label}", key=f"suggest_{i}_{key}",
+                                  icon=":material/add:", on_click=_add_official, args=(key,))
 
     if picked:
         with st.container(border=True, key="card_selected_interests"):
@@ -132,4 +210,4 @@ def render_interest_picker(saved_keys):
             st.markdown(f"**{GROUP_WORDS[g]}** :gray[({g}): {RIASEC_DESCRIPTIONS[g]}]")
             st.markdown("\n".join(f"- **{t.label}**: {t.explanation}. Example: {t.example}."
                                   for t in INTEREST_TERMS if t.riasec == g))
-    return picked
+    return picked + custom
