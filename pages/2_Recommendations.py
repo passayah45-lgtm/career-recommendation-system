@@ -48,7 +48,9 @@ except (ProfileValidationError, ValueError) as exc:
              icon=":material/error:")
     st.stop()
 
-show_profile_warnings(result["warnings"], typed=result["profile"]["report"]["unknown_interests"])
+report = result["profile"]["report"]
+show_profile_warnings(result["warnings"],
+                      typed=report["unknown_interests"] + report["unknown_skills"] + report["duplicate_skills"])
 
 feedback = get_feedback()
 ranked, hidden = adapt_recommendations(result["recommendations"], catalog, feedback)

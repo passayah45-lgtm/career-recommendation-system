@@ -15,7 +15,7 @@ from src.ui.interest_picker import render_interest_picker, split_selection
 from src.ui.skill_picker import render_skill_picker, skill_groups, split_entries
 from src.ui.state import get_catalog, get_profile, set_profile
 from src.ui.text import plain_markdown
-from src.ui.views import build_profile_input, education_label
+from src.ui.views import SKILL_TEXT_SPLIT, build_profile_input, education_label
 
 page_setup("Career Assessment", eyebrow="Step 1 of 3",
            subtitle="Four short sections. Add at least one skill or one interest. "
@@ -46,7 +46,10 @@ if exchanged:
     # official interests (including old names) to the Skills dropdown and the student's own interests, kept
     # exactly as saved, to the Interests dropdown as typed chips
     restore_skills = [s for s in dict.fromkeys(saved_skills) if s in groups]
-    other_text = ", ".join(s for s in saved_skills if s not in groups)
+    # A typed skill that contains a comma, semicolon or line break would be split by the Other skills box when the
+    # answers are saved again, so it returns to section 1 as a chip and stays exactly as typed
+    restore_typed_skills = [s for s in dict.fromkeys(saved_skills) if s not in groups and SKILL_TEXT_SPLIT.search(s)]
+    other_text = ", ".join(s for s in saved_skills if s not in groups and s not in restore_typed_skills)
     restore_own_interests = list(saved_custom) + [old for old, _ in saved_retired]
 
 # A bordered panel instead of a form: the interest picker must react while the student chooses
@@ -61,7 +64,7 @@ with st.container(border=True, key="panel_assessment"):
             notes += [f"{old} {note}" for old, note in saved_retired]
             st.info("Your saved answers used old interest names. " + ". ".join(notes) + ".",
                     icon=":material/update:")
-        section1 = render_interest_picker(saved_interests, (), as_skills=True)
+        section1 = render_interest_picker(saved_interests, restore_typed_skills, as_skills=True)
         # Choices from the list are interests; text typed here is a skill
         section1_interests, section1_skills = split_selection(section1)
     else:
@@ -156,7 +159,9 @@ if submitted:
             st.error("Add at least one skill from the list, or one interest, so the system has something to match.",
                      icon=":material/error:")
             if report.unknown_skills:
-                st.warning(f"These skills are not in the dataset: {', '.join(report.unknown_skills)}.",
+                # Typed text is shown as plain characters, never as a link or image
+                unknown = ", ".join(map(plain_markdown, report.unknown_skills))
+                st.warning(f"These skills are not in the dataset: {unknown}.",
                            icon=":material/warning:")
         else:
             set_profile(raw)
@@ -169,14 +174,16 @@ if submitted:
                                f"Consider keeping the {SOFT_SELECTION_LIMIT} you enjoy most. Your answers were saved.",
                                icon=":material/tune:")
                 if report.unknown_skills:
-                    st.warning(f"Not in the dataset, so not scored: {', '.join(report.unknown_skills)}.",
+                    unknown = ", ".join(map(plain_markdown, report.unknown_skills))
+                    st.warning(f"Not in the dataset, so not scored: {unknown}.",
                                icon=":material/warning:")
                 if report.unknown_interests:
                     own = ", ".join(plain_markdown(i) for i in report.unknown_interests)
                     st.info(f"Your own interests were saved but are not scored: {own}.",
                             icon=":material/edit_note:")
                 if report.duplicate_skills:
-                    st.info(f"Counted once because they repeat another skill: {', '.join(report.duplicate_skills)}.",
+                    repeated = ", ".join(map(plain_markdown, report.duplicate_skills))
+                    st.info(f"Counted once because they repeat another skill: {repeated}.",
                             icon=":material/content_copy:")
                 st.page_link(RECOMMENDATIONS_PAGE, label="See my recommendations", icon=":material/arrow_forward:")
 elif saved:

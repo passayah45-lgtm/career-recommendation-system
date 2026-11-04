@@ -11,6 +11,7 @@ from src.ui.components import (
     resource_row, sidebar_profile_summary,
 )
 from src.ui.state import ROADMAP_CAREER_KEY, SELECTED_CAREER_KEY, get_catalog, get_profile, get_top_k, select_career
+from src.ui.text import plain_markdown
 from src.ui.views import career_label, education_label, resource_rows
 
 page_setup("Skill-Gap Analysis", eyebrow="Step 3 of 3",
@@ -115,7 +116,8 @@ with st.container(border=True, key="panel_skills"):
     label(f"Skills you already have ({len(have_req) + len(have_pref)})")
     st.markdown(have_badges(have_req + have_pref, empty="None yet"))
     if gap["unknown_skills"]:
-        st.caption(f"Not in the dataset, so not compared: {', '.join(gap['unknown_skills'])}.")
+        # Typed text is shown as plain characters, never as a link or image
+        st.caption(f"Not in the dataset, so not compared: {', '.join(map(plain_markdown, gap['unknown_skills']))}.")
 
 TABLE_COLUMNS = {
     "URL": st.column_config.LinkColumn("Link", display_text="Open resource"),

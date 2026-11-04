@@ -12,8 +12,10 @@ from src.services.session_data import SessionFileError, export_session, import_s
 from src.ui.illustrations import HERO_SVG, SIDEBAR_ART, initial_tile, ring_svg
 from src.ui.text import escape_typed
 from src.services.feedback import split_lists
+from src.ui.recovery import RECOVERY_KEY, recovery_script
 from src.ui.state import (
-    SELECTED_CAREER_KEY, get_catalog, get_feedback, get_progress, replace_session, reset_assessment, show_list,
+    SELECTED_CAREER_KEY, get_catalog, get_feedback, get_profile, get_progress, replace_session, reset_assessment,
+    show_list,
 )
 from src.ui.theme import UNVERIFIED_BADGE, VERIFICATION_BADGES
 
@@ -34,6 +36,11 @@ LOGO_ICON = ROOT / "static" / "logo_icon.svg"
 def apply_theme():
     # A style-only st.html block is applied without taking space on the page
     st.html(f"<style>{STYLESHEET.read_text(encoding='utf-8')}</style>")
+    # Recovers pages whose widget files failed to download (iPhone "Importing a module script failed.")
+    has_data = bool(get_profile() or get_feedback() or any(get_progress().values()))
+    # The keyed wrapper is hidden by styles.css, so the script runs without adding space above the page title
+    with st.container(key=RECOVERY_KEY):
+        st.html(recovery_script(has_data), unsafe_allow_javascript=True)
     st.logo(str(LOGO), size="large", icon_image=str(LOGO_ICON))
 
 

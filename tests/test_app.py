@@ -1053,3 +1053,41 @@ def test_old_and_new_sessions_restore_without_losing_anything():
     again = open_page("pages/1_Career_Assessment.py", profile=saved)
     again.button(key="save_assessment").click().run()
     assert again.session_state[PROFILE_KEY] == saved
+
+
+# ---------- Typed skills are shown as plain text too (found in the reliability review, 4 November 2026) ----------
+
+def test_typed_skills_with_markdown_or_html_show_as_plain_text_everywhere():
+    from src.ui.state import SELECTED_CAREER_KEY
+    at = open_page("pages/1_Career_Assessment.py")
+    # Typed in section 1 (a skill) and in the Other skills box, next to one real skill so the answers save
+    picker(at).set_value([MARKDOWN_INTEREST]).run()
+    at.text_area[0].input(f"python, Python!, {HTML_INTEREST}").run()
+    at.button(key="save_assessment").click().run()
+    saved = at.session_state[PROFILE_KEY]
+    # Saved exactly as typed
+    assert saved["skills"] == [MARKDOWN_INTEREST, "python", "Python!", HTML_INTEREST]
+    shown = [e.value for e in list(at.warning) + list(at.info) if "dataset" in e.value or "Counted once" in e.value]
+    assert len(shown) == 2 and all(_no_live_markdown(v) for v in shown), shown
+    rec = open_page("pages/2_Recommendations.py", profile=saved)
+    warnings = [w.value for w in rec.warning if "not in the dataset" in w.value or "counted once" in w.value]
+    assert len(warnings) == 2 and all(_no_live_markdown(v) for v in warnings), warnings
+    gap = open_page("pages/3_Skill_Gap_Analysis.py", profile=saved, **{SELECTED_CAREER_KEY: "C001"})
+    captions = [c.value for c in gap.caption if "not compared" in c.value]
+    assert captions and _no_live_markdown(captions[0]), captions
+
+
+def test_typed_skills_with_commas_survive_a_restore_and_second_save_unchanged():
+    # A skill typed in section 1 may contain commas or semicolons; the Other skills box would split it
+    # on a second save, so it is restored as a chip instead (reliability review, 4 November 2026)
+    first = open_page("pages/1_Career_Assessment.py")
+    picker(first).set_value(["Hello, world! (test); a-b", "Kubernetes"]).run()
+    skills(first).set_value(["python"]).run()
+    first.button(key="save_assessment").click().run()
+    saved = first.session_state[PROFILE_KEY]
+    assert saved["skills"] == ["python", "Hello, world! (test); a-b", "Kubernetes"]
+    again = open_page("pages/1_Career_Assessment.py", profile=saved)
+    assert picker(again).value == ["Hello, world! (test); a-b"]
+    assert again.text_area[0].value == "Kubernetes"
+    again.button(key="save_assessment").click().run()
+    assert sorted(again.session_state[PROFILE_KEY]["skills"]) == sorted(saved["skills"])

@@ -3,6 +3,12 @@
 /* Selectors target the st-key-* classes Streamlit adds to keyed containers, plus a few classes this app writes itself */
 /* Tokens mirror src/ui/theme.py, see docs/design_system.md */
 
+/* The load-recovery script (src/ui/recovery.py) runs inside this container; hiding it keeps the page layout unchanged */
+.st-key-load_recovery,
+[data-testid="stLayoutWrapper"]:has(> .st-key-load_recovery) {
+  display: none !important;
+}
+
 :root {
   --crs-navy: #14213D;
   --crs-teal: #0F9D94;
@@ -212,6 +218,7 @@
 .st-key-skill_picker [role="group"][aria-label="Selected values"] > span {
   height: auto !important;
   max-width: 100% !important;
+  min-width: 0;
   white-space: normal !important;
   align-items: center;
   padding-top: 0.15rem;
@@ -224,6 +231,10 @@
   text-overflow: clip !important;
   max-width: none !important;
   line-height: 1.3;
+  /* A long typed entry with no spaces breaks inside the word, so the chip and its remove button stay on screen */
+  overflow-wrap: anywhere;
+  word-break: break-word;
+  min-width: 0;
 }
 /* The chip area grows to show every chip instead of scrolling inside a capped box */
 .st-key-interest_picker div[role="group"]:has([aria-label="Selected values"]),
