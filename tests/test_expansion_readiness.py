@@ -44,11 +44,26 @@ def test_original_50_careers_are_unchanged_in_the_live_catalogue():
             {k: v for k, v in row.items() if k != "interests"}, f"{cid} differs from the frozen original"
 
 
+# Fields a recorded link repair may change; skill, free status, type, level and language must stay as frozen
+REPAIRED_FIELDS = ("resource_title", "provider", "resource_url", "url_verification", "verified_on", "notes")
+
+
 def test_original_resources_and_aliases_are_unchanged_in_the_live_catalogue():
     snap_res = rows(EVALUATION_CATALOG_DIR / "resources.csv", "resource_id")
     live_res = rows(DEFAULT_DATA_DIR / "resources.csv", "resource_id")
+    replaced = rows(DEFAULT_DATA_DIR.parent / "resource_link_replacements.csv", "resource_id")
     for rid, row in snap_res.items():
-        assert live_res.get(rid) == row, f"{rid} differs from the frozen original"
+        if rid not in replaced:
+            assert live_res.get(rid) == row, f"{rid} differs from the frozen original"
+            continue
+        # A repaired link: the register must describe exactly the frozen row and the live row
+        fix, live = replaced[rid], live_res[rid]
+        assert (row["resource_title"], row["provider"], row["resource_url"]) == \
+            (fix["old_title"], fix["old_provider"], fix["old_url"]), rid
+        assert (live["resource_title"], live["provider"], live["resource_url"]) == \
+            (fix["new_title"], fix["new_provider"], fix["new_url"]), rid
+        assert {k: v for k, v in live.items() if k not in REPAIRED_FIELDS} == \
+            {k: v for k, v in row.items() if k not in REPAIRED_FIELDS}, f"{rid} changed more than its link"
     snap_alias = rows(EVALUATION_CATALOG_DIR / "skill_aliases.csv", "alias")
     live_alias = rows(DEFAULT_DATA_DIR / "skill_aliases.csv", "alias")
     for alias, row in snap_alias.items():

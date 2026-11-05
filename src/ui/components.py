@@ -151,8 +151,13 @@ def verification_badge(status, verified_on=""):
     return f":{color}-badge[{icon} {text}{date}]"
 
 
+# Student-facing access label on resource cards (owner decision, 6 November 2026)
+FREE_RESOURCE_LABEL = "Free learning resource"
+
+
 def resource_row(resource):
-    # One learning resource inside a skill card: provider tile, linked title, type, level, cost and link status
+    # One learning resource inside a skill card: provider tile, linked title, type, level and free access
+    # Link verification status and dates stay in the data and the table view; cards no longer show them to students
     with st.container(horizontal=True, vertical_alignment="center", gap="small"):
         st.html(initial_tile(resource["provider"]), width="content")
         with st.container(gap="small"):
@@ -160,12 +165,10 @@ def resource_row(resource):
                         f'rel="noopener">{escape(resource["title"])}</a></div>'
                         f'<div class="crs-res-meta">{escape(resource["provider"])}</div>',
                         unsafe_allow_html=True)
-            access = (":blue-badge[:material/lock_open: Free]" if resource["is_free"]
+            access = (f":blue-badge[:material/lock_open: {FREE_RESOURCE_LABEL}]" if resource["is_free"]
                       else ":gray-badge[:material/payments: Paid or partly paid]")
             st.markdown(f":violet-badge[{resource['resource_type'].capitalize()}] "
-                        f":gray-badge[{resource['level'].capitalize()}] {access} "
-                        f"{verification_badge(resource['url_verification'], resource.get('verified_on', ''))}",
-                        help=resource.get("url_verification_meaning"))
+                        f":gray-badge[{resource['level'].capitalize()}] {access}")
 
 
 def reset_button(key="reset"):

@@ -21,6 +21,8 @@ APP = str(ROOT / "app.py")
 # Frozen copies of earlier catalogues; every resource they hold must still exist with the same skill and link
 SNAPSHOT_RESOURCES = (ROOT / "data" / "evaluation" / "catalog_v1.2.0" / "resources.csv",
                       ROOT / "data" / "evaluation" / "catalog_v1.4.0" / "resources.csv")
+# Owner-requested link repairs (6 November 2026): each row names one resource and its exact old and new link
+REPLACEMENTS = ROOT / "data" / "resource_link_replacements.csv"
 PROFILE = {"skills": ["python", "sql"], "interests": ["analysing data and information"], "education_level": 3}
 LINK = re.compile(r'href="(https?://[^"]+)"')
 
@@ -51,10 +53,17 @@ def page_links(at):
 
 @pytest.mark.parametrize("snapshot", SNAPSHOT_RESOURCES, ids=["v1.2.0", "v1.4.0"])
 def test_no_learning_resource_was_removed_or_relinked(snapshot):
+    # A link may differ from the frozen copy only when data/resource_link_replacements.csv records that exact change
     live = read_resources(DEFAULT_DATA_DIR / "resources.csv")
+    replaced = read_resources(REPLACEMENTS)
     for rid, row in read_resources(snapshot).items():
         assert rid in live, f"{rid} was removed"
-        assert (live[rid]["skill_name"], live[rid]["resource_url"]) == (row["skill_name"], row["resource_url"]), rid
+        assert live[rid]["skill_name"] == row["skill_name"], rid
+        if rid in replaced:
+            assert (row["resource_url"], live[rid]["resource_url"]) == \
+                (replaced[rid]["old_url"], replaced[rid]["new_url"]), rid
+        else:
+            assert live[rid]["resource_url"] == row["resource_url"], rid
         assert live[rid]["is_free"] == row["is_free"], rid
 
 
@@ -133,10 +142,13 @@ def test_link_check_notice_is_gone_but_verification_stays():
     page = "\n".join(str(e.value) for e in list(at.info) + list(at.markdown) + list(at.caption))
     assert "Each resource shows how its link was checked" not in page
     assert gap["resource_note"] not in page
-    # Verification data and its display remain: the service note, the badges with tooltips and the table column
+    # Verification data remains: the service note, every resource's status and date, and the table column
     assert "was not opened by the checker" in gap["resource_note"]
-    badges = [m for m in at.markdown if "Link checked" in m.value or "Found in search" in m.value]
-    assert badges and all(m.help for m in badges)
+    # Since 6 November 2026 (owner decision) the cards show "Free learning resource" instead of the link check
+    # badge and its date, so students never see internal verification dates
+    cards = [m.value for m in at.markdown if ":violet-badge[" in m.value]
+    assert cards and all("Link checked" not in v and "Found in search" not in v for v in cards)
+    assert not any(re.search(r"20\d\d-\d\d-\d\d", v) for v in cards)
     resources = [r for group in ("required", "preferred") for e in gap["resources"][group] for r in e["resources"]]
     assert all(r["url_verification"] and r["url_verification_meaning"] for r in resources)
     assert all(r.get("verified_on") for r in resources if r["url_verification"] == "http_checked")
@@ -163,3 +175,57 @@ def test_learning_pages_stay_in_the_navigation():
     for title in ("Skill-Gap Analysis", "Skill Roadmap", "Career Assessment", "Recommendations",
                   "Career Explorer", "Analytics"):
         assert f'title="{title}"' in source, title
+
+
+# ---------- Student-facing resource cards (6 November 2026, owner decision) ----------
+# Cards show the title as a direct link, the provider, type, level and "Free learning resource"; verification
+# badges and dates are no longer shown to students
+
+DATE = re.compile(r"20\d\d-\d\d-\d\d")
+VERIFICATION_WORDS = ("Link checked", "Found in search", "Not verified")
+
+
+def resource_cards(at):
+    return [m.value for m in at.markdown if ":violet-badge[" in m.value]
+
+
+@pytest.mark.parametrize("page,state", [
+    ("pages/3_Skill_Gap_Analysis.py", {SELECTED_CAREER_KEY: "C001"}),
+    ("pages/6_Skill_Roadmap.py", {ROADMAP_CAREER_KEY: "C001"}),
+], ids=["skill_gap", "roadmap"])
+def test_cards_show_one_free_label_per_resource_and_no_verification_dates(page, state):
+    at = open_page(page, profile=PROFILE, **state)
+    cards = resource_cards(at)
+    links = page_links(at)
+    assert cards and len(cards) == len(links)
+    for card in cards:
+        assert card.count("Free learning resource") == 1
+        assert not any(word in card for word in VERIFICATION_WORDS) and not DATE.search(card)
+    # No verification wording or date anywhere in the visible text of the cards' markdown
+    titles = [m.value for m in at.markdown if 'class="crs-res-title"' in m.value]
+    assert len(titles) == len(links) and all(not DATE.search(t) for t in titles)
+
+
+def test_every_card_title_links_directly_to_its_catalogue_url():
+    catalog = load_catalog()
+    gap = analyze_skill_gap(PROFILE, "C001", catalog)
+    at = open_page("pages/3_Skill_Gap_Analysis.py", profile=PROFILE, **{SELECTED_CAREER_KEY: "C001"})
+    expected = {r["url"]: r["title"]
+                for g in ("required", "preferred") for e in gap["resources"][g] for r in e["resources"]}
+    shown = {}
+    for m in at.markdown:
+        found = re.search(r'<a href="([^"]+)" target="_blank" rel="noopener">([^<]+)</a>', m.value)
+        if found:
+            shown[found.group(1)] = found.group(2)
+    assert shown == {url: title.replace("&", "&amp;") for url, title in expected.items()}
+
+
+def test_a_resource_that_is_not_free_is_still_labelled_honestly():
+    def card():
+        from src.ui.components import resource_row
+        resource_row({"provider": "Example", "url": "https://example.org/course", "title": "Example course",
+                      "is_free": False, "resource_type": "course", "level": "beginner"})
+    at = AppTest.from_function(card)
+    at.run()
+    text = "\n".join(m.value for m in at.markdown)
+    assert "Paid or partly paid" in text and "Free learning resource" not in text

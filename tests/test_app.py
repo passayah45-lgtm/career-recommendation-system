@@ -223,17 +223,20 @@ def test_home_offers_assessment_action_and_score_note():
     assert "required skills (55%)" in text and "interests (25%)" in text
 
 
-def test_skill_gap_cards_show_the_real_verification_status():
+def test_skill_gap_shows_the_real_verification_status_in_the_table_not_on_the_cards():
+    # Since 6 November 2026 (owner decision) cards show "Free learning resource" instead of the link check and its
+    # date; the real verification status is still shown, accurately, in the table view
     from src.services.catalog import load_catalog
     from src.ui.theme import VERIFICATION_BADGES
     at = open_page("pages/3_Skill_Gap_Analysis.py", profile=WORKED_EXAMPLE, **{SELECTED_CAREER_KEY: "C001"})
     resource = load_catalog().resources.for_skill("data visualization")[0]
-    expected = VERIFICATION_BADGES[resource.url_verification][2]
     card = [m.value for m in at.markdown if resource.title in m.value]
     assert card, "resource card missing"
-    assert any(expected in m.value for m in at.markdown)
-    if resource.url_verification != "http_checked":
-        assert not any("Link checked" in m.value for m in at.markdown)
+    assert not any(badge[2] in m.value for badge in VERIFICATION_BADGES.values() for m in at.markdown)
+    assert any(":material/lock_open: Free learning resource" in m.value for m in at.markdown)
+    table = at.dataframe[0].value
+    row = list(table["Resource"]).index(resource.title)
+    assert list(table["Link status"])[row] == resource.url_verification.replace("_", " ")
 
 
 def test_assessment_sidebar_shows_saved_state_after_submit():
