@@ -7,6 +7,7 @@ from src.data.validation import EDUCATION_LEVELS
 from src.services.profiles import resolve_interests
 from src.services.profiles import MAX_EXPERIENCE_YEARS, ProfileValidationError
 from src.services.recommendations import profile_from_input
+from src.ui.assessment_assistant import render_assessment_assistant
 from src.ui.components import (
     RECOMMENDATIONS_PAGE, have_badges, page_setup, reset_button, section, session_data_panel,
     sidebar_profile_summary,
@@ -51,6 +52,8 @@ if exchanged:
     restore_typed_skills = [s for s in dict.fromkeys(saved_skills) if s not in groups and SKILL_TEXT_SPLIT.search(s)]
     other_text = ", ".join(s for s in saved_skills if s not in groups and s not in restore_typed_skills)
     restore_own_interests = list(saved_custom) + [old for old, _ in saved_retired]
+    # Optional assistant (feature flag CRS_ASSESSMENT_ASSISTANT, off by default); draws nothing when it is off
+    render_assessment_assistant(catalog)
 
 # A bordered panel instead of a form: the interest picker must react while the student chooses
 with st.container(border=True, key="panel_assessment"):

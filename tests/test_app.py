@@ -28,6 +28,11 @@ def text_of(at):
     return "\n".join(str(p) for p in parts)
 
 
+def other_skills(at):
+    # The Other skills box, found by its label so other text boxes on the page (the optional assistant) never matter
+    return next(t for t in at.text_area if t.label == "Other skills (optional)")
+
+
 def open_page(page=None, profile=None, **state):
     at = AppTest.from_file(APP, default_timeout=TIMEOUT)
     if profile is not None:
@@ -54,8 +59,8 @@ def test_home_page_starts_and_shows_dataset_size():
 
 def test_assessment_saves_normalized_profile_and_reports_unknown_skills():
     at = open_page("pages/1_Career_Assessment.py")
-    at.multiselect[0].set_value(["python", "sql"])
-    at.text_area[0].input("ML, machine learning, blockchain")
+    at.multiselect(key="interest_picker").set_value(["python", "sql"])
+    other_skills(at).input("ML, machine learning, blockchain")
     at.multiselect(key="interest_picker").select("analysing data and information").run()
     at.selectbox[0].set_value(3)
     at.button(key="save_assessment").click().run()
@@ -71,7 +76,7 @@ def test_assessment_saves_normalized_profile_and_reports_unknown_skills():
 
 def test_assessment_rejects_empty_answers():
     at = open_page("pages/1_Career_Assessment.py")
-    at.button[0].click().run()
+    at.button(key="save_assessment").click().run()
     assert not at.exception
     assert PROFILE_KEY not in at.session_state
     assert any("at least one skill" in e.value for e in at.error)
@@ -233,8 +238,8 @@ def test_skill_gap_cards_show_the_real_verification_status():
 
 def test_assessment_sidebar_shows_saved_state_after_submit():
     at = open_page("pages/1_Career_Assessment.py")
-    at.multiselect[0].set_value(["python"])
-    at.button[0].click().run()
+    at.multiselect(key="interest_picker").set_value(["python"])
+    at.button(key="save_assessment").click().run()
     assert not at.exception
     assert any("Saved for this session" in c.value for c in at.sidebar.caption)
 
@@ -840,7 +845,7 @@ def test_skills_use_a_grouped_dropdown_with_chips_and_a_live_counter():
 def test_custom_skills_text_area_still_works_with_the_new_dropdown():
     at = open_page("pages/1_Career_Assessment.py")
     skills(at).set_value(["python"]).run()
-    at.text_area[0].input("ML, quantum origami").run()
+    other_skills(at).input("ML, quantum origami").run()
     at.button(key="save_assessment").click().run()
     saved = at.session_state[PROFILE_KEY]
     assert saved["skills"] == ["python", "ML", "quantum origami"]
@@ -850,7 +855,7 @@ def test_custom_skills_text_area_still_works_with_the_new_dropdown():
 def test_saved_skills_are_preselected_after_restore():
     at = open_page("pages/1_Career_Assessment.py", profile={"skills": ["python", "patient care", "my own skill"]})
     assert skills(at).value == ["python", "patient care"]
-    assert at.text_area[0].value == "my own skill"
+    assert other_skills(at).value == "my own skill"
 
 
 def test_own_interests_become_chips_are_explained_and_saved():
@@ -1041,7 +1046,7 @@ def test_old_and_new_sessions_restore_without_losing_anything():
     at = open_page("pages/1_Career_Assessment.py", profile=old)
     assert picker(at).value == ["writing and editing", "working with numbers and calculations"]
     assert skills(at).value == ["python", "patient care", "Rural entrepreneurship", "technology"]
-    assert at.text_area[0].value == "ML, my own skill"
+    assert other_skills(at).value == "ML, my own skill"
     at.button(key="save_assessment").click().run()
     saved = at.session_state[PROFILE_KEY]
     # Skills stay skills, interests stay interests; the old name is translated as before and scores the same
@@ -1062,7 +1067,7 @@ def test_typed_skills_with_markdown_or_html_show_as_plain_text_everywhere():
     at = open_page("pages/1_Career_Assessment.py")
     # Typed in section 1 (a skill) and in the Other skills box, next to one real skill so the answers save
     picker(at).set_value([MARKDOWN_INTEREST]).run()
-    at.text_area[0].input(f"python, Python!, {HTML_INTEREST}").run()
+    other_skills(at).input(f"python, Python!, {HTML_INTEREST}").run()
     at.button(key="save_assessment").click().run()
     saved = at.session_state[PROFILE_KEY]
     # Saved exactly as typed
@@ -1088,6 +1093,6 @@ def test_typed_skills_with_commas_survive_a_restore_and_second_save_unchanged():
     assert saved["skills"] == ["python", "Hello, world! (test); a-b", "Kubernetes"]
     again = open_page("pages/1_Career_Assessment.py", profile=saved)
     assert picker(again).value == ["Hello, world! (test); a-b"]
-    assert again.text_area[0].value == "Kubernetes"
+    assert other_skills(again).value == "Kubernetes"
     again.button(key="save_assessment").click().run()
     assert sorted(again.session_state[PROFILE_KEY]["skills"]) == sorted(saved["skills"])
