@@ -233,7 +233,7 @@ def test_skill_gap_shows_the_real_verification_status_in_the_table_not_on_the_ca
     card = [m.value for m in at.markdown if resource.title in m.value]
     assert card, "resource card missing"
     assert not any(badge[2] in m.value for badge in VERIFICATION_BADGES.values() for m in at.markdown)
-    assert any(":material/lock_open: Free learning resource" in m.value for m in at.markdown)
+    assert any(f":material/lock_open: [Free learning resource](<{resource.url}>)" in m.value for m in at.markdown)
     table = at.dataframe[0].value
     row = list(table["Resource"]).index(resource.title)
     assert list(table["Link status"])[row] == resource.url_verification.replace("_", " ")

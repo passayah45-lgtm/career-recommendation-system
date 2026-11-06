@@ -156,7 +156,7 @@ FREE_RESOURCE_LABEL = "Free learning resource"
 
 
 def resource_row(resource):
-    # One learning resource inside a skill card: provider tile, linked title, type, level and free access
+    # One learning resource inside a skill card: provider tile, linked title, type, level and a linked free label
     # Link verification status and dates stay in the data and the table view; cards no longer show them to students
     with st.container(horizontal=True, vertical_alignment="center", gap="small"):
         st.html(initial_tile(resource["provider"]), width="content")
@@ -165,8 +165,10 @@ def resource_row(resource):
                         f'rel="noopener">{escape(resource["title"])}</a></div>'
                         f'<div class="crs-res-meta">{escape(resource["provider"])}</div>',
                         unsafe_allow_html=True)
-            access = (f":blue-badge[:material/lock_open: {FREE_RESOURCE_LABEL}]" if resource["is_free"]
-                      else ":gray-badge[:material/payments: Paid or partly paid]")
+            # The free label also links to the resource (owner request, 6 November 2026); Streamlit opens Markdown links
+            # in a new tab, and the angle brackets keep URLs with parentheses intact
+            access = (f":blue-badge[:material/lock_open: [{FREE_RESOURCE_LABEL}](<{resource['url']}>)]"
+                      if resource["is_free"] else ":gray-badge[:material/payments: Paid or partly paid]")
             st.markdown(f":violet-badge[{resource['resource_type'].capitalize()}] "
                         f":gray-badge[{resource['level'].capitalize()}] {access}")
 

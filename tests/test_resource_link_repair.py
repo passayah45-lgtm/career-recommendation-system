@@ -156,7 +156,7 @@ def test_skill_gap_card_links_the_replacement_title_and_labels_it_free():
     page = " ".join(m.value for m in at.markdown)
     assert f'href="{fix["new_url"]}"' in page and f'>{fix["new_title"]}</a>' in page
     assert fix["old_url"] not in page
-    assert f":material/lock_open: {FREE_RESOURCE_LABEL}" in page
+    assert f":material/lock_open: [{FREE_RESOURCE_LABEL}](<{fix['new_url']}>)" in page
 
 
 # ---------- Recommendations ----------

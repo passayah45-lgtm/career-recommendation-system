@@ -25,6 +25,8 @@ SNAPSHOT_RESOURCES = (ROOT / "data" / "evaluation" / "catalog_v1.2.0" / "resourc
 REPLACEMENTS = ROOT / "data" / "resource_link_replacements.csv"
 PROFILE = {"skills": ["python", "sql"], "interests": ["analysing data and information"], "education_level": 3}
 LINK = re.compile(r'href="(https?://[^"]+)"')
+# The "Free learning resource" badge as written in Markdown, with its link to the resource (Streamlit opens it in a new tab)
+FREE_LABEL_LINK = re.compile(r":blue-badge\[:material/lock_open: \[Free learning resource\]\(<(https?://[^>]+)>\)\]")
 
 
 def read_resources(path):
@@ -102,8 +104,9 @@ def test_each_tab_shows_its_own_resources_with_free_badges_and_table():
         assert resources, group
         links = [url for m in tab.markdown for url in LINK.findall(m.value)]
         assert sorted(links) == sorted(r["url"] for _, r in resources), group
-        free_badges = sum(":material/lock_open: Free" in m.value for m in tab.markdown)
-        assert free_badges == sum(r["is_free"] for _, r in resources), group
+        # Since 6 November 2026 the free label itself links to the resource
+        label_links = [url for m in tab.markdown for url in FREE_LABEL_LINK.findall(m.value)]
+        assert sorted(label_links) == sorted(r["url"] for _, r in resources if r["is_free"]), group
         table = tab.dataframe[0].value
         assert sorted(zip(table["Skill"], table["URL"], table["Free"])) == \
             sorted((skill, r["url"], r["is_free"]) for skill, r in resources), group
@@ -220,6 +223,35 @@ def test_every_card_title_links_directly_to_its_catalogue_url():
     assert shown == {url: title.replace("&", "&amp;") for url, title in expected.items()}
 
 
+@pytest.mark.parametrize("page,state", [
+    ("pages/3_Skill_Gap_Analysis.py", {SELECTED_CAREER_KEY: "C001"}),
+    ("pages/6_Skill_Roadmap.py", {ROADMAP_CAREER_KEY: "C001"}),
+], ids=["skill_gap", "roadmap"])
+def test_free_label_links_to_the_same_catalogue_url_as_its_title(page, state):
+    # Owner request, 6 November 2026: students can open the resource from the label as well as from the title
+    at = open_page(page, profile=PROFILE, **state)
+    titles = [LINK.findall(m.value)[0] for m in at.markdown if 'class="crs-res-title"' in m.value]
+    labels = [FREE_LABEL_LINK.findall(m.value) for m in at.markdown if ":violet-badge[" in m.value]
+    assert titles and len(titles) == len(labels)
+    # Each card's label link is the same catalogue URL as the title link drawn just above it
+    assert labels == [[url] for url in titles]
+    catalogue = {r["resource_url"] for r in read_resources(DEFAULT_DATA_DIR / "resources.csv").values()}
+    assert set(titles) <= catalogue
+
+
+def test_title_link_still_opens_in_a_new_tab_next_to_the_linked_label():
+    def card():
+        from src.ui.components import resource_row
+        resource_row({"provider": "Example", "url": "https://example.org/a_(b)", "title": "Example course",
+                      "is_free": True, "resource_type": "course", "level": "beginner"})
+    at = AppTest.from_function(card)
+    at.run()
+    text = "\n".join(m.value for m in at.markdown)
+    assert '<a href="https://example.org/a_(b)" target="_blank" rel="noopener">Example course</a>' in text
+    assert FREE_LABEL_LINK.findall(text) == ["https://example.org/a_(b)"]
+    assert not DATE.search(text)
+
+
 def test_a_resource_that_is_not_free_is_still_labelled_honestly():
     def card():
         from src.ui.components import resource_row
@@ -229,3 +261,5 @@ def test_a_resource_that_is_not_free_is_still_labelled_honestly():
     at.run()
     text = "\n".join(m.value for m in at.markdown)
     assert "Paid or partly paid" in text and "Free learning resource" not in text
+    # The paid label stays plain text; the title still links to the resource
+    assert '<a href="https://example.org/course" target="_blank" rel="noopener">Example course</a>' in text
